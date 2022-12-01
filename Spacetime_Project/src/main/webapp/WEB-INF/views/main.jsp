@@ -1,684 +1,305 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" name="viewport"
+	content="width=device-width, initial-scale=1">
 <title>SpaceTime</title>
+<!-- 헤더에서 제이쿼리등 임포트하기 떄문에 여기에 스크립트나 링크 가져올 필요없다. -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> <!-- 온라인 방식 -->
-<!--아이콘-->
-<script src="https://kit.fontawesome.com/c7bfbb0e5b.js"crossorigin="anonymous"></script> 
-<link rel='stylesheet' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
-<!-- 
-    * 부트스트랩
-    웹 사이트를 쉽게 꾸밀 수 있게 도와주는 HTML, CSS, JS 프레임워크 (규칙성이 강한 라이브러리)
--->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-
-<!-- Popper JS -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- bootstrap-select 라이브러리 -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
-
-<!-- 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-
-  
 <style>
-
-
-.box::-webkit-scrollbar {
-        display: none;
-      } [css/html]
-html, body {
-  background: #FFF;
-  color: #444;
-  font-family: 'Lato', sans-serif;
-  margin: 0 auto;
-  overflow-X: hidden;
-  overflow-Y: auto;
-  padding: 0;
+.main * {
+	border: 1px solid black;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+#main_display {
+	width: 70%;
+	min-width: 1200px;
+	margin: 0 auto;
+	justify-content: center;
 }
 
-a:hover {
-  color: black;
+#main_display>div {
+	width: 100%;
+	margin: 30px 0px 30px 0px;
 }
 
-ul, li {
-  list-style-type: none;
-  margin: 0 auto;
-  padding: 0;
+#main_display {
+	width: 70%;
 }
 
-ul li {
-  display: inline-block;
+#main_display>div {
+	width: 100%;
+	margin: 30px 0px 30px 0px;
 }
 
-* {
-  margin: 0;
- box-sizing: border-box;
-  padding: 0;
-
+#main_slide {
+	height: 500px;
 }
 
-header {
-  width: 100%;  
-  background: #FFF;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
-  height: 130px;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: initial;
-  z-index: 9;
-  -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
-  -moz-transform: matrix(1, 0, 0, 1, 0, 0);
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+#main_categoryBar {
+	height: 110px;
 }
 
-header #menu{
-    transform: translateX( -100% );
-    color: #FFB200;
-    font-size: 50px;
-    padding-top: 30px;
-}
-html.active header {
-  -webkit-transform: matrix(1, 0, 0, 1, -320, 0);
-  -moz-transform: matrix(1, 0, 0, 1, -320, 0);
-  transform: matrix(1, 0, 0, 1, -320, 0);
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+#main_recommend {
+	height: 400px;
 }
 
-header .box {
-    margin: 10px 600px 100px 600px;
+#main_reviewZone {
+	height: 500px;
 }
 
-
-#overlay {
-  background: #000;
-  bottom: 0;
-  height: 100%;
-  left: 0;
-  opacity: 0;
-  overflow: hidden;
-  position: fixed;
-  right: 0;
-  top: 0;
-  visibility: hidden;
-  width: 100%;
-  z-index: 99;
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+/* 카테고리바 *************************************************************************************/
+#main_categoryBar>div {
+	display: inline-block;
+	margin: 0 auto;
+	height: 100%;
+	 
 }
 
-html.active #overlay {
-  opacity: .65;
-  visibility: visible;
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+.main_category {
+	width: 12%;
+	box-sizing: border-box;
 }
 
-#home{
-  display: flex;
-  font-size: 45px;
-  height: 36px;
-  left: 0;
-  line-height: 36px;
-  margin: 0 10px 20px 20px;
-  position: fixed;
-
+/* 테마 *************************************************************************************/
+#main_theme {
+	height: 220px;
 }
 
-#logoimg{
-  width: 70px;
-  height: 70px;	
-  right: 200px; 
-  transform: translateX( 35% );
-  vertical-align:middle;
- 
-		}
-
-
-#search{
-  height: 45px;
-  border-radius: 8px;
-  font-size: 25px;
-
- 
-	}
-#searchicon{ 
-    font-size: 800px;
-    margin-left: 500px;
-    
-    }
-        
-.logo {
-  font-size: 32px;
-  height: 40px;
-  line-height: 40px;
-  margin: 0 auto;
-  overflow: hidden;
-  padding: 10px;
-  position: relative;
-  width: initial;
+#main_theme>table {
+	width: 100%;
+	height: 100%;
 }
 
-.logo > a {
-  display: inline-block;
-  margin: 0 auto 0 10px;
-  position: relative;
+#main_theme>table * {
+	width: 50%;
+	height: 50%;
 }
 
-.sign-up {
-  background: #FF5959;
-  border: 1px solid #FF5959;
-  color: #FFF;
-  font-family: 'Abel', sans-serif;
-  font-size: 16px;
-  font-weight: bold;
-  height: 60px;
-  letter-spacing: 1px;
-  line-height: 60px;
-  margin: 10px;
-  overflow: hidden;
-  padding: 0;
-  position: relative;
-  text-align: center;
-  
+/* 추천바 *************************************************************************************/
+#main_recommend {
+	width: 100%;
 }
 
-.sign-up:hover {
-  background: #FFF;
+#main_recommend_title {
+	height: 20%;
 }
 
-.sign-up a {
-  display: block;
+#main_recommend_content {
+	height: 80%;
 }
 
-.sign-up span {
-  margin: 0 auto 0 8px;
+#main_recommend_content>div {
+	display: inline-block;
+	width: 30%;
+	height: 100%;
+	margin: auto;
 }
 
-#close-menu {
-  
-  color: #333;
-  cursor: pointer;
-  display: block;
-  height: 20px;
-  line-height: 20px;
-  margin: 15px 20px 15px auto;
-  padding: 4px;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0;
-  width: 20px;
+.main_recommend_paging {
+	width: 4% !important;
 }
 
-section {
-  background-attachment: fixed;
-  background-position: center;
-  background-size: cover;
-  z-index: 2;
-  -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
-  -moz-transform: matrix(1, 0, 0, 1, 0, 0);
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+.main_recommend_thumbnail {
+	height: 74%;
 }
 
-
-html.active,
-html.active body {
-  overflow: hidden;
+.main_recommend_spaceName, .main_recommend_spacePrice {
+	height: 13%;
 }
 
-html.active section {
-  -webkit-transform: matrix(1, 0, 0, 1, -320, 0);
-  -moz-transform: matrix(1, 0, 0, 1, -320, 0);
-  transform: matrix(1, 0, 0, 1, -320, 0);
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+/* 리뷰존 *************************************************************************************/
+#main_reviewZone {
+	width: 100%;
 }
 
-section > h1 {
-  color: #FFF;
-  font-size: 2em;
-  left: 0;
-  margin: 0 10%;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  text-transform: uppercase;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  transform: translateY(-50%);
+#main_reviewZone_title {
+	height: 16%;
 }
 
-section > h1 > span {
-  display: block;
-  font-family: 'Cabin', cursive;
-  font-size: 16px;
-  font-style: italic;
-  font-weight: 400;
-  text-transform: none;
+#main_reviewZone_content {
+	height: 84%;
 }
 
-menu {
-  background: #FFF;
-  bottom: 0;
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  right: -400px;
-  top: 0;
-  width: 400px;
-  z-index: 1;
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+#main_reviewZone_content>div {
+	display: inline-block;
+	width: 30%;
+	height: 100%;
+	margin: auto;
 }
 
-menu .container {
-  height: 100%;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-  width: 258px;
-  -webkit-transform-origin: 0% 50% 0px;
-  -moz-transform-origin: 0% 50% 0px;
-  transform-origin: 0% 50% 0px;
-  -webkit-transform: matrix(0.8, 0, 0, 0.9, 40, 0);
-  -moz-transform: matrix(0.8, 0, 0, 0.9, 40, 0);
-  transform: matrix(0.8, 0, 0, 0.9, 40, 0);
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
+.main_reviewZone_paging {
+	width: 4% !important;
 }
 
-
-menu .box ul:nth-child(1) {
-  border-bottom: 3px solid;
+.main_reviewZone_thumbnail {
+	height: 59%;
 }
 
-menu .box ul {
-  padding: 10px 0;
-
+.main_reviewZone_spaceName, .main_reviewZone_star {
+	height: 10%;
 }
 
-menu ul li {
-  border-bottom: 1px solid #EDEDED;
-  display: block;
-  font-size: 15px;
-  font-weight: bold;
-  height: 45px;
-  letter-spacing: 0.12em;
-  line-height: 45px;
-  text-transform: uppercase;
+.main_reviewZone_reviewContent {
+	height: 20%;
 }
-
-menu ul:nth-child(2) li {
-  font-size: 10px;
-}
-
-menu ul:nth-child(2) li:last-child {
-  border-bottom: 1px solid #EDEDED;
-}
-
-menu ul:nth-child(3) li {
-  border: 0;
-  display: inline-block;
-}
-
-menu ul:nth-child(3) li > a {
-  border: 1px solid;
-  border-radius: 100%;
-  color: #898989;
-  display: block;
-  font-size: 22px;
-  height: 24px;
-  line-height: 24px;
-  margin: 2px 4px;
-  padding: 5px;
-  text-align: center;
-  width: 24px;
-}
-
-menu ul li:last-child {
-  border: 0;
-}
-
-html.active menu {
-  right: 0;
-  z-index: 999;
-}
-
-html.active menu .container {
-  -webkit-transform-origin: 0% 50% 0px;
-  -moz-transform-origin: 0% 50% 0px;
-  transform-origin: 0% 50% 0px;
-  -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
-  -moz-transform: matrix(1, 0, 0, 1, 0, 0);
-  transform: matrix(1, 0, 0, 1, 0, 0);
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
-}
-
-#menu {
-  cursor: pointer;
-  display: block;
-  font-size: 30px;
-  height: 40px;
-  line-height: 40px;
-  margin: 10px 20px;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  top: 0;
-  width: 40px;
-}
-
-@media only screen and (min-width: 520px) {
-  header .container {
-    max-width: 640px
-  }
-  header .box {
-    display: block;
-  }
-  section > h1 {
-    font-size: 3em
-  }
-}
-#search1{
-    transform: translateX( -20% );
-    font-size: 40px;
-    display: flex;
-    margin-top: 40px; 
-    border-radius: 10px;
-   
-}
-
-#profile{
-  font-size: 20px;
-  font-weight: bold;
-  height: 150px;
-  text-align: center;
-}
-
-a{
-  text-decoration: none;
-}
-
-.menubtn{
-  height: 150px;
-  background-color: #277BC0;
-  text-align: center;
-  font-size: 40px;
-  margin: auto;
-  border-collapse: separate;
-  border-spacing: 10px 20px;
-  color: white;
-
-}
-
- /* ---------- content ---------- */
-  #content {
-      height: 1050px;
-      display: flex;
-    }
-
-    /* #content > div {
-      height: 100%;
-    } */
-    #content_1 {
-      width: 15%;
-      float: left;
-      text-align: center;
-      /* margin-top: 150px; */
-    
-    }
-    #content_2 {
-      width: 70%;
-      height: 100%;
-      /* margin-top: 150px; */
-      text-align: center;
-    }
-    #content_3 {
-      width: 15%;
-      float: right;
-      text-align: center;
-      /* margin-top: 150px; */
-    
-    }
- 
-    li{
-  list-style-type: none;
-  }
-
-/*컨텐츠 슬라이드*/
-/* INPUT 가리기 */
-.section input[id*="slide"] {display:none;}
-
-/* 슬라이드 영역 - max-width 크기를 조절해주면 됩니다*/
-.section .slidewrap {max-width:1200px;margin:0 auto;overflow:hidden;}
-.section .slidelist {white-space:nowrap;font-size:0;}
-.section .slidelist > li {display:inline-block;vertical-align:middle;width:100%;transition:all .5s;}
-.section .slidelist > li > a {display:block;position:relative;}
-.section .slidelist > li > a img {width:100%;}
-
-/* 좌우로 넘기는 LABEL버튼에 대한 스타일 */
-.section .slidelist label {position:absolute;z-index:1;top:50%;transform:translateY(-50%);padding:30px;cursor:pointer;}
-.section .slidelist .left {left:30px;background:url('resources/images/left.png') center center / 100% no-repeat;}
-.section .slidelist .right {right:30px;background:url('resources/images/right.png') center center / 100% no-repeat;}
-
-/* INPUT 체크되면 변화값이 li까지 전달되는 스타일 */
-.section input[id="slide01"]:checked ~ .slidewrap .slidelist > li {transform:translateX(0%);}
-.section input[id="slide02"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-100%);}
-.section input[id="slide03"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-200%);}
-
-
-    /* ---------- footer ---------- */
-    #footer {
-      height: 225px;
-      background-color: #277BC0;
-      color: white;
-      padding-left: 20px;
-      padding-top: 25px;;
-    }
-    #footer>p {
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    #footer_etc {
-      padding: 10px;
-    }
-    #footer_etc a {
-      text-decoration: none;
-      color: white;
-    }
-
 </style>
 </head>
 <body>
+	<div class="wrap">
+		<jsp:include page="common/header.jsp" />
+		<div class="main">
+			<!--컨텐츠작성부분-->
+			<div id="main_display">
+				<!-- 옆으로 넘어가는 화면 (+ 몇 초 뒤 넘어가도록) -->
+				<div id="main_slide">
+					<div id="demo" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ul class="carousel-indicators">
+							<li data-target="#demo" data-slide-to="0" class="active"></li>
+							<li data-target="#demo" data-slide-to="1"></li>
+							<li data-target="#demo" data-slide-to="2"></li>
+							<li data-target="#demo" data-slide-to="3"></li>
+						</ul>
+						<!-- The slideshow -->
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<img src="resources/images/main/maintestpic1.png" alt="Los Angeles">
+							</div>
+							<div class="carousel-item">
+								<img src="resources/images/main/maintestpic2.png" alt="Chicago">
+							</div>
+							<div class="carousel-item">
+								<img src="resources/images/main/maintestpic3.png" alt="New York">
+							</div>
+							<div class="carousel-item">
+								<img src="resources/images/main/maintestpic4.png" alt="New York">
+							</div>
+						</div>
+						<!-- Left and right controls -->
+						<a class="carousel-control-prev" href="#demo" data-slide="prev">
+							<span class="carousel-control-prev-icon"></span>
+						</a> 
+						<a class="carousel-control-next" href="#demo" data-slide="next">
+							<span class="carousel-control-next-icon"></span>
+						</a>
+					</div>
+				</div>
+				
+				<!-- 카테고리 선택, 클릭 시 옆으로 넘어가도록 -->
+				<div id="main_categoryBar">
+					<div class="main_category_paging"></div>
+					<div id="main_category_1" class="main_category">
+						<input type="hidden" value=""/>
+					</div>
+					<div id="main_category_2" class="main_category">
+						<input type="hidden" value=""/>
+					</div>
+					<div id="main_category_3" class="main_category">
+						<input type="hidden" value=""/>
+					</div>
+					<div id="main_category_4" class="main_category">
+						<input type="hidden" value=""/>
+					</div>
+					<div id="main_category_5" class="main_category">
+						<input type="hidden" value=""/>
+					</div>
+					<div id="main_category_6" class="main_category">
+						<input type="hidden" value=""/>
+					</div>
+					<div id="main_category_7" class="main_category">
+						<input type="hidden" value=""/>
+					</div>
+					<div class="main_category_paging"></div>
+				</div>
+				
+				<script>
+					var category = document.querySelector(".main_category");
+					var categoryValue = category
+					$(function(category.click()){
+						location.href="list.bo?bno=" + this.fistchild.value;
+					})
+				</script>
+				
+				
+				
+				
+				<!-- 테마 -->
+				<div id="main_theme">
+					<table>
+						<tr>
+							<td>파티를 위한 공간</td>
+							<td>운동을 위한 공간</td>
+						</tr>
+						<tr>
+							<td>요리를 함께하기 위한 공간</td>
+							<td>연습공간</td>
+						</tr>
+					</table>
+				</div>
+				<!-- 오늘의 추천 공간 / onclick="location.href'링크'"로 페이지 이동 -->
+				<div id="main_recommend">
+					<div id="main_recommend_title">오늘의 추천 공간</div>
+					<div id="main_recommend_content">
+						<div class="main_recommend_paging"></div>
+						<div id="main_recommend_1">
+							<div class="main_recommend_thumbnail"></div>
+							<div class="main_recommend_spaceName"></div>
+							<div class="main_recommend_spacePrice"></div>
+						</div>
+						<div id="main_recommend_2">
+							<div class="main_recommend_thumbnail"></div>
+							<div class="main_recommend_spaceName"></div>
+							<div class="main_recommend_spacePrice"></div>
+						</div>
+						<div id="main_recommend_3">
+							<div class="main_recommend_thumbnail"></div>
+							<div class="main_recommend_spaceName"></div>
+							<div class="main_recommend_spacePrice"></div>
+						</div>
+						<div class="main_recommend_paging"></div>
+					</div>
+				</div>
 
-	<header>
-		<div class="container">
-			<span id="home"><a href=""><span href=""><img id="logoimg" src="resources/images/logo.png"></span>&nbsp;
-			<span style="margin-bottom: 30px;"><span style="color:#277BC0;">S</span><span>pace</span><span style="color: #FFB200;">T</span><span>ime</span></span></a></span>
-			  <span id="search1"><a href=""><i class="fa-solid fa-magnifying-glass" style="color: #FFB200;"></i></a>&nbsp;
-			  <input type="text" size="40" style="height: 50px" value="#해시태그"></span>
-			<span id="menu"><span class="ion-navicon-round"></span></span>
+				<script>
+					$(function() {
+						document.getElementBy
+					})
+				</script>
+				<!-- 리뷰 ZONE -->
+				<div id="main_reviewZone">
+					<div id="main_reviewZone_title">리뷰 ZONE</div>
+					<div id="main_reviewZone_content">
+						<div class="main_reviewZone_paging"></div>
+						<!-- 리뷰 동적으로 찍어낼 예정 (임의로 하드코딩)-->
+						<div id="main_reviewZone_1">
+							<div class="main_reviewZone_thumbnail"></div>
+							<div class="main_reviewZone_spaceName"></div>
+							<div class="main_reviewZone_star"></div>
+							<div class="main_reviewZone_reviewContent"></div>
+						</div>
+						<div id="main_reviewZone_2">
+							<div class="main_reviewZone_thumbnail"></div>
+							<div class="main_reviewZone_spaceName"></div>
+							<div class="main_reviewZone_star"></div>
+							<div class="main_reviewZone_reviewContent"></div>
+						</div>
+						<div id="main_reviewZone_3">
+							<div class="main_reviewZone_thumbnail"></div>
+							<div class="main_reviewZone_spaceName"></div>
+							<div class="main_reviewZone_star"></div>
+							<div class="main_reviewZone_reviewContent"></div>
+						</div>
+						<div class="main_reviewZone_paging"></div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</header>
-          
-      
-        <!--슬라이드메뉴-->
-        <menu>
-          <div style="background-color:#FFB200;" id="profile">
-              <table style="margin-left: 30px;" cellpadding="10" cellspacing="10" >
-                  <tr>
-                      <td rowspan="2">
-                        <div style="margin-top: 30px;"><img src="resources/images/profile.png"></div>
-                      </td>
-                      <td width="100px;"><p style="margin-top: 30px;">고양이님</p></td>
-                  </tr>
-                  <tr>
-                      <td width="190px;"><a href="">프로필 관리 및 수정</a></td>
-                  </tr>
-              </table>
-          </div>    
-          <span id="close-menu"><span class="ion-close-round"></span></span>
-          <div class="menubtn">
-            <table style="margin-left: 60px;" cellpadding="10" cellspacing="20" >
-              <tr>
-                <td><a href=""><i class="fa-solid fa-person-walking-luggage"></i></a></td>
-                <td><a href=""><i class="fa-solid fa-user-pen"></i></a></td>
-                <td><a href=""><i class="fa-solid fa-heart"></i></a></td>
-              </tr>
-              <tr style="font-size: 15px;">
-                <td><a href="">예약내역</a></td>
-                <td><a href="">리뷰내역</a></td>
-                <td><a href="">찜한내역</a></td>
-              </tr>
-            </table>
-          </div>
-          <div class="container">
-            <div class="box">
-              <ul>
-                <li><a href="#">홈으로</a></li>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">뉴스레터</a></li>
-                <li><a href="#">서비스정보</a></li>
-              </ul>
-              <ul>
-                <li><a href="#">Promotions</a></li>
-                <li><a href="#">Log In</a> | <a href="#">Register</a></li>
-              </ul>
-              <div class="sign-up">
-                <a href="#">호스트신청하기<span class="ion-arrow-right-c"></span></a>
-              </div>
-            </div>
-          </div>
-        </menu>
-    
-        <div id="content">
-          <!--바디-->
-          <div id="content_1">왼쪽여백</div>
+		<!-- main -->
 
-  <!--컨텐츠작성부분-->
-  <div id="content_2">
-    <div class="section">
-      <input type="radio" name="slide" id="slide01" checked>
-      <input type="radio" name="slide" id="slide02">
-      <input type="radio" name="slide" id="slide03">
-  
-      <div class="slidewrap">
-        <ul class="slidelist">
-          <li>
-            <a>
-              <label for="slide03" class="left"></label>
-              <img src="resources/images/img1.png">
-              <label for="slide02" class="right"></label>
-            </a>
-          </li>
-          <li>
-            <a>
-              <label for="slide01" class="left"></label>
-              <img src="resources/images/img2.png">
-              <label for="slide03" class="right"></label>
-            </a>
-          </li>
-          <li>
-            <a>
-              <label for="slide02" class="left"></label>
-              <img src="resources/images/profile.png">
-              <label for="slide01" class="right"></label>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-
-
-          <div id="content_3">오른쪽여백</div>
-        </div>
-
-
-        <!--푸터-->
-        <div id="footer">
-          <div id="footer_etc">
-              <a href="" >개인정보처리방침</a> |
-              <a href="" >이용약관</a>
-          </div>
-          <p>
-            Spac Time.<br />
-            서울특별시 영등포구 선유동2로 57 <br /><br />
-
-            Tel 1544-9970<br />
-
-            © 2022 Space Time All right reserved.
-          </p>
-        </div>
-
-      <!--사이드메뉴-->
-      <script>
-        $(function() {
-
-        var w = $(window).width(),
-        h = $(window).height();
-        //$('section').width(w);
-        $('section').height(h);
-        $('menu .container').height(h - 60);
-        $('body').prepend('<div id="overlay">');
-
-        $('#menu').click(function() {$('html').addClass('active');});
-        $('#close-menu').click(function() {$('html').removeClass('active');});
-        $('#overlay').click(function() {$('html').removeClass('active');});
-        $(window).resize(function() {
-        var w = $(window).width(),
-            h = $(window).height();
-        //$('section').width(w);
-        $('section').height(h);
-        $('menu .container').height(h - 60);
-        });
-
-        });
-
-      </script>
-
+		<jsp:include page="common/footer.jsp" />
+	</div>
 </body>
 </html>
