@@ -7,7 +7,7 @@ import com.kh.spacetime.board.model.service.NewsletterService;
 
 @Controller
 public class NewsletterController {
-	//20221201 테스트 -신희섭 
+	//20221201 테스트 - 혜민  
 	@Autowired
 	private NewsletterService newsletterService;
 }
