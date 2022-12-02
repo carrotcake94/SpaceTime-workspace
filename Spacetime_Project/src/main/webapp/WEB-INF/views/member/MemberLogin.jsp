@@ -87,7 +87,7 @@
                     <input id="memPwd" class="form-control" name="memPwd" type="password" placeholder="비밀번호">
 
                     <div class="memory_box">
-                        <div stlye="float:left;">
+                        <div style="float:left;">
                             <input id="memory" type="checkbox"><label for="memory">아이디 기억하기</label>
                         </div>
                         <div style="float:right;">
@@ -99,7 +99,6 @@
                     <br clear="both">
                     <button type="submit">로그인</button>
                 </div>
-
 
                 <p class="no_mem" align="center"> 아직 스페이스타임 회원이 아니신가요?
                     <a href="/auth/signup" class="">회원가입</a>
