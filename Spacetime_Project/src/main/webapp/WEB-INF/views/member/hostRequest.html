@@ -1,0 +1,110 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SpaceTime</title>
+<!-- 헤더에서 제이쿼리등 임포트하기 떄문에 여기에 스크립트나 링크 가져올 필요없다. -->
+
+<!--부트-->
+<title>Bootstrap Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+<body>
+	<div class="wrap">
+		<jsp:include page="common/header.jsp" />
+	<div class="main">
+		<div class="container">
+			<div class="container">
+							  
+				<!-- Button to Open the Modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				  호스트신청하기
+				</button>
+			  
+				<!-- The Modal -->
+				<div class="modal fade" id="myModal">
+				  <div class="modal-dialog">
+						<div class="modal-content">
+						
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">정산정보입력</h4>
+								
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					  
+					  <!-- Modal body -->
+					  <div class="modal-body">
+						
+						<h5>은행명</h5>
+							<div class="dropdown">
+								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+								은행선택
+								</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="">광주은행</a>
+									<a class="dropdown-item" href="">신한은행</a>
+									<a class="dropdown-item" href="">수협은행</a>
+									<a class="dropdown-item" href="">새마을금고</a>
+									<a class="dropdown-item" href="">씨티은행</a>
+									<a class="dropdown-item" href="">우리은행</a>
+									<a class="dropdown-item" href="">우체국</a>
+									<a class="dropdown-item" href="">카카오뱅크</a>
+									<a class="dropdown-item" href="">케이뱅크</a>
+									<a class="dropdown-item" href="">한국산업은행</a>
+								</div>
+							
+								<br><br>
+								<div class="container1">
+									<h5>계좌번호</h5>
+									<form action="/action_page.php">
+									  <div class="form-group">
+										<input type="text" class="form-control" placeholder="계좌번호 입력(- 제외)" name="text1" style="width: 190px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+									  </div>
+									</form>
+								</div>
+								<div class="container2" id="container2-1">
+									<h5>예금주</h5>
+									<form action="/action_page.php">
+									  <div class="form-group" >
+										<input id="test2" type="text" class="form-control"placeholder="실명(예금주명)만 입력" name="text1" style="width: 190px;" onkeyup="chk_han('test2')"/>
+									  </div>
+									</form>
+								</div>	
+							</div>
+				  		</div>
+					  
+					  <!-- Modal footer -->
+					  <div class="modal-footer" align="right" id="">
+						<button type="submit" class="btn" data-dismiss="modal" style="background-color: lightgray;" >확인</button>
+						<button type="button" class="btn" data-dismiss="modal" style="background-color:  lightgray;">취소</button>
+						
+					  </div>
+					  
+					</div>
+				  </div>
+				</div>
+			</div>
+			
+			<!--예금주 한글 입력 유도-->
+			<script>
+				function chk_han(test2) {
+					var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+					var value = $("#"+test2).val();
+					if (regexp.test(value)) {
+						$("#"+test2).val(value.replace(regexp, ''));
+						alert ("한글만 입력이 가능합니다.");
+					}
+				}
+			</script>
+			
+		<jsp:include page="common/footer.jsp" />
+  	</div>
+</body>
+</html>
