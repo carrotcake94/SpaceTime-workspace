@@ -399,6 +399,22 @@
         <div id="m_search_btn">
             <i class="fa fa-search" aria-hidden="true"></i>
         </div>
+        
+        <script>
+        	var searchBtn = document.querySelector("#m_search_btn");
+        	console.log(searchBtn);
+        	
+        	document.querySelector("#m_search_btn").onclick = () => {
+        		location.href = "searchSpaceList.sp";
+        	}
+        	 /* 
+           	$(function() {
+           		searchBtn.onclick(() => {
+           			location.href = "searchSpaceList.sp";
+           		});
+           	}); */
+           </script>
+        
         <div id="m_search_bar">
             <input type="search" name="keyword">
         </div>

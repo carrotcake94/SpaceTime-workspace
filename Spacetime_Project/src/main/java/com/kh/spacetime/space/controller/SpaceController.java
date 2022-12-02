@@ -40,5 +40,22 @@ public class SpaceController {
 
 	}
 	
+	/*공간조회용*/
+	@RequestMapping("searchSpaceList.sp")
+	public String selectSpaceList() {
+		return "space/searchSpace";
+	}
+	
+	/*공간조회 - 게시판형식으로 정렬*/
+	@RequestMapping("sortLineList.sp")
+	public void sortLineList() {
+		
+	}
+	
+	/*공간조회 - 사진형식으로 정렬*/
+	@RequestMapping("sortPicList.sp")
+	public void sortPicList() {
+		
+	}
 
 }
