@@ -40,6 +40,12 @@ public class SpaceController {
 
 	}
 	
+	/*호스트 이용후기 관리*/
+	@RequestMapping("hostRevList.sp")
+	public String selectHostReviewList() {
+		return "space/hostReviewList";
+	}
+	
 	/*공간조회용*/
 	@RequestMapping("searchSpaceList.sp")
 	public String selectSpaceList() {
