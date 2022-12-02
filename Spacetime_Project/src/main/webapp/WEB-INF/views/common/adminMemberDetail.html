@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 관리</title>
+    <title>회원 상세조회</title>
     <!-- jquery 온라인 방식 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
@@ -41,7 +41,7 @@
         margin: auto;
         min-width: 1000px;
         height: 100%;
-        min-height: 940px;
+        min-height: 840px;
         background-color: rgba(128, 128, 128, 0.1);
     }
 
@@ -52,6 +52,7 @@
         border-radius: 10px;
         margin: auto;
         margin-top: 100px;
+        margin-bottom: 100px;
         padding: 25px 0px 25px 0px;
         width: 35%;
         width: 650px;
@@ -89,8 +90,8 @@
     /* 프로필 정보 영역 */
     #mem_detail th, #mem_detail td { height: 50px; }
     #mem_detail {
-        border-bottom: 1px solid lightgray;
-        border-top: 1px solid lightgray;
+        border-bottom: 2px solid lightgray;
+        border-top: 2px solid lightgray;
         width: 100%; 
     }
     
@@ -200,30 +201,31 @@
                 </div>
                 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <table>
-                        <tr>
-                            <th style="width:25%;">프로필 사진</th>
-                            <td><img src="../../../resources/images/profile_default.png" class="mem_img photo"></td>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <td style="height:50px;"><input type="file"></td>
-                        </tr>
-                        <tr>
-                            <th>닉네임</th>
-                            <td><input type="text" class="form-control mb-2" value="김철수닉네임"></td>
-                            <!-- 닉네임 중복확인은 ajax 로!!!! -->
-                        </tr>
-                    </table>
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
-                <!-- 수정이 잘 되면 alert 창 띄우기! -->
-                </div>
-                
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <th style="width:25%;">프로필 사진</th>
+                                <td><img src="../../../resources/images/profile_default.png" class="mem_img photo"></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td style="height:70px;"><input type="file"></td>
+                            </tr>
+                            <tr>
+                                <th>닉네임</th>
+                                <td><input type="text" class="form-control mb-2" value="김철수닉네임"></td>
+                                <!-- 닉네임 중복확인은 ajax 로!!!! -->
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -240,24 +242,25 @@
                 </div>
                 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <table>
-                        <tr>
-                            <th style="width:20%;">연락처</th>
-                            <td><input type="text" class="form-control mb-2 phone">
-                                &nbsp;-&nbsp;<input type="text" class="form-control mb-2 phone">
-                                &nbsp;-&nbsp;<input type="text" class="form-control mb-2 phone">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
-                <!-- 수정이 잘 되면 alert 창 띄우기! -->
-                </div>
-                
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <th style="width:20%;">연락처</th>
+                                <td><input type="text" class="form-control mb-2 phone">
+                                    &nbsp;-&nbsp;<input type="text" class="form-control mb-2 phone">
+                                    &nbsp;-&nbsp;<input type="text" class="form-control mb-2 phone">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -274,29 +277,30 @@
                 </div>
                 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <table>
-                        <tr>
-                            <th style="width:40%;">현재 비밀번호</th>
-                            <td><input type="password" class="form-control mb-2"></td>
-                        </tr>
-                        <tr>
-                            <th>새 비밀번호</th>
-                            <td><input type="password" class="form-control mb-2"></td>
-                        </tr>
-                        <tr>
-                            <th>새 비밀번호 확인</th>
-                            <td><input type="password" class="form-control mb-2"></td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
-                <!-- 수정이 잘 되면 alert 창 띄우기! -->
-                </div>
-                
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <th style="width:40%;">현재 비밀번호</th>
+                                <td><input type="password" class="form-control mb-2"></td>
+                            </tr>
+                            <tr>
+                                <th>새 비밀번호</th>
+                                <td><input type="password" class="form-control mb-2"></td>
+                            </tr>
+                            <tr>
+                                <th>새 비밀번호 확인</th>
+                                <td><input type="password" class="form-control mb-2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -313,35 +317,51 @@
                 </div>
                 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <table>
-                        <tr>
-                            <th style="width:30%;">은행명</th>
-                            <<td>
-                                <select name="" class="select_category form-control mb-2">
-                                    <option value="All" selected>은행명</option>
-                                    <option value="">KB국민은행</option>
-                                    <option value=""></option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>계좌번호</th>
-                            <td><input type="text" class="form-control mb-2" placeholder="- 없이 숫자만 입력"></td>
-                        </tr>
-                        <tr>
-                            <th>예금주명</th>
-                            <td><input type="text" class="form-control mb-2"></td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
-                <!-- 수정이 잘 되면 alert 창 띄우기! -->
-                </div>
-                
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <th style="width:30%;">은행명</th>
+                                <td>
+                                    <select name="" class="select_category form-control mb-2">
+                                        <option value="All" selected>은행명</option>
+                                        <option value="">KB국민은행</option>
+                                        <option value="">신한은행</option>
+                                        <option value="">IBK기업은행</option>
+                                        <option value="">우리은행</option>
+                                        <option value="">KEB하나은행</option>
+                                        <option value="">SC제일은행</option>
+                                        <option value="">NH농협</option>
+                                        <option value="">새마을금고</option>
+                                        <option value="">씨티은행</option>
+                                        <option value="">한국산업은행</option>
+                                        <option value="">케이뱅크</option>
+                                        <option value="">카카오뱅크</option>
+                                        <option value="">우체국</option>
+                                        <option value="">수협은행</option>
+                                        <option value="">KDB산업은행</option>
+                                        <option value="">광주은행</option>
+                                        <option value="">부산은행</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>계좌번호</th>
+                                <td><input type="text" class="form-control mb-2" placeholder="- 없이 숫자만 입력"></td>
+                            </tr>
+                            <tr>
+                                <th>예금주명</th>
+                                <td><input type="text" class="form-control mb-2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                    </div>
+                </form>
             </div>
         </div>
     </div>
