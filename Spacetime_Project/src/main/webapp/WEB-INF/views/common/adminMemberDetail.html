@@ -28,6 +28,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <!-- 나눔스퀘어 폰트 -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 <style>
 
@@ -39,7 +41,7 @@
         margin: auto;
         min-width: 1000px;
         height: 100%;
-        min-height: 900px;
+        min-height: 940px;
         background-color: rgba(128, 128, 128, 0.1);
     }
 
@@ -92,7 +94,6 @@
         width: 100%; 
     }
     
-    
     /* 비밀번호 변경, 운영공간, 운영공간 더보기 링크 ------------------------------------------------- 색 나중에 바꾸기 */
     .changePwd, .space, .showmore { color: green; }
 
@@ -108,6 +109,12 @@
     .showmore:hover, .changePwd:hover, .space:hover, .delete:hover {
         text-decoration: none;
         cursor: pointer;
+    }
+
+    /* 연락처 변경 모달창 */
+    .modal-body .phone { 
+        display: inline-block; 
+        width: 100px;
     }
 
 </style>
@@ -141,12 +148,12 @@
                         </tr>
                         <tr>
                             <th>이메일</th> 
-                            <td>kcs123456@gmail.com</td>
-                            <td align="right"><button class="btn btn-sm btn-outline-primary">인증하기</button></td>
+                            <td colspan="2">kcs123456@gmail.com</td>
                         </tr> 
                         <tr>
                             <th>연락처</th>
-                            <td colspan="2">010-1234-5678</td>
+                            <td>010-1234-5678</td>
+                            <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editPhone">변경하기</button></td>
                         </tr>
                         <tr>
                             <th>가입일</th>
@@ -188,7 +195,7 @@
             
                 <!-- Modal Header -->
                 <div class="modal-header">
-                <h4 class="modal-title">프로필 수정</h4>
+                <h4 class="modal-title">프로필 변경</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
@@ -213,7 +220,7 @@
                 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">수정</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
                 <!-- 수정이 잘 되면 alert 창 띄우기! -->
                 </div>
                 
@@ -221,6 +228,39 @@
         </div>
     </div>
 
+    <!-- 연락처 수정 모달창 -->
+    <div class="modal fade" id="editPhone">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">연락처 변경</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <th style="width:20%;">연락처</th>
+                            <td><input type="text" class="form-control mb-2 phone">
+                                &nbsp;-&nbsp;<input type="text" class="form-control mb-2 phone">
+                                &nbsp;-&nbsp;<input type="text" class="form-control mb-2 phone">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
+                <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
 
     <!-- 비밀번호 수정 모달창 -->
     <div class="modal fade" id="editPwd">
@@ -229,7 +269,7 @@
             
                 <!-- Modal Header -->
                 <div class="modal-header">
-                <h4 class="modal-title">비밀번호 수정</h4>
+                <h4 class="modal-title">비밀번호 변경</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
@@ -253,7 +293,7 @@
                 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">수정</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
                 <!-- 수정이 잘 되면 alert 창 띄우기! -->
                 </div>
                 
@@ -268,7 +308,7 @@
             
                 <!-- Modal Header -->
                 <div class="modal-header">
-                <h4 class="modal-title">계좌 정보 수정</h4>
+                <h4 class="modal-title">계좌 정보 변경</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 
@@ -281,7 +321,7 @@
                         </tr>
                         <tr>
                             <th>계좌번호</th>
-                            <td><input type="password" class="form-control mb-2"></td>
+                            <td><input type="password" class="form-control mb-2" placeholder="- 없이 숫자만 입력"></td>
                         </tr>
                         <tr>
                             <th>예금주명</th>
@@ -292,7 +332,7 @@
                 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">수정</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">변경</button>
                 <!-- 수정이 잘 되면 alert 창 띄우기! -->
                 </div>
                 
