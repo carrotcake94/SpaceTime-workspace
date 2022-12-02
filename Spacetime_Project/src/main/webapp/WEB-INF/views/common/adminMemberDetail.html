@@ -120,12 +120,15 @@
         <div id="memProfile">
             <div id="profile">
                 
+                <!-- 프로필 사진, 닉네임 -->
                 <div class="mem_info" align="center">
                     <img src="../../../resources/images/profile_default.png" class="mem_img photo">
-                    <span class="memEdit"><a class="mamEdit"><i class="fa-solid fa-pencil"></i></a></span>
+                    <span class="memEdit"><a class="mamEdit" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pencil"></i></a></span>
                     <br>
                     <div style="height:30px;"><b>김철수닉네임</b>&nbsp;&nbsp;<span id="memGrade">회원등급</span></div>
                 </div>
+
+                <!-- 프로필 정보 -->
                 <div class="mem_info">
                     <table id="mem_detail"> 
                         <tr>
@@ -151,13 +154,14 @@
                         </tr> 
                         <tr>
                             <th>비밀번호</th> 
-                            <td colspan="2"><a class="changePwd">변경하기</a></td>
+                            <td colspan="2"><a class="changePwd" data-toggle="modal" data-target="#editPwd">변경하기</a></td>
                         </tr> 
+
                         <!-- ===================================== 호스트만 보이기 ===================================== -->
                         <tr>
                             <th>정산 계좌</th>
                             <td>은행명 계좌번호 예금주이름</td>
-                            <td align="right"><button class="btn btn-sm btn-outline-primary">변경하기</button></td>
+                            <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editAccount">변경하기</button></td>
                         </tr>
                         <tr>
                             <th>운영공간</th> 
@@ -172,6 +176,125 @@
                 </div> 
                     
                 <div class="mem_info delete"><a href="" class="delete">서비스 탈퇴하기</a></div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- 프사, 닉네임 수정 모달창 -->
+    <div class="modal fade" id="editModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">프로필 수정</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <th style="width:25%;">프로필 사진</th>
+                            <td><img src="../../../resources/images/profile_default.png" class="mem_img photo"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td style="height:50px;"><input type="file"></td>
+                        </tr>
+                        <tr>
+                            <th>닉네임</th>
+                            <td><input type="text" class="form-control mb-2" value="김철수닉네임"></td>
+                            <!-- 닉네임 중복확인은 ajax 로!!!! -->
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">수정</button>
+                <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 비밀번호 수정 모달창 -->
+    <div class="modal fade" id="editPwd">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">비밀번호 수정</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <th style="width:40%;">현재 비밀번호</th>
+                            <td><input type="password" class="form-control mb-2"></td>
+                        </tr>
+                        <tr>
+                            <th>새 비밀번호</th>
+                            <td><input type="password" class="form-control mb-2"></td>
+                        </tr>
+                        <tr>
+                            <th>새 비밀번호 확인</th>
+                            <td><input type="password" class="form-control mb-2"></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">수정</button>
+                <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- 정산계좌정보 수정 모달창 -->
+    <div class="modal fade" id="editAccount">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">계좌 정보 수정</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <th style="width:30%;">은행명</th>
+                            <td><input type="password" class="form-control mb-2"></td>
+                        </tr>
+                        <tr>
+                            <th>계좌번호</th>
+                            <td><input type="password" class="form-control mb-2"></td>
+                        </tr>
+                        <tr>
+                            <th>예금주명</th>
+                            <td><input type="password" class="form-control mb-2"></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">수정</button>
+                <!-- 수정이 잘 되면 alert 창 띄우기! -->
+                </div>
                 
             </div>
         </div>
