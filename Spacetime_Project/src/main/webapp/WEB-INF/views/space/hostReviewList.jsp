@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>SpaceTime</title>
-<style>
+ <style>
       body * {
         box-sizing: border-box;
       }
@@ -42,10 +42,9 @@
 
       #revListSearchForm input {
         float: left;
-        width: 50%;
+        width: 27%;
         height: 50px;
         padding: 0 10px;
-        margin-right: 5%;
         outline: none;
         border: 1px solid lightgray;
         border-radius: 5px;
@@ -63,43 +62,17 @@
       }
 
       /* select box*/
-
-      #theme {
-        display: inline-block;
-        box-sizing: border-box;
-        width: 170px;
-      }
-
-      .spc-select {
-        position: relative;
-        border-radius: 5px;
-        padding: 12px 15px;
-        height: 50px;
-
-        cursor: pointer;
-        border: 1px solid rgb(204, 204, 204);
-        background: url("selectarrow.png") calc(100% - 5px) center no-repeat;
-        background-size: 20px;
-        box-sizing: border-box;
-      }
-
-      .rev-select {
-        position: relative;
-        border-radius: 5px;
-        padding: 12px 15px;
-        height: 50px;
-
-        cursor: pointer;
-        border: 1px solid rgb(204, 204, 204);
-        background: url("selectarrow.png") calc(100% - 5px) center no-repeat;
-        background-size: 20px;
-        box-sizing: border-box;
-      }
-
+      #theme1,
       #theme2 {
-        display: inline-block;
+        float: left;
         box-sizing: border-box;
-        width: 170px;
+        width: 230px;
+        margin-right: 3%;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      #theme2 {
+        width: 120px;
       }
 
       .rev-select {
@@ -137,6 +110,8 @@
 
       .option {
         padding: 10px 15px;
+        font-size: 11px;
+        font-weight: 500;
       }
 
       .option:hover {
@@ -339,35 +314,36 @@
 <div class="wrap">		
 	<jsp:include page="../common/header.jsp" />
 	<div class="main">
-		<div id="spReviewDiv">
+	<div id="spReviewDiv">
       <div class="space-main-title">이용 후기 관리</div>
       <hr />
       <form action="" method="get" id="revListSearchForm">
-        <input
-          type="search"
-          name="keyword"
-          placeholder="예약번호 또는 예약자명"
-        />
-        <section id="theme">
-          <div class="spc-select">
+        <section id="theme1">
+          <div class="rev-select">
             <div class="text">공간 전체</div>
             <ul class="option-list">
-              <li class="option">전체</li>
-              <li class="option">답글있음</li>
-              <li class="option">답글없음</li>
+              <li class="option">공간 전체</li>
+              <li class="option">당산 아리오 파티룸</li>
+              <li class="option">강남 헬리오 클럽</li>
+              <li class="option">합정 스터디베스트리움 카페</li>
             </ul>
           </div>
         </section>
         <section id="theme2">
           <div class="rev-select">
-            <div class="text">전체</div>
+            <div class="text">답글 상태</div>
             <ul class="option-list">
-              <li class="option">전체</li>
+              <li class="option">답글 전체</li>
               <li class="option">답글있음</li>
               <li class="option">답글없음</li>
             </ul>
           </div>
         </section>
+        <input
+          type="search"
+          name="keyword"
+          placeholder="예약번호 또는 예약자명"
+        />
 
         <button type="submit" onclick="">검색</button>
       </form>
@@ -548,6 +524,7 @@
       }
     </script>
 	</div>
+	
 	<jsp:include page="../common/footer.jsp" />
 </div>
 </body>
