@@ -31,11 +31,13 @@
 
 #main_display>div {
 	width: 100%;
-	margin: 30px 0px 30px 0px;
+	margin: 70px 0px 70px 0px;
 }
 
 #main_slide {
+	width : 100%;
 	height: 500px;
+	margin-bottom: 70px;
 }
 
 #main_categoryBar {
@@ -152,7 +154,6 @@
 		<jsp:include page="common/header.jsp" />
 		<div class="main">
 			<!--컨텐츠작성부분-->
-			<div id="main_display">
 				<!-- 옆으로 넘어가는 화면 (+ 몇 초 뒤 넘어가도록) -->
 				<div id="main_slide">
 					<div id="demo" class="carousel slide" data-ride="carousel">
@@ -187,6 +188,7 @@
 						</a>
 					</div>
 				</div>
+			<div id="main_display">
 				
 				<!-- 카테고리 선택, 클릭 시 옆으로 넘어가도록 -->
 				<div id="main_categoryBar">
