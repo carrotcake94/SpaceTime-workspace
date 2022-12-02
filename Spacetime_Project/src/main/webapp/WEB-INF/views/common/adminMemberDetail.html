@@ -32,6 +32,7 @@
 <style>
 
     body { font-family: 'NanumSquare', sans-serif;}
+
     /* content 영역 */
     #content {
         border: 1px solid red;
@@ -39,14 +40,17 @@
         min-width: 1000px;
         height: 100%;
         min-height: 900px;
+        background-color: rgba(128, 128, 128, 0.1);
     }
 
     /* 회원 상세조회 전체 영역 */
     #memProfile {
-        border: 3px solid rgba(128, 128, 128, 0.2);
+        /* border: 3px solid rgba(128, 128, 128, 0.2); */
+        background-color: white;
         border-radius: 10px;
         margin: auto;
         margin-top: 100px;
+        padding: 25px 0px 25px 0px;
         width: 35%;
         width: 650px;
         min-height: 570px;
@@ -70,12 +74,8 @@
     }
 
     /* 프로필사진, 닉네임 변경 아이콘 */
-    .memEdit {
-        vertical-align: -120%;
-    }
-    .memEdit:hover {
-        cursor: pointer;
-    }
+    .memEdit { vertical-align: -120%; }
+    .memEdit:hover { cursor: pointer; }
 
     /* 회원등급.. 일단 border 줘서 구분해줬는데.. 어떻게 할지... */
     #memGrade { 
@@ -84,16 +84,20 @@
         padding: 5px;
     }
 
-    /* 프로필 정보영역 */
-    #mem_detail { width: 100%; }
+    /* 프로필 정보 영역 */
     #mem_detail th, #mem_detail td { height: 50px; }
-    
-    /* 비밀번호 변경, 운영공간 링크 */
-    .changePwd, .space {
-        text-decoration: none;
-        cursor: pointer;
-        color: green; /* 색 나중에 바꾸기 */
+    #mem_detail {
+        border-bottom: 1px solid lightgray;
+        border-top: 1px solid lightgray;
+        width: 100%; 
     }
+    
+    
+    /* 비밀번호 변경, 운영공간, 운영공간 더보기 링크 ------------------------------------------------- 색 나중에 바꾸기 */
+    .changePwd, .space, .showmore { color: green; }
+
+    /* 운영공간이름 위아래 여백 */
+    div.space { padding: 5px; }
 
     /* 탈퇴하기 */
     .delete { 
@@ -101,17 +105,9 @@
         text-align: right;
         color: darkgray;
     }
-    .changePwd:hover, .space:hover, .delete:hover {
+    .showmore:hover, .changePwd:hover, .space:hover, .delete:hover {
         text-decoration: none;
         cursor: pointer;
-    }
-
-    td.space { 
-        border: 1px solid red;
-        vertical-align: center;
-    }
-    ul.space {
-        border: 1px solid blue;
     }
 
 </style>
@@ -125,7 +121,7 @@
             <div id="profile">
                 
                 <div class="mem_info" align="center">
-                    <img src="../../../resources/images/logo.png" class="mem_img photo">
+                    <img src="../../../resources/images/profile_default.png" class="mem_img photo">
                     <span class="memEdit"><a class="mamEdit"><i class="fa-solid fa-pencil"></i></a></span>
                     <br>
                     <div style="height:30px;"><b>김철수닉네임</b>&nbsp;&nbsp;<span id="memGrade">회원등급</span></div>
@@ -157,7 +153,7 @@
                             <th>비밀번호</th> 
                             <td colspan="2"><a class="changePwd">변경하기</a></td>
                         </tr> 
-                        <!-- 호스트만 보이기 -->
+                        <!-- ===================================== 호스트만 보이기 ===================================== -->
                         <tr>
                             <th>정산 계좌</th>
                             <td>은행명 계좌번호 예금주이름</td>
@@ -166,13 +162,12 @@
                         <tr>
                             <th>운영공간</th> 
                             <td class="space">
-                                <ul class="space">
-                                    <li><a href="#" class="space">운영공간이름 1</a></li> 
-                                    <li><a href="#" class="space">운영공간이름 2</a></li>
-                                </ul>
+                                <div class="space"><a href="#" class="space">운영공간이름 1</a></div> 
+                                <div class="space"><a href="#" class="space">운영공간이름 2</a></div>
                             </td>
-                            <td align="right"><a href="">더보기</a></td>
+                            <td align="right"><a href="" class="showmore">더보기</a></td>
                         </tr>
+                        <!-- ===================================== 호스트만 보이기 ===================================== -->
                     </table>
                 </div> 
                     
