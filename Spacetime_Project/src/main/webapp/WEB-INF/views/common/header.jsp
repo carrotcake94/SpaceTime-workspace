@@ -23,12 +23,12 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- font awesome icon css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-    <!--아이콘-->
+	<!--아이콘-->
     <script src="https://kit.fontawesome.com/c7bfbb0e5b.js" crossorigin="anonymous"></script>
     <link rel='stylesheet' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+
+    <!-- font awesome icon css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,6 +98,7 @@
 
         #home_btn>span {
             line-height: 78px;
+            cursor:pointer;
         }
 
         #m_search_btn {
@@ -390,7 +391,7 @@
 <body>
 	<!--헤더-->
     <div class="header">
-        <div id="logo"><img src="resources/images/logo.png"></div>
+        <div id="logo"><img src="resources/images/logo.png" ></div>
 
         <div id="home_btn">
             <span style="color:#277BC0;">S</span><span>pace</span><span
@@ -477,6 +478,13 @@
     </div>
 	<script>
         $(function () {
+          $("#logo").click(function() {    			
+     			location.href = "/spacetime";
+     	  });
+          $("#home_btn span").click(function() {    			
+    			location.href = "/spacetime";
+    	  });
+        	
           $("#menu_btn>i").click(function () {
             //버튼 클릭 시
             $("#main-slidemenu").addClass("slideon");
@@ -492,6 +500,7 @@
           });
         });
      </script>
+
 
 </body>
 </body>

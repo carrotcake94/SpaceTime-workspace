@@ -16,7 +16,7 @@ public class SpaceController {
 	private SpaceService spaceService;
 
 
-	
+	/*호스트 공간 등록 폼*/
 	@RequestMapping("enrollForm.sp")
 	public String spaceEnrollForm() {
 
