@@ -83,7 +83,7 @@
 
         cursor: pointer;
         border: 1px solid rgb(204, 204, 204);
-        background: url("selectarrow.png") calc(100% - 5px) center no-repeat;
+        background: url("resources/images/reserve/selectarrow.png") calc(100% - 5px) center no-repeat;
         background-size: 20px;
         box-sizing: border-box;
       }
@@ -110,7 +110,7 @@
 
       .option {
         padding: 10px 15px;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 500;
       }
 
@@ -276,8 +276,14 @@
         margin-top: 200px;
       }
 
+	  #reviewImgModal .modal-body {
+	    margin: 0 auto;
+	    padding: 10px 0;
+	  }
+
       #reviewImgModal img {
-        width: 100%;
+        width: 600px;
+        height: 450px;
       }
 
       #reviewImgModal .img_btn_area {
@@ -347,7 +353,7 @@
 
         <button type="submit" onclick="">검색</button>
       </form>
-      <div class="review-area">
+      <div class="review-area" id="review1">
         <div class="rtitle">예약번호<span>★★★★★</span></div>
         <div class="rwriter">제임스 - 아리오 파티룸</div>
         <div class="rcontent-area">
@@ -358,13 +364,13 @@
           <div class="rcontent-img-area">
             <div>
               <div>
-                <img src="resources/images/space/space/166916214.jpg" alt="" />
+                <img class="img1" src="resources/images/space/space/166916214.jpg" alt="" />
               </div>
               <div>
-                <img src="resources/images/space/space/166028842.jpg" alt="" />
+                <img class="img2" src="resources/images/space/space/166028842.jpg" alt="" />
               </div>
               <div>
-                <img src="resources/images/space/space/166916214.jpg" alt="" />
+                <img class="img3" src="resources/images/space/space/166916214.jpg" alt="" />
               </div>
             </div>
           </div>
@@ -386,7 +392,7 @@
           <button>등록</button>
         </div>
       </div>
-      <div class="review-area">
+      <div class="review-area" id="review2">
         <div class="rtitle">예약번호<span>★★★★</span></div>
         <div class="rwriter">필란 - 당산 할리오</div>
         <div class="rcontent-area">
@@ -396,13 +402,10 @@
           <div class="rcontent-img-area">
             <div>
               <div>
-                <img src="resources/images/space/space/166916214.jpg" alt="" />
+                <img class="img1" src="resources/images/space/space/166916214.jpg" alt="" />
               </div>
               <div>
-                <img src="resources/images/space/space/166028842.jpg" alt="" />
-              </div>
-              <div>
-                <img src="resources/images/space/space/166916214.jpg" alt="" />
+                <img class="img2" src="resources/images/space/space/166028842.jpg" alt="" />
               </div>
             </div>
           </div>
@@ -468,61 +471,71 @@
     </div>
 
     <script>
-      $(function () {
-        <!-- 셀렉트 컨트롤 -->
-        $(".rev-select").click(function () {
-          if ($(this).hasClass("active") == false) {
-            $(this).addClass("active");
-            $(this).children("ul").show();
-          } else {
-            $(this).removeClass("active");
-            $(this).children("ul").hide();
-          }
-        });
 
-        $("section").on("click", ".option", function () {
-          console.log($(this).text());
-          $(this).parent().siblings("div").text($(this).text());
-        });
-
-        <!-- img 컨트롤 -->
-
-        $(".rcontent-img-area img").mouseover(function () {
-          $(this).css({ transform: "scale(1.1)" });
-        });
-        $(".rcontent-img-area img").mouseleave(function () {
-          $(this).css({ transform: "scale(1.0)" });
-        });
-        $(".rcontent-img-area img").click(function () {
-          $("#reviewImgModal img").attr("src", $(this).attr("src"));
-          $("#reviewImgModal").modal("show");
-        });
-
-        <!-- 모달 이미지 컨트롤 -->
-        $("#reviewImgModal .modal-body").mouseover(function () {
-          $(this).children(".img_btn_area").show();
-        });
-        $("#reviewImgModal .modal-body").mouseleave(function () {
-          $(this).children(".img_btn_area").hide();
-        });
+    $(function () {
+      // 셀렉트 컨트롤
+      $(".rev-select").click(function () {
+        if ($(this).hasClass("active") == false) {
+          $(this).addClass("active");
+          $(this).children("ul").show();
+        } else {
+          $(this).removeClass("active");
+          $(this).children("ul").hide();
+        }
       });
-      function imgChange(type) {
-        $.ajax({
-          url: "chImg.rev",
-          data: {
-            // ajax 요청 또한 커맨드객체방식 가능 (키값을 필드명이랑 맞춰준다)
-            // reviewNo:${ r.reviewNo },
-            // replyWriter: "${ loginUser.userId }", // 다른 첨부 파일 불러와야되는데 흠...
-          },
-          success: function (result) {
-            $("#reviewImgModal img").attr("src", result);
-          },
-          error: function () {
-            console.log(" 통신 실패!");
-          },
-        });
+
+      $("section").on("click", ".option", function () {
+        console.log($(this).text());
+        $(this).parent().siblings("div").text($(this).text());
+      });
+
+      // img 컨트롤
+
+      $(".rcontent-img-area img").mouseover(function () {
+        $(this).css({ transform: "scale(1.1)" });
+      });
+      $(".rcontent-img-area img").mouseleave(function () {
+        $(this).css({ transform: "scale(1.0)" });
+      });
+      $(".rcontent-img-area img").click(function () {
+        $("#reviewImgModal img").removeAttr("class");
+        $("#reviewImgModal img").attr("src", $(this).attr("src")).addClass($(this).parents(".review-area").attr("id") + "-" + $(this).attr("class"));
+        $("#reviewImgModal").modal("show");
+      });
+
+      // 모달 이미지 컨트롤 
+      $("#reviewImgModal .modal-body").mouseover(function () {
+        $(this).children(".img_btn_area").show();
+      });
+      $("#reviewImgModal .modal-body").mouseleave(function () {
+        $(this).children(".img_btn_area").hide();
+      });
+    });
+
+    function imgChange(type) {
+      var rId = $("#reviewImgModal img").attr("class").split("-", 1)[0];
+      var imgCount = $("#" + rId + " img").length;
+      var index = $("#reviewImgModal img").attr("class").split("-", 2)[1].substr(3, 1);
+
+      console.log("리뷰 이미지 수 : " + imgCount);
+      console.log("이미지 인덱스 : " + index);
+
+      if (type == 1) {
+        index--;
+        if (index == 0) {
+          index = imgCount;
+        }
+      } else {
+        index++;
+        if (index > imgCount) {
+          index = 1;
+        }
       }
-    </script>
+      $("#reviewImgModal img").removeAttr("class");
+      $("#reviewImgModal img").addClass(rId + "-img" + index);
+      $("#reviewImgModal img").attr("src", $("#" + rId + " .img" + index).attr("src"));
+    }
+  </script>
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />
