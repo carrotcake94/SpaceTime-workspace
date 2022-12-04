@@ -22,7 +22,7 @@
 </head>
 <body>
 	
-	<jsp:include page="header.jsp" />
+	<jsp:include page="../common/header.jsp" />
 	
 	<div id="content">
 	<div id="content_1">왼쪽여백</div>
@@ -102,7 +102,7 @@
 	<div id="content_3">오른쪽여백</div>
 	</div>
 	
-	<jsp:include page="footer.jsp" />
+	<jsp:include page="../common/footer.jsp" />
 	
 </body>
 </html>

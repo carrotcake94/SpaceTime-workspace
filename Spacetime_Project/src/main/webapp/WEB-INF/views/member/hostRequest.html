@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,121 +9,102 @@
 
 <!--부트-->
 <title>Bootstrap Example</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 	.bank {border-color: rgb(194, 194, 194);}
 </style>
 <body>
 	<div class="wrap">
 		<jsp:include page="common/header.jsp" />
-	<div class="main">
-		<div class="container">
+		<div class="main">
 			<div class="container">
-							  
-				<!-- Button to Open the Modal -->
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-				  호스트신청하기
-				</button>
-			  
-				<!-- The Modal -->
-				<div class="modal fade" id="myModal">
-				  <div class="modal-dialog">
-						<div class="modal-content">
-						
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<h4 class="modal-title">정산정보입력</h4>
+				<div class="container">
 								
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-					  
-					  <!-- Modal body -->
-					  <div class="modal-body">
-						
-						<h5>은행명</h5>
-							<div class="dropdown">
-								<select class="bank" value="은행선택">
-									<option class="bankselect" disabled selected>--선택해주세요--</option>
-									<option>국민은행</option>
-									<option>광주은행</option>
-									<option>신한은행</option>
-									<option>수협은행</option>
-									<option>새마을금고</option>
-									<option>씨티은행</option>
-									<option>우리은행</option>
-									<option>우체국</option>
-									<option>카카오뱅크</option>
-									<option>케이뱅크</option>
-									<option>한국산업은행</option>
-								</select>
-								<!-- <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-								은행선택
-								</button> 
-								<div class="dropdown-menu">
-
-									 <option>은행</option>
-									<option>광주은행</option>
-									<option>광주은행</option> -->
-									<!-- <a class="dropdown-item" >신한은행</a>
-									<a class="dropdown-item" href="">수협은행</a>
-									<a class="dropdown-item" href="">새마을금고</a>
-									<a class="dropdown-item" href="">씨티은행</a>
-									<a class="dropdown-item" href="">우리은행</a>
-									<a class="dropdown-item" href="">우체국</a>
-									<a class="dropdown-item" href="">카카오뱅크</a>
-									<a class="dropdown-item" href="">케이뱅크</a>
-									<a class="dropdown-item" href="">한국산업은행</a> 
-								</div>  -->
+					<!-- Button to Open the Modal -->
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#hostRequest">
+					호스트신청하기
+					</button>
+			
+					<!-- 정산계좌정보 입력 모달창 -->
+					<div class="modal fade" id="hostRequest">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
 							
-								<br><br>
-								<div class="container1">
-									<h5>계좌번호</h5>
-									<form action="/action_page.php">
-									  <div class="form-group">
-										<input type="text" class="form-control" placeholder="계좌번호 입력(- 제외)" name="text1" style="width: 190px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-									  </div>
-									</form>
+								<!-- Modal Header -->
+								<div class="modal-header">
+									<h4 class="modal-title">호스트 신청 - 정산계좌 등록</h4>
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
 								</div>
-								<div class="container2" id="container2-1">
-									<h5>예금주</h5>
-									<form action="/action_page.php">
-									  <div class="form-group" >
-										<input id="test2" type="text" class="form-control"placeholder="실명(예금주명)만 입력" name="text1" style="width: 190px;" onkeyup="chk_han('test2')"/>
-									  </div>
-									</form>
-								</div>	
+								
+								<!-- Modal body -->
+								<form action="" method="post">
+									<div class="modal-body">
+										<table>
+											<tr>
+												<th style="width:30%;">은행명</th>
+												<td>
+													<select name="" class="bank form-control mb-2">
+														<option value="" selected>은행명</option>
+														<option value="">KB국민은행</option>
+														<option value="">신한은행</option>
+														<option value="">IBK기업은행</option>
+														<option value="">우리은행</option>
+														<option value="">KEB하나은행</option>
+														<option value="">SC제일은행</option>
+														<option value="">NH농협</option>
+														<option value="">새마을금고</option>
+														<option value="">씨티은행</option>
+														<option value="">한국산업은행</option>
+														<option value="">케이뱅크</option>
+														<option value="">카카오뱅크</option>
+														<option value="">우체국</option>
+														<option value="">수협은행</option>
+														<option value="">KDB산업은행</option>
+														<option value="">광주은행</option>
+														<option value="">부산은행</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<th>계좌번호</th>
+												<td><input type="text" class="form-control mb-2" placeholder="계좌번호 입력(- 제외)"></td>
+											</tr>
+											<tr>
+												<th>예금주명</th>
+												<td><input type="text" class="form-control mb-2" placeholder="실명(예금주명)만 입력" onkeyup="chk_han('test2')"></td>
+											</tr>
+										</table>
+									</div>
+									
+									<!-- Modal footer -->
+									<div class="modal-footer">
+										<button type="submit" class="btn btn-primary" data-dismiss="modal">신청</button>
+										<!-- 신청이 잘 되면 alert 창 띄우기! -->
+									</div>
+								</form>
 							</div>
-				  		</div>
-					  
-					  <!-- Modal footer -->
-					  <div class="modal-footer" align="right" id="">
-						<button type="submit" class="btn" data-dismiss="modal" style="background-color: lightgray;" onclick="" >확인</button>
-						<button type="button" class="btn" data-dismiss="modal" style="background-color:  lightgray;">취소</button>
-						
-					  </div>
-					  
+						</div>
 					</div>
-				  </div>
-				</div>
+
+					<!--예금주 한글 입력 유도-->
+					<script>
+						function chk_han(test2) {
+							var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+							var value = $("#"+test2).val();
+							if (regexp.test(value)) {
+								$("#"+test2).val(value.replace(regexp, ''));
+								alert ("한글만 입력이 가능합니다.");
+							}
+						}
+					</script>
+					
+				<jsp:include page="common/footer.jsp" />
 			</div>
-			
-			<!--예금주 한글 입력 유도-->
-			<script>
-				function chk_han(test2) {
-					var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
-					var value = $("#"+test2).val();
-					if (regexp.test(value)) {
-						$("#"+test2).val(value.replace(regexp, ''));
-						alert ("한글만 입력이 가능합니다.");
-					}
-				}
-			</script>
-			
-		<jsp:include page="common/footer.jsp" />
-  	</div>
+		</div>
+	</div>
 </body>
 </html>
