@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항 작성</title>
+    <title>공지사항 수정</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- jquery 온라인 방식 -->
 
@@ -32,6 +32,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <!-- summernote css/js-->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <style>
 
     /*
@@ -541,9 +545,24 @@
                             <button type="submit" class="btn btn-secondary" style="width: 100px;">취소</button>
                             &nbsp;
                             <button type="button" class="btn btn-primary" style="width: 100px; background-color: #277BC0;">수정</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-danger" style="width: 100px;">삭제</button>
                         </div>
                     </form>
                 </div>
+
+                <script>
+                    $(document).ready(function () {
+                        $('textarea').summernote({
+                            placeholder: '내용을 작성하세요',
+                            lang: "ko-KR",
+                            height: 500,
+                            minHeight: 500,
+                            maxHeight: 500
+                        });
+                    });
+                    
+                </script>
             </div>
             <div id="content_3">오른쪽여백</div>
         </div>

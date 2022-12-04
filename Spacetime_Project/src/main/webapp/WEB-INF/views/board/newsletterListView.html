@@ -5,6 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>뉴스레터</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- jquery 온라인 방식 -->
+
+	<!-- jquery datepicker-->
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+ 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- font awesome icon css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!--아이콘-->
+    <script src="https://kit.fontawesome.com/c7bfbb0e5b.js" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
+
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
 
 <style>
 
@@ -381,62 +410,130 @@
 	#header_area { height: 80px; }
 	#content { 
 		width: 100%;
-		/* height: 1250px;  */
-        height: auto; /* 자동 조절 */
+		/*height: 1050px;  */
+        height: auto; /* 공지사항의 테이블이 클릭될 때마다 세로 길이에 영향을 끼쳐 자동으로 조절되게 바꿈 */
 		display: flex;
 	}
 	
 	#content>div { height: 100%; float: left;}
 	
-	#content_1, #content_3 { width: 15%; }
-	#content_2 { width: 70%; }
+	#content_1, #content_3 { width: 20%; }
+	#content_2 { width: 60%; }
 	
     /* --------------------------- */
+    /* content_2 내용물 css */
 
-    #place { width: 33.3%; float: left; }
-
-    #imgg { /* 이미지에 맞게 조절 */
-        background-image: url("../../../resources/images/board/MIC.jpg");
-        background-size: cover; 
-        width: 100%;
-        height: 100%;
-    }
-
-    #imgg>p { 
-        width: 100%;
-        height: 100%;
-        padding-top: 100px; 
-        font-size: 35px;
+    #text>p {
+        font-size: 33px;
         font-weight: bold;
-        color: white;
+        padding: 35px;
     }
 
-    table { background-color: rgb(250, 244, 244)}
+    a { 
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-    table>thead>tr>td img { width: 100%; height: 100%; margin: auto; object-fit: cover; }
+    .theme_list {
+        line-height: 18px;
+        border: 0;
+        font-size: 100%;
+        vertical-align: middle;
+        margin: 0 -13px;
+        padding: 0;
+    }
 
-    table>tbody>tr>td { padding: 2px 20px;}
+    .box {
+        padding: 13px;
+        width: 33.333%;
+        float: left;
+        position: relative;
+    }
 
-    table>tbody>tr>td>span { font-size: 20px; font-weight: bold; margin: 0px; }
+    .box_space {
+        margin-top: 0;
+        margin: 0;
+    }
 
-    i { color: #898989;}
+    .inner {
+        padding-top: 100%;
+        display: block;
+        overflow: hidden;
+        position: relative;
+        height: 330px;
+        border-bottom: 1px solid #ebebeb;
+    }
+
+    .inner>.th_area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 5;
+        color: #fff;
+        text-align: center;
+    }
+
+    .h_theme {
+        position: relative;
+        padding: 0 20px 20px;
+        padding-bottom: 21px;
+        margin: 25px 0;
+        font-size: 26px;
+        line-height: 34px;
+        font-weight: 800;
+        vertical-align: top;
+    }
+
+    .center_wrap {
+        display: table;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    .center { 
+        vertical-align: middle;
+        display: table-cell; 
+    }
+
+    .p_theme {
+        font-size: 14px;
+        padding: 0 20px;
+        z-index: 100;
+    }
+
+    .h_theme:after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        margin-left: -9px;
+        background-color: #ffd014;
+    }
+
+    .th_thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-size: cover;
+        background-position: 50%;
+        background-image: url("../../../resources/images/board/MIC.jpg");
+    }
 
 
-
-    
 </style>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-<!-- font-awesome -->
-<script src="https://kit.fontawesome.com/6cda7ccd12.js" crossorigin="anonymous"></script>
-
-
 </head>
 <body>
     <div class="wrap">
         <!--헤더-->
         <div class="header">
-            <div id="logo"><img src="resources/images/logo.png"></div>
+            <div id="logo"><img src="../../../resources/images/logo.png"></div>
 
             <div id="home_btn">
                 <span style="color:#277BC0;">S</span><span>pace</span><span
@@ -530,132 +627,139 @@
             
             <!--컨텐츠작성부분 -->
             <div id="content_2">
-                <div style="height:350px"><div id="imgg" align="center"><p>올해의 나를 기록할래!<br>컨셉화보, 프로필 촬영 공간</p></div></div>
-                <div style="height:80px">
-                    <div align="right" style="padding-top: 30px">
-                        <button type="button" class="btn btn-warning">수정</button>
-                        <button type="button" class="btn btn-danger">삭제</button>
+                <div id="text" align="center"><p>뉴스레터</p></div>
+                <div class="theme_list">
+                    <div class="flex_wrap column3 fluid list_center">
+                        <article class="box box_space article_theme">
+                            <a href="/theme/1370" class="inner">
+                                <div class="th_area">
+                                    <div class="center_wrap">
+                                        <div class="center">
+                                            <h3 class="h_theme">
+                                                메리 크리스마스! <br>
+                                                연말, 즐거운 모임을 위한 공간
+                                            </h3> 
+                                            <p class="p_theme">연말을 위한 뉴스레터</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="th_thumb"></span>
+                            </a>
+                        </article>
                     </div>
-                </div>
-                <div style="height: 100%;">
-                    <div id="place" style="padding: 15px 15px">
-                        <table width="100%" height="100%">
-                            <thead height="50%">
-                                <tr>
-                                    <td colspan="2"><div style="width: 100%; height: 100%;"><img src="../../../resources/images/space/space/166028706_.jpg"></div></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" height="20%"><span>자연광 스튜디오</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i> 서교동</td>
-                                </tr>
-                                <tr height="20%">
-                                    <td width="60%"><span style="color: #277BC0;">20,000</span> 원/시간</td>
-                                    <td width="40%">
-                                        <i class="fa-solid fa-user"></i> 4
-                                        <i class="fa-solid fa-comment"></i> 3
-                                        <i class="fa-solid fa-heart"></i> 23
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex_wrap column3 fluid list_center">
+                        <article class="box box_space article_theme">
+                            <a href="/theme/1370" class="inner">
+                                <div class="th_area">
+                                    <div class="center_wrap">
+                                        <div class="center">
+                                            <h3 class="h_theme">
+                                                올해의 나를 기록할래! <br>
+                                                컨셉화보, 프로필 촬영 공간
+                                            </h3> 
+                                            <p class="p_theme">연말모임 기획전 6</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="th_thumb"></span>
+                            </a>
+                        </article>
                     </div>
-                    <div id="place" style="padding: 15px 15px">
-                        <table width="100%" height="100%">
-                            <thead height="50%">
-                                <tr>
-                                    <td colspan="2"><div style="width: 100%; height: 100%;"><img src="../../../resources/images/space/space/166028706_.jpg"></div></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" height="20%"><span>자연광 스튜디오</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i> 서교동</td>
-                                </tr>
-                                <tr height="20%">
-                                    <td width="60%"><span style="color: #277BC0;">20,000</span> 원/시간</td>
-                                    <td width="40%">
-                                        <i class="fa-solid fa-user"></i> 4
-                                        <i class="fa-solid fa-comment"></i> 3
-                                        <i class="fa-solid fa-heart"></i> 23
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex_wrap column3 fluid list_center">
+                        <article class="box box_space article_theme">
+                            <a href="/theme/1370" class="inner">
+                                <div class="th_area">
+                                    <div class="center_wrap">
+                                        <div class="center">
+                                            <h3 class="h_theme">
+                                                올해의 나를 기록할래! <br>
+                                                컨셉화보, 프로필 촬영 공간
+                                            </h3> 
+                                            <p class="p_theme">연말모임 기획전 6</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="th_thumb"></span>
+                            </a>
+                        </article>
                     </div>
-                    <div id="place" style="padding: 15px 15px">
-                        <table width="100%" height="100%">
-                            <thead height="50%">
-                                <tr>
-                                    <td colspan="2"><div style="width: 100%; height: 100%;"><img src="../../../resources/images/space/space/166028706_.jpg"></div></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" height="20%"><span>자연광 스튜디오</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i> 서교동</td>
-                                </tr>
-                                <tr height="20%">
-                                    <td width="60%"><span style="color: #277BC0;">20,000</span> 원/시간</td>
-                                    <td width="40%">
-                                        <i class="fa-solid fa-user"></i> 4
-                                        <i class="fa-solid fa-comment"></i> 3
-                                        <i class="fa-solid fa-heart"></i> 23
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex_wrap column3 fluid list_center">
+                        <article class="box box_space article_theme">
+                            <a href="/theme/1370" class="inner">
+                                <div class="th_area">
+                                    <div class="center_wrap">
+                                        <div class="center">
+                                            <h3 class="h_theme">
+                                                올해의 나를 기록할래! <br>
+                                                컨셉화보, 프로필 촬영 공간
+                                            </h3> 
+                                            <p class="p_theme">연말모임 기획전 6</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="th_thumb"></span>
+                            </a>
+                        </article>
                     </div>
-                    <div id="place" style="padding: 15px 15px">
-                        <table width="100%" height="100%">
-                            <thead height="50%">
-                                <tr>
-                                    <td colspan="2"><div style="width: 100%; height: 100%;"><img src="../../../resources/images/space/space/166028706_.jpg"></div></td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" height="20%"><span>자연광 스튜디오</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i> 서교동</td>
-                                </tr>
-                                <tr height="20%">
-                                    <td width="60%"><span style="color: #277BC0;">20,000</span> 원/시간</td>
-                                    <td width="40%">
-                                        <i class="fa-solid fa-user"></i> 4
-                                        <i class="fa-solid fa-comment"></i> 3
-                                        <i class="fa-solid fa-heart"></i> 23
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex_wrap column3 fluid list_center">
+                        <article class="box box_space article_theme">
+                            <a href="/theme/1370" class="inner">
+                                <div class="th_area">
+                                    <div class="center_wrap">
+                                        <div class="center">
+                                            <h3 class="h_theme">
+                                                올해의 나를 기록할래! <br>
+                                                컨셉화보, 프로필 촬영 공간
+                                            </h3> 
+                                            <p class="p_theme">연말모임 기획전 6</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="th_thumb"></span>
+                            </a>
+                        </article>
                     </div>
-                    <!-- 반복 돌리기 -->
+                    <div class="flex_wrap column3 fluid list_center">
+                        <article class="box box_space article_theme">
+                            <a href="/theme/1370" class="inner">
+                                <div class="th_area">
+                                    <div class="center_wrap">
+                                        <div class="center">
+                                            <h3 class="h_theme">
+                                                올해의 나를 기록할래! <br>
+                                                컨셉화보, 프로필 촬영 공간
+                                            </h3> 
+                                            <p class="p_theme">연말모임 기획전 6</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="th_thumb"></span>
+                            </a>
+                        </article>
+                    </div>
+                    <div class="flex_wrap column3 fluid list_center">
+                        <article class="box box_space article_theme">
+                            <a href="/theme/1370" class="inner">
+                                <div class="th_area">
+                                    <div class="center_wrap">
+                                        <div class="center">
+                                            <h3 class="h_theme">
+                                                올해의 나를 기록할래! <br>
+                                                컨셉화보, 프로필 촬영 공간
+                                            </h3> 
+                                            <p class="p_theme">연말모임 기획전 6</p>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <span class="th_thumb"></span>
+                            </a>
+                        </article>
+                    </div>
                     
                 </div>
-                
-                
-                
-
-
-
-                
-               
-
-
             </div>
-            
             <div id="content_3">오른쪽여백</div>
         </div>
-        <div style="height:80px"></div>
 
         <!--푸터-->
         <div id="footer">
@@ -673,5 +777,28 @@
             </div>
         </div>
     </div>
+
+
+    <!-- 질문 클릭시 아코디언 함수 -->
+    <script>
+        $(function() {
+            $(".upperHr").click(function() {
+
+                let $answer = $(this).next().children().children();
+
+                if($answer.css("display") == "none") {
+
+                    $(this).nextAll("tr").children(".answer").children("p").slideUp(100);
+                    $(this).prevAll("tr").children(".answer").children("p").slideUp(100);
+                    $answer.slideDown(100);
+
+                } else {
+                    $answer.slideUp(100);
+                }
+            });
+        });
+    </script>
+
+
 </body>
 </html>

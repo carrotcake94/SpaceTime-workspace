@@ -32,6 +32,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <!-- summernote css/js-->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <style>
 
     /*
@@ -544,6 +548,20 @@
                         </div>
                     </form>
                 </div>
+
+                <script>
+                    $(document).ready(function () {
+                        $('textarea').summernote({
+                            placeholder: '내용을 작성하세요',
+                            lang: "ko-KR",
+                            height: 500,
+                            minHeight: 500,
+                            maxHeight: 500
+                        });
+                    });
+                    
+                </script>
+
             </div>
             <div id="content_3">오른쪽여백</div>
         </div>
