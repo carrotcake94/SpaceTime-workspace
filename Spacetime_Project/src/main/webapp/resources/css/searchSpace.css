@@ -1,7 +1,6 @@
 @charset "utf-8";
 
 #search_display * {
-    border : 1px solid black;
     box-sizing: border-box;
 }
 
@@ -31,6 +30,7 @@
 #listOption > div {
     display: inline-block;
     margin: 0 auto;
+    margin-bottom : 5px;
 }
 
 #listOption > div :hover{
@@ -108,12 +108,46 @@
     height: 50px;
 }
 
-.mapFilter_btn {
-    float: left;
-    width: 50%;
-    height: 100%;
+#mapFilter_option_price {
+    border : 0px;
 }
 
+.mapFilter_options {
+    padding: 25px 0px 25px 0px;
+}
+
+#mapFilter_category_list {
+    padding: 15px 0px 10px 0px;
+}
+
+#mapFilter_priceRange > input{
+    width: 70px;
+}
+
+#mapFilter_btns {
+    width : 100%;
+    height: 100%;
+    border-bottom: 0px;
+}
+
+.mapFilter_btn {
+    float: left;
+    margin: 5px 15px 5px 15px;
+    border : 0px;
+    width: 40%;
+    height: 70%;
+    border-radius : 15px;
+}
+
+form {
+    padding: 5px;
+    border :3px solid rgb(96, 155, 204);
+    border-radius : 15px;
+}
+
+form > div {
+    border-bottom : 1px solid black;
+}
 
 
 
@@ -125,17 +159,21 @@
     overflow-y: scroll;
 }
 
+.picList_content > div {
+    border: 1px solid black;
+}
+
 #picList > div {
     width:50%;
     float: left;
     height: 300px;
 }
 
-#picList_content {
+.picList_content {
     padding: 10%;
 }
 
-#picList_content_pic {
+.picList_content_pic {
     height: 200px;
     padding: 20px;
 }
