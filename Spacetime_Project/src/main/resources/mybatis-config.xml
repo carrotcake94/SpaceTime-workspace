@@ -15,6 +15,7 @@
 		<typeAlias type="com.kh.spacetime.reserve.model.vo.Payments" alias="payments" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.Space" alias="space" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.SpaceAttachment" alias="spaceAttachment" />
+		<typeAlias type="com.kh.spacetime.space.model.vo.SpaceType" alias="spaceType" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.Review" alias="review" />
 	</typeAliases>
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -189,7 +190,7 @@
     }
 
     .space-small-area>div {
-      width: 30%;
+      width: 22%;
     }
 
     .space-small-area>div:nth-child(1) {
@@ -198,10 +199,14 @@
 
     .space-small-area>div:nth-child(2) {
       float: left;
-      margin-left: 5%;
+      margin-left: 4%;
+    }
+    .space-small-area>div:nth-child(3) {
+      float: left;
+      margin-left: 4%;
     }
 
-    .space-small-area>div:nth-child(3) {
+    .space-small-area>div:nth-child(4) {
       float: right;
     }
 
@@ -402,6 +407,7 @@
 	<jsp:include page="../common/header.jsp" />
 	<div class="main">
     <form id="spInsertForm" method="post" action="insert.sp" enctype="multipart/form-data">
+	    <input type="hidden" name="hostNo" value="5">
       <div class="space-main-title">공간 정보 입력</div>
       <hr />
       <div class="space-title">
@@ -415,20 +421,10 @@
         공간 유형
       </div>
       <div class="space-content stypeNo-area">
-        <input type="radio" id="party" name="stypeNo" value="파티룸">
-        <label class="stype-btn" for="party">파티룸</label>
-        <input type="radio" id="study" name="stypeNo" value="스터디룸">
-        <label class="stype-btn" for="study">스터디룸</label>
-        <input type="radio" id="dance" name="stypeNo" value="댄스연습실">
-        <label class="stype-btn" for="dance">댄스연습실</label>
-        <input type="radio" id="office" name="stypeNo" value="오피스">
-        <label class="stype-btn" for="office">오피스</label>
-        <input type="radio" id="cafe" name="stypeNo" value="카페">
-        <label class="stype-btn" for="cafe">카페</label>
-        <input type="radio" id="meetingRoom" name="stypeNo" value="회의실">
-        <label class="stype-btn" for="meetingRoom">회의실</label>
-        <input type="radio" id="kitchen" name="stypeNo" value="공유주방">
-        <label class="stype-btn" for="kitchen">공유주방</label>
+      <c:forEach var="s" items="${stypeList }">
+		<input type="radio" id="stype+${s.stypeNo }" name="stypeNo" value="${s.stypeNo }">
+        <label class="stype-btn" for="stype+${s.stypeNo }">${s.stypeName }</label>
+	 </c:forEach>
       </div>
       <div class="space-title">
         공간 소제목
@@ -461,6 +457,14 @@
         </div>
         <div class="space-small">
           <div class="space-small-title">
+            최대 수용인원
+          </div>
+          <div class="space-small-content">
+            <input type="text" name="maxPeople" placeholder="최대 인원" />
+          </div>
+        </div>
+        <div class="space-small">
+          <div class="space-small-title">
             운영 시작시간
           </div>
           <div class="space-small-content">
@@ -476,7 +480,6 @@
           </div>
         </div>
       </div>
-
 
       <div class="space-title">
         대표 이미지
@@ -521,8 +524,7 @@
       <div class="space-content">
         <input type="text" class="itype1" name="tel" placeholder="- 포함해서 입력해주세요" />
       </div>
-      <button type="button" id="spaceInsertBtn"  data-toggle="modal"
-              data-target="#spaceInsertModal">검수 신청하기</button>
+      <button type="button" id="spaceInsertBtn"  onclick="valichk()">검수 신청하기</button>
     </form>
     <!-- 공간 신청  Modal -->
     <div class="modal" id="spaceInsertModal">
@@ -538,7 +540,7 @@
           <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">닫기</button>
-            <button type="button" onclick="valichk()">검수신청하기</button>
+            <button type="button" onclick="spaceSubmit()">검수신청하기</button>
           </div>
         </div>
       </div>
@@ -764,7 +766,7 @@
     });
 
        valichk= () => {
-    	   console.log($("#mainImgFile").val());
+    	   
       	if($("input[name=spaceTitle]").val().trim() == "") {
   			alert("공간 이름을 입력해주세요.");
   			$("input[name=spaceTitle]").focus();
@@ -782,6 +784,11 @@
     	if($("input[name=hourPrice]").val().trim() == "") {
   			alert("1시간당 대여금액을 입력해주세요.");
   			$("input[name=hourPrice]").focus();
+  			return false;
+  		}
+    	if($("input[name=maxPeople]").val().trim() == "") {
+  			alert("최대 수용인원을 입력해주세요.");
+  			$("input[name=maxPeople]").focus();
   			return false;
   		}
     	if($("input[name=openTime]").val().trim() == "") {
@@ -805,6 +812,11 @@
             $("input[name=addressDefault]").focus();
             return false;
         }
+    	if ($("input[name=addressDetail]").val().trim() == "") {
+            alert("주소를 입력해주세요.");
+            $("input[name=addressDetail]").focus();
+            return false;
+        }
     	if ($("input[name=tel]").val().trim() == "") {
             alert("연락처를 입력해주세요.");
             $("input[name=tel]").focus();
@@ -813,12 +825,17 @@
     	
     	// 숫자 유효성 검사
      	var regExp = /^[0-9]+$/;
-     	
+    	
      	if(!regExp.test($("input[name=hourPrice]").val())) {
            alert("대여금액은 숫자만 입력 가능합니다.");
            $("input[name=hourPrice]").focus();
            return false;
        }
+     	if(!regExp.test($("input[name=maxPeople]").val())) {
+            alert("최대 수용인원은 숫자만 입력 가능합니다.");
+            $("input[name=maxPeople]").focus();
+            return false;
+        }
      	if(!regExp.test($("input[name=openTime]").val())) {
      		alert("시작시간은 숫자만 입력 가능합니다 .");
            $("input[name=openTime]").focus();
@@ -830,7 +847,44 @@
            return false;
        }
      	
+     	 var openTime = $("input[name=openTime]").val();
+     	var closeTime = $("input[name=closeTime]").val();
+     	
+     	if(parseInt(openTime) >= parseInt(closeTime)) {
+  			alert("운영 종료시간은 시작 시간보다 같거나 빠를 수 없습니다.\n다시 입력해주세요.");
+  			$("input[name=closeTime]").focus();
+  			return false;
+  		}
+     	//해시태그 합치기
+     	var hashtag = [];
+     	$(".hashtag>span").each(function() {
+     		hashtag.push($(this).text());
+     	});
+     	if($(".hashtag>span").length != 0) {
+     		$("input[name=hashtag]").val(hashtag.join(","));
+     	}     	
+     	
+     	$('#spaceInsertModal').modal('show');
       }
+       spaceSubmit = () => {
+    	   $("#spInsertForm").submit();
+       }
+       // 새로고침 방지
+       function NotReload() { 
+    	    if((event.ctrlKey == true && (event.keyCode == 78 )) || (event.keyCode == 116) ) { 
+    	    	
+    	    	var result = confirm('변경 사항이 저장되지 않을 수 있습니다.');
+
+    	        if(result) {
+    	          location.href="enrollForm.sp";
+    	        } else {
+    	        	 return false;
+    	        }
+    	      
+    	    } 
+    	} 
+    	document.onkeydown = NotReload;
+    	
     
   </script>
 	

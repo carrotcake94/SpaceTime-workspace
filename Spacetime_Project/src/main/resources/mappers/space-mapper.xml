@@ -1,5 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="spaceMapper">
-
+	<resultMap id="spaceTypeResultSet" type="spaceType">
+		<result column="STYPE_NO" property="stypeNo" />
+		<result column="STYPE_NAME" property="stypeName" />
+	</resultMap>
+	
+	<resultMap id="spaceResultSet" type="space">
+		<result column="SPACE_NO" property="spaceNo" />
+		<result column="SPACE_TITLE" property="spaceTitle" />
+		<result column="SPACE_SUBTITLE" property="spaceSubTitle" />
+		<result column="SPACE_INFO" property="spaceInfo" />
+		<result column="HOUR_PRICE" property="hourPrice" />
+		<result column="MAX_PEOPLE" property="maxPeople" />
+		<result column="ADDRESS_DEFAULT" property="addressDefault" />
+		<result column="ADDRESS_DETAIL" property="addressDetail" />
+		<result column="TEL" property="tel" />
+		<result column="HASHTAG" property="hashtag" />
+		<result column="SPACE_STATUS" property="spaceStatus" />
+		<result column="COUNT" property="count" />
+		<result column="LATITUDE" property="latitude" />
+		<result column="LONGITUDE" property="longitude" />
+		<result column="OPEN_TIME" property="openTime" />
+		<result column="CLOSE_TIME" property="closeTime" />
+		<result column="DENY_MESSAGE" property="denyMessage" />
+		<result column="HOST_NO" property="hostNo" />
+		<result column="STYPE_NO" property="stypeNo" />
+	</resultMap>
+	<!-- 	공간 타입 리스트 전체 선택 -->
+	<select id="selectSpaceTypeList" resultMap="spaceTypeResultSet">
+		SELECT *
+		FROM STYPE			
+	</select>
+	
+	<!-- 	공간 첨부파일 추가-->
+<!-- 	<insert id="insertSpaceAttachment" parameterType="java.util.List"> -->
+<!-- 	<foreach collection="list" item="attachList" open="INSERT " close=")"  separator=","> -->
+<!-- 	 INTO SPACE_ATTACHMENT (ATTACHMENT_NO -->
+<!-- 										 , ATTACHMENT_RENAME -->
+<!-- 										 , ATTACHEMNT_LEVEL -->
+<!-- 										 , SPACE_NO) -->
+<!-- 					 		VALUES	 (SEQ_ANO.NEXTVAL -->
+<!-- 								   		 , #{attachList.attachmentReName} -->
+<!-- 								   		 , #{attachList.attachmentLevel} -->
+<!-- 								   		 , #{attachList.spaceNo} -->
+<!-- 	</foreach> -->
+<!-- 	</insert> -->
+	
+	<!-- 	공간 추가-->
+	<insert id="insertSpace" parameterType="space">
+		INSERT INTO SPACE (SPACE_NO
+						 , SPACE_TITLE
+						 , SPACE_SUBTITLE
+						 , SPACE_INFO
+						 , HOUR_PRICE
+						 , MAX_PEOPLE
+						 , ADDRESS_DEFAULT
+						 , ADDRESS_DETAIL
+						 , TEL
+						 , HASHTAG
+						 , LATITUDE
+						 , LONGITUDE
+						 , OPEN_TIME
+						 , CLOSE_TIME
+						 , HOST_NO
+						 , STYPE_NO)
+				   VALUES (SEQ_SNO.NEXTVAL
+				   		 , #{spaceTitle}
+				   		 , #{spaceSubTitle}
+				   		 , #{spaceInfo}
+				   		 , #{hourPrice}
+				   		 , #{maxPeople}
+				   		 , #{addressDefault}
+				   		 , #{addressDetail}
+				   		 , #{tel}
+				   		 , #{hashtag}
+				   		 , #{latitude}
+				   		 , #{longitude}
+				   		 , #{openTime}
+				   		 , #{closeTime}
+				   		 , #{hostNo}
+				   		 , #{stypeNo})
+	</insert>
 </mapper>
