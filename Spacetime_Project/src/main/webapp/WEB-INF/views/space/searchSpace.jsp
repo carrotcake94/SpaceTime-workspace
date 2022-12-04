@@ -5,8 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="resources/css/searchSpace.css" rel="stylesheet"
-	type="text/css" />
+<link href="resources/css/searchSpace.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<div class="wrap">
@@ -75,31 +74,31 @@
 					</form>
 
 					<script>
-		                $(function() {
-		                    document.querySelector("#listOption_lineList").onclick = () => {
-		                        $.ajax ({
-		                            url: "sortLineList.sp"
-		                        });
-		                    }
-		                    
-		                    document.querySelector("#listOption_picList").onclick = () => {
-		                        $.ajax ({
-		                            url: "sortPicList.sp"
-		                        });
-		                    }
-		
-		                    var filter = document.querySelector("#mapFilter");
-		                    document.querySelector("#listOption_filter").onclick = () => {
-		                        if(filter.style.display =="none"){
-		                            filter.style.display="block";
-		                        } else {
-		                            filter.style.display="none";
-		
-		                        }
-		                    }
-		                    filter.style.display= "none"; //기본으로 닫혀있게
-		                })
-		            </script>
+                $(function() {
+                    document.querySelector("#listOption_lineList").onclick = () => {
+                        $.ajax ({
+                            url: "sortLineList.sp"
+                        });
+                    }
+                    
+                    document.querySelector("#listOption_picList").onclick = () => {
+                        $.ajax ({
+                            url: "sortPicList.sp"
+                        });
+                    }
+
+                    var filter = document.querySelector("#mapFilter");
+                    document.querySelector("#listOption_filter").onclick = () => {
+                        if(filter.style.display =="none"){
+                            filter.style.display="block";
+                        } else {
+                            filter.style.display="none";
+
+                        }
+                    }
+                    filter.style.display= "none"; //기본으로 닫혀있게
+                })
+            </script>
 					<!-- 사진형 리스트 -->
 					<div id="picList">
 						<div>
@@ -170,6 +169,7 @@
 
 				<!-- 지도 -->
 				<div id="map">지도들어갈자리</div>
+
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp" />
