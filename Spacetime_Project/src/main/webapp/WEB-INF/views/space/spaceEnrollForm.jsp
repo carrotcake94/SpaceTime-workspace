@@ -113,7 +113,7 @@
 
     .space-content .tarea-type1 {
       width: 100%;
-      height: 200px;
+      height: 100px;
       border: 1px solid lightgray;
       outline: none;
       padding: 10px;
@@ -121,6 +121,68 @@
       color: rgb(54, 54, 54);
 
     }
+    .space-content .tarea-type2 {
+      width: 100%;
+      height: 300px;
+      border: 1px solid lightgray;
+      outline: none;
+      padding: 10px;
+      resize: none;
+      color: rgb(54, 54, 54);
+
+    }
+
+
+	/* 해시 태그 */
+    .hashtag-div {
+      overflow: hidden;
+      float: left;
+    }
+
+    .hashtag-div>div {
+      float: left;
+    }
+
+    input[name="hashtag"] {
+      width: 30%;
+      padding: 5px 10px;
+      outline: none;
+      margin-left: 30px;
+      border: 1px solid lightgray;
+      border-radius: 10px;
+      color: rgb(54, 54, 54);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .hashtag-area {
+      overflow: hidden;
+    }
+
+    .hashtag-area>div {
+      float: left;
+      padding: 5px 10px;
+      margin-right: 10px;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      background-color: rgb(253, 193, 55);
+      border-radius: 5px;
+    }
+
+    .hashtag {
+      position: relative;
+    }
+
+    .hashtag i {
+      position: absolute;
+      top: -7px;
+      right: -5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* -------------------------------------- */
 
     .space-small-area {
       overflow: hidden;
@@ -258,13 +320,88 @@
       cursor: pointer;
       margin-bottom: 40px;
     }
+    
+    /* 공간 신청  모달 */
+      #spaceInsertModal .modal-content {
+        width: 450px;
+        margin: auto;
+        border: 1px solid gray;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 150px;
+      }
+
+      #spaceInsertModal .modal-header {
+        background-color: rgb(39, 123, 192);
+        text-align: center;
+        color: white;
+        font-size: 18px;
+        border-bottom: none;
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      #spaceInsertModal .modal-body {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      #spaceInsertModal h4 {
+        margin-bottom: 20px;
+      }
+
+      #spaceInsertModal h5 {
+        color: rgb(39, 123, 192);
+      }
+
+      #spaceInsertModal .modal-footer {
+        margin: 0 auto 20px;
+        border: none;
+      }
+
+      #spaceInsertModal button {
+        color: white;
+        width: 150px;
+        height: 60px;
+        margin: 0 10px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        border-radius: 5px;
+        border: none;
+      }
+
+      #spaceInsertModal button:nth-child(1) {
+        background-color: rgb(158, 158, 158);
+      }
+
+      #spaceInsertModal button:nth-child(2) {
+        background-color: rgb(253, 193, 55);
+         color: black;
+      }
+
+      #spaceInsertModal button:nth-child(1):hover {
+        background-color: rgb(136, 136, 136);
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      #spaceInsertModal button:nth-child(2):hover {
+        background-color: rgb(255, 187, 27);
+        font-size: 20px;
+        font-weight: 600;
+        color: black;
+      }
+
+      /* -------------------------------------- */
   </style>
 </head>
 <body>
 	<div class="wrap">		
 	<jsp:include page="../common/header.jsp" />
 	<div class="main">
-    <form id="spInsertForm" method="post" action="insert.bo" enctype="multipart/form-data">
+    <form id="spInsertForm" method="post" action="insert.sp" enctype="multipart/form-data">
       <div class="space-main-title">공간 정보 입력</div>
       <hr />
       <div class="space-title">
@@ -276,7 +413,6 @@
       </div>
       <div class="space-title">
         공간 유형
-        <div class="lcount"><span>0</span><span> / 30자</span></div>
       </div>
       <div class="space-content stypeNo-area">
         <input type="radio" id="party" name="stypeNo" value="파티룸">
@@ -301,6 +437,18 @@
       <div class="space-content">
         <textarea type="text" class="tarea-type1" name="spaceSubTitle" maxlength="150"
           placeholder="공간 소제목 정보를 입력해주세요"></textarea>
+      </div>
+      <div class="space-title">
+        공간 소개
+      <input type="text" name="hashtag" placeholder="#해시태그 입력" />        
+        <div class="lcount"><span>0</span><span> / 1500자</span></div>
+        <div class="hashtag-area">
+          <input type="hidden" name="hashtag">
+        </div>
+      </div>
+      <div class="space-content">
+        <textarea type="text" class="tarea-type2" name="spaceInfo" maxlength="1500"
+          placeholder="공간 정보를 상세하게 소개해주세요"></textarea>
       </div>
       <div class="space-small-area">
         <div class="space-small">
@@ -373,13 +521,44 @@
       <div class="space-content">
         <input type="text" class="itype1" name="tel" placeholder="- 포함해서 입력해주세요" />
       </div>
-      <button id="spaceInsertBtn">검수 신청하기</button>
-
+      <button type="button" id="spaceInsertBtn"  data-toggle="modal"
+              data-target="#spaceInsertModal">검수 신청하기</button>
     </form>
+    <!-- 공간 신청  Modal -->
+    <div class="modal" id="spaceInsertModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">검수 신청</div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <h4>검수 통과시 공간은 바로 노출됩니다.</h4>
+            <h5>공간 검수를 신청하시겠습니까?</h5>
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">닫기</button>
+            <button type="button" onclick="valichk()">검수신청하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>	
 	<jsp:include page="../common/footer.jsp" />
 	</div>
 	<script>
+	 // 글자수 체크
+	$(function() {
+		$('#spInsertForm input').keyup(function () {		
+            $(this).parent().prev().children().children().first().text($(this).val().length);  			
+		});
+		$('#spInsertForm textarea').keyup(function () {		
+			 $(this).parent().prev().children().children().first().text($(this).val().length);  
+		});
+	});
+	
+	 // 추가 이미지 식별 번호
     let thumNo = 0;
     $(function () {
       // 대표 이미지 첨부
@@ -488,7 +667,7 @@
         $(".main-img-area>div").text("대표 이미지를 등록해주세요");
       }
     }
-
+    // 파일 유효성 검사
     function validFileType(filename) {
       const fileTypes = ["png", "jpg", "jpeg"];
       return fileTypes.indexOf(filename.substring(filename.lastIndexOf(".") + 1, filename.length).toLowerCase()) >= 0;
@@ -500,7 +679,6 @@
         return true;
       }
     }
-
     function validFileNameSize(filename) {
       if (filename.length > 30) { //30자
         return false;
@@ -509,6 +687,51 @@
       }
     }
     
+ // 해시 태그 
+    $(function () {
+      $("input[name=hashtag]").focusin(function () {
+        if ($("input[name=hashtag]").val().trim() == "") {
+          $("input[name=hashtag]").val("#");
+        }
+      });
+      $("input[name=hashtag]").focusout(function () {
+        if ($("input[name=hashtag]").val().trim() != "#") {
+          $(".hashtag-area").append("<div class='hashtag'><span>" + $("input[name=hashtag]").val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+          $("input[name=hashtag]").val("");
+        }
+        if ($("input[name=hashtag]").val().trim() == "#") {
+          $("input[name=hashtag]").val("");
+        }
+      });
+      $("input[name=hashtag]").keydown(function () {
+        //backspace 막기 
+        if ($(this).val() == "#" && event.keyCode === 8) {
+          return false;
+        }
+        //space  
+        if (event.keyCode === 32 && $(this).val() != "#") {
+          $(".hashtag-area").append("<div class='hashtag'><span>" + $("input[name=hashtag]").val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+          $("input[name=hashtag]").val("#");
+          return false;
+        }
+        //enter  
+        if (event.keyCode === 13 && $(this).val() != "#") {
+          $(".hashtag-area").append("<div class='hashtag'><span>" + $("input[name=hashtag]").val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+          $("input[name=hashtag]").val("#");
+          return false;
+        }
+        //특수문자 막기
+        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+        if (regExp.test($(this).val().substr(1))) {
+          $(this).val($(this).val().substr(0, $(this).val().length - 1));
+        }
+      });
+      $(".hashtag-area").on("click", "i", function () {
+        $(this).parent().remove();
+      });
+    });
+    
+    // 주소 검색 api 
     var geocoder = new kakao.maps.services.Geocoder();
     
      daumPost = () => {
@@ -529,6 +752,86 @@
     		$("input[name=latitude]").val(result[0].y);  // 위도
     	}
     };
+    
+    // 공간 등록 유효성 검사
+    $(function () {
+      $("#spInsertForm input").not("input[name=hashtag]").keydown(function () {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          valichk();
+        }
+      });
+    });
+
+       valichk= () => {
+    	   console.log($("#mainImgFile").val());
+      	if($("input[name=spaceTitle]").val().trim() == "") {
+  			alert("공간 이름을 입력해주세요.");
+  			$("input[name=spaceTitle]").focus();
+  			return false;
+  		}
+      	if($("input[name=stypeNo]:radio:checked").length < 1){
+      		alert("공간 타입을 선택해 주세요.");
+      		return false;
+      	}
+    	if($("textarea[name=spaceInfo]").val() == "") {
+    		alert("공간 소개를 입력해주세요.");
+    		$("textarea[name=spaceInfo]").focus();
+  			return false;
+  		}
+    	if($("input[name=hourPrice]").val().trim() == "") {
+  			alert("1시간당 대여금액을 입력해주세요.");
+  			$("input[name=hourPrice]").focus();
+  			return false;
+  		}
+    	if($("input[name=openTime]").val().trim() == "") {
+  			alert("운영 시작시간을 입력해주세요.");
+  			$("input[name=openTime]").focus();
+  			return false;
+  		}
+    	if($("input[name=closeTime]").val().trim() == "") {
+  			alert("운영 종료시간을 입력해주세요.");
+  			$("input[name=closeTime]").focus();
+  			return false;
+  		}
+    	
+    	if ($("#mainImgFile").val().trim() == "") {
+            alert("대표 이미지를 첨부해주세요.");
+            return false;
+        }
+    	
+    	if ($("input[name=addressDefault]").val().trim() == "") {
+            alert("주소를 입력해주세요.");
+            $("input[name=addressDefault]").focus();
+            return false;
+        }
+    	if ($("input[name=tel]").val().trim() == "") {
+            alert("연락처를 입력해주세요.");
+            $("input[name=tel]").focus();
+            return false;
+        }
+    	
+    	// 숫자 유효성 검사
+     	var regExp = /^[0-9]+$/;
+     	
+     	if(!regExp.test($("input[name=hourPrice]").val())) {
+           alert("대여금액은 숫자만 입력 가능합니다.");
+           $("input[name=hourPrice]").focus();
+           return false;
+       }
+     	if(!regExp.test($("input[name=openTime]").val())) {
+     		alert("시작시간은 숫자만 입력 가능합니다 .");
+           $("input[name=openTime]").focus();
+           return false;
+       }
+     	if(!regExp.test($("input[name=closeTime]").val())) {
+     		alert("종료시간은 숫자만 입력 가능합니다 .");
+           $("input[name=closeTime]").focus();
+           return false;
+       }
+     	
+      }
+    
   </script>
 	
 </body>
