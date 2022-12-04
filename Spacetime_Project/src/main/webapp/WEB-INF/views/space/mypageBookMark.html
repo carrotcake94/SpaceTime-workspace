@@ -296,6 +296,8 @@
         color: black;
       }
       #bookmark{text-align: center;}
+      
+      .image123 {width:500px}
      
       /* -------------------------------------- */
     </style>
@@ -309,7 +311,8 @@
       <div id="space_area">
         <div class="space">
           <div class="img_area">
-            <img src="../../../resources/images/166028842.jpg" alt="사진 없음" />
+            
+            <a href=""><img class="image123" src="../../../resources/images/166028842.jpg" alt="사진 없음" /></a>
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -330,7 +333,7 @@
         </div>
         <div class="space">
           <div class="img_area">
-            <img src="../../../resources/images/166028842.jpg" alt="사진 없음" />
+            <a href=""><img class="image123" src="../../../resources/images/166028842.jpg" alt="사진 없음" /></a>
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -351,7 +354,7 @@
         </div>
         <div class="space">
           <div class="img_area">
-            <img src="../../../resources/images/166028842.jpg" alt="사진 없음" />
+            <a href=""><img class="image123" src="../../../resources/images/166028842.jpg" alt="사진 없음" /></a>
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -383,6 +386,8 @@
             $(this).children("img").css({ transform: "scale(1.0)" });
           });
         });
+
+
       </script>
 
       <ul class="pagination">
@@ -390,10 +395,10 @@
         <li class="page-item page-btn">
           <a id="active-page" class="page-link">1</a>
         </li>
-        <li class="page-item page-btn"><a class="page-link">2</a></li>
-        <li class="page-item page-btn"><a class="page-link">3</a></li>
-        <li class="page-item page-btn"><a class="page-link">4</a></li>
-        <li class="page-item page-btn"><a class="page-link">5</a></li>
+        <li class="page-item page-btn"><a class="page-link" href="">2</a></li>
+        <li class="page-item page-btn"><a class="page-link" href="">3</a></li>
+        <li class="page-item page-btn"><a class="page-link" href="">4</a></li>
+        <li class="page-item page-btn"><a class="page-link" href="">5</a></li>
         <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
       </ul>
     </div>

@@ -126,72 +126,70 @@
         
         <!-- 회원 상세조회 -->
         <div id="memProfile">
-            <div id="profile">
                 
-                <!-- 프로필 사진, 닉네임 -->
-                <div class="mem_info" align="center">
-                    <img src="../../../resources/images/profile_default.png" class="mem_img photo">
-                    <span class="memEdit"><a class="mamEdit" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pencil"></i></a></span>
-                    <br>
-                    <div style="height:30px;"><b>김철수닉네임</b>&nbsp;&nbsp;<span id="memGrade">회원등급</span></div>
-                </div>
-
-                <!-- 프로필 정보 -->
-                <div class="mem_info">
-                    <table id="mem_detail"> 
-                        <tr>
-                            <th>아이디</th>
-                            <td colspan="2">kimkim</td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <td colspan="2">김철수 &nbsp;&nbsp;<span id="gender">[성별]</span></td>
-                        </tr>
-                        <tr>
-                            <th>이메일</th> 
-                            <td colspan="2">kcs123456@gmail.com</td>
-                        </tr> 
-                        <tr>
-                            <th>연락처</th>
-                            <td>010-1234-5678</td>
-                            <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editPhone">변경하기</button></td>
-                        </tr>
-                        <tr>
-                            <th>가입일</th>
-                            <td colspan="2">2022-10-10</td>
-                        </tr> 
-                        <tr>
-                            <th>비밀번호</th> 
-                            <td colspan="2"><a class="changePwd" data-toggle="modal" data-target="#editPwd">변경하기</a></td>
-                        </tr> 
-
-                        <!-- ===================================== 호스트만 보이기 ===================================== -->
-                        <tr>
-                            <th>정산 계좌</th>
-                            <td>은행명 계좌번호 예금주이름</td>
-                            <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editAccount">변경하기</button></td>
-                        </tr>
-                        <tr>
-                            <th>운영공간</th> 
-                            <td class="space">
-                                <div class="space"><a href="#" class="space">운영공간이름 1</a></div> 
-                                <div class="space"><a href="#" class="space">운영공간이름 2</a></div>
-                            </td>
-                            <td align="right"><a href="" class="showmore">더보기</a></td>
-                        </tr>
-                        <!-- ===================================== 호스트만 보이기 ===================================== -->
-                    </table>
-                </div> 
-                    
-                <div class="mem_info delete"><a href="" class="delete">서비스 탈퇴하기</a></div>
-                
+            <!-- 프로필 사진, 닉네임 -->
+            <div class="mem_info" align="center">
+                <img src="../../../resources/images/profile_default.png" class="mem_img photo">
+                <span class="memEdit"><a class="mamEdit" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pencil"></i></a></span>
+                <br>
+                <div style="height:30px;"><b>김철수닉네임</b>&nbsp;&nbsp;<span id="memGrade">회원등급</span></div>
             </div>
+
+            <!-- 프로필 정보 -->
+            <div class="mem_info">
+                <table id="mem_detail"> 
+                    <tr>
+                        <th>아이디</th>
+                        <td colspan="2">kimkim</td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td colspan="2">김철수 &nbsp;&nbsp;<span id="gender">[성별]</span></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th> 
+                        <td colspan="2">kcs123456@gmail.com</td>
+                    </tr> 
+                    <tr>
+                        <th>연락처</th>
+                        <td>010-1234-5678</td>
+                        <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editPhone">변경하기</button></td>
+                    </tr>
+                    <tr>
+                        <th>가입일</th>
+                        <td colspan="2">2022-10-10</td>
+                    </tr> 
+                    <tr>
+                        <th>비밀번호</th> 
+                        <td colspan="2"><a class="changePwd" data-toggle="modal" data-target="#editPwd">변경하기</a></td>
+                    </tr> 
+
+                    <!-- ===================================== 호스트만 보이기 ===================================== -->
+                    <tr>
+                        <th>정산 계좌</th>
+                        <td>은행명 계좌번호 예금주이름</td>
+                        <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editAccount">변경하기</button></td>
+                    </tr>
+                    <tr>
+                        <th>운영공간</th> 
+                        <td class="space">
+                            <div class="space"><a href="#" class="space">운영공간이름 1</a></div> 
+                            <div class="space"><a href="#" class="space">운영공간이름 2</a></div>
+                        </td>
+                        <td align="right"><a href="" class="showmore">더보기</a></td>
+                    </tr>
+                    <!-- ===================================== 호스트만 보이기 ===================================== -->
+                </table>
+            </div> 
+                
+            <div class="mem_info delete"><a href="" class="delete">서비스 탈퇴하기</a></div>
+                
         </div>
     </div>
 
     <!-- 프사, 닉네임 수정 모달창 -->
     <div class="modal fade" id="editModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             
                 <!-- Modal Header -->
@@ -232,7 +230,7 @@
 
     <!-- 연락처 수정 모달창 -->
     <div class="modal fade" id="editPhone">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             
                 <!-- Modal Header -->
@@ -267,7 +265,7 @@
 
     <!-- 비밀번호 수정 모달창 -->
     <div class="modal fade" id="editPwd">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             
                 <!-- Modal Header -->
@@ -307,7 +305,7 @@
 
     <!-- 정산계좌정보 수정 모달창 -->
     <div class="modal fade" id="editAccount">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             
                 <!-- Modal Header -->

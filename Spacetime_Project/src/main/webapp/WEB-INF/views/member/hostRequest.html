@@ -14,7 +14,9 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+<style>
+	.bank {border-color: rgb(194, 194, 194);}
+</style>
 <body>
 	<div class="wrap">
 		<jsp:include page="common/header.jsp" />
@@ -44,12 +46,29 @@
 						
 						<h5>은행명</h5>
 							<div class="dropdown">
-								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+								<select class="bank" value="은행선택">
+									<option class="bankselect" disabled selected>--선택해주세요--</option>
+									<option>국민은행</option>
+									<option>광주은행</option>
+									<option>신한은행</option>
+									<option>수협은행</option>
+									<option>새마을금고</option>
+									<option>씨티은행</option>
+									<option>우리은행</option>
+									<option>우체국</option>
+									<option>카카오뱅크</option>
+									<option>케이뱅크</option>
+									<option>한국산업은행</option>
+								</select>
+								<!-- <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 								은행선택
-								</button>
+								</button> 
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="">광주은행</a>
-									<a class="dropdown-item" href="">신한은행</a>
+
+									 <option>은행</option>
+									<option>광주은행</option>
+									<option>광주은행</option> -->
+									<!-- <a class="dropdown-item" >신한은행</a>
 									<a class="dropdown-item" href="">수협은행</a>
 									<a class="dropdown-item" href="">새마을금고</a>
 									<a class="dropdown-item" href="">씨티은행</a>
@@ -57,8 +76,8 @@
 									<a class="dropdown-item" href="">우체국</a>
 									<a class="dropdown-item" href="">카카오뱅크</a>
 									<a class="dropdown-item" href="">케이뱅크</a>
-									<a class="dropdown-item" href="">한국산업은행</a>
-								</div>
+									<a class="dropdown-item" href="">한국산업은행</a> 
+								</div>  -->
 							
 								<br><br>
 								<div class="container1">
@@ -82,7 +101,7 @@
 					  
 					  <!-- Modal footer -->
 					  <div class="modal-footer" align="right" id="">
-						<button type="submit" class="btn" data-dismiss="modal" style="background-color: lightgray;" >확인</button>
+						<button type="submit" class="btn" data-dismiss="modal" style="background-color: lightgray;" onclick="" >확인</button>
 						<button type="button" class="btn" data-dismiss="modal" style="background-color:  lightgray;">취소</button>
 						
 					  </div>

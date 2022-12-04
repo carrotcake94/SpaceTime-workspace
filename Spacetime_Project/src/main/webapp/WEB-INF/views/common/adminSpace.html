@@ -69,7 +69,7 @@
     /* 탭 메뉴 */
     #tab {
         margin: auto;
-        margin-top: 40px;;
+        margin-top: 40px;
         width: 60%;
     }
     
@@ -81,13 +81,14 @@
     /* 테이블 행 */
     .table>tbody>tr:hover {
         cursor: pointer;
-        background-color: #FFCB42;
-        color: #277BC0;
+        background-color: rgb(236, 236, 236);
+        font-weight: bold;
     }
     thead th, tbody>tr {
         text-align: center;
     }
 
+    .form-group select { vertical-align: center;}
 
 </style>
 </head>
@@ -153,7 +154,7 @@
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            <tr>
+                            <tr data-toggle="modal" data-target="#checkSpace">
                                 <td>3</td>
                                 <td>dodo</td>
                                 <td></td>
@@ -195,6 +196,48 @@
             <button class="btn btn-warning btn-sm">&gt;</button>
         </div>
 
+    </div>
+
+    <!-- 공간검수 처리 모달창 -->
+    <div class="modal fade" id="checkSpace">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">공간검수</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <th style="width:25%; height: 50px;">공간명</th>
+                                <td>공간이름~~(누르면 공간 상세정보 새창으로~~)</td>
+                            </tr>
+                            <tr>
+                                <th>처리</th>
+                                <td class="form-group">
+                                    <select class="form-control" style="width:50%;"">
+                                        <option value="N">승인대기</option>
+                                        <option value="Y">승인</option>
+                                        <option value="D">반려</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-dismiss="modal">처리</button>
+                        <!-- 검수처리가 잘 되면 alert 창 띄우기! -->
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>
