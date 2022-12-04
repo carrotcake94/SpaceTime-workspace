@@ -444,6 +444,35 @@
         padding: 20px 0px;
     }
 
+          /* 페이지네이션 */
+          .pagination {
+        justify-content: center;
+      }
+
+      .pagination a {
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 8px;
+        background-color: #eeeeee;
+        color: black;
+      }
+
+      .pagination a:hover {
+        color: rgb(253, 193, 55);
+        background-color: #e4e4e4;
+        border-color: #ccc;
+      }
+
+      #active-page {
+        background-color: rgb(253, 193, 55);
+        color: white;
+      }
+
+      .page-btn {
+        margin: 0 5px;
+      }
+
 
 </style>
 </head>
@@ -735,14 +764,16 @@
                 <div align="center">
                     <div style="width: 245px">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#"><</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">></a></li>
-                        </ul>
+                            <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
+                            <li class="page-item page-btn">
+                              <a id="active-page" class="page-link">1</a>
+                            </li>
+                            <li class="page-item page-btn"><a class="page-link">2</a></li>
+                            <li class="page-item page-btn"><a class="page-link">3</a></li>
+                            <li class="page-item page-btn"><a class="page-link">4</a></li>
+                            <li class="page-item page-btn"><a class="page-link">5</a></li>
+                            <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
+                          </ul>
                     </div>
                 </div>
 
