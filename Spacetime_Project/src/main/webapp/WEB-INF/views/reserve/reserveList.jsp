@@ -17,23 +17,11 @@
       }
 
       .sheader {
-        overflow: hidden;
         font-size: 25px;
         font-weight: 800;
-        margin-bottom: 40px;
+        display: inline-block;
       }
 
-      .sheader button {
-        float: right;
-        height: 60px;
-        width: 170px;
-        background-color: rgb(39, 123, 192);
-        color: white;
-        border-radius: 5px;
-        border: none;
-        font-size: 18px;
-        font-weight: 600;
-      }
 
       /* 페이지네이션 */
       .pagination {
@@ -282,6 +270,56 @@
         color: black;
       }
       
+      /* 검색필터  */
+      .selectbox {
+        position: relative;
+        width: 200px;  /* 너비설정 */
+        border: 1px solid #999;  /* 테두리 설정 */
+        z-index: 1;
+        display: inline-block;
+      }
+      
+      .selectbox:before {  /* 화살표 대체 */
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        width: 0;
+        height: 0;
+        margin-top: -1px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #333;
+      }
+      
+      .selectbox label {
+        position: absolute;
+        top: 1px;  /* 위치정렬 */ 
+        left: 5px;  /* 위치정렬 */
+        
+        color: #999;  
+        z-index: -1;  /* IE8에서 label이 위치한 곳이 클릭되지 않는 것 해결 */
+      }
+      
+      .selectbox select {
+        width: 100%; 
+        height: auto;  /* 높이 초기화 */
+        line-height: normal;  /* line-height 초기화 */
+        font-family: inherit;  /* 폰트 상속 */
+        border: 0;
+        opacity: 0;  /* 숨기기 */
+        filter:alpha(opacity=0);  /* IE8 숨기기 */
+        -webkit-appearance: none; /* 네이티브 외형 감추기 */
+        -moz-appearance: none;
+        appearance: none;
+      }
+      .btn-sort {
+        background-color : rgb(96, 155, 204);
+      	border-radius: 0.25rem;
+        cursor: pointer;
+        border: none;
+        color: white;
+      }
 
 </style>
 </head>
@@ -291,9 +329,51 @@
 	
     <div id="spaceList_Host">
         <div class="sheader" style="padding-top: 100px;">
-          예약 내역 리스트
-          <!-- <button type="button" onclick="">공간등록하기</button> -->
+          
+	         예약 내역 리스트 
+        </div> 
+
+        <br>
+          
+      <!--  정렬기준 드롭박스  -->
+      <div align="right">
+        <div class="selectbox" align="right">
+          <label for="ex_select">정렬조건선택</label>
+            <select id="ex_select">
+                <option selected>정렬조건선택</option>
+                <option>예약대기</option>
+                <option>예약취소</option>
+                <option>예약확정</option>
+                <option>이용완료</option>
+            </select>
         </div>
+  
+        <button class="btn-sort">검색</button>
+      </div>
+
+
+      
+
+      <br>
+			
+			<!-- 드롭박스 선택시 값자동으로 바뀌게 -->
+			<script>
+				$(document).ready(function(){
+					  var selectTarget = $('.selectbox select');
+	
+					 selectTarget.on('blur', function(){
+					   $(this).parent().removeClass('focus');
+					 });
+	
+					  selectTarget.change(function(){
+					    var select_name = $(this).children('option:selected').text();
+	
+					  $(this).siblings('label').text(select_name);
+					  });
+					});
+			</script>
+        
+        
         <div id="space_area">
           <div class="space">
             <div class="img_area">
