@@ -407,7 +407,6 @@
         
         <script>
         	var searchBtn = document.querySelector("#m_search_btn");
-        	console.log(searchBtn);
         	
         	document.querySelector("#m_search_btn").onclick = () => {
         		location.href = "searchSpaceList.sp";

@@ -27,6 +27,10 @@
     width: 60%;
 }
 
+#listOption {
+	padding: 10px 10px 10px 20px;
+}
+
 #listOption > div {
     display: inline-block;
     margin: 0 auto;
@@ -40,8 +44,6 @@
 #listOption_listStyle {
     width : 150px;
     height : 70px;
-    margin-left: 0;
-    float: left;
 }
 
 #listOption > div{
@@ -58,6 +60,17 @@
     width: 100px;
     height: 70px;
     float: right;
+}
+
+.listOption_options {
+	padding: 10px;
+}
+
+.listOption_options > img {
+	width: 70%;
+	height: 70%;
+	object-fit: cover;
+	margin: 0 auto;
 }
 
 #mapFilter {
@@ -149,11 +162,12 @@ form > div {
     border-bottom : 1px solid black;
 }
 
-#picList {
+#picList, #lineList {
     width: 100%;
     height: 100%;
     overflow-y: scroll;
 }
+
 
 .picList_content > div {
     border: 1px solid black;
@@ -172,4 +186,39 @@ form > div {
 .picList_content_pic {
     height: 200px;
     padding: 20px;
+}
+
+/*게시판형 리스트*******************************/
+
+#lineList > div {
+    border: 1px solid black;
+    margin : 40px;
+    height: 150px;
+    width: 80%;
+}
+
+.lineList_content_spaceName {
+    height: 40px;
+    font-size : 25px;
+    line-height: 1.5;
+    padding-left: 3px;
+}
+
+.lineList_content_spaceInfo {
+    height: 83px;
+    font-size : 15px;
+}
+
+.lineList_content_price, .lineList_content_loc, .lineList_content_like {
+    float:left;
+    height: 30px;
+    font-size : 15px;
+}
+
+.lineList_content_price {
+    width: 50%;
+}
+
+.lineList_content_loc { 
+    width: 30%;
 }

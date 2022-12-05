@@ -60,19 +60,6 @@
 				
 				
 				
-				<!-- 테마 -->
-				<div id="main_theme">
-					<table>
-						<tr>
-							<td>파티를 위한 공간</td>
-							<td>운동을 위한 공간</td>
-						</tr>
-						<tr>
-							<td>요리를 함께하기 위한 공간</td>
-							<td>연습공간</td>
-						</tr>
-					</table>
-				</div>
 				<!-- 오늘의 추천 공간 / onclick="location.href'링크'"로 페이지 이동 -->
 				<div id="main_recommend">
 					<div id="main_recommend_title">
