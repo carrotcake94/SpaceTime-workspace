@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
    <style>
-   	
+    
    		/*
         body {
             font-family: 'Lato', sans-serif;
@@ -432,18 +433,41 @@
     <div id="main-slidemenu">
         <div id="profile_dv">
             <table id="profile_tb">
-                <tr>
-                    <td rowspan="2">
-                        <img src="resources/images/profile.png">
-                    </td>
-                    <td>
-                        고양이님
-                    </td>
-                </tr>
-                <tr>
-                    <td><a href="">프로필 관리 및 수정</a></td>
-                </tr>
-            </table>
+            <c:choose>
+                
+                <c:when test="${empty loginUser}">
+                    <table id="profile_tb">
+                    <!-- 로그인 전 -->
+                    <tr>
+                        <td rowspan="2">
+                            <img src="resources/images/logo.png" style="width:80px; height:80px;">
+                        </td>
+                        <td>
+                            <a href="enrollLogin.me">로그인</a> / <a href="enrollForm.me">회원가입</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>
+                </c:when>
+                <c:otherwise>
+                <table id="profile_tb">
+                    <!-- 로그인 후 -->
+                    <tr>
+                        <td rowspan="2">
+                            <img src="resources/images/profile.png">
+                        </td>
+                        <td>
+                            ${ loginUser.memName } 님
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="">프로필 관리 및 수정</a></td>
+                    </tr>
+                </table>
+                </c:otherwise>
+            </c:choose>
 
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </div>
