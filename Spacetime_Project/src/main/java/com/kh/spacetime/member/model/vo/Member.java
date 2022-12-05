@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -21,7 +22,7 @@ public class Member {
     private String memName; // MEM_NAME VARCHAR2(21) NOT NULL,
     private String gender; // GENDER CHAR(1) NOT NULL CONSTRAINT MEM_GENDER_CK CHECK(GENDER IN ('M', 'F')),
     private Date birthday; // BIRTHDAY DATE NOT NULL,
-    private String nickName; // NICKNAME VARCHAR2(30) NOT NULL CONSTRAINT MEM_NICKNAME_UQ UNIQUE,
+    private String nickname; // NICKNAME VARCHAR2(30) NOT NULL CONSTRAINT MEM_NICKNAME_UQ UNIQUE,
     private String phone; // PHONE VARCHAR2(11) NOT NULL,
     private String email; // EMAIL VARCHAR2(30) NOT NULL,
     private String profilePath; // PROFILE_PATH VARCHAR2(255) NULL,

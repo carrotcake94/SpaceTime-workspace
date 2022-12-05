@@ -394,10 +394,23 @@
 <body>
 </head>
 <body>
+	
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
 	<!--헤더-->
     <div class="header">
-        <div id="logo"><img src="resources/images/logo.png" ></div>
-
+        <div id="logo"><img src="resources/images/logo.png"></div>
+		<script>
+			$(function() {
+				$("#logo").click(function() {
+					location.href="/";
+				})
+			})
+		</script>
         <div id="home_btn">
             <span style="color:#277BC0;">S</span><span>pace</span><span
                 style="color: #FFB200;">T</span><span>ime</span>
@@ -435,7 +448,7 @@
             <table id="profile_tb">
             <c:choose>
                 
-                <c:when test="${empty loginUser}">
+                <c:when test="${empty loginMember}">
                     <table id="profile_tb">
                     <!-- 로그인 전 -->
                     <tr>
@@ -459,7 +472,7 @@
                             <img src="resources/images/profile.png">
                         </td>
                         <td>
-                            ${ loginUser.memName } 님
+                            ${ loginMember.memName } 님
                         </td>
                     </tr>
                     <tr>
@@ -494,8 +507,7 @@
                 <li><a href="#">서비스정보</a></li>
             </ul>
             <ul>
-                <li><a href="#">Promotions</a></li>
-                <li><a href="#">Log In</a> | <a href="#">Register</a></li>
+                <li><a href="logout.me">로그아웃</a></li>
             </ul>
 
         </div>

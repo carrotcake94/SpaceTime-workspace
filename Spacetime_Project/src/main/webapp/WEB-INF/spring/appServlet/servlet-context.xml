@@ -23,6 +23,15 @@
 	
 	<context:component-scan base-package="com.kh.spacetime" />
 	
-	
+	<!--
+	<interceptors>
+		<interceptor>
+			<mapping path="/myPage.me" />
+			<mapping path="/enrollForm.bo" />
+			<mapping path="/update.me" />
+			<beans:bean class="com.kh.spring.common.interceptor.LoginInterceptor" id="loginInterceptor" />
+		</interceptor>
+	</interceptors>
+	-->
 	
 </beans:beans>

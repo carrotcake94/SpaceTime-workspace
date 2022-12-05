@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,15 +83,22 @@
 		
         <div id="content_2">
         <br><br><br>
-            <form id="login-area">
+            <form id="login-area" action="login.me" method="post">
                 <div><legend align="center">로그인</legend></div>
                 <div>
-                    <input id="memId" class="form-control" type="text" name="memId" placeholder="아이디">
-                    <input id="memPwd" class="form-control" name="memPwd" type="password" placeholder="비밀번호">
+                    <input id="memId" class="form-control" type="text" name="memId" value="${cookie.saveId.value }" placeholder="아이디" required>
+                    <input id="memPwd" class="form-control" name="memPwd" type="password" placeholder="비밀번호" required>
 
                     <div class="memory_box">
                         <div style="float:left;">
-                            <input id="memory" type="checkbox"><label for="memory">아이디 기억하기</label>
+                        	<c:choose>
+                        		<c:when test="${ not empty cookie.saveId }">
+                        			<input id="memory" name="saveId" type="checkbox" value="y" checked><label for="memory">아이디 기억하기</label>
+                        		</c:when>
+                        		<c:otherwise>
+                        			<input id="memory" name="saveId" type="checkbox" value="y"><label for="memory">아이디 기억하기</label>
+                        		</c:otherwise>
+                        	</c:choose>
                         </div>
                         <div style="float:right;">
                             <a data-toggle="modal" data-target="#findId">아이디 찾기</a>
@@ -103,7 +111,7 @@
                 </div>
 
                 <p class="no_mem" align="center"> 아직 스페이스타임 회원이 아니신가요?
-                    <a href="/auth/signup" class="">회원가입</a>
+                    <a href="enrollForm.me">회원가입</a>
                 </p>
             </form>
         </div>
