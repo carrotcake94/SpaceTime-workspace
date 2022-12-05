@@ -25,12 +25,10 @@
 	}
 
 	
-	.reviewList { text-align: center; }
+	.table { text-align: center; }
 	.reviewList tr { line-height: 40px; }
-	.table>tbody>tr:hover { cursor: pointer;}
-	
-	
-	
+	.table>tbody>tr:hover { cursor: pointer; }
+ 
 
 </style>
 </head>
@@ -108,33 +106,33 @@
 	            	});
             </script>
           </div>
-		  <!-- 페이징바 -->
-		   <div id="pagingArea">
-                <ul class="pagination">
-                	<c:choose>
-                		<c:when test="${ pi.currentPage eq 1 }">
-                			<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                		</c:when>
-                		<c:otherwise>
-                			<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">Previous</a></li>
-                		</c:otherwise>
-                	</c:choose>
-                    
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                    	<li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
-                    </c:forEach>
-                    
-                    <c:choose>
-                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-                    		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-                    	</c:when>
-                    	<c:otherwise>
-                    		<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">Next</a></li>
-                    	</c:otherwise>
-                    </c:choose>
-                </ul>
-            </div> 
+          <br>
+		 <!-- 페이지 버튼 -->
+        <div class="btnPage" align="center">
+            <ul class="pagination">
+                <c:choose>
+                    <c:when test="${pi.currentPage eq 1}">
+                        <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item no-page-prev"><a class="page-link" href="spList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                    </c:otherwise>
+                </c:choose>
 
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                    <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                </c:forEach>
+                
+                <c:choose>
+                    <c:when test="${pi.currentPage eq pi.maxPage}">
+                        <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item no-page-next"><a class="page-link" href="spList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+        </div>
 	</div>
 	
 	<div id="content_3">오른쪽여백</div>
