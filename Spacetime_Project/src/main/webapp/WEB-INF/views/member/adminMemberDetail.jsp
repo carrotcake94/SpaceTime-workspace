@@ -1,49 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 상세조회</title>
-    <!-- jquery 온라인 방식 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-
-    <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- font awesome icon css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-    <!--아이콘-->
-    <script src="https://kit.fontawesome.com/c7bfbb0e5b.js" crossorigin="anonymous"></script>
-    <link rel='stylesheet' href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'>
-
-    <!-- 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
-
-    <!-- 나눔스퀘어 폰트 -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+<title>회원 상세조회</title>
 <style>
-
-    body { font-family: 'NanumSquare', sans-serif;}
-
-    /* content 영역 */
-    #content {
-        border: 1px solid red;
-        margin: auto;
-        min-width: 1000px;
-        height: 100%;
-        min-height: 840px;
-        background-color: rgba(128, 128, 128, 0.1);
-    }
 
     /* 회원 상세조회 전체 영역 */
     #memProfile {
@@ -121,8 +84,11 @@
 </style>
 </head>
 <body>
-    <!-- 컨텐트 영역 -->
+
+	<jsp:include page="../common/header.jsp" />
+
     <div id="content">
+    <jsp:include page="../common/adminNavi.jsp" />
         
         <!-- 회원 상세조회 -->
         <div id="memProfile">

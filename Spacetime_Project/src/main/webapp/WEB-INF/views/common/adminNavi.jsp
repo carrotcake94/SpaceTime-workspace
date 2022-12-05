@@ -91,7 +91,7 @@
 <body>
 	
 	
-	<div id="header_area"><jsp:include page="../common/header.jsp" /></div>
+	<jsp:include page="header.jsp" />
 
     <div id="content">
         <div class="adminMenu">

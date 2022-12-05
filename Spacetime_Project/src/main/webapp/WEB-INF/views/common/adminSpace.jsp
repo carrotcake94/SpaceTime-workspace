@@ -60,9 +60,10 @@
 </head>
 <body>
 
-	<div id="header_area"><jsp:include page="../common/header.jsp" /></div>
+	<jsp:include page="header.jsp" />
 	
 	<div id="content">
+	<jsp:include page="adminNavi.jsp" />
 
         <!-- 공간관리 제목 -->
         <div align="left" id="title"><h3>공간 관리</h3></div>
