@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>관리자 메뉴</title>
+<title>매출 관리</title>
 </head>
 <body>
 
