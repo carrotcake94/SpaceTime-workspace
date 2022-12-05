@@ -423,7 +423,7 @@
         	var searchBtn = document.querySelector("#m_search_btn");
         	
         	document.querySelector("#m_search_btn").onclick = () => {
-        		location.href = "searchSpaceList.sp";
+        		location.href = "searchSpaceList.mp";
         	}
         	 /* 
            	$(function() {

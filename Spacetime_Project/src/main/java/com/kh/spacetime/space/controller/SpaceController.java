@@ -119,22 +119,39 @@ public class SpaceController {
 		return "space/hostReviewList";
 	}
 
-	/* 공간조회용 */
-	@RequestMapping("searchSpaceList.sp")
+	/* 공간조회용 -성훈 */
+	@RequestMapping("searchSpaceList.mp")
 	public String selectSpaceList() {
+		
 		return "space/searchSpace";
 	}
 
-	/* 공간조회 - 게시판형식으로 정렬 */
-	@RequestMapping("sortLineList.sp")
+	/* 공간조회 - 게시판형식으로 정렬 -성훈 */
+	@RequestMapping("sortLineList.mp")
 	public void sortLineList() {
 
 	}
 
-	/* 공간조회 - 사진형식으로 정렬 */
-	@RequestMapping("sortPicList.sp")
+	/* 공간조회 - 사진형식으로 정렬 -성훈 */
+	@RequestMapping("sortPicList.mp")
 	public void sortPicList() {
 
+	}
+	
+	/* 표시된 지도 범위에 포함된 장소 조회 -성훈 */
+	@RequestMapping("selectSpace.mp")
+	public String selectSpaceMap(double max_lat, double max_lng, double min_lat, double min_lng) {
+		System.out.println(max_lat);
+		System.out.println(max_lng);
+		System.out.println(min_lat);
+		System.out.println(min_lng);
+		Space max = 
+		
+		ArrayList<Space> list = new ArrayList<Space>();
+		
+		list = SpaceDao.selectSpaceMap()
+		
+		return gson().toJson(list);
 	}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)

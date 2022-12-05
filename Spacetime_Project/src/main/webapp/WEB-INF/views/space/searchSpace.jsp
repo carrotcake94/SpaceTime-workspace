@@ -271,23 +271,79 @@
 				<div id="map">
 				</div>
 				<script>
-					var HOME_PATH = window.HOME_PATH || '.';
+					/* function selectSpace(){
+						$.ajax({
+							url: "selectSpace.mp",
+							type: "post",
+							data : {
+								max : var max = {
+										_lat : ${ rect.bounds._max._lat },
+										_lng : ${rect.bounds._max._lng }
+								}
+								min : var min = {
+										_lat : ${ rect.bounds._min._lat },
+										_lng : ${ rect.bounds._min._lng }
+								}
+							}
+						});
+					} */
+				
+					$(function(){
+						var HOME_PATH = window.HOME_PATH || '.';
+		
+						//최초로 가리키는 곳
+						map = new naver.maps.Map('map', {
+							center: new naver.maps.LatLng(37.53306, 126.89632),
+							zoom: 13
+						});
+						
+						var rect = new naver.maps.Rectangle({
+					        strokeOpacity: 0,
+					        strokeWeight: 0,
+					        fillOpacity: 0.2,
+					        bounds: map.getBounds(), // 지도의 bounds와 동일한 크기의 사각형을 그립니다.
+					        map: map
+					    });
 	
-					//최초로 가리키는 곳
-					map = new naver.maps.Map('map', {
-					center: new naver.maps.LatLng(37.53306, 126.89632),
-					zoom: 13
+					    naver.maps.Event.addListener(map, "bounds_changed", function(bounds) {
+					        window.setTimeout(function() {
+					            rect.setBounds(bounds);
+					        }, 500);
+					   	});
+						
+					        console.log(rect.bounds._max.y);
+					        console.log(rect.bounds._max.x);
+					        console.log(rect.bounds);
+					        
+					        
+					        $.ajax({
+								url: "selectSpace.mp",
+								type: "get",
+								data : {
+									max_lat : rect.bounds._max._lat,
+									max_lng : rect.bounds._max._lng,
+									min_lat : rect.bounds._min._lat,
+									min_lng : rect.bounds._min._lng
+								},
+					        	success : function(list){
+					        		
+					        	},
+					        	error : function() {
+					        		
+					        	}
+							});
+					    
+						//마커위치설
+						/* var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
+						
+						var markers = [];
+						var infowindows = [];
+						
+						markers.push(new naver.maps.Marker({
+						    map: map,
+						    position: sillimStn
+						})); */
 					});
-					
-					var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
-					
-					var markers = [];
-					var infowindows = [];
-					
-					markers.push(new naver.maps.Marker({
-					    map: map,
-					    position: sillimStn
-					}));
 				</script>
 			</div>
 		</div>
