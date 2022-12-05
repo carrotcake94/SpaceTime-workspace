@@ -17,6 +17,7 @@
 		<typeAlias type="com.kh.spacetime.space.model.vo.SpaceAttachment" alias="spaceAttachment" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.SpaceType" alias="spaceType" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.Review" alias="review" />
+		<typeAlias type="com.kh.spacetime.common.model.vo.Report" alias="report" />
 	</typeAliases>
 	
 	<!-- 
@@ -35,8 +36,10 @@
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/newsletter-mapper.xml" />
+		<mapper resource="/mappers/notice-mapper.xml" />
 		<mapper resource="/mappers/reserve-mapper.xml" />
 		<mapper resource="/mappers/review-mapper.xml" />
 		<mapper resource="/mappers/space-mapper.xml" />
+		<mapper resource="/mappers/common-mapper.xml" />
 	</mappers>
 </configuration>
