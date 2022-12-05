@@ -33,7 +33,7 @@
 }
 
 #main_categoryBar {
-	height: 110px;
+	height: 140px;
 }
 
 #main_recommend {
@@ -51,12 +51,18 @@
 	margin-top : 20px;
 }
 
-#previewBtn, #nextBtn{
+#prevBtn, #nextBtn{
 	width: 10%;
 	height: 100%;
 	text-align: center;
 	float: left;
 	margin-left: 0px;
+}
+
+.slider {
+	height: 100%;
+	width: 100%;
+	float:left;
 }
 
 .categoryBtn > * {
@@ -65,21 +71,34 @@
 
 
 #main_category_bundle{
+	position : relative;
 	float: left;
 	height: 100%;
 	width: 80%;
+	margin: 0 auto;
+	overflow: hidden;
 }
 
 .main_category {
-	display: inline-block;
+	display : inline-block;
 	width: 12%;
 	height: 100%;
-	margin: 0px 9.3px;
+	margin: 0px 36.3px;
 	box-sizing: border-box;
 	border: 1px solid black;
 }
 
+.main_category > img {
+	width: 100%;
+	height: 80%;
+	object-fit: cover;
+}
 
+.main_category > div {
+	text-align: center;
+}
+
+/**/
 /* 테마 *************************************************************************************/
 #main_theme {
 	margin-top: 150px;
@@ -210,4 +229,9 @@
 
 .main_reviewZone_card > div {
 	border: 1px solid black;
+}
+
+#map {
+	width: 100%;
+	height: 100%;
 }
