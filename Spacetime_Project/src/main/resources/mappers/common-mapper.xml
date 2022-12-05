@@ -1,5 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="commonMapper">
+	
+	<resultMap id="commonReportSet" type="report">
+		<result column="REPORT_NO" property="reportNo" />
+		<result column="REPORT_TYPE" property="reportType" />
+		<result column="REPORT_CONTENT" property="reportContent" />
+		<result column="REPORT_DATE" property="reportDate" />
+		<result column="REPORT_STATUS" property="reportStatus" />
+		<result column="REPORT_ANSWER" property="reportAnswer" />
+		<result column="REPORT_MEM_NO" property="reportMemNo" />
+		<result column="REPORTED_MEM_NO" property="reportedMemNo" />
+	</resultMap>
+	
+	<!-- 관리자페이지 신고 리스트 조회 + 페이징 처리 -->
+	<!-- 신고 글 총 개수 -->
+	<select id="selectReportListCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		<if test="_parameter == 'all'.toString()">
+			WHERE STATUS = 'Y'
+			  AND STATUS = 'N'
+			  AND STATUS = 'D'
+		</if>
+		<if test="_parameter == 'wait'.toString()">
+			WHERE STATUS = 'N'
+		</if>
+		<if test="_parameter == 'accept'.toString()">
+			WHERE STATUS = 'Y'
+		</if>
+		<if test="_parameter == 'deny'.toString()">
+			WHERE STATUS = 'D'
+		</if>
+	</select>
+	
+	<!-- 신고 리스트 조회 -->
+	<!-- 신고 상세조회 -->
+	<!-- 신고 처리 (승인, 반려) -->
+
+	<!-- 관리자페이지 매출 리스트 조회 + 페이징 처리 -->	
+	<!-- 매출이 있는 공간 총 개수 -->
+	<!-- 매출이 있는 공간 리스트 조회 --> 
+	<!-- 공간별 매출 상세조회 -->
 
 </mapper>

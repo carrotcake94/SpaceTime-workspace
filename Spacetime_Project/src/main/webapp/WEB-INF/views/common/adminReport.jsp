@@ -81,6 +81,36 @@
     /* 관리자 답변 영역 */
     .report_answer { margin-top: 20px;}
 
+    /* 페이지 버튼 */
+    .pagination {
+        margin: auto;
+        justify-content: center;
+    }
+
+    .pagination a {
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 8px;
+        background-color: #eeeeee;
+        color: black;
+    }
+
+    .pagination a:hover {
+        color: rgb(253, 193, 55);
+        background-color: #e4e4e4;
+        border-color: #ccc;
+    }
+
+    #active-page {
+        background-color: rgb(253, 193, 55);
+        color: white;
+    }
+
+    .page-btn {
+        margin: 0 5px;
+    }
+
 
 </style>
 </head>
@@ -123,19 +153,23 @@
             <!-- 탭 메뉴 -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                <a class="nav-link active all" data-toggle="tab" href="#all">전체 신고</a>
+                    <a class="nav-link active active" data-toggle="tab" href="#all">전체 신고</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link guest" data-toggle="tab" href="#wait">미처리 신고</a>
+                    <a class="nav-link" data-toggle="tab" href="#wait">미처리 신고</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link host" data-toggle="tab" href="#accept">승인된 신고</a>
+                    <a class="nav-link" data-toggle="tab" href="#accept">승인된 신고</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#deny">반려된 신고</a>
                 </li>
             </ul>
             
             <!-- 탭 내용 -->
             <div class="tab-content">
-                <div class="tab-pane container active" id="all wait accept" align="right" >
+                <!--============================ 전체 조회 ============================-->
+                <div class="tab-pane container active" id="all" align="right" name="all">
                     <table class="table">
                         <thead>
                             <tr>
@@ -148,47 +182,206 @@
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            <tr data-toggle="modal" data-target="#reportDetail">
+                            <tr>
                                 <td>3</td>
                                 <td>dodo</td>
-                                <td></td>
+                                <td>전체</td>
                                 <td></td>
                                 <td>2022-03-23</td>
-                                <td>승인대기</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>dorami</td>
-                                <td></td>
-                                <td></td>
-                                <td>2022-02-16</td>
-                                <td>승인</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>go-gil</td>
-                                <td></td>
-                                <td></td>
-                                <td>2022-01-08</td>
                                 <td>승인</td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <!-- 페이지 버튼 -->
+                    <div class="btnPage" align="center">
+                        <ul class="pagination">
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq 1}">
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                            </c:forEach>
+
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq pi.maxPage}">
+                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </div>
+                </div>
+            
+                <!--============================ 미처리 조회 ============================-->
+                <div class="tab-pane container fade" id="wait" align="right" name="wait">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">신고번호</th>
+                                <th style="width:15%;">ID</th>
+                                <th style="width:10%;">타입</th>
+                                <th style="width:40%;">내용</th>
+                                <th style="width:15%;">신고일</th>
+                                <th style="width:10%;">처리여부</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            <tr>
+                                <td>3</td>
+                                <td>dodo</td>
+                                <td>미처리</td>
+                                <td></td>
+                                <td>2022-03-23</td>
+                                <td>승인대기</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 페이지 버튼 -->
+                    <div class="btnPage" align="center">
+                        <ul class="pagination">
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq 1}">
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                            </c:forEach>
+
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq pi.maxPage}">
+                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--============================ 승인 조회 ============================-->
+                <div class="tab-pane container fade" id="accept" align="right" name="accept">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">신고번호</th>
+                                <th style="width:15%;">ID</th>
+                                <th style="width:10%;">타입</th>
+                                <th style="width:40%;">내용</th>
+                                <th style="width:15%;">신고일</th>
+                                <th style="width:10%;">처리여부</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            <tr>
+                                <td>3</td>
+                                <td>dodo</td>
+                                <td>승인</td>
+                                <td></td>
+                                <td>2022-03-23</td>
+                                <td>승인대기</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 페이지 버튼 -->
+                    <div class="btnPage" align="center">
+                        <ul class="pagination">
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq 1}">
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                            </c:forEach>
+
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq pi.maxPage}">
+                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--============================ 반려 조회 ============================-->
+                <div class="tab-pane container fade" id="deny" align="right" name="deny">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">신고번호</th>
+                                <th style="width:15%;">ID</th>
+                                <th style="width:10%;">타입</th>
+                                <th style="width:40%;">내용</th>
+                                <th style="width:15%;">신고일</th>
+                                <th style="width:10%;">처리여부</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            <tr>
+                                <td>3</td>
+                                <td>dodo</td>
+                                <td>반려</td>
+                                <td></td>
+                                <td>2022-03-23</td>
+                                <td>승인대기</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 페이지 버튼 -->
+                    <div class="btnPage" align="center">
+                        <ul class="pagination">
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq 1}">
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                            </c:forEach>
+
+                            <c:choose>
+                                <c:when test="${pi.currentPage eq pi.maxPage}">
+                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
         <br>
-
-        <!-- 탭 내용 버튼 -->
-        <div id="btnPage" align="center">
-            <button class="btn btn-warning btn-sm">&lt;</button>
-            <button class="btn btn-light btn-sm">1</button>
-            <button class="btn btn-light btn-sm">2</button>
-            <button class="btn btn-light btn-sm">3</button>
-            <button class="btn btn-light btn-sm">4</button>
-            <button class="btn btn-light btn-sm">5</button>
-            <button class="btn btn-warning btn-sm">&gt;</button>
-        </div>
 
     </div>
 

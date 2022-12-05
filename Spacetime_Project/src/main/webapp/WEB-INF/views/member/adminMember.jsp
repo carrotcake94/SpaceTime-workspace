@@ -59,6 +59,35 @@
         text-align: center;
     }
 
+    /* 페이지 버튼 */
+    .pagination {
+        margin: auto;
+        justify-content: center;
+    }
+
+    .pagination a {
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 8px;
+        background-color: #eeeeee;
+        color: black;
+    }
+
+    .pagination a:hover {
+        color: rgb(253, 193, 55);
+        background-color: #e4e4e4;
+        border-color: #ccc;
+    }
+
+    #active-page {
+        background-color: rgb(253, 193, 55);
+        color: white;
+    }
+
+    .page-btn {
+        margin: 0 5px;
+    }
 
 </style>
 </head>
@@ -187,15 +216,31 @@
         </div>
         <br>
 
-        <!-- 탭 내용 버튼 -->
-        <div id="btnPage" align="center">
-            <button class="btn btn-warning btn-sm">&lt;</button>
-            <button class="btn btn-light btn-sm">1</button>
-            <button class="btn btn-light btn-sm">2</button>
-            <button class="btn btn-light btn-sm">3</button>
-            <button class="btn btn-light btn-sm">4</button>
-            <button class="btn btn-light btn-sm">5</button>
-            <button class="btn btn-warning btn-sm">&gt;</button>
+        <!-- 페이지 버튼 -->
+        <div class="btnPage" align="center">
+            <ul class="pagination">
+                <c:choose>
+                    <c:when test="${pi.currentPage eq 1}">
+                        <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item no-page-prev"><a class="page-link" href="mList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                    </c:otherwise>
+                </c:choose>
+
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                    <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                </c:forEach>
+                
+                <c:choose>
+                    <c:when test="${pi.currentPage eq pi.maxPage}">
+                        <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item no-page-next"><a class="page-link" href="mList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
         </div>
 
     </div>
