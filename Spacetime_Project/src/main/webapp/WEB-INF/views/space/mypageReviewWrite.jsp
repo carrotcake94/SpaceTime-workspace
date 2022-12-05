@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리뷰 수정</title>
+<title>리뷰 작성</title>
 
     <!-- jquery 온라인 방식 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -55,8 +55,8 @@
 	#reviewTable { width: 100%; }
 
 	td.spaceTitle { font-size: large; }
-	.review { height: 50px; }
 	.form-group select { width: 50%;}
+	.review { height: 50px; }
 	.reviewImg { height: 150px;}
 	.reviewImg td { 
 		padding: 20px;
@@ -130,7 +130,7 @@
 
 				<div class="btns" align="center">
 					<a href="" type="button" class="btn btn-sm btn-secondary">취소</a>
-					<a href="" type="button" class="btn btn-sm btn-primary">수정</a>
+					<a href="" type="button" class="btn btn-sm btn-primary">등록</a>
 				</div>
 			</form>
 

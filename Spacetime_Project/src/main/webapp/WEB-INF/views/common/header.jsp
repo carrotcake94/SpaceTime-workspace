@@ -488,12 +488,12 @@
             <table id="my_menubtn_tb">
                 <tr>
                     <td><a href=""><i class="fa-solid fa-person-walking-luggage"></i></a></td>
-                    <td><a href=""><i class="fa-solid fa-user-pen"></i></a></td>
+                    <td><a href="list.sp"><i class="fa-solid fa-user-pen"></i></a></td>
                     <td><a href=""><i class="fa-solid fa-heart"></i></a></td>
                 </tr>
                 <tr style="font-size: 15px;">
                     <td><a href="">예약내역</a></td>
-                    <td><a href="">리뷰내역</a></td>
+                    <td><a href="list.sp">리뷰내역</a></td>
                     <td><a href="">찜한내역</a></td>
                 </tr>
             </table>

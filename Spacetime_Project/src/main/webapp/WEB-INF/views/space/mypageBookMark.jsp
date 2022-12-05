@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,7 +59,7 @@
         font-weight: 600;
       }
 
-      /* 페이지네이션 */
+       /* 페이지네이션 */
       .pagination {
         justify-content: center;
       }
@@ -217,8 +220,8 @@
         background-color: rgb(94, 94, 94);
       }
 
-      /* 공간 검수 반려 모달 */
-      #refuse-info-Modal .modal-content {
+     /* 공간 검수 반려 모달 */
+       #refuse-info-Modal .modal-content {
         width: 600px;
         margin: auto;
         border: 1px solid gray;
@@ -323,14 +326,14 @@
           <div>
             <span class="stitle">공간명</span>
             <hr />
-            당산동
+             당산동
             <span class="sprice">50,000원</span>
           </div>
           
         </div>
         <div class="space">
           <div class="img_area">
-            <img src="166916214.jpg" alt="사진 없음" />
+            <img src="166916214.jpg" alt="사진없음" />
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -344,14 +347,14 @@
           <div>
             <span class="stitle">공간명</span>
             <hr />
-            당산동
-            <span class="sprice">50,000원</span>
+            당산
+            <span class="sprice">50,000</span>
           </div>
           
         </div>
         <div class="space">
           <div class="img_area">
-            <img src="1667747.jpg" alt="사진 없음" />
+            <img src="1667747.jpg" alt="사진없음" />
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -365,7 +368,7 @@
           <div>
             <span class="stitle">공간명3</span>
             <hr />
-            당산동
+           당산
             <span class="sprice">30,000원</span>
           </div>
           
