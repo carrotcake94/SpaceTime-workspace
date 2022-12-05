@@ -5,7 +5,6 @@
 		<result column="STYPE_NO" property="stypeNo" />
 		<result column="STYPE_NAME" property="stypeName" />
 	</resultMap>
-	
 	<resultMap id="spaceResultSet" type="space">
 		<result column="SPACE_NO" property="spaceNo" />
 		<result column="SPACE_TITLE" property="spaceTitle" />
@@ -26,7 +25,18 @@
 		<result column="DENY_MESSAGE" property="denyMessage" />
 		<result column="HOST_NO" property="hostNo" />
 		<result column="STYPE_NO" property="stypeNo" />
+		<collection resultMap="spaceAttachmentResultSet" property="spaceAttachment" />
 	</resultMap>
+	
+	<resultMap id="spaceAttachmentResultSet" type="spaceAttachment">
+		<result column="ATTACHMENT_NO" property="attachmentNo" />
+		<result column="ATTACHMENT_RENAME" property="attachmentReName" />
+		<result column="ATTACHEMENT_UPLOAD_DATE" property="attachmentUploadDate" />
+		<result column="ATTACHEMNT_STATUS" property="attachmentStatus" />
+		<result column="ATTACHEMNT_LEVEL" property="attachmentLevel" />
+		<result column="SPACE_NO" property="spaceNo" />
+	</resultMap>
+	
 	<!-- 	공간 타입 리스트 전체 선택 -->
 	<select id="selectSpaceTypeList" resultMap="spaceTypeResultSet">
 		SELECT *
@@ -60,7 +70,8 @@
 <!-- 								   		 , #{attachList.spaceNo}) -->
 <!-- 	</foreach> -->
 <!-- 	</insert> -->
-	
+
+<!-- 	마지막 공간 PK 가져오기 -->
 	<select id="selectSpaceNo" resultType="_int">
 		SELECT SPACE_NO
 		FROM (SELECT SPACE_NO
@@ -105,12 +116,13 @@
 				   		 , #{stypeNo})
 	</insert>
 	
-	
+<!-- 	호스트 공간 개수 -->
 	<select id="selectHostSpaceListCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
 		FROM SPACE
 		WHERE HOST_NO = #{memNo}
 	</select>
+<!-- 	호스트 공간 리스트 -->
 	<select id="selectHostSpaceList" parameterType="_int" resultMap="spaceResultSet">
 		SELECT SPACE_NO
 			 , SPACE_TITLE
@@ -123,7 +135,6 @@
 		JOIN SPACE_ATTACHMENT USING(SPACE_NO)
 		WHERE HOST_NO = #{memNo}
 		AND ATTACHEMNT_LEVEL = 1
-		
 	</select>
 	
 	

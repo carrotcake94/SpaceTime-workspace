@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
-import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
@@ -54,7 +53,6 @@ public class SpaceController {
 	@RequestMapping("insert.sp")
 	public ModelAndView insertSpace(Space s, MultipartFile[] upfile, HttpSession session, ModelAndView mv) {
 
-		System.out.println(s);
 		int result = spaceService.insertSpace(s);
 
 		int spaceNo = spaceService.selectSpaceNo();
@@ -96,19 +94,17 @@ public class SpaceController {
 	@RequestMapping("hostSpaceList.sp")
 	public String selectHostSpaceList(@RequestParam(value = "spage", defaultValue = "1") int currentPage, HttpSession session, Model model) {
 		
-//		Member loginUser = (Member)session.getAttribute("loginUser");
-//		int memNo = loginUser.getMemNo();
+//		Member loginMember = (Member)session.getAttribute("loginMember");
+//		int memNo = loginMember.getMemNo();
+		int memNo = 5;
 		
-		int listCount = spaceService.selectHostSpaceListCount(5);
-		System.out.println(listCount);
+		int listCount = spaceService.selectHostSpaceListCount(memNo);
 		int pageLimit = 5;
 		int boardLimit = 3;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
-		ArrayList<Space> spaceList = spaceService.selectHostSpaceList(5, pi);
-
-		System.out.println(spaceList);
+		ArrayList<Space> spaceList = spaceService.selectHostSpaceList(memNo, pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("spaceList", spaceList);

@@ -303,7 +303,7 @@
       <c:forEach var="s" items="${spaceList}">
       	<div class="space">
           <div class="img_area">
-            <img src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
+            <img src="resources/uploadFiles/space/space/${s.spaceAttachment.attachmentReName}" alt="사진 없음" />
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -327,7 +327,7 @@
           <div>
             <span class="stitle">${s.spaceTitle }</span>
             <hr />
-            당산동
+            ${s.addressDefault }
             <span class="sprice">${s.hourPrice}</span>
           </div>
           <div class="space_btn_area">

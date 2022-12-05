@@ -34,12 +34,12 @@ public class SpaceDao {
 	public int selectSpaceNo(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("spaceMapper.selectSpaceNo");
 	}
-
+	// 호스트 공간 총 개수 가져오기-정현
 	public int selectHostSpaceListCount(SqlSessionTemplate sqlSession, int memNo) {
 
 		return sqlSession.selectOne("spaceMapper.selectHostSpaceListCount", memNo);
 	}
-
+	// 호스트 공간 리스트 가져오기-정현
 	public ArrayList<Space> selectHostSpaceList(SqlSessionTemplate sqlSession, int memNo, PageInfo pi) {
 
 		int limit = pi.getBoardLimit();

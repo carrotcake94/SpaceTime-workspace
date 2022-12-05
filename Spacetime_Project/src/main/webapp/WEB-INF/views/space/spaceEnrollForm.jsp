@@ -408,7 +408,7 @@
 	<jsp:include page="../common/header.jsp" />
 	<div class="main">
     <form id="spInsertForm" method="post" action="insert.sp" enctype="multipart/form-data">
-	    <input type="hidden" name="hostNo" value="5">
+	    <input type="hidden" name="hostNo" value="${loginMember.memNo }">
       <div class="space-main-title">공간 정보 입력</div>
       <hr />
       <div class="space-title">
@@ -887,7 +887,6 @@
     	        } else {
     	        	 return false;
     	        }
-    	      
     	    } 
     	} 
     	document.onkeydown = NotReload;
