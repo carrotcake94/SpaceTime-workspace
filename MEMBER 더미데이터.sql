@@ -118,3 +118,5 @@ VALUES (SEQ_MNO.NEXTVAL, 'avocado!', 'avocado!', '아복두', 'M', to_date('1960
 INSERT INTO MEMBER (MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, GENDER, BIRTHDAY, NICKNAME, PHONE, EMAIL, ENROLL_DATE, GR_CODE) 
 VALUES (SEQ_MNO.NEXTVAL, 'burnach123', 'burnach123', '조근의', 'M', to_date('1986-05-05', 'RRRR-MM-DD'), '찰리와초콜릿복근', '01044791088', 'tjs1838@naver.com', to_date('2022-01-01', 'RRRR-MM-DD'), 1);
 
+
+COMMIT;
