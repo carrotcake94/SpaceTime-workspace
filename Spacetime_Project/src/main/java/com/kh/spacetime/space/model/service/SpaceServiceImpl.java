@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.space.model.dao.SpaceDao;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
@@ -38,5 +39,31 @@ public class SpaceServiceImpl implements SpaceService {
 		
 		return spaceDao.insertSpaceAttachment(sqlSession, attachList);
 	}
+	// 공간상세 조회-정현
+	@Override
+	public Space selectSpace(int spaceNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//마지막 공간 번호 가져오기 
+	@Override
+	public int selectSpaceNo() {
+		return spaceDao.selectSpaceNo(sqlSession);
+	}
+	
+	// 호스트 공간 관리 리스트 총 개수
+	@Override
+	public int selectHostSpaceListCount(int memNo) {
+		return spaceDao.selectHostSpaceListCount(sqlSession, memNo);
+	}
+	
+	//호스트 공간 리스트
+	@Override
+	public ArrayList<Space> selectHostSpaceList(int memNo, PageInfo pi) {
+		return spaceDao.selectHostSpaceList(sqlSession, memNo, pi);
+	}
+	
+	
 
+	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,6 +49,9 @@
         background-color: #eeeeee;
         color: black;
       }
+      .no-page-prev a, .no-page-next a {
+      background-color: #eeeeee !important;
+      }
 
       .pagination a:hover {
         color: rgb(253, 193, 55);
@@ -69,24 +73,28 @@
       #space_area {
         overflow: hidden;
         margin-bottom: 40px;
+        text-align: center;
       }
 
       #space_area > div {
-        width: 31%;
+      	display: inline-block;
+        width: 33%;
+        padding: 0 10px;
+        text-align:justify;
       }
 
-      #space_area > div:nth-child(1) {
-        float: left;
-      }
+/*       #space_area > div:nth-child(1) { */
+/*         float: left; */
+/*       } */
 
-      #space_area > div:nth-child(2) {
-        float: left;
-        margin-left: 3.5%;
-      }
+/*       #space_area > div:nth-child(2) { */
+/*         float: left; */
+/*         margin-left: 3.5%; */
+/*       } */
 
-      #space_area > div:nth-child(3) {
-        float: right;
-      }
+/*       #space_area > div:nth-child(3) { */
+/*         float: right; */
+/*       } */
 
       .space > div:nth-child(2) {
         padding: 15px 10px;
@@ -153,6 +161,10 @@
         border: none;
         background-color: rgba(0, 0, 0, 0.2);
       }
+	
+	 .button_img_prev {
+	 	float:left;
+	 }
 
       .button_img_next {
         float: right;
@@ -288,7 +300,8 @@
         <button type="button" onclick="">공간등록하기</button>
       </div>
       <div id="space_area">
-        <div class="space">
+      <c:forEach var="s" items="${spaceList}">
+      	<div class="space">
           <div class="img_area">
             <img src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
             <div class="img_btn_area">
@@ -299,73 +312,31 @@
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
               </button>
             </div>
-            <button class="space_state conok">승인</button>
+            <c:choose>
+            	<c:when test="${s.spaceStatus eq 'Y'}">
+            	<button class="space_state conok">승인</button>
+            	</c:when>
+            	<c:when test="${s.spaceStatus eq 'W'}">
+            	<button class="space_state conwait">검수중</button>
+            	</c:when>
+            	<c:otherwise>
+            	<button class="space_state conrefuse">검수반려</button>
+            	</c:otherwise>            
+            </c:choose>
           </div>
           <div>
-            <span class="stitle">공간명</span>
+            <span class="stitle">${s.spaceTitle }</span>
             <hr />
             당산동
-            <span class="sprice">50,000원</span>
+            <span class="sprice">${s.hourPrice}</span>
           </div>
           <div class="space_btn_area">
             <button>공간정보 수정</button>
             <button>삭제</button>
           </div>
         </div>
-        <div class="space">
-          <div class="img_area">
-            <img src="resources/images/space/space/166916214.jpg" alt="사진 없음" />
-            <div class="img_btn_area">
-              <button type="button" class="button_img button_img_prev">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="button_img button_img_next">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </button>
-            </div>
-            <button class="space_state conwait">검수중</button>
-          </div>
-          <div>
-            <span class="stitle">공간명</span>
-            <hr />
-            당산동
-            <span class="sprice">50,000원</span>
-          </div>
-          <div class="space_btn_area">
-            <button>공간정보 수정</button>
-            <button>삭제</button>
-          </div>
-        </div>
-        <div class="space">
-          <div class="img_area">
-            <img src="resources/images/space/space/1667747.jpg" alt="사진 없음" />
-            <div class="img_btn_area">
-              <button type="button" class="button_img button_img_prev">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="button_img button_img_next">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </button>
-            </div>
-            <button
-              class="space_state conrefuse"
-              data-toggle="modal"
-              data-target="#refuse-info-Modal"
-            >
-              검수반려
-            </button>
-          </div>
-          <div>
-            <span class="stitle">공간명3</span>
-            <hr />
-            당산동
-            <span class="sprice">30,000원</span>
-          </div>
-          <div class="space_btn_area">
-            <button>공간정보 수정</button>
-            <button>삭제</button>
-          </div>
-        </div>
+	 </c:forEach>  
+	     
       </div>
       <script>
         $(function () {
@@ -381,13 +352,25 @@
       </script>
 
       <ul class="pagination">
-        <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
-        <li class="page-item page-btn">
-          <a id="active-page" class="page-link">1</a>
-        </li>
-        <li class="page-item page-btn"><a class="page-link">2</a></li>
-        <li class="page-item page-btn"><a class="page-link">3</a></li>
-        <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
+      	<c:choose>
+	   		<c:when test="${ pi.currentPage eq 1 }">
+	   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
+	   		</c:when>
+	   		<c:otherwise>
+	   			<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">Previous</a></li>
+	   		</c:otherwise>
+	   	</c:choose>	       
+	       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	       	<li class="page-item page-btn"><a class="page-link" href="hostSpaceList?spage=${ p }">${ p }</a></li>
+	       </c:forEach>
+	       <c:choose>
+	       	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+	       	</c:when>
+	       	<c:otherwise>
+	      	 	<li class="page-item no-page-next"><a class="page-link" href="hostSpaceList?spage=${ pi.currentPage + 1 }">&gt;</a></li>
+	       	</c:otherwise>
+	       </c:choose>	       
       </ul>
     </div>
 
@@ -420,5 +403,20 @@
 	</div>	
 	<jsp:include page="../common/footer.jsp" />
 	</div>
+	
+	<script>
+		$(function() {
+			$(".page-link").each(function() {
+          		if ($(this).text() ==${ pi.currentPage}) {
+          			$(this).attr("id", "active-page");
+          			$(this).parent().addClass("disabled");
+          		} else {
+          			$(this).removeAttr("id", "active-page");
+          		}
+          	});
+ 			
+		});
+	
+	</script>
 </body>
 </html>

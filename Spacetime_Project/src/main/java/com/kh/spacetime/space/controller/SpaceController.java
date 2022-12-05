@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.common.template.Pagination;
+import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
@@ -30,13 +33,14 @@ public class SpaceController {
 
 	/**
 	 * 호스트 공간 등록 폼
+	 * 
 	 * @author 정현
 	 */
 	@RequestMapping("enrollForm.sp")
 	public String spaceEnrollForm(Model model) {
-		
+
 		ArrayList<SpaceType> stypeList = spaceService.selectSpaceTypeList();
-		
+
 		model.addAttribute("stypeList", stypeList);
 		return "space/spaceEnrollForm";
 
@@ -44,60 +48,70 @@ public class SpaceController {
 
 	/**
 	 * 공간 등록
+	 * 
 	 * @author 정현
 	 */
 	@RequestMapping("insert.sp")
 	public ModelAndView insertSpace(Space s, MultipartFile[] upfile, HttpSession session, ModelAndView mv) {
 
+		System.out.println(s);
 		int result = spaceService.insertSpace(s);
-		
+
+		int spaceNo = spaceService.selectSpaceNo();
+
 //		ArrayList<SpaceAttachment> attachList = new ArrayList<SpaceAttachment>();
-//		List<SpaceAttachment> attachList = new ArrayList<SpaceAttachment>();
-//		
-//		for(int i=0; i<upfile.length; i++) {					
-//			if (!upfile[i].getOriginalFilename().equals("")) {
-//
-//				String changeName = saveFile(upfile[i], session, "space/space/");
-//
-//				SpaceAttachment at = new SpaceAttachment();
-//				at.setAttachmentReName(changeName);
-//				if(i ==0) {
-//					at.setAttachmentLevel(1);
-//				}else {
-//					at.setAttachmentLevel(2);
-//				}
-//				at.setAttachmentLevel(1);
-//				attachList.add(at);
-//			}
-//		}
-		
-		
-//		int result2 = spaceService.insertSpaceAttachment(attachList);
-//		System.out.println(result2);
-		mv.setViewName("redirect:/");
+		List<SpaceAttachment> attachList = new ArrayList<SpaceAttachment>();
+
+		for (int i = 0; i < upfile.length; i++) {
+			if (!upfile[i].getOriginalFilename().equals("")) {
+
+				String changeName = saveFile(upfile[i], session, "space/space/");
+
+				SpaceAttachment at = new SpaceAttachment();
+				at.setAttachmentReName(changeName);
+				if (i == 0) {
+					at.setAttachmentLevel(1);
+				} else {
+					at.setAttachmentLevel(2);
+				}
+				at.setSpaceNo(spaceNo);
+				attachList.add(at);
+			}
+		}
+
+		int result2 = spaceService.insertSpaceAttachment(attachList);
+		if (result > 0 && result2 > 0) {
+			session.setAttribute("alertMsg", "공간 검수 신청을  완료하였습니다.");
+			mv.setViewName("redirect:/hostSpaceList.sp");
+		} else {
+			mv.addObject("errorMsg", "공간 등록 실패").setViewName("common/errorPage");
+		}
 		return mv;
-		
-
-
-//		if (result > 0) { // 성공 => 게시글 리스트 페이지로 url 재요청 (list.bo)
-//			int result3 = spaceService.insertSpaceAttachment(attachList);
-//			session.setAttribute("alertMsg", "공간 검수 신청을  완료하였습니다.");
-//
-//			mv.setViewName("redirect:/list.bo");
-//		} else { 
-//			mv.addObject("errorMsg", "공간 등록 실패").setViewName("common/errorPage");
-//		}
-//
-//		return mv;
 
 	}
 
 	/**
-	 * @author 정현
-	 * 호스트 공간 관리 리스트
+	 * @author 정현 호스트 공간 관리 리스트
 	 */
 	@RequestMapping("hostSpaceList.sp")
-	public String selectHostSpaceList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage, Model model) {
+	public String selectHostSpaceList(@RequestParam(value = "spage", defaultValue = "1") int currentPage, HttpSession session, Model model) {
+		
+//		Member loginUser = (Member)session.getAttribute("loginUser");
+//		int memNo = loginUser.getMemNo();
+		
+		int listCount = spaceService.selectHostSpaceListCount(5);
+		System.out.println(listCount);
+		int pageLimit = 5;
+		int boardLimit = 3;
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		ArrayList<Space> spaceList = spaceService.selectHostSpaceList(5, pi);
+
+		System.out.println(spaceList);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("spaceList", spaceList);
 
 		return "space/hostSpaceList";
 
@@ -129,6 +143,10 @@ public class SpaceController {
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
 	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니여도 된다!!
+	/**
+	 * @author 정현
+	 *  함수 호출시 route에 본인 업파일 경로 넣으면됨
+	 */
 	public String saveFile(MultipartFile upfile, HttpSession session, String route) {
 
 		// 파일명 수정 작업 후 서버에 업로드 시키기
@@ -149,16 +167,16 @@ public class SpaceController {
 		String changeName = currentTime + ranNum + ext;
 
 		// 6. 업로드 하고자 하는 서버의 물리적인 실제 경로 알아내기
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/"+route);
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/" + route);
 
 		// 7. 경로와 수정파일명을 합체 후 파일을 업로드해주기
 		try {
 			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
-			}
-			
-			return changeName;
 		}
-	
+
+		return changeName;
+	}
+
 }

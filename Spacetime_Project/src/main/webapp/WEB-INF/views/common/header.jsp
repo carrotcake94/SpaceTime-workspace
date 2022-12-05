@@ -223,7 +223,7 @@
         }
 
         #profile_tb tr:nth-child(1)>td:nth-child(1) {
-            width: 50%;
+            width: 40%;
             text-align: center;
         }
 

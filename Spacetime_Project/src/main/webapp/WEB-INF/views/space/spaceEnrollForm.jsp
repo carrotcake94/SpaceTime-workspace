@@ -144,7 +144,7 @@
       float: left;
     }
 
-    input[name="hashtag"] {
+    input[name="hashtagInput"] {
       width: 30%;
       padding: 5px 10px;
       outline: none;
@@ -245,9 +245,10 @@
       font-weight: 500;
       color: rgb(43, 43, 43);
       background-color: #fff;
-      overflow-x: scroll;
+      overflow-x: auto;
       white-space: nowrap;
     }
+
 
     .space-img-area>div>div {
       margin-right: 20px;
@@ -436,7 +437,7 @@
       </div>
       <div class="space-title">
         공간 소개
-      <input type="text" name="hashtag" placeholder="#해시태그 입력" />        
+      <input type="text" name="hashtagInput" placeholder="#해시태그 입력" />        
         <div class="lcount"><span>0</span><span> / 1500자</span></div>
         <div class="hashtag-area">
           <input type="hidden" name="hashtag">
@@ -689,37 +690,42 @@
       }
     }
     
- // 해시 태그 
+ // 해시태그 
     $(function () {
-      $("input[name=hashtag]").focusin(function () {
-        if ($("input[name=hashtag]").val().trim() == "") {
-          $("input[name=hashtag]").val("#");
+      $("input[name=hashtagInput]").focusin(function () {
+        if ($(this).val().trim() == "") {
+          $(this).val("#");
         }
       });
-      $("input[name=hashtag]").focusout(function () {
-        if ($("input[name=hashtag]").val().trim() != "#") {
-          $(".hashtag-area").append("<div class='hashtag'><span>" + $("input[name=hashtag]").val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
-          $("input[name=hashtag]").val("");
+      
+      $("input[name=hashtagInput]").focusout(function () {
+        if ($(this).val().trim() != "#") {
+          $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+          $(this).val("");
         }
-        if ($("input[name=hashtag]").val().trim() == "#") {
-          $("input[name=hashtag]").val("");
+        if ($(this).val().trim() == "#") {
+          $(this).val("");
         }
       });
-      $("input[name=hashtag]").keydown(function () {
-        //backspace 막기 
-        if ($(this).val() == "#" && event.keyCode === 8) {
-          return false;
-        }
+      $("input[name=hashtagInput]").keydown(function () {
+    	  //backspace 막기 
+          if ($(this).val() == "#" && event.keyCode === 8) {
+            return false;
+          }
+      });
+      
+      $("input[name=hashtagInput]").keyup(function () {    
+    	  console.log($(this).val());
         //space  
-        if (event.keyCode === 32 && $(this).val() != "#") {
-          $(".hashtag-area").append("<div class='hashtag'><span>" + $("input[name=hashtag]").val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
-          $("input[name=hashtag]").val("#");
+        if (event.keyCode === 32 && $(this).val().trim() !== "#") {
+          $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+          $(this).val("#");
           return false;
         }
         //enter  
         if (event.keyCode === 13 && $(this).val() != "#") {
-          $(".hashtag-area").append("<div class='hashtag'><span>" + $("input[name=hashtag]").val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
-          $("input[name=hashtag]").val("#");
+          $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+          $(this).val("#");
           return false;
         }
         //특수문자 막기
@@ -757,7 +763,7 @@
     
     // 공간 등록 유효성 검사
     $(function () {
-      $("#spInsertForm input").not("input[name=hashtag]").keydown(function () {
+      $("#spInsertForm input").not("input[name=hashtagInput]").keydown(function () {
         if (event.keyCode === 13) {
           event.preventDefault();
           valichk();
@@ -860,6 +866,7 @@
      	$(".hashtag>span").each(function() {
      		hashtag.push($(this).text());
      	});
+     	console.log($(".hashtag>span").length);
      	if($(".hashtag>span").length != 0) {
      		$("input[name=hashtag]").val(hashtag.join(","));
      	}     	
