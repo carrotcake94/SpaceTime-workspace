@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
+	
 	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script>
 </head>
 <body>
@@ -272,23 +273,22 @@
 				<script>
 					var HOME_PATH = window.HOME_PATH || '.';
 	
-				    //최초로 가리키는 곳
-				    map = new naver.maps.Map('map', {
-				    center: new naver.maps.LatLng(37.53306, 126.89632),
-				    zoom: 13
-				    });
-				    
-				    var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
-				    
-				    var markers = [];
-				    var infowindows = [];
-
-				    markers.push(new naver.maps.Marker({
+					//최초로 가리키는 곳
+					map = new naver.maps.Map('map', {
+					center: new naver.maps.LatLng(37.53306, 126.89632),
+					zoom: 13
+					});
+					
+					var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
+					
+					var markers = [];
+					var infowindows = [];
+					
+					markers.push(new naver.maps.Marker({
 					    map: map,
 					    position: sillimStn
-				    }));
+					}));
 				</script>
-
 			</div>
 		</div>
 		<jsp:include page="../common/footer.jsp" />
