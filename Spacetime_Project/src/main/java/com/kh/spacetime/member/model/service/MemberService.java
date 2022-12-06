@@ -14,11 +14,11 @@ public interface MemberService {
 	int updateMember(Member m);
 	
 	// 회원탈퇴 서비스 (update)
-	int deleteMember(int memNo);
+	int deleteMember(String memId);
 	
 	// 아이디 중복체크 서비스 (select)
 	int idCheck(String checkId);
 	
 	// 닉네임 중복체크 서비스 (select)
-	int nickCheck(String nickName);
+	int nickCheck(String checkNick);
 }

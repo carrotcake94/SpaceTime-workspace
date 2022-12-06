@@ -369,7 +369,7 @@
         }
 
         .sign-up:hover {
-            background: #FFF;
+            background: #FFB200;
         }
 
         .sign-up a {
@@ -456,7 +456,7 @@
                             <img src="resources/images/logo.png" style="width:80px; height:80px;">
                         </td>
                         <td>
-                            <a href="enrollLogin.me">로그인</a> / <a href="enrollForm.me">회원가입</a>
+                            <a href="enrollLogin.me">로그인 및 회원가입</a>
                         </td>
                     </tr>
                     <tr>
@@ -539,7 +539,19 @@
           });
         });
      </script>
-
+     <c:choose>
+	     <c:when test="${loginMember.hostStatus eq 'Y'}">
+	     	<script>
+	     		$(".sign-up>a").text("호스트 페이지로");
+	     	</script>
+		 </c:when>
+		 <c:otherwise>
+ 	     	<script>
+	     		$(".sign-up>a").text("호스트 신청하기");
+	     	</script>
+		 </c:otherwise>
+     </c:choose>
+	 
 
 </body>
 </body>

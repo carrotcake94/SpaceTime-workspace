@@ -9,7 +9,7 @@ import com.kh.spacetime.member.model.vo.Member;
 public class MemberDao {
 	
 	/**
-	 * 로그인 Dao
+	 * 로그인 Dao - 경미
 	 * @param sqlSession
 	 * @param m
 	 * @return Member
@@ -17,6 +17,44 @@ public class MemberDao {
 	public Member loginMember(SqlSessionTemplate sqlSession, Member m) {
 		
 		return sqlSession.selectOne("memberMapper.loginMember", m);
+	}
+	
+	/**
+	 * 회원가입 Dao - 경미
+	 * @param sqlSession
+	 * @param m
+	 * @return
+	 */
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+	
+	/**
+	 * 아이디 중복체크 Dao - 경미
+	 * @param sqlSession
+	 * @param checkId
+	 * @return
+	 */
+	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
+		
+		return sqlSession.selectOne("memberMapper.idCheck", checkId);
+	}
+	
+	/**
+	 * 닉네임 중복체크 Dao - 경미
+	 * @param sqlSession
+	 * @param checkNick
+	 * @return
+	 */
+	public int nickCheck(SqlSessionTemplate sqlSession, String checkNick) {
+		
+		return sqlSession.selectOne("memberMapper.nickCheck", checkNick);
+	}
+	
+	public int deleteMember(SqlSessionTemplate sqlSession, String memId) {
+		
+		return sqlSession.update("memberMapper.deleteMember", memId);
 	}
 	
 }

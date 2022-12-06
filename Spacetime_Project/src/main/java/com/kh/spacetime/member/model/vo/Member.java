@@ -21,7 +21,7 @@ public class Member {
     private String memPwd; // MEM_PWD VARCHAR2(20) NOT NULL,
     private String memName; // MEM_NAME VARCHAR2(21) NOT NULL,
     private String gender; // GENDER CHAR(1) NOT NULL CONSTRAINT MEM_GENDER_CK CHECK(GENDER IN ('M', 'F')),
-    private Date birthday; // BIRTHDAY DATE NOT NULL,
+    private String birthday; // BIRTHDAY DATE NOT NULL,
     private String nickname; // NICKNAME VARCHAR2(30) NOT NULL CONSTRAINT MEM_NICKNAME_UQ UNIQUE,
     private String phone; // PHONE VARCHAR2(11) NOT NULL,
     private String email; // EMAIL VARCHAR2(30) NOT NULL,

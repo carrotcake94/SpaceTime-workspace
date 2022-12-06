@@ -337,7 +337,6 @@
 <body>
 	
 	<div class="wrap">
-	
 		<div id="header_area" style="height:80px;"><jsp:include page="../common/header.jsp" /></div>
 	        <div id="content">
 	            <div id="content_1"></div>
@@ -346,38 +345,39 @@
 	            <div id="content_2">
 	            <br><br><br>
 	
-	                <form id="join_form">
+	                <form id="join_form" action="insert.me" method="post">
 	                    <div><legend align="center">회원 가입</legend></div>
 	                    <hr>
 	                    <div id="join-area">
 	                        <input id="memId" name="memId" class="form-control" type="text" placeholder="아이디(8~20자, 영문자/숫자 포함)" 
-	                                minlength="8" maxlength="20" onchange="idCheck();" required>
-	                                <!-- 아이디 중복체크 idCheck(); 함수 -->
-	                        <span class="error_next_box" id="idMsg">이미 사용중이거나 탈퇴한 아이디입니다.</span>
-	                        <input id="memPwd" name="memPwd" class="form-control" type="password" placeholder="비밀번호(8~20자, 문자/숫자/기호 포함)"
+	                                minlength="8" maxlength="20" required>
+	                        <span class="error_next_box" id="idMsg"></span>
+							<span class="error_next_box" id="idCheckMsg"></span>
+	                        <input id="memPwd" name="memPwd" class="form-control" type="password" placeholder="비밀번호(8~20자, 영문자/숫자/특수기호(-, _제외) 포함)"
 	                                minlength="8" maxlength="20" required>
 	                        <span class="error_next_box" id="pswd1Msg">8~20자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</span>
-	                        <input id="pwOk" type="password" class="form-control" placeholder="비밀번호 확인(8~20자, 문자/숫자/기호 포함)">
+	                        <input id="pwOk" type="password" class="form-control" placeholder="비밀번호 확인">
 	                        <span class="error_next_box" id="pswd2Msg">비밀번호가 일치하지 않습니다.</span>
 	                        <input id="memName" name="memName" class="form-control" type="text" placeholder="이름"
 	                                minlength="2" maxlength="6" required>
+							<span class="error_next_box" id="nameMsg"></span>
 	                        <input id="email" name="email" class="form-control" type="email" placeholder="이메일">
 	                        <span class="error_next_box" id="emailMsg">이메일 주소를 다시 확인해주세요.</span>
 	                        <!-- 이메일 본인인증 -->
 	                        <button type="button" style="background: #277BC0; color: white; margin-top: 10px;">이메일 본인인증</button>
 	                        <hr>
-	                        <input id="nickname" name="nickname" class="form-control" type="text" placeholder="닉네임"
-	                                onchange="nickCheck();" required>
-	                                <!-- 닉네임 중복체크 nickCheck(); 함수 -->
-	                        <span class="error_next_box" id="nickMsg">이미 사용중이거나 탈퇴한 회원의 닉네임입니다.</span>
+
+	                        <input id="nickname" name="nickname" class="form-control" type="text" placeholder="닉네임" required>
+	                        <span class="error_next_box" id="nickMsg"></span>
+							<span class="error_next_box" id="nickCheckMsg"></span>
 	                        <select id="gender" name="gender" class="form-control" style="height: 50px;" required>
-	                            <option value="" selected>성별</option>
+	                            <option selected>성별</option>
 	                            <option value="M">남자</option>
 	                            <option value="F">여자</option>
 	                        </select>
 	                        <div id="birthday-area" style="margin-top:10px;">
 	                            <input id="yyyy" class="form-control" type="text" placeholder="생년" minlength="4" maxlength="4" required>
-	                            <select id="MM" class="form-control" style="margin-left: 5px;" required>
+	                            <select id="MM" class="form-control" style="margin-left: 8px;" required>
 	                                <option value="" selected>생월</option>
 	                                <option value="01">1월</option>
 	                                <option value="02">2월</option>
@@ -392,24 +392,254 @@
 	                                <option value="11">11월</option>
 	                                <option value="12">12월</option>
 	                            </select>
-	                            <input id="dd" class="form-control" type="text" style="margin-left: 5px;" placeholder="생일" minlength="2" maxlength="2" required>
-	                            <!-- VO로 합치기 위해 input type="hidden" 으로 생년월일 다 합쳐서 birthday로 넘길 것 -->
+	                            <input id="dd" class="form-control" type="text" style="margin-left: 8px;" placeholder="생일" minlength="2" maxlength="2" required>
+								<span class="error_next_box" id="yyMsg">정말 이 때 태어나셨나요?</span>
+								<input id="birthday" type="hidden" name="birthday">
+								<!-- VO로 합치기 위해 input type="hidden" 으로 생년월일 다 합쳐서 birthday로 넘길 것 -->
 	                        </div>
 	                        <span class="error_next_box" id="birthdayMsg">생년월일을 다시 확인해주세요.</span>
 	                        <input id="phone" name="phone" class="form-control" type="text" placeholder="전화번호">
-	                        <!-- 정규식 검사 -->
-	                        
+							<span class="error_next_box" id="phoneMsg">-을 제외한 유효한 전화번호를 입력해주세요.</span>
+							<!-- 정규식 검사 -->
+	                        <script>
+								$(function() {
+        		
+									$("#memId").on({blur:function() {
+										// 아이디 정규식 영문자, 숫자로만 총 8 ~ 20자로 이루어지게
+										let regExp = /^[a-z\d]{8,20}$/i;
+										if(!regExp.test($("#memId").val())) {
+											$("#idMsg").text("아이디는 총 8~20자의 영문자와 숫자로만 입력 가능합니다.");
+											$("#idMsg").css("display", "block");
+											$("#memId").select(); // 재입력 유도
+											return false;
+										} else {
+											$("#idMsg").css("display", "none");
+											return true;
+										}
+									}, keyup:function() {
+										// 아이디 중복체크
+										// 최소 8글자 이상으로 아이디값이 입력되어 있을 때만 ajax 요청
+										if($("#memId").val().length >= 8) {
+
+											$.ajax({
+												url : "idCheck.me",
+												data : {checkId : $("#memId").val()},
+												success : function(result) {
+													
+													// console.log(result);
+													
+													if(result == "NNNNN") { // 사용 불가능
+														
+														// 빨간색 메세지 출력
+														$("#idCheckMsg").show();
+														$("#idCheckMsg").css("color", "red").text("이미 사용중이거나 탈퇴한 아이디입니다.");
+														
+														// 버튼 비활성화
+														$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+														
+													} else { // 사용 가능
+														// 버튼 활성화
+														$("#idCheckMsg").hide();
+														$("#join_form button[type=submit]").css("background-color", "#FFB200").attr("disabled", false);
+													}
+												},
+												error : function() {
+													console.log("아이디 중복 체크용 ajax 통신 실패!");
+												}
+											});
+										} else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
+											
+											$("#idCheckMsg").hide();
+											$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+										}
+									}
+								})
+
+									$("#memPwd").blur(function() {
+										// 비밀번호 정규식
+										// 영문자, 숫자, 특수문자(!@#$%^&*()) 로 총 12~20 자 로 이루어져야함
+										let regExp = /^[a-z\d!@#$%^&*()]{8,20}$/i;
+										if(!regExp.test($("#memPwd").val())) {
+											$("#pswd1Msg").text("비밀번호는 총 8~20자의 영문자,숫자,특수문자로만 입력 가능합니다.");
+											$("#pswd1Msg").css("display", "block");
+											$("#memPwd").select(); // 재입력 유도
+											return false;
+										} else {
+											$("#pswd1Msg").css("display", "none");
+											return true;
+										}
+									})
+
+									$("#pwOk").blur(function() {
+										// 비밀번호 유효성 검사
+										let pwOk = $("#pwOk").val();
+										if($("#memPwd").val() != (pwOk)) {
+											$("#pswd2Msg").css("display", "block");
+											$("#memPwd").select(); // 비밀번호부터 재입력 유도
+											return false;
+										} else {
+											$("#pswd2Msg").css("display", "none");
+											return true;
+										}
+									})
+
+									$("#memName").blur(function() {
+										// 이름 정규식
+										// 한글 2~6글자
+										let regExp = /^[가-힣]{2,6}$/;
+										if(!regExp.test($("#memName").val())) {
+											$("#nameMsg").text("한글로 된 2~6자리 이름을 입력해주세요.");
+											$("#nameMsg").css("display", "block");
+											$("#memName").select(); // 재입력 유도
+											return false;
+										} else {
+											$("#nameMsg").css("display", "none");
+											return true;
+										}
+									})
+
+									$("#email").blur(function() {
+										// 이메일 정규식
+										// - 이메일주소 시작은 숫자나 알파벳으로 시작됨
+										// - 이메일 첫째자리 뒤에는 -_. 을 포함하여 들어올 수 있음
+										// - 도메인 주소 전에는 @ 포함
+										// - . 이 최소한 하나는 있어야 하며 마지막 마디는 2-3자리 여야 함
+										let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+										if(!regExp.test($("#email").val())) {
+											$("#emailMsg").css("display", "block");
+											$("#email").select(); // 재입력 유도
+											return false;
+										} else {
+											$("#emailMsg").css("display", "none");
+											return true;
+										}
+									})
+
+									$("#nickname").on({blur:function() {
+										// 닉네임 정규식
+										// 영문자, 숫자, 한글 2~10글자
+										let regExp = /^[a-z\d\가-힣]{2,10}$/;
+										if(!regExp.test($("#nickname").val())) {
+											$("#nickMsg").text("닉네임은 영문자, 숫자, 한글을 포함하여 총 2~10글자를 입력할 수 있습니다.");
+											$("#nickMsg").css("display", "block");
+											$("#nickname").select(); // 재입력 유도
+											return false;
+										} else {
+											$("#nickMsg").css("display", "none");
+											return true;
+										}
+									}, keyup:function() {
+										// 닉네임 중복체크
+										// 최소 2글자 이상으로 닉네임값이 입력되어 있을 때만 ajax 요청
+										if($("#nickname").val().length >= 2) {
+
+											$.ajax({
+												url : "nickCheck.me",
+												data : {checkNick : $("#nickname").val()},
+												success : function(result) {
+													
+													// console.log(result);
+													
+													if(result == "NNNNN") { // 사용 불가능
+														
+														// 빨간색 메세지 출력
+														$("#nickCheckMsg").show();
+														$("#nickCheckMsg").css("color", "red").text("이미 사용중이거나 탈퇴한 아이디입니다.");
+														
+														// 버튼 비활성화
+														$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+														
+													} else { // 사용 가능
+														// 버튼 활성화
+														$("#nickCheckMsg").hide();
+														$("#join_form button[type=submit]").css("background-color", "#FFB200").attr("disabled", false);
+													}
+												},
+												error : function() {
+													console.log("아이디 중복 체크용 ajax 통신 실패!");
+												}
+											});
+											} else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
+
+											$("#nickCheckMsg").hide();
+											$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+											}
+										}
+									})
+
+									$("#yyyy").blur(function() {
+										// 생년 정규식
+										// 19 혹은 20으로 시작하는 숫자 4자리
+										let regExp = /^(19|20)[0-9]{2}$/;
+										let date = new Date();
+										let yearNow = date.getFullYear;
+										console.log(yearNow);
+										if(!regExp.test($("#yyyy").val())) {
+											$("#yyMsg").css("display", "block");
+											$("#yyyy").select(); // 재입력 유도
+											return false;
+										} 
+										else if($("#yyyy").val()>yearNow) {
+											$("#yyMsg").css("display", "block");
+											$("#yyyy").select(); // 재입력 유도
+											return false;
+										} 
+										else {
+											$("#yyMsg").css("display", "none");
+											return true;
+										}
+									})
+
+									$("#dd").blur(function() {
+										// 생일 정규식
+										let regExp = /^([1-9]|0[1-9]|[1-2][0-9]|3[0-1])$/;
+										if(!regExp.test($("#dd").val())) {
+											$("#yyMsg").css("display", "block");
+											$("#dd").select(); // 재입력 유도
+											return false;
+										} else {
+											if($("#dd").val().length==1) {
+												$("#dd").val("0"+$("#dd").val());
+											}
+											$("#yyMsg").css("display", "none");
+											return true;
+										}
+
+									})
+
+									$("#phone").blur(function() {
+										// 핸드폰 번호 정규식
+										let regExp = /^(010)[0-9]{8}$/;
+										if(!regExp.test($("#phone").val())) {
+											$("#phoneMsg").css("display", "block");
+											$("#phone").select(); // 재입력 유도
+											return false;
+										} else {
+											$("#phoneMsg").css("display", "none");
+											return true;
+										}
+									})
+
+									$("button[type=submit]").click(function() {
+										// 생일 입력 다 되면 전부 합치기
+										let birthday = "" + $("#yyyy").val() + $("#MM").val() + $("#dd").val();
+										console.log(birthday);
+										$("#birthday").val(birthday);
+									})
+								})
+
+							</script>
 	                        <div class="agree_box" style="margin-top: 30px;">
 	                            <p><input id="allAgree" type="checkbox"> <label for="allAgree">아래 약관에 모두 동의합니다.</label></p> 
 	                            <ul>
 	                                <li class="ltype">
-	                                    <input id="agree1" type="checkbox" required> <label for="agree1"><a onclick="layerPop();">서비스 이용약관 (필수)</a></label>
+	                                    <input id="agree1" class="agree_check" type="checkbox" required> <label for="agree1"><a onclick="layerPop();">서비스 이용약관 (필수)</a></label>
 	                                </li> 
 	                                <li class="ltype">
-	                                    <input id="agree2" type="checkbox" required> <label for="agree2"><a onclick="layer2Pop();">개인정보 처리 방침(필수)</a></label>
+	                                    <input id="agree2" class="agree_check" type="checkbox" required> <label for="agree2"><a onclick="layer2Pop();">개인정보 처리 방침(필수)</a></label>
 	                                </li>
 	                                <li>
-	                                    <input id="agree5" type="checkbox"> <label for="agree5" style="padding: 0 0 0 20px;">이벤트 등 프로모션 알림 메일 수신 (선택)</label>
+	                                    <input id="agree5" class="agree_check" type="checkbox"> <label for="agree5" style="padding: 0 0 0 20px;">이벤트 등 프로모션 알림 메일 수신 (선택)</label>
 	                                </li>
 	                            </ul>
 	                            <script>
@@ -421,6 +651,24 @@
 	                                    $(".layer_popup2").css("display", "block");
 	                                    $("#agree2").attr('checked', false);
 	                                }
+
+									$(function() {
+										// 전체체크박스 함수
+										$("#allAgree").click(function() {
+											if($("#allAgree").is(":checked")) {
+												$(".agree_check").prop("checked", true);
+											}
+											else $(".agree_check").prop("checked", false);
+										});
+										
+										$(".agree_check").click(function() {
+											var total = $(".agree_check").length;
+											var checked = $(".agree_check:checked").length;
+											
+											if(total != checked) $("#allAgree").prop("checked", false);
+											else $("#allAgree").prop("checked", true); 
+										});
+									})
 	                            </script>
 	                        </div> 
 	                        <button type="submit">회원가입</button>
@@ -905,7 +1153,6 @@
 	                                        $("#agree2").attr('checked', true);
 	                                    }
 	                                </script>
-	
 	                            </div>
 	                        </div>
 	                    </div>

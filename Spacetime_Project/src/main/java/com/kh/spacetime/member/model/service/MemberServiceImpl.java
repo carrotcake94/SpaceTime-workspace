@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDao memberDao;
 	
 	/**
-	 * 로그인 서비스
+	 * 로그인 서비스 - 경미
 	 */
 	@Override
 	public Member loginMember(Member m) {
@@ -25,10 +25,13 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.loginMember(sqlSession, m);
 	}
 
+	/**
+	 * 회원가입 서비스 - 경미
+	 */
 	@Override
 	public int insertMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return memberDao.insertMember(sqlSession, m);
 	}
 
 	@Override
@@ -38,21 +41,25 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int deleteMember(int memNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteMember(String memId) {
+		return memberDao.deleteMember(sqlSession, memId);
 	}
-
+	
+	/**
+	 * 아이디 중복체크 서비스 - 경미
+	 */
 	@Override
 	public int idCheck(String checkId) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.idCheck(sqlSession, checkId);
 	}
-
+	
+	
+	/**
+	 * 닉네임 중복체크 서비스 - 경미
+	 */
 	@Override
-	public int nickCheck(String nickName) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int nickCheck(String checkNick) {
+		return memberDao.nickCheck(sqlSession, checkNick);
 	}
 
 }
