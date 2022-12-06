@@ -1,5 +1,7 @@
 package com.kh.spacetime.space.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,9 +11,9 @@ import lombok.ToString;
  * @author 정현
  * 공간 VO 
  */
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString
 public class Space {
 		private int spaceNo;	//	SPACE_NO	NUMBER
@@ -33,5 +35,5 @@ public class Space {
 		private String denyMessage;	//	DENY_MESSAGE	VARCHAR2(600 BYTE)
 		private String hostNo;	//	HOST_NO	NUMBER  id가 들어갈수있따.
 		private String stypeNo;	//	STYPE_NO	NUMBER 공간유형 이름이 들어갈수 있다.
-		private SpaceAttachment spaceAttachment; // join용
+		private ArrayList<SpaceAttachment> spaceAttachment; // join용
 }
