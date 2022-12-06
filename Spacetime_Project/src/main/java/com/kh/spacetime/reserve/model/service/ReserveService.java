@@ -29,5 +29,18 @@ public interface ReserveService {
 	// 호스트 예약관리 검색 리스트 
 	ArrayList<Reserve> searchHostReserveList(PageInfo pi);
 	
+	
+	/**
+	 * @author 하연 
+	 *
+	 */
+	// 마이페이지 예약 리스트 
+	int selectMyReserveListCount();
+	
+	ArrayList<Reserve> selectMyReservetList(PageInfo pi, int memNo);
+	
+	// 마이페이지 예약 리스트 - 드롭박스 정렬 
+	int selectMyReserveListSortCount();
+	
 
 }

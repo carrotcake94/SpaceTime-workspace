@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<!--  현재날짜가져오기  -->
+<%
+  String date = new java.text.SimpleDateFormat("yyyy. MM. dd").format(new java.util.Date());
+  int today = Integer.parseInt(new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date()));
+  
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -327,19 +335,19 @@
 
 	<jsp:include page="../common/header.jsp" />
 	
+	
     <div id="spaceList_Host">
         <div class="sheader" style="padding-top: 100px;">
-          
-	         예약 내역 리스트 
         </div> 
 
         <br>
           
       <!--  정렬기준 드롭박스  -->
-      <div align="right">
+     <form action="myReserveSort.re" method="post">
+     	<div align="right">
         <div class="selectbox" align="right">
-          <label for="ex_select">정렬조건선택</label>
-            <select id="ex_select">
+          <label for="sort_select">정렬조건선택</label>
+            <select id="sort_select">
                 <option selected>정렬조건선택</option>
                 <option>예약대기</option>
                 <option>예약취소</option>
@@ -348,11 +356,17 @@
             </select>
         </div>
   
-        <button class="btn-sort">검색</button>
+        <button type="submit" class="btn-sort">검색</button>
       </div>
-
-
+     </form>
       
+      <script>
+      	$(document).ready(function() {
+      		
+      	})
+      	
+      
+      </script>
 
       <br>
 			
@@ -372,85 +386,75 @@
 					  });
 					});
 			</script>
+
         
         
         <div id="space_area">
-          <div class="space">
-            <div class="img_area">
-              <img src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
-              <div class="img_btn_area">
-                <button type="button" class="button_img button_img_prev">
-                  <i class="fa fa-angle-left" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="button_img button_img_next">
-                  <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </button>
-              </div>
-              <button class="space_state conwait">예약확정</button>
-            </div>
-            <div>
-              <span class="stitle">공간명</span>
-              <hr />
-              당산동
-              <span class="sprice">50,000원</span>
-            </div>
-            <div class="space_btn_area">
-              <button style="width: 100%;" class="btn-reserveList">예약내역 확인</button>
-            </div>
-          </div>
-          <div class="space">
-            <div class="img_area">
-              <img src="resources/images/space/space/166916214.jpg" alt="사진 없음" />
-              <div class="img_btn_area">
-                <button type="button" class="button_img button_img_prev">
-                  <i class="fa fa-angle-left" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="button_img button_img_next">
-                  <i class="fa fa-angle-right" aria-hidden="true"></i>
+
+          <c:forEach var="r" items="${ list }">
+            <div class="space">
+              <div class="img_area">
+                <img src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
+                <div class="img_btn_area">
+                  <button type="button" class="button_img button_img_prev">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="button_img button_img_next">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <button class="space_state conwait">
+                
+                    <c:choose>
+                		<c:when test="${ r.reserveStatus eq 'W' }">
+                			예약 대기 
+                		</c:when>
+                		<c:when test="${ r.reserveStatus eq 'Y' }">
+                			예약 확정 
+                		</c:when>
+                		<c:otherwise>
+                			이용 완료 
+                		</c:otherwise>
+                	</c:choose>
+                
+                
                 </button>
               </div>
-              <button class="space_state conwait">예약확정</button>
-            </div>
-            <div>
-              <span class="stitle">공간명</span>
-              <hr />
-              당산동
-              <span class="sprice">50,000원</span>
-            </div>
-            <div class="space_btn_area">
-              <button style="width: 100%;" class="btn-reserveList">예약내역 확인</button>
-            </div>
-          </div>
-          <div class="space">
-            <div class="img_area">
-              <img src="resources/images/space/space/1667747.jpg" alt="사진 없음" />
-              <div class="img_btn_area">
-                <button type="button" class="button_img button_img_prev">
-                  <i class="fa fa-angle-left" aria-hidden="true"></i>
-                </button>
-                <button type="button" class="button_img button_img_next">
-                  <i class="fa fa-angle-right" aria-hidden="true"></i>
-                </button>
+              <div>
+                <span class="stitle">${ r.memNo }</span>
+                <hr />
+                ${ r.denyMessage }
+                <span class="sprice">${ r.price }</span>
               </div>
-              <button
-                class="space_state conok"
-                data-toggle="modal"
-                data-target="#refuse-info-Modal"
-              >
-                이용완료
-              </button>
+
+			<!--  jstl 형변환 -->
+			<fmt:parseNumber var = "parseDate" integerOnly = "true" type = "number" value = "${ r.useDate }" />
+
+			<c:set var="today" value="<%= today %>" /> 
+			
+				<!-- ststus 가 'Y' 이고 사용일이 현재날짜를 지난 경우 -->
+              <c:choose>
+                		<c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate)}">
+                			<div class="space_btn_area">
+				              <button style="width: 70%" class="btn btn-warning">리뷰 작성하기</button>
+				              <button style="width: 30%" class="btn btn-danger">신고하기</button>
+				            </div>
+                		</c:when>
+                		<c:otherwise>
+                			<div class="space_btn_area">
+				                <button style="width: 100%;" class="btn-reserveList">예약내역 확인</button>
+				            </div>
+                		</c:otherwise>
+                	</c:choose>
+              
+              
+              
+              
+              
+              
             </div>
-            <div>
-              <span class="stitle">공간명3</span>
-              <hr />
-              당산동
-              <span class="sprice">30,000원</span>
-            </div>
-            <div class="space_btn_area">
-              <button style="width: 70%" class="btn btn-warning">리뷰 작성하기</button>
-              <button style="width: 30%" class="btn btn-danger">신고하기</button>
-            </div>
-          </div>
+          </c:forEach>
+
         </div>
         <script>
           $(function () {

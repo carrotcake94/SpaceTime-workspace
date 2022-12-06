@@ -2,4 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="reserveMapper">
 
+		<!--   하연 : 조인떄문에 야매로 가공한 resultSet 입니다.. -->
+		<resultMap id="joinReserveResultSet" type="reserve">
+			<result column="RESERVE_NO" property="reserveNo" />
+			<result column="RESERVE_STATUS" property="reserveStatus" />
+			<result column="RESERVE_DATE" property="reserveDate" />
+			<result column="PRICE" property="price" />
+			<result column="USE_DATE" property="useDate" />
+			<!-- 여기 다른 테이블 조인한거 -->
+			<result column="SPACE_TITLE" property="memNo" />
+			<result column="ADDRESS_DEFAULT" property="denyMessage" />
+			<result column="ATTACHMENT_NO" property="endTime" />
+		</resultMap>
+
+		<select id="selectMyReserveListCount" resultType="_int">
+			SELECT COUNT(*)
+			FROM RESERVE
+		</select>
+
+		<select id="selectMyReservetList" resultMap="joinReserveResultSet">
+			SELECT RESERVE_NO
+			     , SPACE_TITLE
+			     , ADDRESS_DEFAULT
+			     , RESERVE_STATUS
+			     , TO_CHAR(RESERVE_DATE, 'YYYYMMDD') AS "RESERVE_DATE"
+			     , ATTACHMENT_NO
+			     , PRICE
+			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			FROM RESERVE R
+			JOIN SPACE USING (SPACE_NO)
+			JOIN MEMBER USING (MEM_NO)
+			JOIN SPACE_ATTACHMENT USING(SPACE_NO)
+			WHERE ATTACHEMNT_LEVEL = 1
+			  AND MEM_NO = #{memNo}
+			ORDER BY RESERVE_NO DESC
+
+		</select>
+		
+		<select id="selectMyReserveListSortCount" resultType="_int">
+			SELECT COUNT(*)
+			FROM RESERVE
+			WHERE RESERVE_STATUS = ?
+		</select>
+
+
+
+
+
+
+
+
+
+
 </mapper>
