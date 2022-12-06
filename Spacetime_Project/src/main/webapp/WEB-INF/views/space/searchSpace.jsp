@@ -193,107 +193,7 @@
 					
 					
 					
-					<script>
-						var lineList = document.querySelector("#lineList");
-						var picList = document.querySelector("#picList");
-						var spaceListArr = [];
-						var reviewCount = [];
-						
-						
-						function selectList() {
-							$.ajax({
-								url: "selectSpace.mp",
-								type: "get",
-								data : {
-									max_lat : rect.bounds._max._lat,
-									max_lng : rect.bounds._max._lng,
-									min_lat : rect.bounds._min._lat,
-									min_lng : rect.bounds._min._lng
-								},
-					        	success : listArr => {
-				        			spaceListArr = [];
-					        		for(var i = 0; i < list.length; i++) {
-					        			spaceListArr[i] = listArr[i];
-						        		console.log(listArr[i]);
-					        		}
-					        		console.log("ajax성공");
-					        	},
-					        	error : function() {
-					        		console.log("ajax실패");
-					        	}
-							});
-						}
-						
-						
-						//
-						function reviewCount() {
-							
-						}
-						
-						
-						//사진형 리스트 보기
-						function toPicList() {
-							var picContent = "";
-							for(var i = 0; i < spaceListArr.length; i++){
-								picContent += "<div class='picList_content'"> +
-												"<div class='picList_content_pic'>" + + "</div>" +
-												"<div class='picList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
-												"<div class='picList_content_price'>" + spaceListArr[i].hourPrice + " / 시간</div>" +
-										   "</div>"
-								picList.append(picContent);
-							}
-						}
-						
-						
-						
-	                    
-	                    
-						//
-						function toLineList() {
-							var lineContent = "";
-							for(var i = 0; i < spaceListArr.length; i++){
-								lineContent += "<div class='lineList_content'>"
-													"<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle +"</div>" +
-													"<input type='hidden' name='spaceNo' value='" + spaceListArr[i].spaceNo + "'>"
-													"<div class='lineList_content_hashTag'>" spaceListArr[i].spaceTitle"</div>" +
-													"<div class='lineList_content_extraInfo'>" +
-														"<div class='lineList_content_price'>"spaceListArr[i].hourPrice"</div>" +
-														"<div class='lineList_content_reviewCount'>" + 리뷰갯수 + "</div>" +
-														"<div class='lineList_content_bookMark'>" + 북마크 + "</div>" +
-													"</div>" +
-												"</div>"
-								lineList.append(lineContent);
-							}
-						}
-						*/
-						
-						
-						$(function (){
-							selectList();
-							console.log("selectList() 성공");
-							//reviewCount();
-							//toPicList(); //기본적으로 사진형게시판
-							
-							//게시판형 리스트로 변환
-							document.querySelector("#listOption_lineList").onclick = () => {
-	                            picList.style.display="none";
-	                            lineList.style.display="block";
-	                            //toPicList();
-		                    };
-		                    
-		                    //사진형 리스트로 변환
-							document.querySelector("#listOption_picList").onclick = () => {
-	                            lineList.style.display="none";
-	                            picList.style.display="block";
-	                            //toLineList();
-		                    };
-		                    
-		                    
-							picList.style.display= "block";
-			                lineList.style.display= "none";
-			                
-						});
-					</script>
+					
 				</div>
 				<!-- 지도 -->
 				<div id="map">
@@ -321,7 +221,7 @@
 					            rect.setBounds(bounds);
 					        }, 500);
 					   	});
-					    
+					
 				        
 					    
 						//마커위치설정
@@ -333,8 +233,103 @@
 						markers.push(new naver.maps.Marker({
 						    map: map,
 						    position: sillimStn
-						})); */
+						})); 
+					*/
+					var lineList = document.querySelector("#lineList");
+					var picList = document.querySelector("#picList");
+					var spaceListArr = [];
+					var reviewCount = [];
+					
+					
+					function selectList() {
+						$.ajax({
+							url: "selectSpace.mp",
+							type: "get",
+							data : {
+								max_lat : rect.bounds._max._lat,
+								max_lng : rect.bounds._max._lng,
+								min_lat : rect.bounds._min._lat,
+								min_lng : rect.bounds._min._lng
+							},
+				        	success : listArr => {
+				        		console.log("되나?");
+			        			spaceListArr = [];
+				        		for(var i = 0; i < list.length; i++) {
+				        			spaceListArr[i] = listArr[i];
+					        		console.log(listArr[i]);
+				        		}
+				        		console.log("ajax성공");
+				        	},
+				        	error : function() {
+				        		console.log("ajax실패");
+				        	}
+						});
+					}
+					
+					
+					//
+					function reviewCount() {
+						
+					}
+					
+					
+					//사진형 리스트 보기
+					function toPicList() {
+						var picContent = "";
+						for(var i = 0; i < spaceListArr.length; i++){
+							picContent += "<div class='picList_content'"> +
+											"<div class='picList_content_pic'>" + + "</div>" +
+											"<div class='picList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
+											"<div class='picList_content_price'>" + spaceListArr[i].hourPrice + " / 시간</div>" +
+									   "</div>"
+							picList.append(picContent);
+						}
+					}
+					
+					//
+					function toLineList() {
+						var lineContent = "";
+						for(var i = 0; i < spaceListArr.length; i++){
+							lineContent += "<div class='lineList_content'>"
+												"<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle +"</div>" +
+												"<input type='hidden' name='spaceNo' value='" + spaceListArr[i].spaceNo + "'>"
+												"<div class='lineList_content_hashTag'>" + spaceListArr[i].spaceTitle + "</div>" +
+												"<div class='lineList_content_extraInfo'>" +
+													"<div class='lineList_content_price'>" + spaceListArr[i].hourPrice + "</div>" +
+													"<div class='lineList_content_reviewCount'>" + 리뷰갯수 + "</div>" +
+													"<div class='lineList_content_bookMark'>" + 북마크 + "</div>" +
+												"</div>" +
+											"</div>"
+							lineList.append(lineContent);
+						}
+					}
+					
+					
+						selectList();
+						console.log("selectList() 성공");
+						//reviewCount();
+						//toPicList(); //기본적으로 사진형게시판
+						
+						//게시판형 리스트로 변환
+						document.querySelector("#listOption_lineList").onclick = () => {
+                            picList.style.display="none";
+                            lineList.style.display="block";
+                            //toPicList();
+	                    };
+	                    
+	                    //사진형 리스트로 변환
+						document.querySelector("#listOption_picList").onclick = () => {
+                            lineList.style.display="none";
+                            picList.style.display="block";
+                            //toLineList();
+	                    };
+	                    
+	                    
+						picList.style.display= "block";
+		                lineList.style.display= "none";
+		                
 					});
+				
 				</script>
 			</div>
 		</div>

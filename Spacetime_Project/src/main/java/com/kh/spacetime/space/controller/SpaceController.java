@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.space.model.service.SpaceService;
@@ -108,7 +107,11 @@ public class SpaceController {
 
 		ArrayList<Space> spaceList = spaceService.selectHostSpaceList(memNo, pi);
 		
-		return new Gson().toJson(spaceList);
+		model.addAttribute("pi", pi);
+		model.addAttribute("spaceList", spaceList);
+
+		return "space/hostSpaceList";
+
 	}
 
 	/* 호스트 이용후기 관리 */
