@@ -15,26 +15,51 @@
 	
 	<!-- 관리자페이지 신고 리스트 조회 + 페이징 처리 -->
 	<!-- 신고 글 총 개수 -->
-	<select id="selectReportListCount" parameterType="String" resultType="_int">
+	<!-- <select id="selectReportListCount" parameterType="string" resultType="_int"> -->
+	<select id="selectReportListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM REPORT
-		<if test="_parameter == 'all'.toString()">
-			WHERE STATUS = 'Y'
-			  AND STATUS = 'N'
-			  AND STATUS = 'D'
+<!-- 		<if test="condition == 'all'">
+			WHERE REPORT_STATUS = 'Y'
+			  AND REPORT_STATUS = 'N'
+			  AND REPORT_STATUS = 'D'
 		</if>
-		<if test="_parameter == 'wait'.toString()">
-			WHERE STATUS = 'N'
+		<if test="condition == 'wait'">
+			WHERE REPORT_STATUS = 'N'
 		</if>
-		<if test="_parameter == 'accept'.toString()">
-			WHERE STATUS = 'Y'
+		<if test="condition == 'accept'">
+			WHERE REPORT_STATUS = 'Y'
 		</if>
-		<if test="_parameter == 'deny'.toString()">
-			WHERE STATUS = 'D'
-		</if>
+		<if test="condition == 'deny'">
+			WHERE REPORT_STATUS = 'D'
+		</if> -->
 	</select>
 	
 	<!-- 신고 리스트 조회 -->
+	<!-- <select id="selectReportList" parameterType="string" resultMap="commonReportSet"> -->
+	<select id="selectReportList" resultMap="commonReportSet">
+		SELECT REPORT_NO, MEM_ID, REPORT_TYPE, REPORT_CONTENT, TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE", REPORT_STATUS
+		FROM REPORT 
+   		JOIN MEMBER ON (REPORTED_MEM_NO = MEM_NO)
+<!-- 		<if test="condition == 'all'">
+			WHERE REPORT_STATUS = 'Y'
+			  AND REPORT_STATUS = 'N'
+			  AND REPORT_STATUS = 'D'
+		</if>
+		<if test="condition == 'wait'">
+			WHERE REPORT_STATUS = 'N'
+		</if>
+		<if test="condition == 'accept'">
+			WHERE REPORT_STATUS = 'Y'
+		</if>
+		<if test="condition == 'deny'">
+			WHERE REPORT_STATUS = 'D'
+		</if> -->
+	</select> 
+	
+	
+	
+	
 	<!-- 신고 상세조회 -->
 	<!-- 신고 처리 (승인, 반려) -->
 

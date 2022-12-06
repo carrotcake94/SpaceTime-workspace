@@ -10,16 +10,6 @@
 
     body { font-family: 'NanumSquare', sans-serif;}
     
-    /* content 영역 */
-    #content {
-        border: 1px solid red;
-        margin: auto;
-        min-width: 1000px;
-        height: 100%;
-        min-height: 850px;
-        /* background-color: rgba(128, 128, 128, 0.1); */
-    }
-
     /* 메뉴바 전체 */
     .adminMenu {
         /* background-color: white; */
@@ -27,12 +17,13 @@
         /* height: 100%;  */
         width: 250px;   
         box-sizing: border-box;
-        margin-left: 10%;
+        margin-left: 3%;
         /* margin-top: 100px; */
         /* padding: 50px 0px; */
         /* border-radius: 10px; */
-        min-height: 850px;
+        min-height: 1000px;
         padding-top: 70px;
+        float: left;
     }
 
     /* 관리자페이지 제목 */
@@ -65,6 +56,7 @@
     }
     .navi:hover {
         color: #277BC0;
+        text-decoration: none;
     }
     
     /* 매출관리 화살표 */
@@ -90,27 +82,22 @@
 </head>
 <body>
 	
-	
-	<jsp:include page="header.jsp" />
-
-    <div id="content">
-        <div class="adminMenu">
-            <div id="adminPage">관리자페이지</div>
-            <ul class="accordion">
-                <li>
-                    <span class="naviMenu navi">매출 관리</span>
-                    <ul>
-                        <li class="naviSub"><a href="#" class="navi">매출 통계</a></li>
-                        <li class="naviSub"><a href="#" class="navi">매출 관리</a></li>
-                    </ul>
-                </li>
-                <li class="naviMenu"><a href="#" class="navi">회원 관리</a></li>
-                <li class="naviMenu"><a href="#" class="navi">공간 관리</a></li>
-                <li class="naviMenu"><a href="#" class="navi">신고 관리</a></li>
-            </ul>
-        </div>
+    <div class="adminMenu">
+        <div id="adminPage">관리자페이지</div>
+        <ul class="accordion">
+            <li>
+                <span class="naviMenu navi">매출 관리</span>
+                <ul>
+                    <li class="naviSub"><a href="#" class="navi">매출 통계</a></li>
+                    <li class="naviSub"><a href="#" class="navi">매출 관리</a></li>
+                </ul>
+            </li>
+            <li class="naviMenu"><a href="#" class="navi">회원 관리</a></li>
+            <li class="naviMenu"><a href="#" class="navi">공간 관리</a></li>
+            <li class="naviMenu"><a href="#" class="navi">신고 관리</a></li>
+        </ul>
     </div>
-
+    
     <script>
         var acc=$(".accordion");
         acc.find("li").not(".open").find("ul").slideUp();

@@ -20,7 +20,7 @@ public class Report {
 	private String reportStatus; // REPORT_STATUS	CHAR(1 BYTE)
 	private String reportAnswer; // REPORT_ANSWER	VARCHAR2(300 BYTE)
 	private String modifyDate; // MODIFY_DATE	DATE
-	private int reportMemNo; // REPORT_MEM_NO	NUMBER
-	private int reportedMemNo; // REPORTED_MEM_NO	NUMBER
+	private String reportMemNo; // REPORT_MEM_NO	NUMBER
+	private String reportedMemNo; // REPORTED_MEM_NO	NUMBER
 	
 }

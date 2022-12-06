@@ -7,13 +7,25 @@
 <meta charset="UTF-8">
 <title>신고 관리</title>
 <style>
+    
+    #header_container { height: 80px;}
+
+    /* content 영역 */
+    #content {
+        margin-left: 25%;
+        padding-bottom: 80px;
+        width: 60%;
+        min-width: 1000px;
+        /* height: 100%; */
+        /* min-height: 940px; */
+        /* background-color: rgba(128, 128, 128, 0.1); */
+    }
 
     /* 신고관리 제목 */
     #title {
-        /* border: 1px solid blue; */
         margin: auto;
         margin-top: 70px;
-        width: 60%;
+        width: 100%;
     }
 
     /* 검색 폼 회색 배경 */
@@ -21,7 +33,8 @@
         margin: auto;
         margin-top: 30px;
         padding: 40px;
-        width: 60%;
+        width: 100%;
+        min-width: 600px;
         border-radius: 10px;
         background-color: rgb(235, 235, 235);
     }
@@ -36,11 +49,14 @@
     #tab {
         margin: auto;
         margin-top: 40px;;
-        width: 60%;
+        width: 100%;
+        min-width: 600px;
     }
     
     /* 탭 내용(테이블) */
     .tab-content {
+        width: 100%;
+        min-width: 600px;
         margin-top: 20px;
     }
 
@@ -116,12 +132,13 @@
 </head>
 <body>
 
-
-	<jsp:include page="header.jsp" />
+    <div class="wrap">
+	<div id="header_container"><jsp:include page="header.jsp" /></div>
 	
-    <div id="content">
+    
     <jsp:include page="adminNavi.jsp" />
-
+    
+    <div id="content">
         <!-- 신고관리 제목 -->
         <div align="left" id="title"><h3>신고 관리</h3></div>
         
@@ -168,28 +185,31 @@
             
             <!-- 탭 내용 -->
             <div class="tab-content">
+                
                 <!--============================ 전체 조회 ============================-->
-                <div class="tab-pane container active" id="all" align="right" name="all">
+                <div class="tab-pane container active" id="all" align="right">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
                                 <th style="width:15%;">ID</th>
-                                <th style="width:10%;">타입</th>
-                                <th style="width:40%;">내용</th>
+                                <th style="width:15%;">타입</th>
+                                <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            <tr>
-                                <td>3</td>
-                                <td>dodo</td>
-                                <td>전체</td>
-                                <td></td>
-                                <td>2022-03-23</td>
-                                <td>승인</td>
-                            </tr>
+                            <c:forEach var="r" items="${list}">
+                                <tr>
+                                    <td>${r.reportNo}</td>
+                                    <td>${r.reportedMemNo}</td>
+                                    <td>${r.reportType}</td>
+                                    <td align="left">${r.reportContent}</td>
+                                    <td>${r.reportDate}</td>
+                                    <td>${r.reportStatus}</td>
+                                </tr>	
+                            </c:forEach>
                         </tbody>
                     </table>
 
@@ -222,27 +242,29 @@
                 </div>
             
                 <!--============================ 미처리 조회 ============================-->
-                <div class="tab-pane container fade" id="wait" align="right" name="wait">
+                <div class="tab-pane container fade" id="wait" align="right" name="condition" value="wait">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
                                 <th style="width:15%;">ID</th>
-                                <th style="width:10%;">타입</th>
-                                <th style="width:40%;">내용</th>
+                                <th style="width:15%;">타입</th>
+                                <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            <tr>
-                                <td>3</td>
-                                <td>dodo</td>
-                                <td>미처리</td>
-                                <td></td>
-                                <td>2022-03-23</td>
-                                <td>승인대기</td>
-                            </tr>
+                            <c:forEach var="r" items="${list}">
+                                <tr>
+                                    <td>${r.reportNo}</td>
+                                    <td>${r.reportedMemNo}</td>
+                                    <td>${r.reportType}</td>
+                                    <td align="left">${r.reportContent}</td>
+                                    <td>${r.reportDate}</td>
+                                    <td>${r.reportStatus}</td>
+                                </tr>	
+                            </c:forEach>
                         </tbody>
                     </table>
 
@@ -275,27 +297,29 @@
                 </div>
 
                 <!--============================ 승인 조회 ============================-->
-                <div class="tab-pane container fade" id="accept" align="right" name="accept">
+                <div class="tab-pane container fade" id="accept" align="right" name="condition" value="accept">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
                                 <th style="width:15%;">ID</th>
-                                <th style="width:10%;">타입</th>
-                                <th style="width:40%;">내용</th>
+                                <th style="width:15%;">타입</th>
+                                <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            <tr>
-                                <td>3</td>
-                                <td>dodo</td>
-                                <td>승인</td>
-                                <td></td>
-                                <td>2022-03-23</td>
-                                <td>승인대기</td>
-                            </tr>
+                            <c:forEach var="r" items="${list}">
+                                <tr>
+                                    <td>${r.reportNo}</td>
+                                    <td>${r.reportedMemNo}</td>
+                                    <td>${r.reportType}</td>
+                                    <td align="left">${r.reportContent}</td>
+                                    <td>${r.reportDate}</td>
+                                    <td>${r.reportStatus}</td>
+                                </tr>	
+                            </c:forEach>
                         </tbody>
                     </table>
 
@@ -325,30 +349,32 @@
                             </c:choose>
                         </ul>
                     </div>
-                </div>
+                </div> 
 
                 <!--============================ 반려 조회 ============================-->
-                <div class="tab-pane container fade" id="deny" align="right" name="deny">
+                <div class="tab-pane container fade" id="deny" align="right" name="condition" value="deny">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
                                 <th style="width:15%;">ID</th>
-                                <th style="width:10%;">타입</th>
-                                <th style="width:40%;">내용</th>
+                                <th style="width:15%;">타입</th>
+                                <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody id="myTable">
-                            <tr>
-                                <td>3</td>
-                                <td>dodo</td>
-                                <td>반려</td>
-                                <td></td>
-                                <td>2022-03-23</td>
-                                <td>승인대기</td>
-                            </tr>
+                            <c:forEach var="r" items="${list}">
+                                <tr>
+                                    <td>${r.reportNo}</td>
+                                    <td>${r.reportedMemNo}</td>
+                                    <td>${r.reportType}</td>
+                                    <td align="left">${r.reportContent}</td>
+                                    <td>${r.reportDate}</td>
+                                    <td>${r.reportStatus}</td>
+                                </tr>	
+                            </c:forEach>
                         </tbody>
                     </table>
 
@@ -378,11 +404,10 @@
                             </c:choose>
                         </ul>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
         <br>
-
     </div>
 
     <!-- 신고 상세내역 모달창 -->

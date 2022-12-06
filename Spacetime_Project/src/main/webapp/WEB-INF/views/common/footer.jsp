@@ -34,7 +34,7 @@
         <div id="footerDv">
           <div id="footer_etc">
             <a href="">개인정보처리방침</a> |
-            <a href="">이용약관</a>
+            <a href="rlist.ad">이용약관</a>
           </div>
           <p>
             Space Time.<br />

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kh.spacetime.common.model.dao.CommonDao;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 
+@Service
 public class CommonServiceImpl implements CommonService {
 	
 	@Autowired
@@ -21,14 +23,19 @@ public class CommonServiceImpl implements CommonService {
 	// 관리자페이지 신고 리스트 조회 + 페이징 처리 
 	// 신고 글 총 개수 
 	@Override
+//	public int selectReportListCount(String condition) {
 	public int selectReportListCount() {
+		
 		return commonDao.selectReportListCount(sqlSession);
 	}
 
 	// 신고 리스트 조회 
 	@Override
+//	public ArrayList<Report> selectReportList(String condition, PageInfo pi) {
 	public ArrayList<Report> selectReportList(PageInfo pi) {
-		return null;
+		
+//		return commonDao.selectReportList(sqlSession, condition, pi);
+		return commonDao.selectReportList(sqlSession, pi);
 	}
 
 	// 신고 상세조회 
@@ -61,5 +68,6 @@ public class CommonServiceImpl implements CommonService {
 	public Reserve selectSpace(int spaceNo) {
 		return null;
 	}
+
 
 }
