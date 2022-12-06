@@ -27,7 +27,7 @@
 		<result column="DENY_MESSAGE" property="denyMessage" />
 		<result column="HOST_NO" property="hostNo" />
 		<result column="STYPE_NO" property="stypeNo" />
-		<collection resultMap="spaceAttachmentResultSet" property="spaceAttachment" />
+		<collection resultMap="spaceAttachmentResultSet" property="attachments" />
 	</resultMap>
 	
 	<resultMap id="spaceAttachmentResultSet" type="spaceAttachment">
@@ -38,6 +38,26 @@
 		<result column="ATTACHMENT_LEVEL" property="attachmentLevel" />
 		<result column="SPACE_NO" property="spaceNo" />
 	</resultMap>
+	
+	<!-- 	호스트 공간 개수 -->
+	<select id="selectHostSpaceListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM SPACE
+		WHERE HOST_NO = #{memNo}
+	</select>
+	<!-- 	호스트 공간 리스트 -->
+	<select id="selectHostSpaceList" parameterType="_int" resultMap="spaceResultSet">
+		SELECT SPACE_NO
+			 , SPACE_TITLE
+			 , HOUR_PRICE
+			 , ADDRESS_DEFAULT
+			 , SPACE_STATUS
+			 , DENY_MESSAGE
+			 , ATTACHMENT_RENAME
+		FROM SPACE
+		JOIN SPACE_ATTACHMENT USING(SPACE_NO)
+		WHERE HOST_NO = #{memNo}
+	</select>
 	
 	<!-- 	공간 타입 리스트 전체 선택 -->
 	<select id="selectSpaceTypeList" resultMap="spaceTypeResultSet">
@@ -72,6 +92,7 @@
 <!-- 								   		 , #{attachList.spaceNo}) -->
 <!-- 	</foreach> -->
 <!-- 	</insert> -->
+
 
 <!-- 	마지막 공간 PK 가져오기 -->
 	<select id="selectSpaceNo" resultType="_int">
@@ -118,25 +139,25 @@
 				   		 , #{stypeNo})
 	</insert>
 	
-<!-- 	호스트 공간 개수 -->
-	<select id="selectHostSpaceListCount" parameterType="_int" resultType="_int">
-		SELECT COUNT(*)
-		FROM SPACE
-		WHERE HOST_NO = #{memNo}
-	</select>
-<!-- 	호스트 공간 리스트 -->
-	<select id="selectHostSpaceList" parameterType="_int" resultMap="spaceResultSet">
-		SELECT SPACE_NO
-			 , SPACE_TITLE
-			 , HOUR_PRICE
-			 , ADDRESS_DEFAULT
-			 , SPACE_STATUS
-			 , DENY_MESSAGE
-			 , ATTACHMENT_RENAME
-		FROM SPACE
-		JOIN SPACE_ATTACHMENT USING(SPACE_NO)
-		WHERE HOST_NO = #{memNo}
-		AND ATTACHEMNT_LEVEL = 1
+	<!-- 공간 삭제-->
+	<delete id="deleteSpace" parameterType="_int">
+		DELETE
+	    FROM SPACE
+	    WHERE SPACE_NO = #{sno}
+	</delete>
+	
+	<!-- 공간 첨부파일 삭제-->
+	<delete id="deleteSpaceAttachment" parameterType="_int">
+		DELETE
+	    FROM SPACE_ATTACHMENT
+	    WHERE SPACE_NO = #{sno}
+	</delete>
+	
+	<!-- 	호스트 공간 첨부파일 리스트 -->
+	<select id="selectSpaceAttachmentList" parameterType="_int" resultMap="spaceAttachmentResultSet">
+		SELECT ATTACHMENT_RENAME
+		FROM SPACE_ATTACHMENT
+		WHERE SPACE_NO = #{sno}
 	</select>
 	
 	<!-- 지도에 표시될 공간 갯수 조회 -성훈-->

@@ -517,8 +517,6 @@
       var imgCount = $("#" + rId + " img").length;
       var index = $("#reviewImgModal img").attr("class").split("-", 2)[1].substr(3, 1);
 
-      console.log("리뷰 이미지 수 : " + imgCount);
-      console.log("이미지 인덱스 : " + index);
 
       if (type == 1) {
         index--;

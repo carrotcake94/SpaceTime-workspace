@@ -35,40 +35,13 @@
         font-size: 18px;
         font-weight: 600;
       }
+	  .nodata {
+	  	text-align: center;
+	  	 font-size: 25px;
+        font-weight: 600;
+	  
+	  }
 
-      /* 페이지네이션 */
-      .pagination {
-        justify-content: center;
-      }
-
-      .pagination a {
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-        padding: 5px 8px;
-        background-color: #eeeeee;
-        color: black;
-      }
-      .no-page-prev a, .no-page-next a {
-      background-color: #eeeeee !important;
-      }
-
-      .pagination a:hover {
-        color: rgb(253, 193, 55);
-        background-color: #e4e4e4;
-        border-color: #ccc;
-      }
-
-      #active-page {
-        background-color: rgb(253, 193, 55);
-        color: white;
-      }
-
-      .page-btn {
-        margin: 0 5px;
-      }
-
-      /* ---------- */
       /* 공간 리스트 */
       #space_area {
         overflow: hidden;
@@ -208,6 +181,41 @@
         background-color: rgb(94, 94, 94);
       }
 
+	      /* 페이지네이션 */
+      .pagination {
+        justify-content: center;
+      }
+
+      .pagination a {
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 8px;
+        background-color: #eeeeee;
+        color: black;
+      }
+      .no-page-prev a, .no-page-next a {
+      background-color: #eeeeee !important;
+      }
+
+      .pagination a:hover {
+        color: rgb(253, 193, 55);
+        background-color: #e4e4e4;
+        border-color: #ccc;
+      }
+
+      #active-page {
+        background-color: rgb(253, 193, 55);
+        color: white;
+      }
+
+      .page-btn {
+        margin: 0 5px;
+      }
+
+      /* ---------- */
+
+
       /* 공간 검수 반려 모달 */
       #refuse-info-Modal .modal-content {
         width: 600px;
@@ -288,27 +296,113 @@
       }
 
       /* -------------------------------------- */
+       /* 공간 삭제  모달 */
+      #spaceDeleteModal .modal-content {
+        width: 450px;
+        margin: auto;
+        border: 1px solid gray;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 150px;
+      }
+
+      #spaceDeleteModal .modal-header {
+        background-color: rgb(39, 123, 192);
+        text-align: center;
+        color: white;
+        font-size: 18px;
+        border-bottom: none;
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      #spaceDeleteModal .modal-body {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      #spaceDeleteModal h4 {
+        margin-bottom: 20px;
+      }
+
+      #spaceDeleteModal h5 {
+        color: rgb(39, 123, 192);
+      }
+
+      #spaceDeleteModal .modal-footer {
+        margin: 0 auto 20px;
+        border: none;
+      }
+
+      #spaceDeleteModal button {
+        color: white;
+        width: 150px;
+        height: 60px;
+        margin: 0 10px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        border-radius: 5px;
+        border: none;
+      }
+
+      #spaceDeleteModal button:nth-child(1) {
+        background-color: rgb(158, 158, 158);
+      }
+
+      #spaceDeleteModal button:nth-child(2) {
+        background-color: rgb(253, 193, 55);
+         color: black;
+      }
+
+      #spaceDeleteModal button:nth-child(1):hover {
+        background-color: rgb(136, 136, 136);
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      #spaceDeleteModal button:nth-child(2):hover {
+        background-color: rgb(255, 187, 27);
+        font-size: 20px;
+        font-weight: 600;
+        color: black;
+      }
+
+      /* -------------------------------------- */
+      
     </style>
 </head>
 <body>
 	<div class="wrap">		
 	<jsp:include page="../common/header.jsp" />
 	<div class="main">
-		<div id="spaceList_Host">
+	<div id="spaceList_Host">
       <div class="sheader">
         공간 관리 리스트
-        <button type="button" onclick="">공간등록하기</button>
+        <button type="button" onclick="location.href='enrollForm.sp';">공간등록하기</button>
       </div>
+      
+      <c:choose>
+      <c:when test="${spaceList.size() eq 0}">
       <div id="space_area">
-      <c:forEach var="s" items="${spaceList}">
+      	<div class="nodata">소유한 공간이 없습니다.<br>공간을 등록해주세요 .</div>     
+      </div>
+      </c:when>
+      <c:otherwise>
+      <div id="space_area">
+      <c:forEach var="s" items="${spaceList}" varStatus="status">
+      	<c:set var="i" value="${status.index}" />
+
       	<div class="space">
           <div class="img_area">
-            <img src="resources/uploadFiles/space/space/${s.spaceAttachment.attachmentReName}" alt="사진 없음" />
+            <img class="img-0" src="resources/uploadFiles/space/space/${s.attachments[0].attachmentReName}" alt="사진 없음" />
+            <input type="hidden" value="${imgStrList[i]}">
             <div class="img_btn_area">
-              <button type="button" class="button_img button_img_prev">
+              <button type="button" class="button_img button_img_prev" onclick="imgLoader(this,1)">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
               </button>
-              <button type="button" class="button_img button_img_next">
+              <button type="button" class="button_img button_img_next" onclick="imgLoader(this,2)">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
               </button>
             </div>
@@ -328,30 +422,16 @@
             <span class="stitle">${s.spaceTitle }</span>
             <hr />
             ${s.addressDefault }
-            <span class="sprice">${s.hourPrice}</span>
+            <span class="sprice">${s.hashtag}원</span>
           </div>
           <div class="space_btn_area">
             <button>공간정보 수정</button>
-            <button>삭제</button>
+            <button type="button" onclick="delModal(${s.spaceNo})">삭제</button>
           </div>
         </div>
-	 </c:forEach>  
-	     
-      </div>
-      <script>
-        $(function () {
-          $(".img_area").mouseover(function () {
-            $(this).children(".img_btn_area").show();
-            $(this).children("img").css({ transform: "scale(1.1)" });
-          });
-          $(".img_area").mouseleave(function () {
-            $(this).children(".img_btn_area").hide();
-            $(this).children("img").css({ transform: "scale(1.0)" });
-          });
-        });
-      </script>
-
-      <ul class="pagination">
+	 </c:forEach>
+	 </div>
+	 <ul class="pagination">
       	<c:choose>
 	   		<c:when test="${ pi.currentPage eq 1 }">
 	   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
@@ -372,6 +452,8 @@
 	       	</c:otherwise>
 	       </c:choose>	       
       </ul>
+      </c:otherwise>
+      </c:choose>     
     </div>
 
     <!-- 공간 검수 반려 확정 Modal -->
@@ -395,16 +477,48 @@
             <button type="button" onclick="">관리자 문의</button>
             <button type="button" onclick="">재검수 신청</button>
           </div>
+          
         </div>
       </div>
     </div>
-	
-	
+    
+     <!-- 공간 삭제  Modal -->
+    <div class="modal" id="spaceDeleteModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">공간 삭제</div>
+          <!-- Modal body -->
+          <div class="modal-body">
+            <h4>공간을 삭제하면 복구할 수 없습니다.</h4>
+            <h5>삭제하시겠습니까?</h5>
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">닫기</button>
+            <button type="button" onclick="spaceDel();">삭제하기</button>
+          </div>
+          <form id="spDelForm" method="post" action="spaceDel.sp" >
+         	 	<input type="hidden" name="spaceNo" value="">
+          </form>
+        </div>
+      </div>
+    </div>
 	</div>	
 	<jsp:include page="../common/footer.jsp" />
 	</div>
-	
-	<script>
+	 <script>
+        $(function () {
+          $(".img_area").mouseover(function () {
+            $(this).children(".img_btn_area").show();
+            $(this).children("img").css({ transform: "scale(1.1)" });
+          });
+          $(".img_area").mouseleave(function () {
+            $(this).children(".img_btn_area").hide();
+            $(this).children("img").css({ transform: "scale(1.0)" });
+          });
+        });
+
 		$(function() {
 			$(".page-link").each(function() {
           		if ($(this).text() ==${ pi.currentPage}) {
@@ -416,6 +530,41 @@
           	});
  			
 		});
+		
+		imgLoader = (btn, type) => {
+			 var $img = $(btn).parent().prev().prev();
+			 var result = $img.attr("class").split("-");
+			 var index = result[1];
+			 console.log($(btn).parent().prev().val());
+		  	 var imgArr = $(btn).parent().prev().val().split(",");
+		      
+		      if (type == 1) {
+		          index--;
+		          if (index < 0) {
+		            index = imgArr.length-1;
+		          }
+		        } else {
+		          index++;
+		          if (index ==  imgArr.length) {
+		            index = 0;
+		          }
+		        }
+		  	    $img.removeAttr("class");
+		  	    $img.addClass("img-" + index);
+		  	    $img.attr("src", "resources/uploadFiles/space/space/"+imgArr[index]);
+		      
+		}
+		
+		
+		delModal  = sno =>  {
+			$("input[name='spaceNo']").val(sno);
+			$("#spaceDeleteModal").modal("show");
+		}
+		
+		spaceDel  = () =>  {
+			$("#spDelForm").submit();
+			
+		}
 	
 	</script>
 </body>

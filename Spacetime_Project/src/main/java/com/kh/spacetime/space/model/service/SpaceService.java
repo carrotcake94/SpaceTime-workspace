@@ -25,16 +25,28 @@ public interface SpaceService {
 	// 공간 시퀀스 currval 가져오기 -정현
 	int selectSpaceNo();
 
+	// 공간 삭제 -정현
+	int deleteSpace(int sno);
+
+	// 공간 첨부파일 삭제 -정현
+	int deleteSpaceAttachment(int sno);
+
+	// 호스트 공간 첨부파일 리스트 -정현
+	ArrayList<SpaceAttachment> selectSpaceAttachmentList(int sno);
+
 	// 호스트 공간 리스트 총 개수 - 정현
 	int selectHostSpaceListCount(int memNo);
 
 	// 호스트 공간 리스트 -정현
 	ArrayList<Space> selectHostSpaceList(int memNo, PageInfo pi);
 
+	// 공간관리 이미지 변경용 - 정현
+	SpaceAttachment changeHostSpaceImg(HashMap<String, String> map);
+
 	// 지도에 표시될 공간 갯수 조회 -성훈
 	int selectListCountForMap(HashMap<String, Double> map);
-	
+
 	// 지도 공간 리스트 -성훈
 	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
-	
+
 }

@@ -35,11 +35,28 @@ public class SpaceDao {
 	public int selectSpaceNo(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("spaceMapper.selectSpaceNo");
 	}
+
+	// 공간 삭제-정현
+	public int deleteSpace(SqlSessionTemplate sqlSession, int sno) {
+		return sqlSession.delete("spaceMapper.deleteSpace", sno);
+	}
+
+	// 공간 첨부파일 삭제-정현
+	public int deleteSpaceAttachment(SqlSessionTemplate sqlSession, int sno) {
+		return sqlSession.delete("spaceMapper.deleteSpaceAttachment", sno);
+	}
+
+	// 호스트 공간 첨부파일 리스트 가져오기-정현
+	public ArrayList<SpaceAttachment> selectSpaceAttachmentList(SqlSessionTemplate sqlSession, int sno) {
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectSpaceAttachmentList", sno);
+	}
+
 	// 호스트 공간 총 개수 가져오기-정현
 	public int selectHostSpaceListCount(SqlSessionTemplate sqlSession, int memNo) {
 
 		return sqlSession.selectOne("spaceMapper.selectHostSpaceListCount", memNo);
 	}
+
 	// 호스트 공간 리스트 가져오기-정현
 	public ArrayList<Space> selectHostSpaceList(SqlSessionTemplate sqlSession, int memNo, PageInfo pi) {
 
@@ -50,19 +67,19 @@ public class SpaceDao {
 
 		return (ArrayList) sqlSession.selectList("spaceMapper.selectHostSpaceList", memNo, rowBounds);
 	}
-	
-	//지도에 표시될 공간 갯수 조회 -성훈
+
+	// 지도에 표시될 공간 갯수 조회 -성훈
 	public int selectListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map) {
 		return sqlSession.selectOne("spaceMapper.selectListCountForMap", map);
 	}
-	
-	//지도 공간 리스트 -성훈
-	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi){
+
+	// 지도 공간 리스트 -성훈
+	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
 	}
 
 }

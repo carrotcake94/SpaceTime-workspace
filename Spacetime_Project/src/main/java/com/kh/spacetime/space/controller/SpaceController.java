@@ -2,6 +2,7 @@ package com.kh.spacetime.space.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +55,7 @@ public class SpaceController {
 	 */
 	@RequestMapping("insert.sp")
 	public ModelAndView insertSpace(Space s, MultipartFile[] upfile, HttpSession session, ModelAndView mv) {
-
+		System.out.println(s);
 		int result = spaceService.insertSpace(s);
 
 		int spaceNo = spaceService.selectSpaceNo();
@@ -94,12 +95,13 @@ public class SpaceController {
 	 * @author 정현 호스트 공간 관리 리스트
 	 */
 	@RequestMapping("hostSpaceList.sp")
-	public String selectHostSpaceList(@RequestParam(value = "spage", defaultValue = "1") int currentPage, HttpSession session, Model model) {
-		
+	public String selectHostSpaceList(@RequestParam(value = "spage", defaultValue = "1") int currentPage,
+			HttpSession session, Model model) {
+
 //		Member loginMember = (Member)session.getAttribute("loginMember");
 //		int memNo = loginMember.getMemNo();
 		int memNo = 5;
-		
+
 		int listCount = spaceService.selectHostSpaceListCount(memNo);
 		int pageLimit = 5;
 		int boardLimit = 3;
@@ -107,12 +109,62 @@ public class SpaceController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Space> spaceList = spaceService.selectHostSpaceList(memNo, pi);
+		System.out.println(spaceList);
 		
+		ArrayList<String> imgStrList = new ArrayList<String>();
+		
+		NumberFormat numberFormat = NumberFormat.getInstance();
+		for (Space s : spaceList) {
+//			System.out.println(s.getAttachments());
+			//원 콤마로 표현
+			s.setHashtag(numberFormat.format(s.getHourPrice()));
+			String imgStr ="";
+			for(int i=0; i<s.getAttachments().size(); i++) {
+				if(i == s.getAttachments().size()-1) {
+					imgStr += s.getAttachments().get(i).getAttachmentReName();
+				}else {
+					imgStr += s.getAttachments().get(i).getAttachmentReName()+",";
+				}
+			}
+//			System.out.println("rename : "+imgStr);
+			imgStrList.add(imgStr);
+		}
 		model.addAttribute("pi", pi);
 		model.addAttribute("spaceList", spaceList);
+		model.addAttribute("imgStrList", imgStrList);
 
 		return "space/hostSpaceList";
+	}
 
+	/**
+	 * @author 정현 공간 삭제
+	 */
+	@RequestMapping("spaceDel.sp")
+	public String deleteSpace(int spaceNo, HttpSession session, Model model) {
+		int result = spaceService.deleteSpace(spaceNo);
+		
+		if (result > 0) {
+			ArrayList<SpaceAttachment> aList = spaceService.selectSpaceAttachmentList(spaceNo);
+			System.out.println(aList);
+			
+			// 공간에대한 모든 첨부파일 삭제
+			for (SpaceAttachment a : aList) {
+				String realPath = session.getServletContext().getRealPath("resources/uploadFiles/space/space/"+a.getAttachmentReName());
+				System.out.println(realPath);
+				new File(realPath).delete();
+			}
+			int result2= spaceService.deleteSpaceAttachment(spaceNo);
+			if(result2>0) {
+				session.setAttribute("alertMsg", "공간이 삭제되었습니다.");
+				return "redirect:/hostSpaceList.sp";
+			}else {
+				model.addAttribute("errorMsg", "공간 첨부파일 삭제 실패");
+				return "common/errorPage";
+			}
+		} else { // 게시글 삭제 실패
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
 	}
 
 	/* 호스트 이용후기 관리 */
