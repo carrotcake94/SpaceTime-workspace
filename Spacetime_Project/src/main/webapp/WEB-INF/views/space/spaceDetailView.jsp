@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>공간 상세 페이지</title>
+<!-- 부트페이 -->
+<script src="https://js.bootpay.co.kr/bootpay-4.2.6.min.js" type="application/javascript"></script>
+
 <style>
 
     #content {
@@ -29,6 +32,9 @@
         color: grey;
     }
 
+    tbody {
+      margin: autos;
+    }
 
         /* 페이지네이션 */
         .pagination {
@@ -203,6 +209,40 @@
         height: 400px;
       }
 
+      /* 가로스크롤  */
+      .swiper-wrapper{
+        line-height: 18px;
+        -webkit-font-smoothing: antialiased;
+        color: #000;
+        font-weight: 400;
+        font-family: NanumBarunGothic,"나눔바른고딕",NanumGothic,"돋움",Dotum,Helvetica,"Apple SD Gothic Neo",Sans-serif!important;
+        border: 0;
+        font-size: 100%;
+        vertical-align: middle;
+        -webkit-text-size-adjust: 100%;
+        list-style: none;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: flex;
+        transition-property: transform,-webkit-transform;
+        box-sizing: content-box;
+        transition-timing-function: ease-out;
+        margin: 0 auto;
+        padding: 10px 0;
+        transition-duration: 0ms;
+        transform: translate3d(0px, 0px, 0px);
+
+      }
+
+      .slide-wrapper {
+        border: 1px solid black;
+      }
+
+      
+      
+
 </style>
 </head>
 <body>
@@ -250,18 +290,148 @@
                             </div>
 
                             <!-- 달력/시간 -->
-                            <table id="tbl-reserve2" class="table table-hover">
+                            <table id="tbl-reserve2" class="table">
                                 <tr>
                                     
                                     <th>
-                                        <b>예약날짜</b> &nbsp;&nbsp;&nbsp;
-                                        <input type="date" id="D-day" onchange="selectDay(this.value)">
+                                        <!-- <input type="date" id="D-day" onchange="selectDay(this.value)"> -->
+                                        <jsp:include page="calendar.jsp" />
+
+                                        <!-- 클릭한 td(날짜 값) 가져오기-->
+                                        <script>
+
+                                          // 클릭한 날짜값 가져오기 
+                                          $('.day-tr td').click(function() {
+
+                                            // console.log($(this).text());
+                                            var day = $(this).text(); 
+
+                                          });
+                                          
+                                        </script>
+	
                                     </th>
                                 </tr>
                                 <tr>
                                     <th>
                                         <b>예약시간</b> <br>
-                                        <table class="table" style="cursor: pointer; font-size: 12px;" id="availableTime">
+
+                                        <div class="reserve_time_wrap scroll" style="width: 400px; overflow-x: scroll;" align="center">
+                                          <div class="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode" style="padding: 10px;">
+                                            <ul class="swiper-wrapper time_list" style="transition-duration: 0ms;transform: translate3d(0px, 0px, 0px);">
+                                              <li class="swiper-slide able swiper-slide-active">
+                                                <!-- <span class="time time_half">오전</span> -->
+                                                <a class="time_box">
+                                                  <span class="time">0</span> 
+                                                  <span class="price">15,000</span>
+                                                </a>
+                                              </li>
+                                              <li class="swiper-slide able swiper-slide-next">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">1</span> 
+                                                <span class="price">15,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">2</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">3</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">4</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">5</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">6</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">7</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">8</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                                <!----> 
+                                                <a class="time_box">
+                                                  <span class="time">9</span> 
+                                                  <span class="price">12,000</span>
+                                                </a>
+                                              </li>
+                                              <li class="swiper-slide able">
+                                                <!----> 
+                                                <a class="time_box">
+                                                  <span class="time">10</span> 
+                                                  <span class="price">12,000</span>
+                                                </a>
+                                              </li>
+                                              <li class="swiper-slide able">
+                                                <!----> 
+                                                <a class="time_box">
+                                                  <span class="time">11</span> 
+                                                  <span class="price">12,000</span>
+                                                </a>
+                                              </li>
+                                              <li class="swiper-slide able">
+                                                <!-- <span class="time time_half">오후</span>  -->
+                                                <a class="time_box">
+                                                <span class="time">12</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <li class="swiper-slide able">
+                                              <!----> 
+                                              <a class="time_box">
+                                                <span class="time">13</span> 
+                                                <span class="price">12,000</span>
+                                              </a>
+                                            </li>
+                                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                                          </div>
+                                        </div>
+
+                                        <!-- 좌우스크롤 -->
+                                        <script>
+                                          moveScrollLeft = function() {
+                                            var _scrollX = $('.scroll').scrollLeft();
+                                            $('.test').scrollLeft(_scrollX + 100);
+                                          };
+                                        </script>
+
+
+                                        <!-- 
+                                          <table class="table" style="cursor: pointer; font-size: 12px;" id="availableTime">
                                             <tr>
                                                 <th id="0" style="width:16.6%;">00:00 - 01:00</th>	                                
                                                 <th id="1" style="width:16.6%;">01:00 - 02:00</th>	                                
@@ -293,8 +463,10 @@
                                                 <th id="21">21:00 - 22:00</th>	                                
                                                 <th id="22">22:00 - 23:00</th>	                                
                                                 <th id="23">23:00 - 24:00</th>	                                
-                                            </tr>
+                                            </tr> 
                                         </table>
+                                        -->
+                                        <input type="button" class="" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
                                     </th>
                                 </tr>
                             </table>
@@ -363,7 +535,152 @@
        
         <jsp:include page="../common/footer.jsp" />
 
-	
+         <!-- 예약 확인 Modal -->
+         <div class="modal" id="confirm-modal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header" style="font-size: 30px; font-weight:600;">예약 확인</div>
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                      <div style="padding:30px;">
+                          <b>결제하시겠습니까?</b>
+                          <br><br>
+                          <table style="line-height: 2; padding: 5px;">
+                              <tr>
+                                  <td>예약공간</td>
+                                  <td>공간이름이들어갈자리</td>
+                              </tr>
+                              <tr>
+                                  <td>예약날짜</td>
+                                  <td>날짜가들어갈자리</td>
+                              </tr>
+                              <tr>
+                                  <td>예약시간</td>
+                                  <td>시간이들어갈자리</td>
+                              </tr>
+                              <tr>
+                                  <td>결제예정금액</td>
+                                  <td>결제금액들어갈자리</td>
+                              </tr>
+                          </table>
+                          <br>
+                      </div>
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                          <button type="button"  class="btn btn-light" onclick="$('#confirm-modal').modal('hide')">닫기</button>
+                          <button type="button" class="btn btn-primary" id="bootPayment" onclick="pay();">결제하기</button> <!-- 결제버튼 여기 -->
+
+                        <!-- 부트페이 -->
+                        <script>
+                          // 로고 눌렀을 시 질척모달창, 모달창에서 홈으로 갈 시 입력한 가정보 삭제하는 서블릿 호출 
+                          function toHome() {
+                              // 원본참고하기
+                          }
+
+                          // 결제하기 버튼 클릭 시 부트페이 결제 함수 실행
+                          $(document).ready(function() {
+                              $("#bootPayment").click(function() {
+                                  toPay();
+                              });
+                          });
+
+                          // 부트페이 결제 함수
+                          async function toPay() {
+                              try {
+                                  const response = await Bootpay.requestPayment({
+                                      "application_id": "638d424dd01c7e001e7bd63e", // 부트페이에서 발급해주는 ID
+                                      "price": 1000, 
+                                      "order_name": "결제내용들어갈공간",
+                                      "order_id": "TEST_ORDER_ID",
+                                      "tax_free": 0, 
+                                      "user": { // loginMember 객체로부터 추출
+                                          "id": "회원아이디",
+                                          "username": "회원이름",
+                                          "phone": "01000000000",
+                                          "email": "test@test.com"
+                                      },
+                                      "items": [
+                                            {
+                                              "id": "item_id",
+                                              "name": "테스트아이템",
+                                              "qty": 1,
+                                              "price": 1000
+                                            }
+                                          ],
+                                      "extra": {
+                                          "open_type": "iframe", // 결제창 열리는 방식
+                                          "card_quota": "0", // 할부 개월 수(무할부)
+                                          "escrow": false,
+                                          "display_success_result" : true,
+                                          "display_error_result" : true
+                                          // "separately_confirmed" : true
+                                      }
+                                  })
+
+                                  switch (response.event) {
+                                      case 'issued':
+                                          // 가상계좌 입금 완료 처리
+                                          break;
+                                      case 'done':
+
+                                          // 결제 완료 시 hidden으로 숨긴 input들 안에 부트페이 데이터를 넣고 서블릿으로 요청
+                                          console.log(response);
+                                          $("form>input[name=rId]").val(response.data.receipt_id);
+                                          $("form>input[name=oId]").val(response.data.order_id);
+                                          $("form>input[name=rUrl]").val(response.data.receipt_url);
+                                          $("form>input[name=payMethod]").val(response.data.method);
+                                          $("form>button[type=submit]").click();
+
+                                          break;
+                                      case 'confirm': //payload.extra.separately_confirmed = true; 일 경우 승인 전 해당 이벤트가 호출됨
+                                          console.log(response.receipt_id)
+                                          /**
+                                           * 1. 클라이언트 승인을 하고자 할때
+                                           * // validationQuantityFromServer(); //예시) 재고확인과 같은 내부 로직을 처리하기 한다.
+                                           */
+                                          const confirmedData = await Bootpay.confirm() //결제를 승인한다
+                                          if(confirmedData.event === 'done') {
+                                              //결제 성공
+                                          } else if(confirmedData.event === 'error') {
+                                              //결제 승인 실패
+                                          }
+
+                                          /**
+                                           * 2. 서버 승인을 하고자 할때
+                                           * // requestServerConfirm(); //예시) 서버 승인을 할 수 있도록  API를 호출한다. 서버에서는 재고확인과 로직 검증 후 서버승인을 요청한다.
+                                           * Bootpay.destroy(); //결제창을 닫는다.
+                                           */
+                                          break;
+                                  }
+                              } catch (e) {
+                                  // 결제 진행중 오류 발생
+                                  // e.error_code - 부트페이 오류 코드
+                                  // e.pg_error_code - PG 오류 코드
+                                  // e.message - 오류 내용
+                                  console.log(e.message)
+                                  switch (e.event) {
+                                      case 'cancel':
+                                          // 사용자가 결제창을 닫을때 호출
+                                          // 결제 실패 alert창과 함께 홈으로 가기 + 가정보 delete 하는 서블릿 호출
+                                          //--------------------------------------------------------원본참고하기 
+                                          console.log(e.message);
+                                          break;
+                                      case 'error':
+                                          // 결제 승인 중 오류 발생시 호출
+                                          // 결제 실패 alert창과 함께 홈으로 가기 + 가정보 delete 하는 서블릿 호출
+                                          console.log(e.error_code);
+                                          //--------------------------------------------------------원본참고하기 
+                                          break;
+                                  }
+                              }
+                          }
+                        </script>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
 
 	
 </body>
