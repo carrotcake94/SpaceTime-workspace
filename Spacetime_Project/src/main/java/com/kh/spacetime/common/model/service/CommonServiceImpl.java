@@ -41,7 +41,8 @@ public class CommonServiceImpl implements CommonService {
 	// 신고 상세조회 
 	@Override
 	public Report selectReport(int reportNo) {
-		return null;
+		
+		return commonDao.selectReport(sqlSession, reportNo);
 	}
 
 	// 신고 처리 (승인, 반려)

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.service.CommonService;
 import com.kh.spacetime.common.model.vo.PageInfo;
@@ -18,9 +19,6 @@ public class CommonController {
 	
 	@Autowired
 	private CommonService commonService;
-	
-	// 메뉴바에서 신고관리 클릭 시 => rlist.ad (기본적으로 1번 페이지 요청)
-	// 페이징바 클릭 시 => rlist.ad?cpage=요청하는페이지수 
 	
 	@RequestMapping("rlist.ad")
 //	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpServletRequest request) {
@@ -50,6 +48,16 @@ public class CommonController {
 		// /WEB-INF/views/common/adminReport.jsp
 		return "common/adminReport";
 		
+	}
+	
+	@RequestMapping("rdetail.ad")
+	public ModelAndView selectReport(int rno, ModelAndView mv) {
+		
+		Report r = commonService.selectReport(rno);
+		
+		mv.addObject("r", r).setViewName("common/adminReportDetail");
+		
+		return mv;
 	}
 
 }

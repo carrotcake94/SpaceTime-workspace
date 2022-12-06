@@ -188,7 +188,7 @@
                 
                 <!--============================ 전체 조회 ============================-->
                 <div class="tab-pane container active" id="all" align="right">
-                    <table class="table">
+                    <table class="table" id="reportList">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -201,7 +201,7 @@
                         </thead>
                         <tbody id="myTable">
                             <c:forEach var="r" items="${list}">
-                                <tr>
+                                <tr data-toggle="modal" data-target="#reportDetail">
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
@@ -212,7 +212,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
-
+                    
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
@@ -256,7 +256,7 @@
                         </thead>
                         <tbody id="myTable">
                             <c:forEach var="r" items="${list}">
-                                <tr>
+                                <tr data-toggle="modal" data-target="#reportDetail">
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
@@ -311,7 +311,7 @@
                         </thead>
                         <tbody id="myTable">
                             <c:forEach var="r" items="${list}">
-                                <tr>
+                                <tr data-toggle="modal" data-target="#reportDetail">
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
@@ -366,7 +366,7 @@
                         </thead>
                         <tbody id="myTable">
                             <c:forEach var="r" items="${list}">
-                                <tr>
+                                <tr data-toggle="modal" data-target="#reportDetail">
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
@@ -409,10 +409,19 @@
         </div>
         <br>
     </div>
+    
+    <!-- 신고 상세페이지로 연결 -->
+    <script>
+    	$(function() {
+    		$("#reportList>tbody>tr").click(function() {
+    			location.href = "rdetail.ad?rno=" + $(this).children().eq(0).text();
+    		});
+    	});
+    </script>
 
     <!-- 신고 상세내역 모달창 -->
     <form action="" method="post">
-        <div class="modal fade" id="reportDetail">
+        <div class="modal fade" id="#">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
                 <div class="modal-content">
                 
@@ -429,11 +438,11 @@
                             <table id="report_detail"> 
                                 <tr>
                                     <th style="width: 150px;">신고일</th>
-                                    <td style="width: 500px;">2022-10-10</td>
+                                    <td style="width: 500px;">${r.reportDate}</td>
                                 </tr> 
                                 <tr>
                                     <th>신고유형</th> 
-                                    <td>욕설</td>
+                                    <td>${r.reportType}</td>
                                 </tr> 
                                 <tr>
                                     <th>신고자 ID</th>
@@ -445,10 +454,7 @@
                                 </tr>
                                 <tr class="reportContent">
                                     <th>신고내용</th>
-                                    <td>신고내용~~<br>
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASsAAACpCAMAAABEdevhAAABL1BMVEX////W3uHuIhjm7/P/0gDC0dXOHxezvcHU3N/19/i+ztPh5+ntAADt8fLc4uX/0AD/vQD/xQBydn5UWWSTlpz/uQBIU2v/xwD/2gBSXWj/sgCKT1b0HRD/8dr96+vg6u7/6qnTGg5+Tlb/7Mv/2EX/7LKvxMj/0HC+x8vL1Nf/8MT1k5DHz9OMrbn+8/L3paLzgX7oNCz/1YBITlv84uHyYVzzcWzvKyH83Nv6xcP4qqfwQDj5u7j2nJn7zsy5r7HBnp/jR0LUb22+p6n0enXzbWnyWFLyYl7lIRigu8XeT0rbWlbOgYHmQTzqLibSd3XNhITHj4/iT0v/++3/y1v/wmD/zYD0iojaZGLwwVvqwx+qlUE2SW28ojjRsCwmQHFwbGD/xS//867/+cmqrLGw2/GqAAAJO0lEQVR4nO2cC3fTNhSA5YTUdiynbJTBNpOOsXn2SNNmBVrarg9SGBmQDvbgMfbm//+GSfJLcuRX4tROcr/Tc5oqtuN8vbqWZMkIAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACw4uzfq/oMFoYutqo+hYXhHsZVn8LC0AVXuQFX+YE6mMJRX/izf/+B+H734SWeTL3Zxi/6ae/f28Mgy2cf48Nu8tukSo5T3l4xjhv4MDGySFQN9i/zbGrOwwY+CP/odwmRuh08BlU8x+d+LesfPB5gwuF5IG//AfR4ZHR3MLYaDOLr+9SMv+IcWbgRYmE8gMtfEt9zphrWk3t3+SwG8AiqGnibpKpDfFT1WdWSI0EVgWjqH+Ljqs+rhnStmKoGvt9H/b3khtfqshMPKyLrSR89pHUREOhPqiKyzhF6sFf1qdWD/vZdAstIBzJXDZKt9r1+8xHdkl0VTRPpBkKGjkyDvNKRERU0vVdmlV9qThzTFjpmgfN4Il15DQeEftih77MtMW3cuxoy2zpqG0hpIb1topaCjDZ5ZSDN9d7qVPqt5kP/7g6Bxk1/EAl6entt7fZTP7D20f1DuukB3bLU1KUoyGzpyDWQoSGdvKIFro5azaBA63gFJldQA7pRFSSmKL6swROr8CCpnmsbw0CmRpQREx2ku16BgpBmoqaCdE1HnbDA8AoUY4qvVjqRq6dra4Isq1HYVY46aLTyCK0nkatA1drtMMEXPZiZ7UGfKv2btbhoSFytTe0qE23KukSuIjWgVFeZKjrNKU+zFpTqyk13VYsEPQOXWAdNe+q0nlAHm1I6mjKf9Faqqxy5fTrkuV2ualMhzOUsSnWV1mYgTfuySXalzeWfVqqrtDOc6bLfkaY6Tw3PArmaG/I+DnPVimhr4CqJlDo4l89bDFfyi4Z31eMI66BCX5V+Mexjy+d2SFCS6ko3OmVg5Kot8jYDc6W5Eco8XakbG58HfBkSFm1s9JL2NDSlJHINTiTHlbzN0Czf1e61a5+mcG3344QdzdJU5ZMlhalRNB9l/q5SSXTVKU+VluM7ucl1UO5qDnXQ2cggqQHJwoqkitksebvn6CbKB/Ivtw5ODXWlqaram0GVq6pOTldyUlzN5To4JdRVj7hSZ3DlkN213HE1cQsp01VdBmDLcNXL74reMWoFt5BM7xZS5IqkqlYzylcseW3WJqy8fEUCY6aE1XPYYWaug217c6s5ClzVxlGA12TQSmk5zOqqNbJbW8ookFVTV+Uwc1xtjkZte7RZ77iqiavmaNTcspvgKoXQlW03R+0FdqV5ndocUmd3tbnZ3GwuqiutRxtPHk4vY+OS26KL5YoT5etKbVqssKue58cOyLS1sq40T9TJ6cWPg7298Ytnz09VpstJ3GVVXXlBNXwzsPxlGOT3i4sTZisptDxXegoJJ0E6iU3yoyP6Y7LJhU19uskl8yTBFVN18sYS5wri8YWaIou5MlvtZNzaff8iyF3RnG4/b0zOqsSDoZ0oi7rSW6mUfx/2EpG6YlH1TDpXt4F/SpRFXZltzoy9RRnxd/7qMr4yDTJXbooqkrgubH8MJtOVXx2X2JWWqorIopHlJLtKyVdL54okK/siWRWphkN5LfRdmckoS+aKhtVpmqpGYyAfSPVdpXyasWSuaFgNYlfA2J+YpqzJwFo5VzSsXsbCavwkJmt8IstYK+eKthfOYk3QI3Qu2mOBNbHryrkiVXAoiLHGdMmmuOSVZayJW4or54pkq0dCWFneUk1x0at1KqmEC+eq4y0X0rzlQi5bAmOSroXrrYmhb7EC3eubxV3Rdugr3hXe8Y7bFyqmtBIunitvrZUbueoUcUXS1cmAj6Bwbbmw5s76MZcrw+0JU+Vr5qogEldDMY0HT3gQ0/tA0mqIuzLpaBf5iQYXauaq4DThuKvJ1B4sw78rZvdsV6bao2ZMRw1PqVpXP9+J+JkWuMWGPSSuxEb7IFiFfywqzHSlq8FcQscJPq1aV79cj/iOFiQOPsrJcoUfB1v294rFlaEGZ2KqQc6q2NXVEM9VQWR1UGgyRE+D2uYd7mW66oXRhNRg6nXN4qrgEhDZdZAPoLODbZ8D3pV1lu0qms7rBOdUratfP4v4jRbMmNvdeBeHPknr9evXdA0+n64eZbYZuLiq0tWdr0LWb0SVsIw6SLrO9huxO2idk+1ivWnrZWa7vd0OP8QJQqwCV1+sX4mI5Suj2F06SR9nYpihcdDdyTPQwLu69c3bt98EkJdfsNIqXHGqrsTzVbElLLK+s7oXcyXWPxpWz2QDWLyrr6+Tf14AeXmVlVbh6iOOWL4qiGz8Kn0Embk6ld2eEFxd/UiElVZSB0OurJebr7zAkj5uhQ8r6SxvwRWfJiistDb5qiRXLr2NmiFrKL3rJXG1/q5Wrkqug15gnaXJws/liwcmXd38/f0fVbsS8lWQQctyRZtYJ+NkWZiOx8jmw0vi6s/376p2Ja2DfOGtvIeS3T+mQ+7DRFn4VdL0D1kd/OtmLV1xZevf5j2UdD4DrYXD+H2vQNWzD0nLd2Su/q6VqzBdledKYTOKXslaDtYjNXGlk+w6GKiqR74KW3x84Z28h5K78ib1/WTFm6B4cEpzlWwyw4SrGKy06na7rA5emTGu/BlY6sUYh9PVLAufvbSTo2qy3c5RYbt9zvmKwuZg2erLN2dji/ZxBq8eDdW0WX2iq2+vi/zDSqttt6+vR/mKK5zdlaJ5E7Zt9WRIOVH9icjJewjjDLdE2Ph2NfnqRkT4r7vB5asSXJGGVnx6e6qpmt4fvIR85cdWTxCVsXCinq4uIV+Futxez3GcXi97NWZNXcny1Xq5+ao49XQl5KvgssyVlZOvlsLVvzc5wnzOF/6X91BL7aqzu7v7SSZko2u5bugstSv0Iet5KP5TUZzsQ6Fld6V/nIuNfEdjrlwntd2URbB7tiuzXvNkCkK/pJvcHc4D62gHz7IgrlIekqUtvKsZn/vhxlylsfCuSo4rntHWqL1UrkrOV7GFXqOlWbs0g6IJJl2N6Jq4pXFV3uP6vGeBLrOr8gLLe465uC61TWTZQslCu9KN8EF5MxGsok9d79xa6PXOKH3hewHyHK7KrwkAAAAAAAAAAAAAAAAAAAAsO/8DqOtEJBnOp5gAAAAASUVORK5CYII=">
-                                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>신고내용~~
-                                    </td>
+                                    <td>${r.reportContent}</td>
                                 </tr>                        
                             </table>
                         
