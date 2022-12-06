@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -181,26 +182,25 @@ public class SpaceController {
 	}
 	
 	//지도 범위에 포함된 장소 조회 -성훈 
-	@RequestMapping("selectSpace.mp")
-	public String selectListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage, 
-			double max_lat, double max_lng, double min_lat, double min_lng, Model model) {
-		HashMap<String, Double> map = new HashMap<>();
-		map.put("max_lat", max_lat);
-		map.put("max_lng", max_lng);
-		map.put("min_lat", min_lat);
-		map.put("mim_lng", min_lng);
-		
-		int listCount = spaceService.selectListCountForMap(map);
-		int pageLimit = 3;
-		int boardLimit = 10;
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
-		ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
-
-		System.out.println("hello");
-		return new Gson().toJson(listArr);
-	}
+		@ResponseBody
+		@RequestMapping(value="selectSpace.mp", produces="application/json; charset=UTF-8")
+		public String selectListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage, 
+				double max_lat, double max_lng, double min_lat, double min_lng, Model model) {
+			HashMap<String, Double> map = new HashMap<>();
+			map.put("max_lat", max_lat);
+			map.put("max_lng", max_lng);
+			map.put("min_lat", min_lat);
+			map.put("min_lng", min_lng);
+			
+			int listCount = spaceService.selectListCountForMap(map);
+			int pageLimit = 3;
+			int boardLimit = 10;
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+			
+			ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
+			return new Gson().toJson(listArr);
+		}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
 	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니여도 된다!!

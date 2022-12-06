@@ -77,7 +77,8 @@
 							<button type="submit" class="mapFilter_btn">검색</button>
 						</div>
 					</form>
-
+					
+					<!-- 필터 열고 닫는 구문 -->
 					<script>
 						$(function(){
 		                    var filter = document.querySelector("#mapFilter");
@@ -190,42 +191,41 @@
 							<a class="pagination" href="#"><img src="resources/images/main/rightPointer.png"></a>
 						</div>
 					</div>
-					
-					
-					
-					
 				</div>
 				<!-- 지도 -->
 				<div id="map">
 				</div>
 				<script>
+					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
+				
 					$(function(){
+						//지도 생성 구문
 						var HOME_PATH = window.HOME_PATH || '.';
 		
-						//최초로 가리키는 곳
+						//최초로 가리키는 곳 (학원)
 						map = new naver.maps.Map('map', {
 							center: new naver.maps.LatLng(37.53306, 126.89632),
 							zoom: 13
 						});
 						
+						//로딩된 지도의 범위
 						var rect = new naver.maps.Rectangle({
 					        strokeOpacity: 0,
 					        strokeWeight: 0,
 					        fillOpacity: 0.2,
-					        bounds: map.getBounds(), // 지도의 bounds와 동일한 크기의 사각형을 그립니다.
+					        bounds: map.getBounds(), // 지도의 bounds와 동일한 크기의 사각형을 그림
 					        map: map
 					    });
-	
+						
+						//변경된 범위를 인식하는 구문
 					    naver.maps.Event.addListener(map, "bounds_changed", function(bounds) {
 					        window.setTimeout(function() {
 					            rect.setBounds(bounds);
 					        }, 500);
 					   	});
-					
-				        
 					    
 						//마커위치설정
-						/* var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
+						var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
 						
 						var markers = [];
 						var infowindows = [];
@@ -233,48 +233,78 @@
 						markers.push(new naver.maps.Marker({
 						    map: map,
 						    position: sillimStn
-						})); 
-					*/
-					var lineList = document.querySelector("#lineList");
-					var picList = document.querySelector("#picList");
-					var spaceListArr = [];
-					var reviewCount = [];
-					
-					
-					function selectList() {
-						$.ajax({
-							url: "selectSpace.mp",
-							type: "get",
-							data : {
-								max_lat : rect.bounds._max._lat,
-								max_lng : rect.bounds._max._lng,
-								min_lat : rect.bounds._min._lat,
-								min_lng : rect.bounds._min._lng
-							},
-				        	success : listArr => {
-			        			spaceListArr = [];
-				        		for(var i = 0; i < list.length; i++) {
-				        			spaceListArr[i] = listArr[i];
-					        		console.log(listArr[i]);
-				        		}
-				        		console.log("ajax성공");
-				        	},
-				        	error : function() {
-				        		console.log("ajax실패");
-				        	}
-						});
-					}
-					
-					
-					//
-					function reviewCount() {
+						}));
 						
-					}
+						
+						
+						//게시판형-사진형 리스트 변경을 위한 전역변수
+						var lineList = document.querySelector("#lineList");
+						var picList = document.querySelector("#picList");
+						
+						//지도의 범위를 인식하고, 범위 내의 공간들을 불러오는 구문
+						//Gson객체로 불러와 spaceListArr(전역변수)에 담아줌
+						function selectList() {
+							$.ajax({
+								url: "selectSpace.mp",
+								type: "get",
+								data : {
+									max_lat : rect.bounds._max._lat,
+									max_lng : rect.bounds._max._lng,
+									min_lat : rect.bounds._min._lat,
+									min_lng : rect.bounds._min._lng
+								},
+					        	success : function(listArr) {
+				        			var spaceListArr = [];
+					        		for(var i = 0; i < listArr.length; i++) {
+					        			spaceListArr[i] = listArr[i];
+					        		}
+					        	},
+					        	error : function() {
+					        		console.log("ajax실패");
+					        	}
+							});
+						}
+						
+						function markPosition () {
+							
+						}
+						
+						//게시판형 리스트에 표시될 리뷰갯수를 불러오기위한 구문
+						function reviewCount() {
+							$.ajax({
+								url: "reviewCount.mp",
+								type: "post",
+								data: {
+									
+								}
+							})
+						};
+						
+						toPicList();
+							
+						//게시판형 리스트로 변환
+						document.querySelector("#listOption_lineList").onclick = () => {
+		                    picList.style.display="none";
+		                    lineList.style.display="block";
+		                    toPicList();
+		                };
+		                
+		                //사진형 리스트로 변환
+						document.querySelector("#listOption_picList").onclick = () => {
+		                    lineList.style.display="none";
+		                    picList.style.display="block";
+		                    toLineList();
+		                };
+						picList.style.display= "block";
+		                lineList.style.display= "none";
 					
+					});
 					
-					//사진형 리스트 보기
+					//사진형 리스트로 전환하기 위한 메소드
+					//리스트에 해당하는 DOM요소에 필요한 값을 추가하여 "#picList"안에 뿌려주는 구문
 					function toPicList() {
 						var picContent = "";
+						console.log(spaceListArr);
 						for(var i = 0; i < spaceListArr.length; i++){
 							picContent += "<div class='picList_content'"> +
 											"<div class='picList_content_pic'>" + + "</div>" +
@@ -285,7 +315,8 @@
 						}
 					}
 					
-					//
+					//게시판형 리스트로 전환하기 위한 메소드
+					//리스트에 해당하는 DOM요소에 필요한 값을 추가하여 "#lineList"안에 뿌려주는 구문
 					function toLineList() {
 						var lineContent = "";
 						for(var i = 0; i < spaceListArr.length; i++){
@@ -302,33 +333,6 @@
 							lineList.append(lineContent);
 						}
 					}
-					
-					
-						selectList();
-						console.log("selectList() 성공");
-						//reviewCount();
-						//toPicList(); //기본적으로 사진형게시판
-						
-						//게시판형 리스트로 변환
-						document.querySelector("#listOption_lineList").onclick = () => {
-                            picList.style.display="none";
-                            lineList.style.display="block";
-                            //toPicList();
-	                    };
-	                    
-	                    //사진형 리스트로 변환
-						document.querySelector("#listOption_picList").onclick = () => {
-                            lineList.style.display="none";
-                            picList.style.display="block";
-                            //toLineList();
-	                    };
-	                    
-	                    
-						picList.style.display= "block";
-		                lineList.style.display= "none";
-		                
-					});
-				
 				</script>
 			</div>
 		</div>
