@@ -1,6 +1,7 @@
 package com.kh.spacetime.space.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -61,6 +62,16 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public ArrayList<Space> selectHostSpaceList(int memNo, PageInfo pi) {
 		return spaceDao.selectHostSpaceList(sqlSession, memNo, pi);
+	}
+
+	@Override
+	public int selectListCountForMap(HashMap<String, Double> map) {
+		return spaceDao.selectListCountForMap(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi) {
+		return spaceDao.selectListForMap(sqlSession, map, pi);
 	}
 	
 	

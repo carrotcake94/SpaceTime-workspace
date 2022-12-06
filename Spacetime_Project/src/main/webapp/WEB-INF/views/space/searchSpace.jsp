@@ -252,7 +252,6 @@
 								min_lng : rect.bounds._min._lng
 							},
 				        	success : listArr => {
-				        		console.log("되나?");
 			        			spaceListArr = [];
 				        		for(var i = 0; i < list.length; i++) {
 				        			spaceListArr[i] = listArr[i];

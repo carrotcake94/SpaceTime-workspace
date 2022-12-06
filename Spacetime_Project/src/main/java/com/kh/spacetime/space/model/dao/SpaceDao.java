@@ -53,7 +53,7 @@ public class SpaceDao {
 	
 	//지도에 표시될 공간 갯수 조회 -성훈
 	public int selectListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map) {
-		return sqlSession.selectOne("spaceMapper.selectMapListCountForMap", map);
+		return sqlSession.selectOne("spaceMapper.selectListCountForMap", map);
 	}
 	
 	//지도 공간 리스트 -성훈

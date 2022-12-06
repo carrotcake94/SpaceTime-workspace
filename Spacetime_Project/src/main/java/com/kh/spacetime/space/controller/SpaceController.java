@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.space.model.service.SpaceService;
@@ -144,11 +145,9 @@ public class SpaceController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("spaceList", listArr);
-		
-		return "space/searchSpace";
+
+		System.out.println("hello");
+		return new Gson().toJson(listArr);
 	}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)

@@ -143,8 +143,8 @@
 	<select id="selectListCountForMap" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
 		  FROM SPACE
-		 WEHRE LATITUDE BETWEEN #{max_lat} AND #{min_lat}
-		   AND LONGITUDE BETWEEN #{max_lng} AND #{min_lng}
+		 WEHRE LATITUDE BETWEEN #{min_lat} AND #{max_lat}
+		   AND LONGITUDE BETWEEN #{min_lng} AND #{max_lng}
 		   AND SPACE_STATUS = 'Y'
 	</select>
 	
@@ -160,10 +160,10 @@
 		       ATTACHMENT_RENAME
 		  FROM SPACE
 		  LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
-		 WEHRE LATITUDE BETWEEN #{max_lat} AND #{min_lat}
-		   AND LONGITUDE BETWEEN #{max_lng} AND #{min_lng}
+		 WHERE LATITUDE BETWEEN #{min_lat} AND #{max_lat}
+		   AND LONGITUDE BETWEEN #{min_lng} AND #{max_lng}
 		   AND SPACE_STATUS = 'Y'
-		   AND ATTACHMENT_LEVEL = 1
+		   AND ATTACHMENT_LEVEL = 1;
 	</select>
 	
 	
