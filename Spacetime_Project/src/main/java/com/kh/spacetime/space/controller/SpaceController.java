@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.space.model.service.SpaceService;
@@ -106,11 +108,7 @@ public class SpaceController {
 
 		ArrayList<Space> spaceList = spaceService.selectHostSpaceList(memNo, pi);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("spaceList", spaceList);
-
-		return "space/hostSpaceList";
-
+		return new Gson().toJson(spaceList);
 	}
 
 	/* 호스트 이용후기 관리 */
@@ -119,39 +117,35 @@ public class SpaceController {
 		return "space/hostReviewList";
 	}
 
-	/* 공간조회용 -성훈 */
+	//공간조회용 -성훈
 	@RequestMapping("searchSpaceList.mp")
 	public String selectSpaceList() {
 		
 		return "space/searchSpace";
 	}
-
-	/* 공간조회 - 게시판형식으로 정렬 -성훈 */
-	@RequestMapping("sortLineList.mp")
-	public void sortLineList() {
-
-	}
-
-	/* 공간조회 - 사진형식으로 정렬 -성훈 */
-	@RequestMapping("sortPicList.mp")
-	public void sortPicList() {
-
-	}
 	
-	/* 표시된 지도 범위에 포함된 장소 조회 -성훈 */
+	//지도 범위에 포함된 장소 조회 -성훈 
 	@RequestMapping("selectSpace.mp")
-	public String selectSpaceMap(double max_lat, double max_lng, double min_lat, double min_lng) {
-		System.out.println(max_lat);
-		System.out.println(max_lng);
-		System.out.println(min_lat);
-		System.out.println(min_lng);
-		Space max = 
+	public String selectListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage, 
+			double max_lat, double max_lng, double min_lat, double min_lng, Model model) {
+		HashMap<String, Double> map = new HashMap<>();
+		map.put("max_lat", max_lat);
+		map.put("max_lng", max_lng);
+		map.put("min_lat", min_lat);
+		map.put("mim_lng", min_lng);
 		
-		ArrayList<Space> list = new ArrayList<Space>();
+		int listCount = spaceService.selectListCountForMap(map);
+		int pageLimit = 3;
+		int boardLimit = 10;
 		
-		list = SpaceDao.selectSpaceMap()
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		return gson().toJson(list);
+		ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("spaceList", listArr);
+		
+		return "space/searchSpace";
 	}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)

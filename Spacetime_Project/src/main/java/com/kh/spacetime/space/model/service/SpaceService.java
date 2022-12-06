@@ -1,6 +1,7 @@
 package com.kh.spacetime.space.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
@@ -30,4 +31,10 @@ public interface SpaceService {
 	// 호스트 공간 리스트 -정현
 	ArrayList<Space> selectHostSpaceList(int memNo, PageInfo pi);
 
+	// 지도에 표시될 공간 갯수 조회 -성훈
+	int selectListCountForMap(HashMap<String, Double> map);
+	
+	// 지도 공간 리스트 -성훈
+	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
+	
 }

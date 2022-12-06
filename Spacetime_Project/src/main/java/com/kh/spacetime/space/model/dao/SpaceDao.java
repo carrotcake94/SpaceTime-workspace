@@ -1,6 +1,7 @@
 package com.kh.spacetime.space.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -48,6 +49,20 @@ public class SpaceDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		return (ArrayList) sqlSession.selectList("spaceMapper.selectHostSpaceList", memNo, rowBounds);
+	}
+	
+	//지도에 표시될 공간 갯수 조회 -성훈
+	public int selectListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map) {
+		return sqlSession.selectOne("spaceMapper.selectMapListCountForMap", map);
+	}
+	
+	//지도 공간 리스트 -성훈
+	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi){
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
 	}
 
 }

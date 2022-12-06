@@ -31,9 +31,9 @@
 	<resultMap id="spaceAttachmentResultSet" type="spaceAttachment">
 		<result column="ATTACHMENT_NO" property="attachmentNo" />
 		<result column="ATTACHMENT_RENAME" property="attachmentReName" />
-		<result column="ATTACHEMENT_UPLOAD_DATE" property="attachmentUploadDate" />
-		<result column="ATTACHEMNT_STATUS" property="attachmentStatus" />
-		<result column="ATTACHEMNT_LEVEL" property="attachmentLevel" />
+		<result column="ATTACHMENT_UPLOAD_DATE" property="attachmentUploadDate" />
+		<result column="ATTACHMENT_STATUS" property="attachmentStatus" />
+		<result column="ATTACHMENT_LEVEL" property="attachmentLevel" />
 		<result column="SPACE_NO" property="spaceNo" />
 	</resultMap>
 	
@@ -135,6 +135,33 @@
 		JOIN SPACE_ATTACHMENT USING(SPACE_NO)
 		WHERE HOST_NO = #{memNo}
 		AND ATTACHEMNT_LEVEL = 1
+	</select>
+	
+	<!-- 지도에 표시될 공간 갯수 조회 -성훈-->
+	<select id="selectListCountForMap" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		  FROM SPACE
+		 WEHRE LATITUDE BETWEEN #{max_lat} AND #{min_lat}
+		   AND LONGITUDE BETWEEN #{max_lng} AND #{min_lng}
+		   AND SPACE_STATUS = 'Y'
+	</select>
+	
+	
+	<!-- 지도 공간 리스트 (사진형게시판) -성훈 -->
+	<select id="selectListForMap" parameterType="hashmap" resultType="spaceResultSet">
+		SELECT SPACE_NO, 
+		       SPACE_TITLE, 
+		       HOUR_PRICE, 
+		       HASHTAG, 
+		       LATITUDE, 
+		       LONGITUDE, 
+		       ATTACHMENT_RENAME
+		  FROM SPACE
+		  LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+		 WEHRE LATITUDE BETWEEN #{max_lat} AND #{min_lat}
+		   AND LONGITUDE BETWEEN #{max_lng} AND #{min_lng}
+		   AND SPACE_STATUS = 'Y'
+		   AND ATTACHMENT_LEVEL = 1
 	</select>
 	
 	

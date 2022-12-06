@@ -96,198 +96,209 @@
 					<div id="picList">
 						<div>
 							<div class="picList_content">
+								<input type="hidden" name="spaceNo" value="">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
 						<div>
 							<div class="picList_content">
 								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
 						</div>
-					</div>
-					<!-- 게시판형 리스트 -->
-					<div id="lineList">
-						<div>
-							<div class="lineList_content">
-								<div class="lineList_content_spaceName">공간명</div>
-								<div class="lineList_content_spaceInfo">공간설명</div>
-								<div class="lineList_content_extraInfo">
-									<div class="lineList_content_price">가격</div>
-									<div class="lineList_content_loc">위치(동)</div>
-									<div class="lineList_content_like">좋아요</div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<div class="lineList_content">
-								<div class="lineList_content_spaceName">공간명</div>
-								<div class="lineList_content_spaceInfo">공간설명</div>
-								<div class="lineList_content_extraInfo">
-									<div class="lineList_content_price">가격</div>
-									<div class="lineList_content_loc">위치(동)</div>
-									<div class="lineList_content_like">좋아요</div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<div class="lineList_content">
-								<div class="lineList_content_spaceName">공간명</div>
-								<div class="lineList_content_spaceInfo">공간설명</div>
-								<div class="lineList_content_extraInfo">
-									<div class="lineList_content_price">가격</div>
-									<div class="lineList_content_loc">위치(동)</div>
-									<div class="lineList_content_like">좋아요</div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<div class="lineList_content">
-								<div class="lineList_content_spaceName">공간명</div>
-								<div class="lineList_content_spaceInfo">공간설명</div>
-								<div class="lineList_content_extraInfo">
-									<div class="lineList_content_price">가격</div>
-									<div class="lineList_content_loc">위치(동)</div>
-									<div class="lineList_content_like">좋아요</div>
-								</div>
-							</div>
-						</div>
-						<div>
-							<div class="lineList_content">
-								<div class="lineList_content_spaceName">공간명</div>
-								<div class="lineList_content_spaceInfo">공간설명</div>
-								<div class="lineList_content_extraInfo">
-									<div class="lineList_content_price">가격</div>
-									<div class="lineList_content_loc">위치(동)</div>
-									<div class="lineList_content_like">좋아요</div>
-								</div>
-							</div>
+						<div id="pic_pagination">
+							<a class="pic_pagination" href="#"><img src="resources/images/main/leftPointer.png"></a>
+							<a class="pic_pagination">1</a>
+							<a class="pic_pagination">2</a>
+							<a class="pic_pagination">3</a>
+							<a class="pic_pagination" href="#"><img src="resources/images/main/rightPointer.png"></a>
 						</div>
 					</div>
 					
+					<!-- 게시판형 리스트 -->
+					<div id="lineList">
+						<!-- 
+						<div>
+							<div class="lineList_content">
+								<div class="lineList_content_spaceTitle">공간명</div>
+								<div class="lineList_content_hashTag">해시태그</div>
+								<div class="lineList_content_extraInfo">
+									<div class="lineList_content_price">가격</div>
+									<div class="lineList_content_reviewCount">리뷰갯수</div>
+									<div class="lineList_content_like">좋아요</div>
+								</div>
+							</div>
+						</div>
+						 -->
+						<div id="">
+							<a class="pagination" href="#"><img src="resources/images/main/leftPointer.png"></a>
+							<a class="pagination">1</a>
+							<a class="pagination">2</a>
+							<a class="pagination">3</a>
+							<a class="pagination" href="#"><img src="resources/images/main/rightPointer.png"></a>
+						</div>
+					</div>
+					
+					
+					
 					<script>
-						$(function (){
-							var lineList = document.querySelector("#lineList");
-							var picList = document.querySelector("#picList");
+						var lineList = document.querySelector("#lineList");
+						var picList = document.querySelector("#picList");
+						var spaceListArr = [];
+						var reviewCount = [];
+						
+						
+						function selectList() {
+							$.ajax({
+								url: "selectSpace.mp",
+								type: "get",
+								data : {
+									max_lat : rect.bounds._max._lat,
+									max_lng : rect.bounds._max._lng,
+									min_lat : rect.bounds._min._lat,
+									min_lng : rect.bounds._min._lng
+								},
+					        	success : listArr => {
+				        			spaceListArr = [];
+					        		for(var i = 0; i < list.length; i++) {
+					        			spaceListArr[i] = listArr[i];
+						        		console.log(listArr[i]);
+					        		}
+					        		console.log("ajax성공");
+					        	},
+					        	error : function() {
+					        		console.log("ajax실패");
+					        	}
+							});
+						}
+						
+						
+						//
+						function reviewCount() {
 							
-							console.log(picList);
-							console.log(lineList);
-		                    
+						}
+						
+						
+						//사진형 리스트 보기
+						function toPicList() {
+							var picContent = "";
+							for(var i = 0; i < spaceListArr.length; i++){
+								picContent += "<div class='picList_content'"> +
+												"<div class='picList_content_pic'>" + + "</div>" +
+												"<div class='picList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
+												"<div class='picList_content_price'>" + spaceListArr[i].hourPrice + " / 시간</div>" +
+										   "</div>"
+								picList.append(picContent);
+							}
+						}
+						
+						
+						
+	                    
+	                    
+						//
+						function toLineList() {
+							var lineContent = "";
+							for(var i = 0; i < spaceListArr.length; i++){
+								lineContent += "<div class='lineList_content'>"
+													"<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle +"</div>" +
+													"<input type='hidden' name='spaceNo' value='" + spaceListArr[i].spaceNo + "'>"
+													"<div class='lineList_content_hashTag'>" spaceListArr[i].spaceTitle"</div>" +
+													"<div class='lineList_content_extraInfo'>" +
+														"<div class='lineList_content_price'>"spaceListArr[i].hourPrice"</div>" +
+														"<div class='lineList_content_reviewCount'>" + 리뷰갯수 + "</div>" +
+														"<div class='lineList_content_bookMark'>" + 북마크 + "</div>" +
+													"</div>" +
+												"</div>"
+								lineList.append(lineContent);
+							}
+						}
+						*/
+						
+						
+						$(function (){
+							selectList();
+							console.log("selectList() 성공");
+							//reviewCount();
+							//toPicList(); //기본적으로 사진형게시판
+							
+							//게시판형 리스트로 변환
 							document.querySelector("#listOption_lineList").onclick = () => {
-								$.ajax({
-									url: "sortLineList.sp",
-									type: "post",
-									data : {
-										
-									},
-									success : function(){
-										
-									},
-									error : function(){
-										
-									}
-								});
 	                            picList.style.display="none";
 	                            lineList.style.display="block";
-		                    }
-							
+	                            //toPicList();
+		                    };
+		                    
+		                    //사진형 리스트로 변환
 							document.querySelector("#listOption_picList").onclick = () => {
-								$.ajax({
-									url: "sortPicList.sp",
-									type: "post",
-									data : {
-										
-									},
-									success : function(){
-										
-									},
-									error : function(){
-										
-									}
-								});
 	                            lineList.style.display="none";
 	                            picList.style.display="block";
-		                    }
-							
-							//기본적으로 사진형게시판
-		                    picList.style.display= "block";
-		                    lineList.style.display= "none";
-						})
+	                            //toLineList();
+		                    };
+		                    
+		                    
+							picList.style.display= "block";
+			                lineList.style.display= "none";
+			                
+						});
 					</script>
 				</div>
 				<!-- 지도 -->
 				<div id="map">
 				</div>
 				<script>
-					/* function selectSpace(){
-						$.ajax({
-							url: "selectSpace.mp",
-							type: "post",
-							data : {
-								max : var max = {
-										_lat : ${ rect.bounds._max._lat },
-										_lng : ${rect.bounds._max._lng }
-								}
-								min : var min = {
-										_lat : ${ rect.bounds._min._lat },
-										_lng : ${ rect.bounds._min._lng }
-								}
-							}
-						});
-					} */
-				
 					$(function(){
 						var HOME_PATH = window.HOME_PATH || '.';
 		
@@ -310,30 +321,10 @@
 					            rect.setBounds(bounds);
 					        }, 500);
 					   	});
-						
-					        console.log(rect.bounds._max.y);
-					        console.log(rect.bounds._max.x);
-					        console.log(rect.bounds);
-					        
-					        
-					        $.ajax({
-								url: "selectSpace.mp",
-								type: "get",
-								data : {
-									max_lat : rect.bounds._max._lat,
-									max_lng : rect.bounds._max._lng,
-									min_lat : rect.bounds._min._lat,
-									min_lng : rect.bounds._min._lng
-								},
-					        	success : function(list){
-					        		
-					        	},
-					        	error : function() {
-					        		
-					        	}
-							});
 					    
-						//마커위치설
+				        
+					    
+						//마커위치설정
 						/* var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
 						
 						var markers = [];
