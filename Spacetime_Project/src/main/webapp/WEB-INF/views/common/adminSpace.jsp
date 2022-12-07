@@ -27,8 +27,8 @@
     }
 
     /* 검색창 */
-    #searchForm td {
-        width: 30%;
+    #searchForm {
+        width: 70%;
         min-width: none;
     }
 
@@ -102,24 +102,23 @@
         <div id="search">
             <table align="center" id="searchForm">
                 <tr>
+                    <td align="right">
+                        <select name="cate" class="select_category form-control mb-2" style="width:70%;">
+                            <option value="All" selected>전체</option>
+                            <option value="reportedMemId">신고대상ID</option>
+                            <option value="reportMemId">신고자ID</option>
+                            <option value="reportContent">내용</option>
+                        </select>
+                    </td>
                     <td>
                         <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
                     </td>
+                    <td align="left">
+                        <button type="submit" class="btn btn-secondary mb-2">검색</button>
+                    </td> 
                 </tr>
             </table>
         </div>
-
-        <!-- 자동 검색(?) -->
-        <script>
-            $(document).ready(function(){
-                $("#myInput").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
 
         <!-- 컨텐츠 탭 -->
         <div id="tab">
@@ -142,7 +141,7 @@
             <!-- 탭 내용 -->
             <div class="tab-content">
                 <div class="tab-pane container active" id="all wait accept deny" align="right" >
-                    <table class="table">
+                    <table class="table" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">공간번호</th>
@@ -157,26 +156,10 @@
                             <tr data-toggle="modal" data-target="#checkSpace">
                                 <td>3</td>
                                 <td>dodo</td>
-                                <td></td>
+                                <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;"></td>
                                 <td></td>
                                 <td>2022-03-23</td>
                                 <td>승인대기</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>dodo</td>
-                                <td></td>
-                                <td></td>
-                                <td>2022-02-16</td>
-                                <td>승인</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>doremi</td>
-                                <td></td>
-                                <td></td>
-                                <td>2022-01-08</td>
-                                <td>반려</td>
                             </tr>
                         </tbody>
                     </table>

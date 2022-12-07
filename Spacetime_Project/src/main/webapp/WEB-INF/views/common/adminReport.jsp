@@ -40,8 +40,8 @@
     }
 
     /* 검색창 */
-    #searchForm td {
-        width: 30%;
+    #searchForm {
+        width: 70%;
         min-width: none;
     }
 
@@ -145,24 +145,23 @@
         <div id="search">
             <table align="center" id="searchForm">
                 <tr>
+                    <td align="right">
+                        <select name="cate" class="select_category form-control mb-2" style="width:70%;">
+                            <option value="All" selected>전체</option>
+                            <option value="reportedMemId">신고대상ID</option>
+                            <option value="reportMemId">신고자ID</option>
+                            <option value="reportContent">내용</option>
+                        </select>
+                    </td>
                     <td>
                         <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
                     </td>
+                    <td>
+                        <button type="submit" class="btn btn-secondary mb-2">검색</button>
+                    </td> 
                 </tr>
             </table>
         </div>
-
-        <!-- 자동 검색(?) -->
-        <script>
-            $(document).ready(function(){
-                $("#myInput").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
 
         <!-- 컨텐츠 탭 -->
         <div id="tab">
@@ -187,7 +186,7 @@
                 
                 <!--============================ 전체 조회 ============================-->
                 <div class="tab-pane container active" id="all" align="right">
-                    <table class="table" id="reportList">
+                    <table class="table" class="reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -204,7 +203,7 @@
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
-                                    <td align="left">${r.reportContent}</td>
+                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
                                         <c:choose>
@@ -254,7 +253,7 @@
             
                 <!--============================ 미처리 조회 ============================-->
                 <div class="tab-pane container fade" id="wait" align="right" name="condition" value="wait">
-                    <table class="table">
+                    <table class="table" class="reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -271,7 +270,7 @@
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
-                                    <td align="left">${r.reportContent}</td>
+                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
                                         <c:choose>
@@ -321,7 +320,7 @@
 
                 <!--============================ 승인 조회 ============================-->
                 <div class="tab-pane container fade" id="accept" align="right" name="condition" value="accept">
-                    <table class="table">
+                    <table class="table" class="reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -338,7 +337,7 @@
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
-                                    <td align="left">${r.reportContent}</td>
+                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
                                         <c:choose>
@@ -388,7 +387,7 @@
 
                 <!--============================ 반려 조회 ============================-->
                 <div class="tab-pane container fade" id="deny" align="right" name="condition" value="deny">
-                    <table class="table">
+                    <table class="table" class="reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -405,7 +404,7 @@
                                     <td>${r.reportNo}</td>
                                     <td>${r.reportedMemNo}</td>
                                     <td>${r.reportType}</td>
-                                    <td align="left">${r.reportContent}</td>
+                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
                                         <c:choose>

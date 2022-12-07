@@ -27,8 +27,8 @@
     }
 
     /* 검색창 */
-    #searchForm td {
-        width: 30%;
+    #searchForm {
+        width: 70%;
         min-width: none;
     }
 
@@ -105,36 +105,24 @@
         <div id="search">
             <table align="center" id="searchForm">
                 <tr>
-                    <!-- <td>
-                        <select name="cate" class="select_category form-control mb-2">
-                            <option value="All" selected width="20%;">전체</option>
+                    <td align="right">
+                        <select name="cate" class="select_category form-control mb-2" style="width:70%;">
+                            <option value="All" selected>전체</option>
                             <option value="name`">이름</option>
                             <option value="id">아이디</option>
                             <option value="nickName">닉네임</option>
                             <option value="email">이메일</option>
                         </select>
-                    </td> -->
+                    </td>
                     <td>
                         <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
                     </td>
-                    <!-- <td>
+                    <td align="left">
                         <button type="submit" class="btn btn-secondary mb-2">검색</button>
-                    </td> -->
+                    </td>
                 </tr>
             </table>
         </div>
-
-        <!-- 자동 검색(?) -->
-        <script>
-            $(document).ready(function(){
-                $("#myInput").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-            });
-        </script>
 
         <!-- 컨텐츠 탭 -->
         <div id="tab">

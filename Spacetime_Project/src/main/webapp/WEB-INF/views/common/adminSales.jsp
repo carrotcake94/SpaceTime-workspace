@@ -40,8 +40,8 @@
     }
 
     /* 검색창 */
-    #searchForm td {
-        width: 30%;
+    #searchForm {
+        width: 70%;
         min-width: none;
     }
 
@@ -156,24 +156,23 @@
             <div id="search">
                 <table align="center" id="searchForm">
                     <tr>
+                        <td align="right">
+                            <select name="cate" class="select_category form-control mb-2" style="width:70%;">
+                                <option value="All" selected>전체</option>
+                                <option value="reportedMemId">신고대상ID</option>
+                                <option value="reportMemId">신고자ID</option>
+                                <option value="reportContent">내용</option>
+                            </select>
+                        </td>
                         <td>
                             <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
                         </td>
+                        <td align="left">
+                            <button type="submit" class="btn btn-secondary mb-2">검색</button>
+                        </td> 
                     </tr>
                 </table>
             </div>
-
-            <!-- 자동 검색(?) -->
-            <script>
-                $(document).ready(function(){
-                    $("#myInput").on("keyup", function() {
-                        var value = $(this).val().toLowerCase();
-                        $("#myTable tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                        });
-                    });
-                });
-            </script>
 
             <div class="select" align="right">
                 <!-- 년도 선택 -->
@@ -207,7 +206,7 @@
             <!-- 컨텐츠 탭 -->
             <div id="tab">
 
-                <table class="table">
+                <table class="table" style="table-layout:fixed;">
                     <thead>
                         <tr>
                             <th style="width:10%;">호스트명</th>
@@ -222,7 +221,7 @@
 	                        <tr data-toggle="modal" data-target="#salesDetail">
 	                            <td>${s.stypeNo}</td>
 	                            <td>${s.hostNo}</td>
-	                            <td>${s.spaceTitle}</td>
+	                            <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${s.spaceTitle}</td>
 	                            <td>${s.price}</td>
 	                            <td>정산상태..</td>
 	                        </tr>
