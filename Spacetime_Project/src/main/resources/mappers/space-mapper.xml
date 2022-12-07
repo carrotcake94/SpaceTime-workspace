@@ -53,9 +53,7 @@
 			 , ADDRESS_DEFAULT
 			 , SPACE_STATUS
 			 , DENY_MESSAGE
-			 , ATTACHMENT_RENAME
 		FROM SPACE
-		JOIN SPACE_ATTACHMENT USING(SPACE_NO)
 		WHERE HOST_NO = #{memNo}
 	</select>
 	
@@ -69,12 +67,12 @@
 	<insert id="insertSpaceAttachment" parameterType="java.util.List">
 	insert INTO SPACE_ATTACHMENT(ATTACHMENT_NO
 										 , ATTACHMENT_RENAME
-										 , ATTACHEMNT_LEVEL
+										 , ATTACHMENT_LEVEL
 										 , SPACE_NO)
 	SELECT SEQ_ANO.NEXTVAL, A.* from(
 	 <foreach item="attachList" collection="list" separator="UNION ALL " >
 	   SELECT #{attachList.attachmentReName} AS ATTACHMENT_RENAME,
-	          #{attachList.attachmentLevel} AS ATTACHEMNT_LEVEL,
+	          #{attachList.attachmentLevel} AS ATTACHMENT_LEVEL,
 	          #{attachList.spaceNo} AS SPACE_NO
 	   FROM DUAL
 	 </foreach>) A
@@ -84,7 +82,7 @@
 <!-- 	<foreach collection="list" item="attachList" open="INSERT ALL" close="SELECT * FROM DUAL"  separator=" "> -->
 <!-- 	 	INTO SPACE_ATTACHMENT (ATTACHMENT_NO -->
 <!-- 										 , ATTACHMENT_RENAME -->
-<!-- 										 , ATTACHEMNT_LEVEL -->
+<!-- 										 , ATTACHMENT_LEVEL -->
 <!-- 										 , SPACE_NO) -->
 <!-- 					 		VALUES	 (SEQ_ANO.NEXTVAL -->
 <!-- 								   		 , #{attachList.attachmentReName} -->

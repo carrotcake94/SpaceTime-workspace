@@ -112,22 +112,27 @@ public class SpaceController {
 		ArrayList<Space> spaceList = spaceService.selectHostSpaceList(memNo, pi);
 		System.out.println(spaceList);
 		
+		//첨부파일 rename 문자열 리스트
 		ArrayList<String> imgStrList = new ArrayList<String>();
 		
 		NumberFormat numberFormat = NumberFormat.getInstance();
+		int index = 0;
 		for (Space s : spaceList) {
-//			System.out.println(s.getAttachments());
 			//원 콤마로 표현
 			s.setHashtag(numberFormat.format(s.getHourPrice()));
+			
+			ArrayList<SpaceAttachment> aList = spaceService.selectSpaceAttachmentList(s.getSpaceNo());
+			s.setSpaceSubTitle(aList.get(index).getAttachmentReName());
+			index++;
+			
 			String imgStr ="";
-			for(int i=0; i<s.getAttachments().size(); i++) {
-				if(i == s.getAttachments().size()-1) {
-					imgStr += s.getAttachments().get(i).getAttachmentReName();
+			for(int i=0; i<aList.size(); i++) {
+				if(i == aList.size()-1) {
+					imgStr += aList.get(i).getAttachmentReName();
 				}else {
-					imgStr += s.getAttachments().get(i).getAttachmentReName()+",";
+					imgStr += aList.get(i).getAttachmentReName()+",";
 				}
 			}
-//			System.out.println("rename : "+imgStr);
 			imgStrList.add(imgStr);
 		}
 		model.addAttribute("pi", pi);

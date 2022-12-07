@@ -73,12 +73,6 @@ public class SpaceServiceImpl implements SpaceService {
 		return spaceDao.selectSpaceAttachmentList(sqlSession, sno);
 	}
 
-	// 호스트 공간 리스트
-	@Override
-	public SpaceAttachment changeHostSpaceImg(HashMap<String, String> map) {
-		return spaceDao.changeHostSpaceImg(sqlSession, map);
-	}
-
 	// 호스트 공간 관리 리스트 총 개수
 	@Override
 	public int selectHostSpaceListCount(int memNo) {

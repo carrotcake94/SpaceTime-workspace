@@ -40,9 +40,6 @@ public interface SpaceService {
 	// 호스트 공간 리스트 -정현
 	ArrayList<Space> selectHostSpaceList(int memNo, PageInfo pi);
 
-	// 공간관리 이미지 변경용 - 정현
-	SpaceAttachment changeHostSpaceImg(HashMap<String, String> map);
-
 	// 지도에 표시될 공간 갯수 조회 -성훈
 	int selectListCountForMap(HashMap<String, Double> map);
 

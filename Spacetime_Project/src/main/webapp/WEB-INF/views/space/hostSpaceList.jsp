@@ -396,7 +396,7 @@
 
       	<div class="space">
           <div class="img_area">
-            <img class="img-0" src="resources/uploadFiles/space/space/${s.attachments[0].attachmentReName}" alt="사진 없음" />
+            <img class="img-0" src="resources/uploadFiles/space/space/${s.spaceSubTitle}" alt="사진 없음" />
             <input type="hidden" value="${imgStrList[i]}">
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev" onclick="imgLoader(this,1)">
