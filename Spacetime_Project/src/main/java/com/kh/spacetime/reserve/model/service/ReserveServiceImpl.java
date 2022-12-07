@@ -22,18 +22,16 @@ public class ReserveServiceImpl implements ReserveService {
 	
 	
 	
-	
-
+	//호스트 예약관리 리스트 개수 - 정현
 	@Override
-	public int selectHostReserveListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selectHostReserveListCount(int memNo) {
+		return reserveDao.selectHostReserveListCount(sqlSession,  memNo);
 	}
-
+	
+	//호스트 예약관리 리스트 - 정현
 	@Override
-	public ArrayList<Reserve> selectHostReserveList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Reserve> selectHostReserveList(int memNo, PageInfo pi) {
+		return reserveDao.selectHostReserveList(sqlSession,  memNo, pi);
 	}
 
 	@Override

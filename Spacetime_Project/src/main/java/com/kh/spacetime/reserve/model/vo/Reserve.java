@@ -1,5 +1,8 @@
 package com.kh.spacetime.reserve.model.vo;
 
+import com.kh.spacetime.member.model.vo.Member;
+import com.kh.spacetime.space.model.vo.Space;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,5 +29,7 @@ public class Reserve {
 		private String memNo;	//	MEM_NO	NUMBER
 		private String reserveStatus;	//	RESERVE_STATUS	CHAR(1 BYTE)
 		private String denyMessage;	//	DENY_MESSAGE	VARCHAR2(600 BYTE)
+		private Space space;  // join용 정현
+		private Member member;  // join용 정현
 
 }

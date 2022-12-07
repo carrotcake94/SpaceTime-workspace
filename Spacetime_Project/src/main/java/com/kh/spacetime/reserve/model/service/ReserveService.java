@@ -13,10 +13,10 @@ import com.kh.spacetime.reserve.model.vo.Reserve;
 public interface ReserveService {
 
 	//  호스트 예약관리 리스트 개수
-	int selectHostReserveListCount();
+	int selectHostReserveListCount(int memNo);
 
 	// 호스트 예약관리 리스트 
-	ArrayList<Reserve> selectHostReserveList(PageInfo pi);
+	ArrayList<Reserve> selectHostReserveList(int memNo, PageInfo pi);
 
 	// 예약 상세 조회 
 	Reserve selectReserve(int reserveNo);

@@ -15,6 +15,7 @@ import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.service.ReserveService;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Space;
 
 @Controller
 public class ReserveController {
@@ -29,18 +30,23 @@ public class ReserveController {
 	@RequestMapping("revList.ho")
 	public String selectHostReserveList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage, Model model) {
 
-		// 연결 전
-//		int listCount = reserveService.selectHostReserveListCount();
-//
-//		int pageLimit = 10;
-//		int boardLimit = 5;
-//
-//		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-//
-//		ArrayList<Reserve> list = reserveService.selectHostReserveList(pi);
-//
-//		model.addAttribute("pi", pi);
-//		model.addAttribute("list", list);
+//		Member loginMember = (Member)session.getAttribute("loginMember");
+//		int memNo = loginMember.getMemNo();
+		int memNo = 5;
+		
+		int listCount = reserveService.selectHostReserveListCount(memNo);
+		System.out.println(listCount);
+		int pageLimit = 10;
+		int boardLimit = 3;
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		ArrayList<Reserve> list = reserveService.selectHostReserveList(memNo, pi);
+		System.out.println(list);
+		
+
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
 
 		return "reserve/hostReserveList";
 

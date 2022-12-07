@@ -130,5 +130,65 @@
 			ORDER BY RESERVE_NO DESC
 			]]>
 		</select>
+		
+	<!-- 	정현 -->
+	<!-- 	호스트 예약 관리리스트 set  -->
+	<resultMap id="hostReserveListSet" type="reserve">
+		<result column="RESERVE_NO" property="reserveNo" />
+		<result column="RESERVE_COUNT" property="reserveCount" />
+		<result column="RESERVE_DATE" property="reserveDate" />
+		<result column="USE_DATE" property="useDate" />
+		<result column="START_TIME" property="startTime" />
+		<result column="END_TIME" property="endTime" />
+		<result column="PRICE" property="price" />
+		<result column="RESERVE_STATUS" property="reserveStatus" />
+		<result column="DENY_MESSAGE" property="denyMessage" />
+		<collection resultMap="spaceSet" property="space" />
+		<collection resultMap="memberSet" property="member" />
+	</resultMap>	
+	<resultMap id="spaceSet" type="space">
+		<result column="SPACE_TITLE" property="spaceTitle" />
+	</resultMap>	
+	<resultMap id="memberSet" type="member">
+		<result column="MEM_NAME" property="memName" />
+		<result column="PHONE" property="phone" />
+	</resultMap>	
+	<!-- 	정현 -->
+	<!-- 	호스트 예약 리스트  개수 -->
+	<select id="selectHostReserveListCount" parameterType="_int" resultType="_int">
+ 	   SELECT COUNT(*)
+       FROM (
+       SELECT RESERVE_NO
+       FROM RESERVE R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo}
+       ))
+	</select>
+	<!-- 	호스트 예약 리스트-->
+	<select id="selectHostReserveList" parameterType="_int" resultMap="hostReserveListSet">
+	   SELECT RESERVE_NO
+	   			, RESERVE_COUNT
+                , TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS USE_DATE
+                , START_TIME, END_TIME, PRICE
+                , RESERVE_STATUS
+                , R.DENY_MESSAGE
+                , M.MEM_NAME
+                , M.PHONE
+                , S.SPACE_TITLE
+       FROM RESERVE R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo}
+       )
+	</select>
+	
+	<!-- 정현 End -->
 
 </mapper>
