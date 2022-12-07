@@ -10,7 +10,7 @@ public interface ReviewService {
 		// 리뷰의 총 갯수
 		int selectListCount();
 		// 리뷰 리스트 조회
-		ArrayList<Review> selectList(PageInfo pi);
+		ArrayList<Review> selectList(PageInfo pi, int memNo);
 		
 		// 리뷰 상세 조회 서비스
 		// 리뷰 글 조회수 증가

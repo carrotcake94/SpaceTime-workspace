@@ -24,4 +24,6 @@ public class Review {
 	private String hostAnswer;//HOST_ANSWER	VARCHAR2(300 BYTE)
 	private int spaceNo;//SPACE_NO	NUMBER
 	private int memNo;//MEM_NO	NUMBER
+	
+	private int reserveNo;// 
 }

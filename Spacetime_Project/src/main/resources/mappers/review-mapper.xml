@@ -2,4 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="reviewMapper">
 
+	<resultMap id="reviewResultSet" type="review">
+		<result column="RESERVE_NO" property="reserveNo" />
+		<result column="SPACE_NO" property="spaceNo" />
+		<result column="REVIEW_CONT" property="reviewCont" />
+		<result column="RATING" property="rating" />
+		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
+	</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE REVIEW_STATUS = 'N'
+	</select>
+	
+	<select id="selectList" resultMap="reviewResultSet" parameterType="_int">
+		SELECT
+		C.RESERVE_NO		--예약번호
+		, A.SPACE_NO		--공간장소
+		, A.REVIEW_CONT		--리뷰내용
+		, A.RATING			--평점
+		, TO_CHAR(A.REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE		--작성일자
+		FROM 
+		REVIEW A
+		INNER JOIN SPACE B
+		ON A.SPACE_NO = B.SPACE_NO
+		INNER JOIN RESERVE C
+		ON B.SPACE_NO = C.SPACE_NO
+		WHERE
+		A.MEM_NO = #{memNo}
+		ORDER BY REVIEW_NO DESC
+	</select>
 </mapper>

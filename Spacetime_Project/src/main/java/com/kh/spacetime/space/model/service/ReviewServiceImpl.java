@@ -22,14 +22,14 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewDao.selectListCount(sqlSession);
+		
 	}
 
 	@Override
-	public ArrayList<Review> selectList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Review> selectList(PageInfo pi, int memNo) {
+			
+		return reviewDao.selectList(sqlSession, pi, memNo);
 	}
 
 	@Override
