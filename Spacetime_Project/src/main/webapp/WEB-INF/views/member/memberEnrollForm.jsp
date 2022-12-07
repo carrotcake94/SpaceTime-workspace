@@ -544,7 +544,7 @@
 														
 														// 빨간색 메세지 출력
 														$("#nickCheckMsg").show();
-														$("#nickCheckMsg").css("color", "red").text("이미 사용중이거나 탈퇴한 아이디입니다.");
+														$("#nickCheckMsg").css("color", "red").text("이미 사용중인 닉네임입니다.");
 														
 														// 버튼 비활성화
 														$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);

@@ -52,9 +52,15 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.nickCheck", checkNick);
 	}
 	
-	public int deleteMember(SqlSessionTemplate sqlSession, String memId) {
+	/**
+	 * 회원 탈퇴 Dao - 경미
+	 * @param sqlSession
+	 * @param memNo
+	 * @return
+	 */
+	public int deleteMember(SqlSessionTemplate sqlSession, int memNo) {
 		
-		return sqlSession.update("memberMapper.deleteMember", memId);
+		return sqlSession.update("memberMapper.deleteMember", memNo);
 	}
 	
 }

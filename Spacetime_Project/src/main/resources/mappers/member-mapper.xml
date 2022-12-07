@@ -62,10 +62,11 @@
 		 WHERE MEM_NO = #{memNo}
 	</update>
 	
-	<update id="deleteMember" parameterType="string">
+	<!-- 회원 탈퇴용 쿼리문 - 경미 -->
+	<update id="deleteMember" parameterType="_int">
 		UPDATE MEMBER
-		   SET STATUS = 'N'
-		 WHERE MEM_ID = #{memId}
+		   SET MEM_STATUS = 'Y'
+		 WHERE MEM_NO = #{memNo}
 	</update>
 	
 	<!-- 아이디 중복체크 쿼리문 - 경미 -->

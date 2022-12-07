@@ -476,7 +476,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><a href="">프로필 관리 및 수정</a></td>
+                        <td><a href="detail.me">프로필 관리 및 수정</a></td>
                     </tr>
                 </table>
                 </c:otherwise>

@@ -114,9 +114,9 @@ public class MemberController {
 		// => 평문 + salt(랜덤값) => 암호화 작업이 이루어지기 때문
 		
 		// Member 객체의 userPwd 필드의 값을 암호문으로 바꿔치기 => setter 메소드
+		/*
 		m.setMemPwd(encPwd);
 		
-		/*
 		int result = memberService.insertMember(m);
 		
 		if(result > 0) { // 성공 => 메인페이지 url 재요청
@@ -161,9 +161,44 @@ public class MemberController {
 		return (count > 0)? "NNNNN" : "NNNNY";
 	}
 	
+	/**
+	 * 프로필 마이페이지로 포워딩하는 메소드 - 경미
+	 * @return
+	 */
+	@RequestMapping("detail.me")
+	public String detailMember() {
+		return "member/memberDetailView";
+	}
 	
+	/**
+	 * 비밀번호 일치 확인용 - 경미
+	 * @param checkPwd
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="pwdCheck.me", produces="text/html; charset=UTF-8")
+	public String pwdCheck(String checkPwd, HttpSession session) {
+		String encPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
+		// 비밀번호 대조작업
+		if(bcryptPasswordEncoder.matches(checkPwd, encPwd)) {
+			return "NNNNY";
+		}
+		else {
+			return "NNNNN";
+		}
+	}
+	
+	/**
+	 * 회원 탈퇴용 메소드 - 경미
+	 * @param memPwd
+	 * @param memId
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("delete.me")
-	public String deleteMember(String memPwd, String memId, HttpSession session, Model model) {
+	public String deleteMember(String memPwd, int memNo, HttpSession session, Model model) {
 		
 		String encPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
 		
@@ -171,7 +206,7 @@ public class MemberController {
 		if(bcryptPasswordEncoder.matches(memPwd, encPwd)) {
 			
 			// 비밀번호가 맞을 경우 => 탈퇴처리
-			int result = memberService.deleteMember(memId);
+			int result = memberService.deleteMember(memNo);
 			
 			if(result > 0) { // 탈퇴처리 성공
 				
