@@ -21,15 +21,16 @@ public class CommonController {
 	@Autowired
 	private CommonService commonService;
 	
+	/**
+	 * 관리자 신고관리 리스트 조회 메소드 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("rlist.ad")
-//	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpServletRequest request) {
 	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
 
 		// System.out.println("cpage : " + currentPage);
-		
-//		String condition = request.getParameter("condition");
-		
-//		int listCount = commonService.selectReportListCount(condition);
 		
 		int listCount = commonService.selectReportListCount();
 		
@@ -38,19 +39,21 @@ public class CommonController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-//		ArrayList<Report> list = commonService.selectReportList(condition, pi);
 		ArrayList<Report> list = commonService.selectReportList(pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-//		request.setAttribute("condition", condition);
-		
 		// /WEB-INF/views/common/adminReport.jsp
 		return "common/adminReport";
-		
 	}
 	
+	/**
+	 * 관리자 신고 상세조회 메소드 - 혜민  
+	 * @param rpno
+	 * @param mv
+	 * @return
+	 */
 	@RequestMapping("rdetail.ad")
 	public ModelAndView selectReport(int rpno, ModelAndView mv) {
 		
@@ -61,6 +64,12 @@ public class CommonController {
 		return mv;
 	}
 	
+	/**
+	 * 관리자 매출관리 리스트 조회 메소드 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("slist.ad")
 	public String selectSalesList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
 		

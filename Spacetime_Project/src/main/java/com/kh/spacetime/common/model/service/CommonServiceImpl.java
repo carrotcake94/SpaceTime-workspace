@@ -23,7 +23,6 @@ public class CommonServiceImpl implements CommonService {
 	// 관리자페이지 신고 리스트 조회 + 페이징 처리 
 	// 신고 글 총 개수 
 	@Override
-//	public int selectReportListCount(String condition) {
 	public int selectReportListCount() {
 		
 		return commonDao.selectReportListCount(sqlSession);
@@ -31,10 +30,8 @@ public class CommonServiceImpl implements CommonService {
 
 	// 신고 리스트 조회 
 	@Override
-//	public ArrayList<Report> selectReportList(String condition, PageInfo pi) {
 	public ArrayList<Report> selectReportList(PageInfo pi) {
 		
-//		return commonDao.selectReportList(sqlSession, condition, pi);
 		return commonDao.selectReportList(sqlSession, pi);
 	}
 
@@ -48,6 +45,7 @@ public class CommonServiceImpl implements CommonService {
 	// 신고 처리 (승인, 반려)
 	@Override
 	public int updateReport(Report r) {
+		
 		return 0;
 	}
 
@@ -69,6 +67,7 @@ public class CommonServiceImpl implements CommonService {
 	// 공간 매출 상세조회 
 	@Override
 	public Reserve selectSales(int spaceNo) {
+		
 		return null;
 	}
 

@@ -220,10 +220,10 @@
                     <tbody id="myTable">
                     	<c:forEach var="s" items="${list}">
 	                        <tr data-toggle="modal" data-target="#salesDetail">
-	                            <td>호스트명..</td>
-	                            <td>호스트아이디..</td>
+	                            <td>${s.stypeNo}</td>
+	                            <td>${s.hostNo}</td>
 	                            <td>${s.spaceTitle}</td>
-	                            <td>총매출액..</td>
+	                            <td>${s.price}</td>
 	                            <td>정산상태..</td>
 	                        </tr>
                         </c:forEach>
@@ -234,29 +234,29 @@
 
             <!-- 페이지 버튼 -->
             <div class="btnPage" align="center">
-                <ul class="pagination">
-                    <c:choose>
-                        <c:when test="${pi.currentPage eq 1}">
-                            <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item no-page-prev"><a class="page-link" href="sList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                        </c:otherwise>
-                    </c:choose>
+                 <ul class="pagination">
+                     <c:choose>
+                         <c:when test="${pi.currentPage eq 1}">
+                             <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                         </c:when>
+                         <c:otherwise>
+                             <li class="page-item no-page-prev"><a class="page-link" href="slist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                         </c:otherwise>
+                     </c:choose>
 
-                    <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                        <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
-                    </c:forEach>
-                    
-                    <c:choose>
-                        <c:when test="${pi.currentPage eq pi.maxPage}">
-                            <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item no-page-next"><a class="page-link" href="sList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
+                     <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                         <li class="page-item page-btn"><a id="active-page" class="page-link" href="slist.ad?cpage=${p}">${p}</a></li>
+                     </c:forEach>
+
+                     <c:choose>
+                         <c:when test="${pi.currentPage eq pi.maxPage}">
+                             <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                         </c:when>
+                         <c:otherwise>
+                             <li class="page-item no-page-next"><a class="page-link" href="slist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                         </c:otherwise>
+                     </c:choose>
+                 </ul>
             </div>
         </div>
     </div>

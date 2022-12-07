@@ -124,16 +124,16 @@
     }
 
     .page-btn {
-        margin: 0 5px;
+        margin: 0 8px;
     }
 
 </style>
 </head>
 <body>
 
-    <div class="wrap">
-	<div id="header_container"><jsp:include page="header.jsp" /></div>
-	
+    
+    <div id="header_container"><jsp:include page="header.jsp" /></div>
+    
     
     <jsp:include page="adminNavi.jsp" />
     
@@ -207,37 +207,37 @@
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
-	                                    <c:choose>
-	                                    	<c:when test="${r.reportStatus eq 'Y'}">
-	                                    		승인
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'N'}">
-	                                    		미처리
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'D'}">
-	                                    		반려
-	                                    	</c:when>
-	                                    </c:choose>
+                                        <c:choose>
+                                            <c:when test="${r.reportStatus eq 'Y'}">
+                                                승인
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'N'}">
+                                                미처리
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'D'}">
+                                                반려
+                                            </c:when>
+                                        </c:choose>
                                     </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
                     </table>
-                    
+                    <br>
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
                             <c:choose>
                                 <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
                                 </c:otherwise>
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -245,7 +245,7 @@
                                     <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
                                 </c:otherwise>
                             </c:choose>
                         </ul>
@@ -274,37 +274,37 @@
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
-	                                    <c:choose>
-	                                    	<c:when test="${r.reportStatus eq 'Y'}">
-	                                    		승인
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'N'}">
-	                                    		미처리
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'D'}">
-	                                    		반려
-	                                    	</c:when>
-	                                    </c:choose>
+                                        <c:choose>
+                                            <c:when test="${r.reportStatus eq 'Y'}">
+                                                승인
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'N'}">
+                                                미처리
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'D'}">
+                                                반려
+                                            </c:when>
+                                        </c:choose>
                                     </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
                     </table>
-
+                    <br>
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
                             <c:choose>
                                 <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
                                 </c:otherwise>
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -312,7 +312,7 @@
                                     <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
                                 </c:otherwise>
                             </c:choose>
                         </ul>
@@ -341,37 +341,37 @@
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
-	                                    <c:choose>
-	                                    	<c:when test="${r.reportStatus eq 'Y'}">
-	                                    		승인
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'N'}">
-	                                    		미처리
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'D'}">
-	                                    		반려
-	                                    	</c:when>
-	                                    </c:choose>
+                                        <c:choose>
+                                            <c:when test="${r.reportStatus eq 'Y'}">
+                                                승인
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'N'}">
+                                                미처리
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'D'}">
+                                                반려
+                                            </c:when>
+                                        </c:choose>
                                     </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
                     </table>
-
+                    <br>
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
                             <c:choose>
                                 <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
                                 </c:otherwise>
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -379,7 +379,7 @@
                                     <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
                                 </c:otherwise>
                             </c:choose>
                         </ul>
@@ -408,29 +408,29 @@
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
                                     <td>
-	                                    <c:choose>
-	                                    	<c:when test="${r.reportStatus eq 'Y'}">
-	                                    		승인
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'N'}">
-	                                    		미처리
-	                                    	</c:when>
-	                                    	<c:when test="${r.reportStatus eq 'D'}">
-	                                    		반려
-	                                    	</c:when>
-	                                    </c:choose>
+                                        <c:choose>
+                                            <c:when test="${r.reportStatus eq 'Y'}">
+                                                승인
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'N'}">
+                                                미처리
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'D'}">
+                                                반려
+                                            </c:when>
+                                        </c:choose>
                                     </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
                     </table>
-
+                    <br>
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
                             <c:choose>
                                 <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
@@ -534,6 +534,17 @@
             </div>
         </div>
     </form>
-	
+    
+    <script>
+    	$(function() {
+    		
+    		// 탭메뉴 클릭시 탭마다 클릭 이벤트 걸기
+    		// 각 탭이 클릭됬을 경우 => ajax 해당 쿼리문까지 다녀오기 (요청시 전달값이 다르게)
+    		// 응답데이터 리턴 => success function 내부에 동적으로 요소를 각 탭에 맞는 테이블에 찍어내기 (tbody에!!)
+    		
+    	});
+    
+    </script>
+    
 </body>
 </html>
