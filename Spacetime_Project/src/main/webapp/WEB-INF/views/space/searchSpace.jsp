@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
-	
 	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script>
+	<script src="resources/js/map.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -26,6 +26,7 @@
 							class="listOption_listStyle listOption_options">
 							<img src="resources/images/space/picStyle.png">
 						</div>
+						<div id="test">click</div>
 						<div id="listOption_filter" class="listOption_options">
 							<img src="resources/images/space/filter.png">
 						</div>
@@ -79,20 +80,6 @@
 					</form>
 					
 					<!-- 필터 열고 닫는 구문 -->
-					<script>
-						$(function(){
-		                    var filter = document.querySelector("#mapFilter");
-		                    document.querySelector("#listOption_filter").onclick = () => {
-		                        if(filter.style.display =="none"){
-		                            filter.style.display="block";
-		                        } else {
-		                            filter.style.display="none";
-		
-		                        }
-		                    }
-		                    filter.style.display= "none"; //기본으로 닫혀있게
-		                })
-		            </script>
 					<!-- 사진형 리스트 -->
 					<div id="picList">
 						<div>
@@ -193,146 +180,66 @@
 					</div>
 				</div>
 				<!-- 지도 -->
+				<a id="mapResearch" style="z-index: 0; position: absolute;">검색</a>
 				<div id="map">
 				</div>
 				<script>
-					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
-				
+					var markers = [];
+					var spaceListArr = [];
+					
+					/* document.querySelector("#listOption_filter").onclick = filter => {						
+						filterOpenClose();
+					} */
+					
+					//게시판형 리스트로 변환
+					/* lineList.onclick = () => {
+						console.log("lineList Clicked");
+	                    picList.style.display="none";
+	                    this.style.display="block";
+	                    toPicList();
+	                }; */
+	                
+	                //사진형 리스트로 변환
+					/* picList.addEventListener("click", picList => {
+						console.log("picList Clicked");
+	                    toPicList();
+					}) */
 					$(function(){
-						//지도 생성 구문
-						var HOME_PATH = window.HOME_PATH || '.';
-		
-						//최초로 가리키는 곳 (학원)
-						map = new naver.maps.Map('map', {
-							center: new naver.maps.LatLng(37.53306, 126.89632),
-							zoom: 13
-						});
+						loadMap();
 						
-						//로딩된 지도의 범위
-						var rect = new naver.maps.Rectangle({
-					        strokeOpacity: 0,
-					        strokeWeight: 0,
-					        fillOpacity: 0.2,
-					        bounds: map.getBounds(), // 지도의 bounds와 동일한 크기의 사각형을 그림
-					        map: map
-					    });
-						
-						//변경된 범위를 인식하는 구문
-					    naver.maps.Event.addListener(map, "bounds_changed", function(bounds) {
-					        window.setTimeout(function() {
-					            rect.setBounds(bounds);
-					        }, 500);
-					   	});
-					    
-						//마커위치설정
-						var sillimStn = new naver.maps.LatLng(37.48422, 126.92980);
-						
-						var markers = [];
-						var infowindows = [];
-						
-						markers.push(new naver.maps.Marker({
-						    map: map,
-						    position: sillimStn
-						}));
-						
-						
-						
-						//게시판형-사진형 리스트 변경을 위한 전역변수
-						var lineList = document.querySelector("#lineList");
-						var picList = document.querySelector("#picList");
-						
-						//지도의 범위를 인식하고, 범위 내의 공간들을 불러오는 구문
-						//Gson객체로 불러와 spaceListArr(전역변수)에 담아줌
-						function selectList() {
-							$.ajax({
-								url: "selectSpace.mp",
-								type: "get",
-								data : {
-									max_lat : rect.bounds._max._lat,
-									max_lng : rect.bounds._max._lng,
-									min_lat : rect.bounds._min._lat,
-									min_lng : rect.bounds._min._lng
-								},
-					        	success : function(listArr) {
-				        			var spaceListArr = [];
-					        		for(var i = 0; i < listArr.length; i++) {
-					        			spaceListArr[i] = listArr[i];
-					        		}
-					        	},
-					        	error : function() {
-					        		console.log("ajax실패");
-					        	}
-							});
-						}
-						
-						function markPosition () {
-							
-						}
-						
-						//게시판형 리스트에 표시될 리뷰갯수를 불러오기위한 구문
-						function reviewCount() {
-							$.ajax({
-								url: "reviewCount.mp",
-								type: "post",
-								data: {
-									
-								}
-							})
-						};
-						
-						toPicList();
-							
-						//게시판형 리스트로 변환
-						document.querySelector("#listOption_lineList").onclick = () => {
-		                    picList.style.display="none";
-		                    lineList.style.display="block";
-		                    toPicList();
-		                };
-		                
-		                //사진형 리스트로 변환
-						document.querySelector("#listOption_picList").onclick = () => {
-		                    lineList.style.display="none";
-		                    picList.style.display="block";
-		                    toLineList();
-		                };
-						picList.style.display= "block";
-		                lineList.style.display= "none";
-					
+						// console.log(rect); // loadMap()에서 뽑아온 변수 , 잘 출력됨 
+						console.log("최초 메소드 시작 전");
+						//console.log(spaceListArr);
+						//console.log(markers);
+						//console.log(rect);
+						selectList(rect);
+						//console.log("최초 메소드 종료 후");
+						//console.log(spaceListArr);
+						//console.log(markers);
 					});
-					
-					//사진형 리스트로 전환하기 위한 메소드
-					//리스트에 해당하는 DOM요소에 필요한 값을 추가하여 "#picList"안에 뿌려주는 구문
-					function toPicList() {
-						var picContent = "";
-						console.log(spaceListArr);
-						for(var i = 0; i < spaceListArr.length; i++){
-							picContent += "<div class='picList_content'"> +
-											"<div class='picList_content_pic'>" + + "</div>" +
-											"<div class='picList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
-											"<div class='picList_content_price'>" + spaceListArr[i].hourPrice + " / 시간</div>" +
-									   "</div>"
-							picList.append(picContent);
-						}
-					}
-					
-					//게시판형 리스트로 전환하기 위한 메소드
-					//리스트에 해당하는 DOM요소에 필요한 값을 추가하여 "#lineList"안에 뿌려주는 구문
-					function toLineList() {
-						var lineContent = "";
-						for(var i = 0; i < spaceListArr.length; i++){
-							lineContent += "<div class='lineList_content'>"
-												"<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle +"</div>" +
-												"<input type='hidden' name='spaceNo' value='" + spaceListArr[i].spaceNo + "'>"
-												"<div class='lineList_content_hashTag'>" + spaceListArr[i].spaceTitle + "</div>" +
-												"<div class='lineList_content_extraInfo'>" +
-													"<div class='lineList_content_price'>" + spaceListArr[i].hourPrice + "</div>" +
-													"<div class='lineList_content_reviewCount'>" + 리뷰갯수 + "</div>" +
-													"<div class='lineList_content_bookMark'>" + 북마크 + "</div>" +
-												"</div>" +
-											"</div>"
-							lineList.append(lineContent);
-						}
-					}
+	                
+	                //불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
+					var lineList = document.querySelector("#lineList");
+					var picList = document.querySelector("#picList");
+					var filter = document.querySelector("#mapFilter");
+	                
+	                document.querySelector("#test").onclick = () => {
+	                	removeMarker();
+	                	
+	                	getMapRect();
+	                	
+	                	selectList(rect);
+	                	
+	                	console.log(markers);
+	                	console.log(spaceListArr);
+	                	console.log(rect);
+	                }
+	                
+	                //document.querySelector("#mapResearch").onclick = () => {
+	                //	console.log(rect);
+	                //	selectList(rect);
+	                //}
+	                
 				</script>
 			</div>
 		</div>

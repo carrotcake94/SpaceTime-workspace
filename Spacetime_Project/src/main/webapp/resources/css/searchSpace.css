@@ -25,6 +25,18 @@
 
 #map {
     width: 60%;
+    position: relative;
+}
+
+#map * {
+	z-index: 1;
+}
+
+#mapResearch {
+	width : 10%;
+	height: 5%;
+	border: 3px solid red;
+	margin: 600px 350px 0px 350px;
 }
 
 #listOption {
@@ -78,6 +90,7 @@
     width: 100%;
     height: 50%;
     position: absolute;
+    display: none; 
     background-color: white;
 }
 
