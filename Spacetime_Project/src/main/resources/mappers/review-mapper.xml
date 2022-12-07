@@ -8,6 +8,7 @@
 		<result column="REVIEW_CONT" property="reviewCont" />
 		<result column="RATING" property="rating" />
 		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
+		<result column="REVIEW_NO" property="reviewNo" />
 	</resultMap>
 	
 	<!-- 리스트조회 -->
@@ -36,17 +37,18 @@
 	</select>
 	
 	<!--상세페이지-->
-	<select id="selectReview" parameterType="_int" resultMap="boardResultSet">
-		SELECT BOARD_NO
-			 , BOARD_TITLE
-			 , BOARD_WRITER
-			 , TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
-			 , BOARD_CONTENT
-			 , ORIGIN_NAME
-			 , CHANGE_NAME
-		FROM BOARD
-		WHERE BOARD_NO = #{boardNo}
-	</select>
+	<select id="selectReview" parameterType="_int" resultMap="reviewResultSet"> 
+		SELECT
+		B.SPACE_TITLE --공간명
+		, A.RATING --평점
+		, TO_CHAR(A.REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE --등록일
+		, A.REVIEW_CONT --내용
+		FROM REVIEW A
+		INNER JOIN SPACE B
+		ON A.SPACE_NO = B.SPACE_NO
+		WHERE
+		A.Review_No = #{reviewNo}
+	</select>  
 	
 	
 </mapper>
