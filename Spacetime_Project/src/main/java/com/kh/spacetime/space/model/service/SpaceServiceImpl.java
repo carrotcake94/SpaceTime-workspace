@@ -45,14 +45,13 @@ public class SpaceServiceImpl implements SpaceService {
 	// 공간상세 조회-정현
 	@Override
 	public Space selectSpace(int spaceNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return spaceDao.selectSpace(sqlSession, spaceNo);
 	}
 
 	// 마지막 공간 번호 가져오기
 	@Override
-	public int selectSpaceNo() {
-		return spaceDao.selectSpaceNo(sqlSession);
+	public int selectSpaceNo(int hostNo) {
+		return spaceDao.selectSpaceNo(sqlSession, hostNo);
 	}
 
 	// 공간삭제-정현
@@ -83,6 +82,29 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public ArrayList<Space> selectHostSpaceList(int memNo, PageInfo pi) {
 		return spaceDao.selectHostSpaceList(sqlSession, memNo, pi);
+	}
+
+	// 공간 재검수 등록
+	@Override
+	public int updateSpace(Space s) {
+		return spaceDao.updateSpace(sqlSession, s);
+	}
+	// 공간 메인 이미지 수정 재검수 등록
+	@Override
+	public int updateMainImg(SpaceAttachment mainAttach) {
+		return spaceDao.updateMainImg(sqlSession, mainAttach);
+	}
+
+	// 공간 추가 이미지삭제(재검수) -정현
+	@Override
+	public int deleteThumImg(int ano) {
+		return spaceDao.deleteThumImg(sqlSession, ano);
+	}
+
+	// 공간 재검수 등록
+	@Override
+	public int reInsertSpace(int spaceNo) {
+		return spaceDao.reInsertSpace(sqlSession, spaceNo);
 	}
 
 	@Override

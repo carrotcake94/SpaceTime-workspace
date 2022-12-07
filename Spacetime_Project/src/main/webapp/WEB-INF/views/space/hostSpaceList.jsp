@@ -217,7 +217,7 @@
 
 
       /* 공간 검수 반려 모달 */
-      #refuse-info-Modal .modal-content {
+      #refuseInfoModal .modal-content {
         width: 600px;
         margin: auto;
         border: 1px solid gray;
@@ -226,7 +226,7 @@
         margin-top: 100px;
       }
 
-      #refuse-info-Modal .modal-header {
+      #refuseInfoModal .modal-header {
         background-color: rgb(231, 76, 60);
         text-align: center;
         color: white;
@@ -237,19 +237,19 @@
         margin-bottom: 10px;
       }
 
-      #refuse-info-Modal .modal-body {
+      #refuseInfoModal .modal-body {
         text-align: center;
         margin-top: 30px;
         padding: 10px 30px;
       }
 
-      #refuse-info-Modal .modal-body > div:nth-child(1) {
+      #refuseInfoModal .modal-body > div:nth-child(1) {
         font-size: 20px;
         font-weight: 700;
         margin-bottom: 20px;
       }
 
-      #refuse-info-Modal .modal-body > div:nth-child(2) {
+      #refuseInfoModal .modal-body > div:nth-child(2) {
         font-size: 18px;
         font-weight: 600;
         color: rgb(11, 130, 208);
@@ -257,12 +257,12 @@
         margin-bottom: 20px;
       }
 
-      #refuse-info-Modal .modal-footer {
+      #refuseInfoModal .modal-footer {
         margin: 0 auto 20px;
         border: none;
       }
 
-      #refuse-info-Modal button {
+      #refuseInfoModal button {
         color: white;
         width: 200px;
         height: 60px;
@@ -274,21 +274,21 @@
         border: none;
       }
 
-      #refuse-info-Modal button:nth-child(1) {
+      #refuseInfoModal button:nth-child(1) {
         background-color: rgb(158, 158, 158);
       }
 
-      #refuse-info-Modal button:nth-child(2) {
+      #refuseInfoModal button:nth-child(2) {
         background-color: rgb(253, 193, 55);
       }
 
-      #refuse-info-Modal button:nth-child(1):hover {
+      #refuseInfoModal button:nth-child(1):hover {
         background-color: rgb(136, 136, 136);
         font-size: 20px;
         font-weight: 600;
       }
 
-      #refuse-info-Modal button:nth-child(2):hover {
+      #refuseInfoModal button:nth-child(2):hover {
         background-color: rgb(255, 187, 27);
         font-size: 20px;
         font-weight: 600;
@@ -414,7 +414,8 @@
             	<button class="space_state conwait">검수중</button>
             	</c:when>
             	<c:otherwise>
-            	<button class="space_state conrefuse">검수반려</button>
+            	<button class="space_state conrefuse" onclick="refuseModal(this, ${s.spaceNo})">검수반려</button>
+            	<input type="hidden" value="${s.denyMessage}">
             	</c:otherwise>            
             </c:choose>
           </div>
@@ -424,10 +425,13 @@
             ${s.addressDefault }
             <span class="sprice">${s.hashtag}원</span>
           </div>
+            <form  method="post" action="spaceUpdateForm.sp" >
+            <input type="hidden" name="spaceNo" value="${s.spaceNo}">
           <div class="space_btn_area">
-            <button>공간정보 수정</button>
+            <button type="submit" >공간정보 수정</button>
             <button type="button" onclick="delModal(${s.spaceNo})">삭제</button>
           </div>
+          </form>
         </div>
 	 </c:forEach>
 	 </div>
@@ -457,7 +461,7 @@
     </div>
 
     <!-- 공간 검수 반려 확정 Modal -->
-    <div class="modal" id="refuse-info-Modal">
+    <div class="modal" id="refuseInfoModal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -468,14 +472,15 @@
               아래 사유로 검수가 반려되었습니다.<br />
               수정 후 재검수 신청을 해주시기 바랍니다.
             </div>
-            <div>
-              (반려 메시지)공간 고유 이름을 등록해주시고 블라 블라 블라 블라전체
-            </div>
+            <div id="denyMsg"></div>
+            <form id="spReInsertForm" method="post" action="spaceReInsert.sp" >
+         	 	<input type="hidden" name="spaceNo" value="">
+          	</form>
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">
             <button type="button" onclick="">관리자 문의</button>
-            <button type="button" onclick="">재검수 신청</button>
+            <button type="button" onclick="spReInsertSubmit()">재검수 신청</button>
           </div>
           
         </div>
@@ -535,7 +540,6 @@
 			 var $img = $(btn).parent().prev().prev();
 			 var result = $img.attr("class").split("-");
 			 var index = result[1];
-			 console.log($(btn).parent().prev().val());
 		  	 var imgArr = $(btn).parent().prev().val().split(",");
 		      
 		      if (type == 1) {
@@ -555,9 +559,19 @@
 		      
 		}
 		
+		refuseModal = (btn, sno) => {
+			$("#refuseInfoModal #denyMsg").text($(btn).next().val());
+			$("#spReInsertForm input[name='spaceNo']").val(sno);
+			$("#refuseInfoModal").modal("show");
+		}
+		
+		spReInsertSubmit  = () =>  {
+			$("#spReInsertForm").submit();
+		}
+		
 		
 		delModal  = sno =>  {
-			$("input[name='spaceNo']").val(sno);
+			$("#spDelForm input[name='spaceNo']").val(sno);
 			$("#spaceDeleteModal").modal("show");
 		}
 		
@@ -565,6 +579,8 @@
 			$("#spDelForm").submit();
 			
 		}
+		
+		
 	
 	</script>
 </body>

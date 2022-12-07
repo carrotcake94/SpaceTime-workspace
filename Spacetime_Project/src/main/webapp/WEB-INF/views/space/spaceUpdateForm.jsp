@@ -399,8 +399,12 @@
         font-weight: 600;
         color: black;
       }
-
       /* -------------------------------------- */
+      .denymsg {
+      
+      
+      }
+      
       /* Chrome, Safari, Edge, Opera */
 		input::-webkit-outer-spin-button,
 		input::-webkit-inner-spin-button {
@@ -412,31 +416,45 @@
 		input[type=number] {
 		  -moz-appearance: textfield;
 		}
-	     	
+      
   </style>
 </head>
 <body>
 	<div class="wrap">		
 	<jsp:include page="../common/header.jsp" />
 	<div class="main">
-    <form id="spInsertForm" method="post" action="insert.sp" enctype="multipart/form-data">
+    <form id="spInsertForm" method="post" action="update.sp" enctype="multipart/form-data">
 	    <input type="hidden" name="hostNo" value="${loginMember.memNo }">
+	    <input type="hidden" name="spaceNo" value="${s.spaceNo}">
+	    <input type="hidden" name="mainChg" value="">
+	    <input type="hidden" name="thumChg" value="">
       <div class="space-main-title">공간 정보 입력</div>
       <hr />
+   		<c:if test="${s.spaceStatus eq 'N'}">
+		<div class="space-title" style="color:rgb(231, 76, 60);">
+		  반려 사유
+		</div>
+		<div class="space-content">
+		  <div class="denymsg">
+		  	${s.denyMessage}
+		  </div>
+		</div>
+       	</c:if>
+     
       <div class="space-title">
         공간 이름
         <div class="lcount"><span>0</span><span> / 30자</span></div>
       </div>
       <div class="space-content">
-        <input type="text" class="itype1" name="spaceTitle" placeholder="고유 업체명을 입력해주세요" />
+        <input type="text" class="itype1" name="spaceTitle" placeholder="고유 업체명을 입력해주세요" value="${s.spaceTitle} "/>
       </div>
       <div class="space-title">
         공간 유형
       </div>
       <div class="space-content stypeNo-area">
       <c:forEach var="s" items="${stypeList }">
-		<input type="radio" id="stype+${s.stypeNo }" name="stypeNo" value="${s.stypeNo }">
-        <label class="stype-btn" for="stype+${s.stypeNo }">${s.stypeName }</label>
+		<input type="radio" id="stype${s.stypeNo }" name="stypeNo" value="${s.stypeNo }">
+        <label class="stype-btn" for="stype${s.stypeNo }">${s.stypeName }</label>
 	 </c:forEach>
       </div>
       <div class="space-title">
@@ -445,7 +463,7 @@
       </div>
       <div class="space-content">
         <textarea type="text" class="tarea-type1" name="spaceSubTitle" maxlength="150"
-          placeholder="공간 소제목 정보를 입력해주세요"></textarea>
+          placeholder="공간 소제목 정보를 입력해주세요">${s.spaceSubTitle }</textarea>
       </div>
       <div class="space-title">
         공간 소개
@@ -457,7 +475,7 @@
       </div>
       <div class="space-content">
         <textarea type="text" class="tarea-type2" name="spaceInfo" maxlength="1500"
-          placeholder="공간 정보를 상세하게 소개해주세요"></textarea>
+          placeholder="공간 정보를 상세하게 소개해주세요">${s.spaceInfo }</textarea>
       </div>
       <div class="space-small-area">
         <div class="space-small">
@@ -465,7 +483,7 @@
             금액(1시간당,원)
           </div>
           <div class="space-small-content">
-            <input type="number" name="hourPrice" placeholder="금액" />
+            <input type="number" name="hourPrice" placeholder="금액" value="${s.hourPrice }" />
           </div>
         </div>
         <div class="space-small">
@@ -473,7 +491,7 @@
             최대 수용인원
           </div>
           <div class="space-small-content">
-            <input type="number" name="maxPeople" placeholder="최대 인원" />
+            <input type="number" name="maxPeople" placeholder="최대 인원" value="${s.maxPeople }" />
           </div>
         </div>
         <div class="space-small">
@@ -481,7 +499,7 @@
             운영 시작시간
           </div>
           <div class="space-small-content">
-            <input type="number" name="openTime" placeholder="시작시간" />
+            <input type="number" name="openTime" placeholder="시작시간" value="${s.openTime }" />
           </div>
         </div>
         <div class="space-small">
@@ -489,7 +507,7 @@
             운영 종료시간
           </div>
           <div class="space-small-content">
-            <input type="number" name="closeTime" placeholder="종료시간" />
+            <input type="number" name="closeTime" placeholder="종료시간" value="${s.closeTime }" />
           </div>
         </div>
       </div>
@@ -499,7 +517,7 @@
       </div>
       <div class="space-img-area main-img-area">
         <div>
-          대표 이미지를 등록해주세요
+          <div><img src="resources/uploadFiles/space/space/${aList[0].getAttachmentReName()}" /><i class='fa fa-times' aria-hidden='true' onclick='mainImgFileDel(this)'></i></div>
         </div>
         <button type="button" class="main-img-btn">파일첨부</button>
         <input id="mainImgFile" type='file' name='upfile' style="display: none;">
@@ -510,7 +528,17 @@
       </div>
       <div class="space-img-area thum-img-area">
         <div>
-          추가 이미지를 등록해주세요
+        <c:choose>
+        <c:when test="${aList.size() eq 1 }">
+                  추가 이미지를 등록해주세요
+        </c:when>
+        <c:otherwise>
+        <c:forEach var="a" begin="1" end="${aList.size()-1 }" items="${aList}" varStatus="status">
+        <c:set var="i" value="${status.index}" />
+        <div><img class="thum${i}" src="resources/uploadFiles/space/space/${aList[i].getAttachmentReName()}"/><i class='fa fa-times' aria-hidden='true' ></i></div>
+        </c:forEach>
+        </c:otherwise>
+        </c:choose>
         </div>
         <button type="button" class="thum-img-btn">파일첨부</button>
       </div>
@@ -521,21 +549,19 @@
       </div>
       <div class="space-address-area">
 
-        <input type="text" name="addressDefault" placeholder="공간 주소를 입력해주세요" readonly onclick="daumPost()" />
+        <input type="text" name="addressDefault" placeholder="공간 주소를 입력해주세요" value="${s.addressDefault }"  onclick="daumPost()" readonly/>
         <button type="button" onclick="daumPost()">주소등록</button>
       </div>
       <div class="space-content">
-        <input type="text" class="itype1" name="addressDetail" placeholder="상세 주소" />
-        <input type="hidden" name="latitude" value="">
-        <input type="hidden" name="longitude" value="">
-        
+        <input type="text" class="itype1" name="addressDetail" placeholder="상세 주소" value="${s.addressDetail }" />
+        <input type="hidden" name="latitude" value="${s.latitude }">
+        <input type="hidden" name="longitude" value="${s.longitude }">
       </div>
-
       <div class="space-title">
         연락처
       </div>
       <div class="space-content">
-        <input type="text" class="itype1" name="tel" placeholder="- 포함해서 입력해주세요" />
+        <input type="text" class="itype1" name="tel" placeholder="- 포함해서 입력해주세요" value="${s.tel }" />
       </div>
       <button type="button" id="spaceInsertBtn"  onclick="valichk()">검수 신청하기</button>
     </form>
@@ -547,7 +573,7 @@
           <div class="modal-header">검수 신청</div>
           <!-- Modal body -->
           <div class="modal-body">
-            <h4>검수 통과시 공간은 바로 노출됩니다.</h4>
+            <h4>공간 수정시 재검수가 필요합니다.</h4>
             <h5>공간 검수를 신청하시겠습니까?</h5>
           </div>
           <!-- Modal footer -->
@@ -563,6 +589,27 @@
 	<jsp:include page="../common/footer.jsp" />
 	</div>
 	<script>
+    //이미지 변경 여부
+    let mainChg = 0;
+    let thumChg = [];
+    
+    // 추가 이미지 식별 번호 메인이미지는 뺀다.
+    let thumNo = ${aList.size()}-1;
+    
+	// 페이지 로딩 후 기본 체크
+	$(function () {
+		var hashtag ="${s.hashtag}".split(",");
+		
+		hashtag.forEach((value, index, array) => {
+		    $(".hashtag-area").append("<div class='hashtag'><span>" + value + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+		});
+		$("#stype"+${s.stypeNo}).prop("checked",true);
+		
+		 for(var i = 0; i < thumNo; i++) {
+			 thumChg.push(0);
+         }
+	});
+
 	 // 글자수 체크
 	$(function() {
 		$('#spInsertForm input').keyup(function () {		
@@ -572,9 +619,7 @@
 			 $(this).parent().prev().children().children().first().text($(this).val().length);  
 		});
 	});
-	
-	 // 추가 이미지 식별 번호
-    let thumNo = 0;
+
     $(function () {
       // 대표 이미지 첨부
       $(".main-img-btn").click(function () {
@@ -582,6 +627,7 @@
       });
 
       $("#mainImgFile").on("change", function () {
+    	mainChg =1;
         if ($(this)[0].files.length == 1) {
           var filename = $(this)[0].files[0].name;
 
@@ -623,7 +669,6 @@
         thumNo++;
         $(".file-area").append("<input type='file' name='upfile' id='thum" + thumNo + "' style='display:none;' >");
         $("#thum" + thumNo).click();
-
       });
       $(".file-area").on("change", "input[name='upfile']", function () {
         if ($(this)[0].files.length == 1) {
@@ -662,7 +707,17 @@
         var fileId = $(this).prev().attr("class");
         $("#" + fileId).remove();
         $(this).parent().remove();
-
+        
+        //기존 추가이미지 수
+        var toImg = thumChg.length;
+        console.log("기존 추가이미지 수 : "+toImg);
+        //삭제하려는 추가이미지 인덱스
+        var index = fileId.substr(4);
+        console.log("삭제이미지인덱스"+index);
+        if(index <= toImg) {
+        	thumChg[index-1] = 1;
+        }
+        
         if ($(".thum-img-area>div>div").length == 0) {
           $(".thum-img-area>div").text("추가 이미지를 등록해주세요");
         }
@@ -671,8 +726,9 @@
     });
     // 메인 이미지 삭제
     function mainImgFileDel(i) {
+      mainChg =1;
       $(i).parent().remove();
-
+      
       var agent = navigator.userAgent.toLowerCase();
       //파일초기화 크로스 브라우징 
       if ((navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1)) {
@@ -820,9 +876,10 @@
   			return false;
   		}
     	
-    	if ($("#mainImgFile").val().trim() == "") {
-            alert("대표 이미지를 첨부해주세요.");
-            return false;
+    	//메인이미지 변경했을경우
+   		if (mainChg ==1 && $("#mainImgFile").val().trim() == "") {
+               alert("대표 이미지를 첨부해주세요.");
+               return false;
         }
     	
     	if ($("input[name=addressDefault]").val().trim() == "") {
@@ -878,30 +935,19 @@
      	$(".hashtag>span").each(function() {
      		hashtag.push($(this).text());
      	});
-     	console.log($(".hashtag>span").length);
+     	
+     	
      	if($(".hashtag>span").length != 0) {
      		$("input[name=hashtag]").val(hashtag.join(","));
-     	}     	
+     	}     
+     	$("input[name=mainChg]").val(mainChg);
+     	$("input[name=thumChg]").val(thumChg.join(","));
      	
      	$('#spaceInsertModal').modal('show');
       }
        spaceSubmit = () => {
     	   $("#spInsertForm").submit();
        }
-       // 새로고침 방지
-       function NotReload() { 
-    	    if((event.ctrlKey == true && (event.keyCode == 78 )) || (event.keyCode == 116) ) { 
-    	    	
-    	    	var result = confirm('변경 사항이 저장되지 않을 수 있습니다.');
-
-    	        if(result) {
-    	          location.href="enrollForm.sp";
-    	        } else {
-    	        	 return false;
-    	        }
-    	    } 
-    	} 
-    	document.onkeydown = NotReload;
     	
     
   </script>

@@ -31,9 +31,14 @@ public class SpaceDao {
 		return sqlSession.insert("spaceMapper.insertSpaceAttachment", attachList);
 	}
 
+	// 공간 선택-정현
+	public Space selectSpace(SqlSessionTemplate sqlSession, int spaceNo) {
+		return sqlSession.selectOne("spaceMapper.selectSpace", spaceNo);
+	}
+
 	// 공간 currval 가져오기-정현
-	public int selectSpaceNo(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("spaceMapper.selectSpaceNo");
+	public int selectSpaceNo(SqlSessionTemplate sqlSession, int hostNo) {
+		return sqlSession.selectOne("spaceMapper.selectSpaceNo", hostNo);
 	}
 
 	// 공간 삭제-정현
@@ -66,6 +71,26 @@ public class SpaceDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		return (ArrayList) sqlSession.selectList("spaceMapper.selectHostSpaceList", memNo, rowBounds);
+	}
+
+	// 공간 등록-정현
+	public int updateSpace(SqlSessionTemplate sqlSession, Space s) {
+		return sqlSession.update("spaceMapper.updateSpace", s);
+	}
+
+	// 공간 메인 이미지 수정 재검수 등록-정현
+	public int updateMainImg(SqlSessionTemplate sqlSession, SpaceAttachment mainAttach) {
+		return sqlSession.update("spaceMapper.updateMainImg", mainAttach);
+	}
+
+	// 공간 기존 추가 이미지 삭제 재검수 등록-정현
+	public int deleteThumImg(SqlSessionTemplate sqlSession, int ano) {
+		return sqlSession.delete("spaceMapper.deleteThumImg", ano);
+	}
+
+	// 공간 재검수 등록-정현
+	public int reInsertSpace(SqlSessionTemplate sqlSession, int spaceNo) {
+		return sqlSession.update("spaceMapper.reInsertSpace", spaceNo);
 	}
 
 	// 지도에 표시될 공간 갯수 조회 -성훈
