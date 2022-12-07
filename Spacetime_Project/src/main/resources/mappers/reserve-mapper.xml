@@ -45,11 +45,20 @@
 			WHERE RESERVE_STATUS = #{selectbox}
 		</select>
 		
+		<select id="selectMyReserveListSortConfirmCount" resultType="_int">
+			<![CDATA[
+			SELECT COUNT(*)
+			FROM RESERVE
+			WHERE RESERVE_STATUS = 'Y'
+			  AND USE_DATE > SYSDATE		
+			]]>
+		</select>
+		
 		<select id="selectMyReserveListSortUsedCount" resultType="_int">
 			<![CDATA[
 			SELECT COUNT(*)
 			FROM RESERVE
-			WHERE RESERVE_STATUS = #{selectbox}
+			WHERE RESERVE_STATUS = 'Y'
 			  AND USE_DATE < SYSDATE		
 			]]>
 		</select>

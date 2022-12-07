@@ -107,7 +107,7 @@ public class ReserveController {
 		case "예약대기" : selectbox = "W"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
 		case "예약취소" : selectbox = "C"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
 		case "예약반려" : selectbox = "N"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
-		case "예약확정" : selectbox = "Y";  listCount = reserveService.selectMyReserveListSortCount(selectbox); break; // 기본 카운트 
+		case "예약확정" : selectbox = "Y";  listCount = reserveService.selectMyReserveListSortConfirmCount(selectbox); break; // 기본 카운트 
 		case "이용완료" : selectbox = "Y"; listCount = reserveService.selectMyReserveListSortUsedCount(selectbox); break; // 현재날짜 비교해서 이용완료 뽑는 카운트 
 		}
 		

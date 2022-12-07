@@ -35,6 +35,11 @@ public class ReserveDao {
 		return sqlSession.selectOne("reserveMapper.selectMyReserveListSortCount", selectbox);			
 	}
 	
+	public int selectMyReserveListSortConfirmCount(SqlSessionTemplate sqlSession, String selectbox) {
+
+		return sqlSession.selectOne("reserveMapper.selectMyReserveListSortConfirmCount", selectbox);			
+	}
+	
 	public int selectMyReserveListSortUsedCount(SqlSessionTemplate sqlSession, String selectbox) {
 		return sqlSession.selectOne("reserveMapper.selectMyReserveListSortUsedCount", selectbox);	
 	}

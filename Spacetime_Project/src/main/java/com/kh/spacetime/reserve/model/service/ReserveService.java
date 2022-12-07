@@ -41,8 +41,10 @@ public interface ReserveService {
 	
 	// 마이페이지 예약 리스트 - 드롭박스 정렬 
 	int selectMyReserveListSortCount(String selectbox);
+
+	int selectMyReserveListSortConfirmCount(String selectbox);
 	
 	int selectMyReserveListSortUsedCount(String selectbox);
 	
-
+	
 }
