@@ -97,11 +97,22 @@ public class ReserveController {
 	/* 마이페이지 예약리스트 - 드롭박스 정렬 (예약대기 / 예약취소 / 예약확정 / 이용완료 ) */
 	
 	@RequestMapping("myReserveSort.re")
-	public String selectMyReserveListSort(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
-		
+	public String selectMyReserveListSort(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session, String selectbox) {
+
 		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 		
-		int listCount = reserveService.selectMyReserveListSortCount();
+		int listCount = 0; // 초기화 
+		
+		switch(selectbox) {
+		case "예약대기" : selectbox = "W"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
+		case "예약취소" : selectbox = "C"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
+		case "예약반려" : selectbox = "N"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
+		case "예약확정" : selectbox = "Y";  listCount = reserveService.selectMyReserveListSortCount(selectbox); break; // 기본 카운트 
+		case "이용완료" : selectbox = "Y"; listCount = reserveService.selectMyReserveListSortUsedCount(selectbox); break; // 현재날짜 비교해서 이용완료 뽑는 카운트 
+		}
+		
+		System.out.println(selectbox);
+		System.out.println(listCount);
 		
 		int pageLimit = 10;
 		int boardLimit = 5;

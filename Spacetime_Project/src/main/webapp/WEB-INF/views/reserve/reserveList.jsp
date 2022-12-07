@@ -347,12 +347,13 @@
      	<div align="right">
         <div class="selectbox" align="right">
           <label for="sort_select">정렬조건선택</label>
-            <select id="sort_select">
+            <select id="sort_select" name="selectbox">
                 <option selected>정렬조건선택</option>
                 <option>예약대기</option>
                 <option>예약취소</option>
                 <option>예약확정</option>
                 <option>이용완료</option>
+                <option>예약반려</option>
             </select>
         </div>
   
@@ -360,17 +361,11 @@
       </div>
      </form>
       
-      <script>
-      	$(document).ready(function() {
-      		
-      	})
-      	
       
-      </script>
-
       <br>
 			
-			<!-- 드롭박스 선택시 값자동으로 바뀌게 -->
+			<!-- 드롭박스 선택시 드롭박스 값자동으로 바뀌게 -->
+			<!-- 드롭박스 값 받아오기 -->
 			<script>
 				$(document).ready(function(){
 					  var selectTarget = $('.selectbox select');
@@ -385,6 +380,15 @@
 					  $(this).siblings('label').text(select_name);
 					  });
 					});
+				
+				
+				
+				$(document).ready(function() {
+		      		$("#sort_select").change(function(){
+		      			/* console.log("테스트 : " + $(this).val()); */
+		      			var select = $(this).val();
+		      		});
+		      	});
 			</script>
 
         

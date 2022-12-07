@@ -74,9 +74,14 @@ public class ReserveServiceImpl implements ReserveService {
 	}
 
 	@Override
-	public int selectMyReserveListSortCount() {
+	public int selectMyReserveListSortCount(String selectbox) {
 		
-		return reserveDao.selectMyReserveListSortCount(sqlSession);
+		return reserveDao.selectMyReserveListSortCount(sqlSession, selectbox);
+	}
+	
+	public int selectMyReserveListSortUsedCount(String selectbox) {
+		
+		return reserveDao.selectMyReserveListSortUsedCount(sqlSession, selectbox);
 	}
 
 }

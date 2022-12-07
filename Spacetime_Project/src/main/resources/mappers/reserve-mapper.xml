@@ -33,7 +33,7 @@
 			JOIN SPACE USING (SPACE_NO)
 			JOIN MEMBER USING (MEM_NO)
 			JOIN SPACE_ATTACHMENT USING(SPACE_NO)
-			WHERE ATTACHEMNT_LEVEL = 1
+			WHERE ATTACHMENT_LEVEL = 1
 			  AND MEM_NO = #{memNo}
 			ORDER BY RESERVE_NO DESC
 
@@ -42,16 +42,17 @@
 		<select id="selectMyReserveListSortCount" resultType="_int">
 			SELECT COUNT(*)
 			FROM RESERVE
-			WHERE RESERVE_STATUS = ?
+			WHERE RESERVE_STATUS = #{selectbox}
 		</select>
-
-
-
-
-
-
-
-
+		
+		<select id="selectMyReserveListSortUsedCount" resultType="_int">
+			<![CDATA[
+			SELECT COUNT(*)
+			FROM RESERVE
+			WHERE RESERVE_STATUS = #{selectbox}
+			  AND USE_DATE < SYSDATE		
+			]]>
+		</select>
 
 
 </mapper>

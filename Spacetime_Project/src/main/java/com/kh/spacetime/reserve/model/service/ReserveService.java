@@ -40,7 +40,9 @@ public interface ReserveService {
 	ArrayList<Reserve> selectMyReservetList(PageInfo pi, int memNo);
 	
 	// 마이페이지 예약 리스트 - 드롭박스 정렬 
-	int selectMyReserveListSortCount();
+	int selectMyReserveListSortCount(String selectbox);
+	
+	int selectMyReserveListSortUsedCount(String selectbox);
 	
 
 }

@@ -30,10 +30,14 @@ public class ReserveDao {
 			return (ArrayList)sqlSession.selectList("reserveMapper.selectMyReservetList", memNo, rowBounds);
 	}
 	
-	public int selectMyReserveListSortCount(SqlSessionTemplate sqlSession) {
-		
-		return sqlSession.selectOne("reserveMapper.selectMyReserveListSortCount");			
-}
+	public int selectMyReserveListSortCount(SqlSessionTemplate sqlSession, String selectbox) {
+
+		return sqlSession.selectOne("reserveMapper.selectMyReserveListSortCount", selectbox);			
+	}
+	
+	public int selectMyReserveListSortUsedCount(SqlSessionTemplate sqlSession, String selectbox) {
+		return sqlSession.selectOne("reserveMapper.selectMyReserveListSortUsedCount", selectbox);	
+	}
 	
 	
 }
