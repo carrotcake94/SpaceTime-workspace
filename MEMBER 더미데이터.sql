@@ -25,7 +25,7 @@ INSERT INTO MEMBER (MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, GENDER, BIRTHDAY, NICKNAM
 VALUES (SEQ_MNO.NEXTVAL, 'ksronh', '$2a$10$yIlsWpIvT0Jodm1MWUIVh.mcCSuu1a3em9H7bkcFD47HEoW9/XHdy', '신희섭', 'M', to_date('1989-12-31', 'RRRR-MM-DD'), '신림동백순대', '01071711380', 'ksronh@naver.com', to_date('2022-01-01', 'RRRR-MM-DD'), 'Y', '신한은행', '110382619347', 'S');
 
 INSERT INTO MEMBER (MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, GENDER, BIRTHDAY, NICKNAME, PHONE, EMAIL, ENROLL_DATE, HOST_STATUS, BANK_NAME, ACCOUNT_NUM, GR_CODE) 
-VALUES (SEQ_MNO.NEXTVAL, 'insertcoin', '$2a$10$yIlsWpIvT0Jodm1MWUIVh.mcCSuu1a3em9H7bkcFD47HEoW9/XHdy', '정혜민', 'F', to_date('1993-12-31', 'RRRR-MM-DD'), '백원만', '01089364994', 'kh.insertcoin@gmail.com', to_date('2022-01-01', 'RRRR-MM-DD'), 'Y', '우리은행', '1003616792934', 'S');
+VALUES (SEQ_MNO.NEXTVAL, 'insertcoin', '$2a$10$6qvINORqc9n40qkb2lMckeuu/FCGdCO7QJ8qR6oxhUVWHxa8qcbNW', '정혜민', 'F', to_date('1993-12-31', 'RRRR-MM-DD'), '백원만', '01089364994', 'kh.insertcoin@gmail.com', to_date('2022-01-01', 'RRRR-MM-DD'), 'Y', '우리은행', '1003616792934', 'S');
 
 INSERT INTO MEMBER (MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, GENDER, BIRTHDAY, NICKNAME, PHONE, EMAIL, ENROLL_DATE, HOST_STATUS, BANK_NAME, ACCOUNT_NUM, GR_CODE) 
 VALUES (SEQ_MNO.NEXTVAL, 'filan705', '$2a$10$PHG4bvE6LCq2s7AlnOLMf.OH2zLVXCiNdv7T0GOXvW5ok4Kbaa4ui', '김정현', 'M', to_date('1989-12-31', 'RRRR-MM-DD'), 'James', '01090595891', 'filan705@naver.com', to_date('2022-01-01', 'RRRR-MM-DD'), 'Y', '카카오뱅크', '3333084204557', 'S');

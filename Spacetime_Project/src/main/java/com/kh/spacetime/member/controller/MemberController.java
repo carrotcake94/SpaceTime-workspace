@@ -114,7 +114,7 @@ public class MemberController {
 		// => 평문 + salt(랜덤값) => 암호화 작업이 이루어지기 때문
 		
 		// Member 객체의 userPwd 필드의 값을 암호문으로 바꿔치기 => setter 메소드
-		/*
+		
 		m.setMemPwd(encPwd);
 		
 		int result = memberService.insertMember(m);
@@ -132,9 +132,7 @@ public class MemberController {
 			// /WEB-INF/views/common/errorPage.jsp
 			return "common/errorPage";
 		}
-		*/
 		
-		return encPwd;
 	}
 	
 	/**
