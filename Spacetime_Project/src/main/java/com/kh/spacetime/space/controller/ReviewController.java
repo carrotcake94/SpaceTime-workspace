@@ -2,6 +2,8 @@ package com.kh.spacetime.space.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
+import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.ReviewService;
 import com.kh.spacetime.space.model.vo.Review;
 
@@ -23,9 +26,11 @@ public class ReviewController {
 	//마이페이지 리뷰 리스트
 	//페이징바
 	@RequestMapping("list.sp")
-	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model ) {
 		
 		System.out.println("cpage : " + currentPage);
+		
+		Member m = (Member)session.getAttribute("loginMember");
 		
 		int listCount = reviewService.selectListCount();
 		
@@ -33,8 +38,8 @@ public class ReviewController {
 		int boardLimit = 5;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
-		ArrayList<Review> list = reviewService.selectList(pi);
+		//getter setter X
+		ArrayList<Review> list = reviewService.selectList(pi, m.getMemNo());
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -42,7 +47,7 @@ public class ReviewController {
 		return "space/mypageReviewList";
 	}
 	
-	@RequestMapping("detail.bo")
+	@RequestMapping("detail.ro")
 	public ModelAndView selectBoard(int rno, ModelAndView mv) {
 		
 		// rno 에는 상세조회하고자 하는 해당 게시글 번호가 담겨있음
