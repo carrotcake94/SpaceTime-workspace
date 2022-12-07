@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
@@ -40,7 +39,7 @@ public class ReviewController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		//getter setter X
 		ArrayList<Review> list = reviewService.selectList(pi, m.getMemNo());
-		
+		System.out.println();
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 				
@@ -48,8 +47,9 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("detail.ro")
-	public ModelAndView selectBoard(int rno, ModelAndView mv) {
-		
+	public String selectBoard() {
+		/*
+		 * (int rno, ModelAndView mv)
 		// rno 에는 상세조회하고자 하는 해당 게시글 번호가 담겨있음
 		
 		// 1. 해당 게시글 조회수 증가용 서비스 먼저 호출 결과 받기 (update 하고 오기)
@@ -71,7 +71,14 @@ public class ReviewController {
 		}
 		
 		return mv;
+		*/
+		return "space/mypageReviewDetail";
 	}
 	
+	@RequestMapping("bookmark.sp")
+	public String bookMark() {
+		
+		return "space/mypageBookMark";
+	}
 	
 }

@@ -161,8 +161,9 @@
 		
 		<!--컨텐츠작성부분-->
 		<div id="content_2">
-			
+			<br>
 			<div id="reviewDetail">
+			
 				<table id="reviewTable">
 					<tr>
 						<th class="review sapeceTitle"><h3><b>공간명</b></h3></th>

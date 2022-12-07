@@ -4,7 +4,7 @@
 
 	<resultMap id="reviewResultSet" type="review">
 		<result column="RESERVE_NO" property="reserveNo" />
-		<result column="SPACE_NO" property="spaceNo" />
+		<result column="SPACE_TITLE" property="spaceTitle" />
 		<result column="REVIEW_CONT" property="reviewCont" />
 		<result column="RATING" property="rating" />
 		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
@@ -19,7 +19,7 @@
 	<select id="selectList" resultMap="reviewResultSet" parameterType="_int">
 		SELECT
 		C.RESERVE_NO		--예약번호
-		, A.SPACE_NO		--공간장소
+		, B.SPACE_TITLE		--공간장소
 		, A.REVIEW_CONT		--리뷰내용
 		, A.RATING			--평점
 		, TO_CHAR(A.REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE		--작성일자

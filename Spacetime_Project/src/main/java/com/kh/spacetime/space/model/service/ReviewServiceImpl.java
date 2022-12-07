@@ -15,7 +15,7 @@ public class ReviewServiceImpl implements ReviewService {
 	
 
 	@Autowired
-	private ReviewDao boardDao;
+	private ReviewDao reviewDao;
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;

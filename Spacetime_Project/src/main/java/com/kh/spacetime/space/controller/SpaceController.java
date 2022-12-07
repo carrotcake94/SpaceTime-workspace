@@ -244,5 +244,5 @@ public class SpaceController {
 
 		return changeName;
 	}
-
+	
 }

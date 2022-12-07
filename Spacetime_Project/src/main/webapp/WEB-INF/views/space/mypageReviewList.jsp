@@ -14,21 +14,25 @@
 	padding-top: 50px;
 	text-align: center;
 }
-	#title{cursor : pointer;}
+	#reviewList{cursor : pointer;}
 	#title1{cursor : pointer;}
-	#review-admin3{text-align: center;}
+	#review-admin1{text-align: center;}
 	#reviewTitle {
 		font-size: 40px;
 		font-weight: bold;
 		padding: 50px;
 		text-align: center;
 	}
-
+	/* #btn{text-align: center;} */
 	
 	.table { text-align: center; }
 	.reviewList tr { line-height: 40px; }
 	.table>tbody>tr:hover { cursor: pointer; }
- 
+ 	.btnPage {
+		text-align: center; 
+		margin: auto;
+		border: 1px solid red;
+	}
 
 </style>
 </head>
@@ -49,7 +53,7 @@
 					<tr >
 						<th>예약번호</th>
 						<th>공간장소</th>
-						<th style="width:650px;">리뷰내용</th>
+						<th style="width:630px;">리뷰내용</th>
 						<th>평점</th>
 						<th>작성날짜</th>
 					</tr>
@@ -58,7 +62,7 @@
 					<c:forEach var="r" items="${ list }">
                     	<tr>
 	                        <td>${r.reserveNo}</td>
-	                        <td>${r.spaceNo}</td>
+	                        <td>${r.spaceTitle}</td>
 	                        <td>${r.reviewCont}</td>
 	                        <td>${r.rating}</td>
 	                        <td>${r.reviewEnrollDate}</td>
@@ -77,7 +81,7 @@
           </div>
           <br>
 		 <!-- 페이지 버튼 -->
-        <div class="btnPage" align="center">
+        <div class="btnPage" align="center" id="btn">
             <ul class="pagination">
                 <c:choose>
                     <c:when test="${pi.currentPage eq 1}">

@@ -25,5 +25,6 @@ public class Review {
 	private int spaceNo;//SPACE_NO	NUMBER
 	private int memNo;//MEM_NO	NUMBER
 	
-	private int reserveNo;// 
+	private int reserveNo;//
+	private String spaceTitle;//
 }
