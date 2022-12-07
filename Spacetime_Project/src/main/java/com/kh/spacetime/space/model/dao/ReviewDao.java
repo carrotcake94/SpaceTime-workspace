@@ -15,6 +15,7 @@ public class ReviewDao {
 		
 		return sqlSession.selectOne("reviewMapper.selectListCount");
 	}
+	
 	public ArrayList<Review> selectList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
 			
 		int limit = pi.getBoardLimit();
@@ -25,7 +26,10 @@ public class ReviewDao {
 		
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectList", memNo, rowBounds);
 	}	
-	
+	public Review selectReview(SqlSessionTemplate sqlSession, int reviewNo) {
+			
+			return sqlSession.selectOne("reviewMapper.selectReview", reviewNo);
+		}
 
 	
 	}

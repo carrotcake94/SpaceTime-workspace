@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
@@ -24,7 +25,7 @@ public class ReviewController {
 	
 	//마이페이지 리뷰 리스트
 	//페이징바
-	@RequestMapping("list.sp")
+	@RequestMapping("list.re")
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model ) {
 		
 		System.out.println("cpage : " + currentPage);
@@ -46,33 +47,17 @@ public class ReviewController {
 		return "space/mypageReviewList";
 	}
 	
-	@RequestMapping("detail.ro")
-	public String selectBoard() {
-		/*
-		 * (int rno, ModelAndView mv)
-		// rno 에는 상세조회하고자 하는 해당 게시글 번호가 담겨있음
-		
-		// 1. 해당 게시글 조회수 증가용 서비스 먼저 호출 결과 받기 (update 하고 오기)
-		int result = reviewService.increaseCount(rno);
-		
-		if(result > 0) { // 성공적으로 조회수 증가가 일어났다면
+	@RequestMapping("detail.re")
+	public ModelAndView selectBoard(int rno, ModelAndView mv) {
+				
+		Review r = reviewService.selectReview(rno);
 			
-			// 2. 상세조회 요청
-			// => reviewDetailView.jsp 상에 필요한 데이터 조회
-			Review r = reviewService.selectReview(rno);
-			
-			// 조회된 데이터를 담아서space/mypageReviewDetail.jsp 로 포워딩
-			mv.addObject("r", r).setViewName("space/mypageReviewDetail");
-			
-		}
-		else { // 실패
-			
-			mv.addObject("errorMsg", "리뷰상세조회 실패").setViewName("common/errorPage");
-		}
-		
+		// 조회된 데이터를 담아서space/mypageReviewDetail.jsp 로 포워딩
+		mv.addObject("r", r).setViewName("space/mypageReviewDetail");
+				
 		return mv;
-		*/
-		return "space/mypageReviewDetail";
+		
+		//return "space/mypageReviewDetail";
 	}
 	
 	@RequestMapping("bookmark.sp")

@@ -9,7 +9,8 @@
 		<result column="RATING" property="rating" />
 		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
 	</resultMap>
-
+	
+	<!-- 리스트조회 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM REVIEW
@@ -33,4 +34,19 @@
 		A.MEM_NO = #{memNo}
 		ORDER BY REVIEW_NO DESC
 	</select>
+	
+	<!--상세페이지-->
+	<select id="selectReview" parameterType="_int" resultMap="boardResultSet">
+		SELECT BOARD_NO
+			 , BOARD_TITLE
+			 , BOARD_WRITER
+			 , TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+			 , BOARD_CONTENT
+			 , ORIGIN_NAME
+			 , CHANGE_NAME
+		FROM BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	
 </mapper>

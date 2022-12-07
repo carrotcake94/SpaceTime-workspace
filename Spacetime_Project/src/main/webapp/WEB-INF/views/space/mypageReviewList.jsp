@@ -30,6 +30,8 @@
 	.table { text-align: center; }
 	.reviewList tr { line-height: 40px; }
 	.table>tbody>tr:hover { cursor: pointer; }
+	
+	
 
     /* 페이지 버튼 */
     .pagination {
@@ -102,7 +104,7 @@
 					$(function() {
 						$("#reviewList>tbody>tr").click(function() {
 							
-							location.href = "detail.ro?rno=" + $(this).children().eq(0).text();
+							location.href = "detail.re?rde=" + $(this).children().eq(0).text();
 						});
 					});
 			</script>
@@ -116,7 +118,7 @@
 						<li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
 					</c:when>
 					<c:otherwise>
-						<li class="page-item no-page-prev"><a class="page-link" href="spList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+						<li class="page-item no-page-prev"><a class="page-link" href="reList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
 					</c:otherwise>
 				</c:choose>
 
@@ -129,7 +131,7 @@
 						<li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
 					</c:when>
 					<c:otherwise>
-						<li class="page-item no-page-next"><a class="page-link" href="spList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+						<li class="page-item no-page-next"><a class="page-link" href="reList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>

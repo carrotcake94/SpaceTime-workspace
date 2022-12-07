@@ -40,8 +40,8 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public Review selectReview(int reviewNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return reviewDao.selectreview(sqlSession, reviewNo);
+		
 	}
 
 	@Override
