@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
+import com.kh.spacetime.reserve.model.vo.Reserve;
 
 @Repository
 public class CommonDao {
@@ -65,7 +66,22 @@ public class CommonDao {
 	
 	// 관리자페이지 매출 리스트 조회 + 페이징 처리 
 	// 매출이 있는 공간 총 개수 
+	public int selectSalesListCount(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("commonMapper.selectSalesListCount");
+	}
+	
 	// 매출이 있는 공간 리스트 조회
+	public ArrayList<Reserve> selectSalesList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesList", null, rowBounds);
+	}
+	
 	// 공간 매출 상세조회 
 
 }

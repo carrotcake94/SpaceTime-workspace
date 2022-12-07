@@ -30,7 +30,7 @@
 
     /* 신고 상세조회 전체 틀 */
     #reportDetail {
-    	border: 2px solid lightgray;
+        border: 2px solid lightgray;
         background-color: white;
         border-radius: 10px;
         margin: auto;
@@ -68,8 +68,8 @@
     .report_answer { margin: 20px 0px;}
     #reportStatus { color: red; }
     #reportStatus, #reportAnswer { 
-    	marign-top: 20px;
-    	padding-bottom: 20px;
+        margin-top: 20px;
+        padding-bottom: 20px;
     }
     
 
@@ -88,8 +88,8 @@
             <!-- 신고내용 상세조회 -->
             <div id="reportDetail">
             
-	            <!-- 신고내역 상세조회 제목 -->
-	        	<div align="center" id="title"><h3>신고내역 상세조회</h3></div>
+                <!-- 신고내역 상세조회 제목 -->
+                <div align="center" id="title"><h3>신고내역 상세조회</h3></div>
 
                 <!-- 신고 정보 -->
                 <div class="report_info" align="center">
@@ -121,7 +121,7 @@
                             <th style="width: 150px;" rowspan="2">관리자 답변</th>
                             <td style="width: 500px;">
                                 <div id="reportStatus" align="left">${r.reportStatus}</div>
-                                <div id="reportAnswer" align="left">${r.reportAnswer}dd</div>
+                                <div id="reportAnswer" align="left">${r.reportAnswer}</div>
                             </td>
                         </tr>
                     </table>
@@ -133,7 +133,7 @@
             </div>
             
             <form id="postForm" action="" method="post">
-            	<input type="hidden" name="rno" value="${r.reportNo}">
+                <input type="hidden" name="rno" value="${r.reportNo}">
             </form>
                     
         </div>

@@ -14,16 +14,17 @@
     .adminMenu {
         /* background-color: white; */
         background-color: rgba(128, 128, 128, 0.1);
-        /* height: 100%;  */
+        height: 100vh; 
         width: 250px;   
         box-sizing: border-box;
         margin-left: 3%;
         /* margin-top: 100px; */
         /* padding: 50px 0px; */
         /* border-radius: 10px; */
-        min-height: 1000px;
+        /* min-height: 1000px; */
         padding-top: 70px;
         float: left;
+        position: fixed;
     }
 
     /* 관리자페이지 제목 */
@@ -81,23 +82,24 @@
 </style>
 </head>
 <body>
-	
-    <div class="adminMenu">
-        <div id="adminPage">관리자페이지</div>
-        <ul class="accordion">
-            <li>
-                <span class="naviMenu navi">매출 관리</span>
-                <ul>
-                    <li class="naviSub"><a href="#" class="navi">매출 통계</a></li>
-                    <li class="naviSub"><a href="#" class="navi">매출 관리</a></li>
-                </ul>
-            </li>
-            <li class="naviMenu"><a href="#" class="navi">회원 관리</a></li>
-            <li class="naviMenu"><a href="#" class="navi">공간 관리</a></li>
-            <li class="naviMenu"><a href="#" class="navi">신고 관리</a></li>
-        </ul>
+	<div class="wrap">
+        <div class="adminMenu">
+            <div id="adminPage">관리자페이지</div>
+            <ul class="accordion">
+                <li>
+                    <span class="naviMenu navi">매출 관리</span>
+                    <ul>
+                        <li class="naviSub"><a href="#" class="navi">매출 통계</a></li>
+                        <li class="naviSub"><a href="slist.ad" class="navi">매출 관리</a></li>
+                    </ul>
+                </li>
+                <li class="naviMenu"><a href="#" class="navi">회원 관리</a></li>
+                <li class="naviMenu"><a href="#" class="navi">공간 관리</a></li>
+                <li class="naviMenu"><a href="rlist.ad" class="navi">신고 관리</a></li>
+            </ul>
+        </div>
     </div>
-    
+
     <script>
         var acc=$(".accordion");
         acc.find("li").not(".open").find("ul").slideUp();

@@ -7,13 +7,26 @@
 <meta charset="UTF-8">
 <title>매출 관리</title>
 <style>
+        
+    #header_container { height: 80px;}
+
+    /* content 영역 */
+    #content {
+        margin-left: 25%;
+        padding-bottom: 80px;
+        width: 60%;
+        min-width: 1000px;
+        /* height: 100%; */
+        /* min-height: 940px; */
+        /* background-color: rgba(128, 128, 128, 0.1); */
+    }
 
     /* 매출관리 제목 */
     #title {
         /* border: 1px solid blue; */
         margin: auto;
-        margin-top: 70px;
-        width: 60%;
+        margin-top: 80px;
+        width: 100%;
     }
 
     /* 검색 폼 회색 배경 */
@@ -21,7 +34,7 @@
         margin: auto;
         margin-top: 30px;
         padding: 40px;
-        width: 60%;
+        width: 100%;
         border-radius: 10px;
         background-color: rgb(235, 235, 235);
     }
@@ -34,7 +47,7 @@
 
     /* 년도, 월 선택 */
     .select {
-        width: 60%;
+        width: 100%;
         margin: auto;
     }
     #selectYear, #selectMonth {
@@ -50,11 +63,14 @@
     #tab {
         margin: auto;
         margin-top: 40px;;
-        width: 60%;
+        width: 100%;
+        min-width: 600px;
     }
     
     /* 탭 내용(테이블) */
     .tab-content {
+        width: 100%;
+        min-width: 600px;
         margin-top: 20px;
     }
 
@@ -125,133 +141,124 @@
 <body>
 
 
-	<jsp:include page="header.jsp" />
+	<div class="wrap">
+	<div id="header_container"><jsp:include page="header.jsp" /></div>
 	
-	<div id="content">
-	<jsp:include page="adminNavi.jsp" />
+    
+    <jsp:include page="adminNavi.jsp" />
+	
+        <div id="content">
 
-        <!-- 매출관리 제목 -->
-        <div align="left" id="title"><h3>매출 관리</h3></div>
-        
-        <!-- 검색창 -->
-        <div id="search">
-            <table align="center" id="searchForm">
-                <tr>
-                    <td>
-                        <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
-                    </td>
-                </tr>
-            </table>
-        </div>
+            <!-- 매출관리 제목 -->
+            <div align="left" id="title"><h3>매출 관리</h3></div>
+            
+            <!-- 검색창 -->
+            <div id="search">
+                <table align="center" id="searchForm">
+                    <tr>
+                        <td>
+                            <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-        <!-- 자동 검색(?) -->
-        <script>
-            $(document).ready(function(){
-                $("#myInput").on("keyup", function() {
-                    var value = $(this).val().toLowerCase();
-                    $("#myTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            <!-- 자동 검색(?) -->
+            <script>
+                $(document).ready(function(){
+                    $("#myInput").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("#myTable tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
                     });
                 });
-            });
-        </script>
+            </script>
 
-        <div class="select" align="right">
-            <!-- 년도 선택 -->
-            <div id="selectYear" align="right">
-                <div class="form-group select_year">
-                    <select class="form-control">
-                        <option value="2022">2022년</option>
-                    </select>
+            <div class="select" align="right">
+                <!-- 년도 선택 -->
+                <div id="selectYear" align="right">
+                    <div class="form-group select_year">
+                        <select class="form-control">
+                            <option value="2022">2022년</option>
+                        </select>
+                    </div>
+                </div> &nbsp;
+                <!-- 월 선택 -->
+                <div id="selectMonth" align="right">
+                    <div class="form-group select_month">
+                        <select class="form-control">
+                            <option value="01">1월</option>
+                            <option value="02">2월</option>
+                            <option value="03">3월</option>
+                            <option value="04">4월</option>
+                            <option value="05">5월</option>
+                            <option value="06">6월</option>
+                            <option value="07">7월</option>
+                            <option value="08">8월</option>
+                            <option value="09">9월</option>
+                            <option value="10">10월</option>
+                            <option value="11">11월</option>
+                            <option value="12">12월</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-            <!-- 월 선택 -->
-            <div id="selectMonth" align="right">
-                <div class="form-group select_month">
-                    <select class="form-control">
-                        <option value="01">1월</option>
-                        <option value="02">2월</option>
-                        <option value="03">3월</option>
-                        <option value="04">4월</option>
-                        <option value="05">5월</option>
-                        <option value="06">6월</option>
-                        <option value="07">7월</option>
-                        <option value="08">8월</option>
-                        <option value="09">9월</option>
-                        <option value="10">10월</option>
-                        <option value="11">11월</option>
-                        <option value="12">12월</option>
-                    </select>
-                </div>
+            <!-- 컨텐츠 탭 -->
+            <div id="tab">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:10%;">호스트명</th>
+                            <th style="width:15%;">호스트ID</th>
+                            <th style="width:50%;">공간명</th>
+                            <th style="width:15%;">총매출액</th>
+                            <th style="width:10%;">정산상태</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    	<c:forEach var="s" items="${list}">
+	                        <tr data-toggle="modal" data-target="#salesDetail">
+	                            <td>호스트명..</td>
+	                            <td>호스트아이디..</td>
+	                            <td>${s.spaceTitle}</td>
+	                            <td>총매출액..</td>
+	                            <td>정산상태..</td>
+	                        </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+
+            <!-- 페이지 버튼 -->
+            <div class="btnPage" align="center">
+                <ul class="pagination">
+                    <c:choose>
+                        <c:when test="${pi.currentPage eq 1}">
+                            <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item no-page-prev"><a class="page-link" href="sList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                        <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                        <c:when test="${pi.currentPage eq pi.maxPage}">
+                            <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item no-page-next"><a class="page-link" href="sList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
             </div>
         </div>
-        <!-- 컨텐츠 탭 -->
-        <div id="tab">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th style="width:10%;">호스트명</th>
-                        <th style="width:15%;">호스트ID</th>
-                        <th style="width:50%;">공간명</th>
-                        <th style="width:15%;">총매출액</th>
-                        <th style="width:10%;">정산상태</th>
-                    </tr>
-                </thead>
-                <tbody id="myTable">
-                    <tr data-toggle="modal" data-target="#salesDetail">
-                        <td>손흥민</td>
-                        <td>sonny</td>
-                        <td></td>
-                        <td>423,590</td>
-                        <td>대기</td>
-                    </tr>
-                    <tr>
-                        <td>이강인</td>
-                        <td>ganginlee</td>
-                        <td></td>
-                        <td>297,720</td>
-                        <td>승인</td>
-                    </tr>
-                    <tr>
-                        <td>조규성</td>
-                        <td>jgs0101</td>
-                        <td></td>
-                        <td>729,179</td>
-                        <td>승인</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <br>
-
-        <!-- 페이지 버튼 -->
-        <div class="btnPage" align="center">
-            <ul class="pagination">
-                <c:choose>
-                    <c:when test="${pi.currentPage eq 1}">
-                        <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="page-item no-page-prev"><a class="page-link" href="sList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-
-                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                    <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
-                </c:forEach>
-                
-                <c:choose>
-                    <c:when test="${pi.currentPage eq pi.maxPage}">
-                        <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                    </c:when>
-                    <c:otherwise>
-                        <li class="page-item no-page-next"><a class="page-link" href="sList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-        </div>
-
     </div>
 
     <!-- 매출 상세내역 모달창 -->

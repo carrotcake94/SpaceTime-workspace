@@ -13,6 +13,7 @@ import com.kh.spacetime.common.model.service.CommonService;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.common.template.Pagination;
+import com.kh.spacetime.reserve.model.vo.Reserve;
 
 @Controller
 public class CommonController {
@@ -23,7 +24,7 @@ public class CommonController {
 	@RequestMapping("rlist.ad")
 //	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, HttpServletRequest request) {
 	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
-		
+
 		// System.out.println("cpage : " + currentPage);
 		
 //		String condition = request.getParameter("condition");
@@ -32,8 +33,8 @@ public class CommonController {
 		
 		int listCount = commonService.selectReportListCount();
 		
-		int pageLimit = 10;
-		int boardLimit = 5;
+		int pageLimit = 5;
+		int boardLimit = 10;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
@@ -51,13 +52,31 @@ public class CommonController {
 	}
 	
 	@RequestMapping("rdetail.ad")
-	public ModelAndView selectReport(int rno, ModelAndView mv) {
+	public ModelAndView selectReport(int rpno, ModelAndView mv) {
 		
-		Report r = commonService.selectReport(rno);
+		Report r = commonService.selectReport(rpno);
 		
 		mv.addObject("r", r).setViewName("common/adminReportDetail");
 		
 		return mv;
+	}
+	
+	@RequestMapping("slist.ad")
+	public String selectSalesList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
+		
+		int listCount = commonService.selectSalesListCount();
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount,  currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Reserve> list = commonService.selectSalesList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "common/adminSales";
 	}
 
 }

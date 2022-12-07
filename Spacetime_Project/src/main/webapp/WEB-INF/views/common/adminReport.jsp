@@ -24,7 +24,7 @@
     /* 신고관리 제목 */
     #title {
         margin: auto;
-        margin-top: 70px;
+        margin-top: 80px;
         width: 100%;
     }
 
@@ -48,7 +48,7 @@
     /* 탭 메뉴 */
     #tab {
         margin: auto;
-        margin-top: 40px;;
+        margin-top: 40px;
         width: 100%;
         min-width: 600px;
     }
@@ -127,7 +127,6 @@
         margin: 0 5px;
     }
 
-
 </style>
 </head>
 <body>
@@ -192,7 +191,7 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">ID</th>
+                                <th style="width:15%;">신고대상ID</th>
                                 <th style="width:15%;">타입</th>
                                 <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
@@ -207,7 +206,19 @@
                                     <td>${r.reportType}</td>
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
-                                    <td>${r.reportStatus}</td>
+                                    <td>
+	                                    <c:choose>
+	                                    	<c:when test="${r.reportStatus eq 'Y'}">
+	                                    		승인
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'N'}">
+	                                    		미처리
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'D'}">
+	                                    		반려
+	                                    	</c:when>
+	                                    </c:choose>
+                                    </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
@@ -247,7 +258,7 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">ID</th>
+                                <th style="width:15%;">신고대상ID</th>
                                 <th style="width:15%;">타입</th>
                                 <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
@@ -262,7 +273,19 @@
                                     <td>${r.reportType}</td>
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
-                                    <td>${r.reportStatus}</td>
+                                    <td>
+	                                    <c:choose>
+	                                    	<c:when test="${r.reportStatus eq 'Y'}">
+	                                    		승인
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'N'}">
+	                                    		미처리
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'D'}">
+	                                    		반려
+	                                    	</c:when>
+	                                    </c:choose>
+                                    </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
@@ -302,7 +325,7 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">ID</th>
+                                <th style="width:15%;">신고대상ID</th>
                                 <th style="width:15%;">타입</th>
                                 <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
@@ -317,7 +340,19 @@
                                     <td>${r.reportType}</td>
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
-                                    <td>${r.reportStatus}</td>
+                                    <td>
+	                                    <c:choose>
+	                                    	<c:when test="${r.reportStatus eq 'Y'}">
+	                                    		승인
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'N'}">
+	                                    		미처리
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'D'}">
+	                                    		반려
+	                                    	</c:when>
+	                                    </c:choose>
+                                    </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
@@ -357,7 +392,7 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">ID</th>
+                                <th style="width:15%;">신고대상ID</th>
                                 <th style="width:15%;">타입</th>
                                 <th style="width:35%;">내용</th>
                                 <th style="width:15%;">신고일</th>
@@ -372,7 +407,19 @@
                                     <td>${r.reportType}</td>
                                     <td align="left">${r.reportContent}</td>
                                     <td>${r.reportDate}</td>
-                                    <td>${r.reportStatus}</td>
+                                    <td>
+	                                    <c:choose>
+	                                    	<c:when test="${r.reportStatus eq 'Y'}">
+	                                    		승인
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'N'}">
+	                                    		미처리
+	                                    	</c:when>
+	                                    	<c:when test="${r.reportStatus eq 'D'}">
+	                                    		반려
+	                                    	</c:when>
+	                                    </c:choose>
+                                    </td>
                                 </tr>	
                             </c:forEach>
                         </tbody>
@@ -386,12 +433,12 @@
                                     <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
                                 </c:otherwise>
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
+                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -399,7 +446,7 @@
                                     <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
                                 </c:when>
                                 <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
                                 </c:otherwise>
                             </c:choose>
                         </ul>
@@ -412,11 +459,11 @@
     
     <!-- 신고 상세페이지로 연결 -->
     <script>
-    	$(function() {
-    		$("#reportList>tbody>tr").click(function() {
-    			location.href = "rdetail.ad?rno=" + $(this).children().eq(0).text();
-    		});
-    	});
+        $(function() {
+            $("#reportList>tbody>tr").click(function() {
+                location.href = "rdetail.ad?rpno=" + $(this).children().eq(0).text();
+            });
+        });
     </script>
 
     <!-- 신고 상세내역 모달창 -->

@@ -26,12 +26,12 @@ public interface CommonService {
 	
 	// 관리자페이지 매출 리스트 조회 + 페이징 처리 
 	// 매출이 있는 공간 총 개수 
-	int selectSpaceListCount();
+	int selectSalesListCount();
 	
 	// 매출이 있는 공간 리스트 조회 
-	ArrayList<Reserve> selectSpaceList(PageInfo pi);
+	ArrayList<Reserve> selectSalesList(PageInfo pi);
 	
 	// 공간 매출 상세조회 
-	Reserve selectSpace(int spaceNo);
+	Reserve selectSales(int spaceNo);
 
 }
