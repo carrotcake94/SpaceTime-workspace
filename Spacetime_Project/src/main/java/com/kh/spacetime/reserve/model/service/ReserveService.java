@@ -3,6 +3,7 @@ package com.kh.spacetime.reserve.model.service;
 import java.util.ArrayList;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 
 /**
@@ -40,11 +41,13 @@ public interface ReserveService {
 	ArrayList<Reserve> selectMyReservetList(PageInfo pi, int memNo);
 	
 	// 마이페이지 예약 리스트 - 드롭박스 정렬 
-	int selectMyReserveListSortCount(String selectbox);
+	int selectMyReserveListSortCount(Member m);
 
-	int selectMyReserveListSortConfirmCount(String selectbox);
+	int selectMyReserveListSortConfirmCount(Member m);
 	
-	int selectMyReserveListSortUsedCount(String selectbox);
+	int selectMyReserveListSortUsedCount(Member m);
+	
+	ArrayList<Reserve> selectMyReserveSortList(PageInfo pi, Member m);
 	
 	
 }

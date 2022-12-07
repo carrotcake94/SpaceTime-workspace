@@ -81,7 +81,7 @@ public class ReserveController {
 		int listCount = reserveService.selectMyReserveListCount();
 		
 		int pageLimit = 10;
-		int boardLimit = 5;
+		int boardLimit = 9;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
@@ -89,6 +89,8 @@ public class ReserveController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list",list);
+		
+//		System.out.println(list);
 		
 		return "reserve/reserveList";
 		
@@ -101,30 +103,40 @@ public class ReserveController {
 
 		int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
 		
+		// selectbox 랑 memNo 같이 묶어서 보내기 위한 객체 
+		Member m = new Member();
+		m.setMemNo(memNo);
+		m.setMemId(selectbox);  // => 아이디 아닌데 그냥 형 맞아서 넣음 
+		
 		int listCount = 0; // 초기화 
 		
 		switch(selectbox) {
-		case "예약대기" : selectbox = "W"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
-		case "예약취소" : selectbox = "C"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
-		case "예약반려" : selectbox = "N"; listCount = reserveService.selectMyReserveListSortCount(selectbox); break;
-		case "예약확정" : selectbox = "Y";  listCount = reserveService.selectMyReserveListSortConfirmCount(selectbox); break; // 기본 카운트 
-		case "이용완료" : selectbox = "Y"; listCount = reserveService.selectMyReserveListSortUsedCount(selectbox); break; // 현재날짜 비교해서 이용완료 뽑는 카운트 
+		case "예약대기" : selectbox = "W"; listCount = reserveService.selectMyReserveListSortCount(m); break;
+		case "예약취소" : selectbox = "C"; listCount = reserveService.selectMyReserveListSortCount(m); break;
+		case "예약반려" : selectbox = "N"; listCount = reserveService.selectMyReserveListSortCount(m); break;
+		case "예약확정" : selectbox = "Y"; listCount = reserveService.selectMyReserveListSortConfirmCount(m); break; // 기본 카운트 
+		case "이용완료" : selectbox = "Y"; listCount = reserveService.selectMyReserveListSortUsedCount(m); break; // 현재날짜 비교해서 이용완료 뽑는 카운트 
 		}
 		
+		m.setMemId(selectbox);  // 밑에 메소드에서 재활용할거 
+		
 		System.out.println(selectbox);
-		System.out.println(listCount);
 		
 		int pageLimit = 10;
-		int boardLimit = 5;
+		int boardLimit = 9;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		ArrayList<Reserve> list = reserveService.selectMyReservetList(pi, memNo);
+		
+		ArrayList<Reserve> list = reserveService.selectMyReserveSortList(pi, m);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list",list);
 		
-		return "reserve/reserveList";
+		System.out.println(listCount); 
+//		System.out.println(list);
+		
+		return "reserve/reserveFilterList";
 	}
 
 }

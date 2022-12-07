@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.dao.ReserveDao;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 
@@ -73,21 +74,29 @@ public class ReserveServiceImpl implements ReserveService {
 		return reserveDao.selectMyReservetList(sqlSession, pi, memNo);
 	}
 
+	// 검색용 메소드 
+	
 	@Override
-	public int selectMyReserveListSortCount(String selectbox) {
+	public int selectMyReserveListSortCount(Member m) {
 		
-		return reserveDao.selectMyReserveListSortCount(sqlSession, selectbox);
+		return reserveDao.selectMyReserveListSortCount(sqlSession,  m);
 	}
 	
 	@Override
-	public int selectMyReserveListSortConfirmCount(String selectbox) {
+	public int selectMyReserveListSortConfirmCount(Member m) {
 		
-		return reserveDao.selectMyReserveListSortConfirmCount(sqlSession, selectbox);
+		return reserveDao.selectMyReserveListSortConfirmCount(sqlSession, m);
 	}
 	
-	public int selectMyReserveListSortUsedCount(String selectbox) {
+	public int selectMyReserveListSortUsedCount(Member m) {
 		
-		return reserveDao.selectMyReserveListSortUsedCount(sqlSession, selectbox);
+		return reserveDao.selectMyReserveListSortUsedCount(sqlSession, m);
+	}
+	
+	@Override
+	public ArrayList<Reserve> selectMyReserveSortList(PageInfo pi, Member m) {
+		
+		return reserveDao.selectMyReserveSortList(sqlSession, pi, m);
 	}
 
 }

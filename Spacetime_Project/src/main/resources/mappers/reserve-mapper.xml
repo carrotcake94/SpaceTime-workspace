@@ -39,29 +39,96 @@
 
 		</select>
 		
-		<select id="selectMyReserveListSortCount" resultType="_int">
+		<select id="selectMyReserveListSortCount" parameterType="member"  resultType="_int">
 			SELECT COUNT(*)
 			FROM RESERVE
-			WHERE RESERVE_STATUS = #{selectbox}
+			WHERE RESERVE_STATUS = #{memId}
+			    AND MEM_NO = #{memNo}
 		</select>
 		
-		<select id="selectMyReserveListSortConfirmCount" resultType="_int">
+		<select id="selectMyReserveListSortConfirmCount" parameterType="member" resultType="_int">
 			<![CDATA[
 			SELECT COUNT(*)
 			FROM RESERVE
+			JOIN MEMBER USING (MEM_NO)
 			WHERE RESERVE_STATUS = 'Y'
-			  AND USE_DATE > SYSDATE		
+			  AND USE_DATE > SYSDATE	
+			  AND MEM_NO = #{memNo}	
 			]]>
 		</select>
 		
-		<select id="selectMyReserveListSortUsedCount" resultType="_int">
+		<select id="selectMyReserveListSortUsedCount" parameterType="member" resultType="_int">
 			<![CDATA[
 			SELECT COUNT(*)
 			FROM RESERVE
+			JOIN MEMBER USING (MEM_NO)
 			WHERE RESERVE_STATUS = 'Y'
-			  AND USE_DATE < SYSDATE		
+			  AND USE_DATE < SYSDATE	
+			  AND MEM_NO = #{memNo}		
 			]]>
 		</select>
 
+		<select id="selectMyReserveSortList" resultMap="joinReserveResultSet">
+			SELECT RESERVE_NO
+			     , SPACE_TITLE
+			     , ADDRESS_DEFAULT
+			     , RESERVE_STATUS
+			     , TO_CHAR(RESERVE_DATE, 'YYYYMMDD') AS "RESERVE_DATE"
+			     , ATTACHMENT_NO
+			     , PRICE
+			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			FROM RESERVE R
+			JOIN SPACE USING (SPACE_NO)
+			JOIN MEMBER USING (MEM_NO)
+			JOIN SPACE_ATTACHMENT USING(SPACE_NO)
+			WHERE ATTACHMENT_LEVEL = 1
+			  AND MEM_NO = #{memNo}
+			  AND RESERVE_STATUS = #{memId}
+			ORDER BY RESERVE_NO DESC
+		</select>
+		
+		<select id="selectMyReserveSortConfirmList" resultMap="joinReserveResultSet">
+			<![CDATA[
+			SELECT RESERVE_NO
+			     , SPACE_TITLE
+			     , ADDRESS_DEFAULT
+			     , RESERVE_STATUS
+			     , TO_CHAR(RESERVE_DATE, 'YYYYMMDD') AS "RESERVE_DATE"
+			     , ATTACHMENT_NO
+			     , PRICE
+			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			FROM RESERVE R
+			JOIN SPACE USING (SPACE_NO)
+			JOIN MEMBER USING (MEM_NO)
+			JOIN SPACE_ATTACHMENT USING(SPACE_NO)
+			WHERE ATTACHMENT_LEVEL = 1
+			  AND MEM_NO = #{memNo}
+			  AND RESERVE_STATUS = #{memId}
+			  AND USE_DATE > SYSDATE	
+			ORDER BY RESERVE_NO DESC		
+			]]>
+		</select>
+		
+		<select id="selectMyReserveSortUsedList" resultMap="joinReserveResultSet">
+			<![CDATA[
+			SELECT RESERVE_NO
+			     , SPACE_TITLE
+			     , ADDRESS_DEFAULT
+			     , RESERVE_STATUS
+			     , TO_CHAR(RESERVE_DATE, 'YYYYMMDD') AS "RESERVE_DATE"
+			     , ATTACHMENT_NO
+			     , PRICE
+			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			FROM RESERVE R
+			JOIN SPACE USING (SPACE_NO)
+			JOIN MEMBER USING (MEM_NO)
+			JOIN SPACE_ATTACHMENT USING(SPACE_NO)
+			WHERE ATTACHMENT_LEVEL = 1
+			  AND MEM_NO = #{memNo}
+			  AND RESERVE_STATUS = #{memId}
+			  AND USE_DATE < SYSDATE	
+			ORDER BY RESERVE_NO DESC
+			]]>
+		</select>
 
 </mapper>
