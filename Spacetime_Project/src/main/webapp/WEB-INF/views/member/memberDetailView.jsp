@@ -165,7 +165,14 @@
                 
             <!-- 프로필 사진, 닉네임 -->
             <div class="mem_info" align="center">
-                <img src="../../../resources/images/profile_default.png" class="mem_img photo">
+                <c:choose>
+                    <c:when test="${!empty loginMember.profilePath }">
+                        <img src="${loginMember.profilePath}" class="mem_img photo">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="resources/images/profile_default.png" class="mem_img photo">
+                    </c:otherwise>
+                </c:choose>
                 <span class="memEdit"><a class="mamEdit" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pencil"></i></a></span>
                 <br>
                 <div style="height:30px;">
@@ -262,28 +269,94 @@
                 </div>
                 
                 <!-- Modal body -->
-                <form action="" method="post">
+                <form action="update.me" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <table>
                             <tr>
                                 <th style="width:25%;">프로필 사진</th>
-                                <td><img src="../../../resources/images/profile_default.png" class="mem_img photo"></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${!empty loginMember.profilePath }">
+                                            <img src="${loginMember.profilePath}" class="mem_img photo">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="resources/images/profile_default.png" class="mem_img photo">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                             </tr>
                             <tr>
                                 <th></th>
-                                <td style="height:70px;"><input type="file"></td>
+                                <td style="height:70px;"><input type="file" name="upfile" class="form-control-file border"></td>
                             </tr>
                             <tr>
                                 <th>닉네임</th>
-                                <td><input type="text" class="form-control mb-2" value="김철수닉네임"></td>
+                                <td>
+                                    <input type="text" id="nickname" name="nickname" class="form-control mb-2" value="${loginMember.nickname}" required>
+                                    <span class="error_next_box" id="nickMsg">.</span>
+                                </td>
                                 <!-- 닉네임 중복확인은 ajax 로!!!! -->
                             </tr>
                         </table>
                     </div>
-                    
+                    <script>
+                        $(function() {
+                            $("#nickname").on({blur:function() {
+                                // 닉네임 정규식
+                                // 영문자, 숫자, 한글 2~10글자
+                                let regExp = /^[a-z\d\가-힣]{2,10}$/;
+                                if(!regExp.test($("#nickname").val())) {
+                                    $("#nickMsg").text("닉네임은 영문자, 숫자, 한글을 포함하여 총 2~10글자를 입력할 수 있습니다.");
+                                    $("#nickMsg").css("display", "block");
+                                    $("#nickname").select(); // 재입력 유도
+                                    return false;
+                                } else {
+                                    $("#nickMsg").css("display", "none");
+                                    return true;
+                                }
+                            }, keyup:function() {
+                                // 닉네임 중복체크
+                                // 최소 2글자 이상으로 닉네임값이 입력되어 있을 때만 ajax 요청
+                                if($("#nickname").val().length >= 2) {
+
+                                    $.ajax({
+                                        url : "nickCheck.me",
+                                        data : {checkNick : $("#nickname").val()},
+                                        success : function(result) {
+                                            
+                                            // console.log(result);
+                                            
+                                            if(result == "NNNNN") { // 사용 불가능
+                                                
+                                                // 빨간색 메세지 출력
+                                                $("#nickCheckMsg").show();
+                                                $("#nickCheckMsg").css("color", "red").text("이미 사용중인 닉네임입니다.");
+                                                
+                                                // 버튼 비활성화
+                                                $("#nickChange").attr("disabled", true);
+                                                
+                                            } else { // 사용 가능
+                                                // 버튼 활성화
+                                                $("#nickCheckMsg").hide();
+                                                $("#nickChange").attr("disabled", false);
+                                            }
+                                        },
+                                        error : function() {
+                                            console.log("아이디 중복 체크용 ajax 통신 실패!");
+                                        }
+                                    });
+                                    } else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
+
+                                    $("#nickCheckMsg").hide();
+                                    $("#nickChange").attr("disabled", true);
+                                    }
+                                }
+                            })
+                        })
+                    </script>
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <button type="submit" id="nickChange" class="btn btn-primary">변경</button>
                         <!-- 수정이 잘 되면 alert 창 띄우기! -->
                     </div>
                 </form>
@@ -309,7 +382,7 @@
                             <tr>
                                 <th style="width:20%;">연락처</th>
                                 <td>
-                                    <input type="text" id="phone" name="phone" class="form-control phone">
+                                    <input type="text" id="phone" name="phone" value="${loginMember.phone}" class="form-control phone" required>
                                     <span class="error_next_box" id="phoneMsg">-을 제외한 유효한 전화번호(010으로 시작)를 입력해주세요.</span>
                                 </td>
                             </tr>
@@ -334,7 +407,7 @@
                     </script>
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" id="phoneChange" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <button type="submit" id="phoneChange" class="btn btn-primary">변경</button>
                         <!-- 수정이 잘 되면 alert 창 띄우기! -->
                     </div>
                 </form>
@@ -360,17 +433,17 @@
                             <tr>
                                 <th style="width:40%;">현재 비밀번호</th>
                                 <td>
-                                	<input type="password" id="checkPwd" name="checkPwd" class="form-control mb-2">
+                                	<input type="password" id="checkPwd" name="checkPwd" class="form-control mb-2" required>
                                 	<span class="error_next_box" id="pwdMsg">비밀번호가 일치하지 않습니다. 다시 확인해주세요.</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>새 비밀번호</th>
-                                <td><input id="memPwd" name="memPwd" type="password" class="form-control mb-2"></td>
+                                <td><input id="memPwd" name="memPwd" type="password" class="form-control mb-2" required></td>
                             </tr>
                             <tr>
                                 <th>새 비밀번호 확인</th>
-                                <td><input id="pwOk" type="password" class="form-control mb-2">
+                                <td><input id="pwOk" type="password" class="form-control mb-2" required>
                                 	<span class="error_next_box" id="pswd2Msg">비밀번호가 일치하지 않습니다.</span>
                                 </td>
                             </tr>
@@ -436,7 +509,7 @@
                     
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button id="pwdChange" type="submit" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <button id="pwdChange" type="submit" class="btn btn-primary">변경</button>
                         <!-- 수정이 잘 되면 alert 창 띄우기! -->
                     </div>
                 </form>
@@ -467,11 +540,55 @@
                                 <table>
                                     <tr>
                                         <th style="width:40%;">현재 비밀번호</th>
-                                        <td><input type="password" name="memPwd" class="form-control" style="height:100%;"></td>
+                                        <td>
+                                        	<input type="password" name="memPwd" class="form-control" style="height:100%;">
+                                        	<span class="error_next_box" id="pwdMsg">비밀번호가 일치하지 않습니다. 다시 확인해주세요.</span>
+                                        </td>
                                         <input type="hidden" name="memNo" value="${ loginMember.memNo} ">
                                     </tr>
                                 </table>
                             </div>
+                            <script>
+                            $(function() { 
+                        		$("#checkPwd").keyup(function() {
+                                    // 현재 비밀번호 확인
+                                    // 최소 8글자 이상으로 비밀번호값이 입력되어 있을 때만 ajax 요청
+                                    if($("#checkPwd").val().length >= 8) {
+
+                                        $.ajax({
+                                            url : "pwdCheck.me",
+                                            data : {checkPwd : $("#checkPwd").val()},
+                                            success : function(result) {
+                                                
+                                                // console.log(result);
+                                                
+                                                if(result == "NNNNN") { // 사용 불가능
+                                                    
+                                                    // 빨간색 메세지 출력
+                                                    $("#pwdMsg").show();
+                                                    
+                                                    // 버튼 비활성화
+                                                    $("#leaveMem").attr("disabled", true);
+                                                    
+                                                } else { // 사용 가능
+                                                    // 버튼 활성화
+                                                    $("#pwdMsg").hide();
+                                                    $("#leaveMem").attr("disabled", false);
+                                                }
+                                                
+                                            },
+                                            error : function() {
+                                                console.log("비밀번호 확인용 ajax 통신 실패!");
+                                            }
+                                        });
+                                    } else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
+
+	                                    $("#pwdMsg").hide();
+	                                    $("#pwdChange").attr("disabled", false);
+                                    }
+    							});
+                            })
+                            </script>
                             <div class="info_duration error">
                                 <input id="agree_member_out" type="checkbox" class="checkbox" required> 
                                 <label for="agree_member_out">위의 내용을 숙지했으며 서비스 탈퇴에 동의합니다.</label>
@@ -481,7 +598,7 @@
                             </p> 
                             <div class="btns" style="margin: 50px auto 0;">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal" style="width: 150px; background-color: #FFB200; border-color:#FFB200;">취소</button>
-                                <button type="submit" class="btn btn-danger" style="width: 150px; color:black; background-color: lightgray; border-color: lightgray;">탈퇴</button>
+                                <button type="submit" id="leaveMem" class="btn btn-danger" style="width: 150px; color:black; background-color: lightgray; border-color: lightgray;">탈퇴</button>
                             </div>
                         </div>
                         
@@ -503,7 +620,7 @@
                 </div>
                 
                 <!-- Modal body -->
-                <form action="" method="post">
+                <form action="update.me" method="post">
                     <div class="modal-body">
                         <table>
                             <tr>
@@ -533,18 +650,38 @@
                             </tr>
                             <tr>
                                 <th>계좌번호</th>
-                                <td><input type="text" class="form-control mb-2" placeholder="- 없이 숫자만 입력"></td>
+                                <td>
+                                    <input type="text" id="accountNum" name="accountNum" class="form-control mb-2" placeholder="- 없이 숫자만 입력" required>
+                                    <span class="error_next_box" id="accountMsg">-을 제외하여 유효한 계좌번호를 입력해주세요.</span>
+                                </td>
                             </tr>
                             <tr>
                                 <th>예금주명</th>
-                                <td><input type="text" class="form-control mb-2"></td>
+                                <td><input type="text" class="form-control mb-2" value="${ loginMember.memName }" readonly></td>
                             </tr>
                         </table>
                     </div>
-                    
+                    <script>
+                        $(function() {
+                            $("#accountNum").keyup(function() {
+                                // 계좌번호 정규식
+                                let regExp = /^[0-9]{11,15}$/;
+                                if(!regExp.test($("#accountNum").val())) {
+                                    $("#accountMsg").css("display", "block");
+                                    $("#bankChange").attr("disabled", true);
+                                    return false;
+                                } else {
+                                    $("#accountMsg").css("display", "none");
+                                    $("#bankChange").attr("disabled", false);
+                                    return true;
+                                }
+							});
+
+                        })
+                    </script>
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">변경</button>
+                        <button type="submit" id="bankChange" class="btn btn-primary">변경</button>
                         <!-- 수정이 잘 되면 alert 창 띄우기! -->
                     </div>
                 </form>

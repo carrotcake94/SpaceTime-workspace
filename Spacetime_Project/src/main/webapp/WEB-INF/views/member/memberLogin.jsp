@@ -79,7 +79,7 @@
 	
 	<div id="header_area"><jsp:include page="../common/header.jsp" /></div>
 	<div id="content">
-		<div id="content_1">왼쪽여백</div>
+		<div id="content_1"></div>
 		
         <div id="content_2">
         <br><br><br>
@@ -197,7 +197,7 @@
             </div>
         </div>
             
-		<div id="content_3">오른쪽여백</div>
+		<div id="content_3"></div>
 	</div>
 	<br clear="both">
 	<jsp:include page="../common/footer.jsp" />

@@ -1,5 +1,7 @@
 package com.kh.spacetime.member.model.service;
 
+import java.util.HashMap;
+
 import com.kh.spacetime.member.model.vo.Member;
 
 public interface MemberService {
@@ -11,7 +13,7 @@ public interface MemberService {
 	int insertMember(Member m);
 	
 	// 회원정보 수정 서비스 (update)
-	int updateMember(Member m);
+	int updateMember(HashMap<String, String> map);
 	
 	// 회원탈퇴 서비스 (update)
 	int deleteMember(int memNo);

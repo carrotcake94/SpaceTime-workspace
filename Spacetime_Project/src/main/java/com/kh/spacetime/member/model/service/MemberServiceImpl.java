@@ -1,5 +1,7 @@
 package com.kh.spacetime.member.model.service;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +37,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int updateMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateMember(HashMap<String, String> map) {
+		
+		return memberDao.updateMember(sqlSession, map);
 	}
 
 	@Override

@@ -216,6 +216,15 @@
             width: 80%;
             margin: 20px auto;
         }
+        
+        /* 프로필 이미지 크기 */
+        #profile-img {
+	        border: 2px solid rgba(128, 128, 128, 0.2);
+	        margin-bottom: 20px;
+	        border-radius: 100%;
+	        width: 80px;
+	        height: 80px;
+    	}
 
         #profile_tb td {
             padding: 0;
@@ -453,7 +462,7 @@
                     <!-- 로그인 전 -->
                     <tr>
                         <td rowspan="2">
-                            <img src="resources/images/logo.png" style="width:80px; height:80px;">
+                            <img id="profile-img" src="resources/images/logo.png">
                         </td>
                         <td>
                             <a href="enrollLogin.me">로그인 및 회원가입</a>
@@ -469,14 +478,14 @@
                     <!-- 로그인 후 -->
                     <tr>
                         <td rowspan="2">
-                            <img src="resources/images/profile.png">
+                            <img id="profile-img" src="${loginMember.profilePath}">
                         </td>
                         <td>
                             ${ loginMember.memName } 님
                         </td>
                     </tr>
                     <tr>
-                        <td><a href="detail.me">프로필 관리 및 수정</a></td>
+                        <td><a href="myPage.me">프로필 관리 및 수정</a></td>
                     </tr>
                 </table>
                 </c:otherwise>

@@ -1,5 +1,7 @@
 package com.kh.spacetime.member.model.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -61,6 +63,17 @@ public class MemberDao {
 	public int deleteMember(SqlSessionTemplate sqlSession, int memNo) {
 		
 		return sqlSession.update("memberMapper.deleteMember", memNo);
+	}
+	
+	/**
+	 * 회원정보 수정 Dao - 경미
+	 * @param sqlSession
+	 * @param map
+	 * @return
+	 */
+	public int updateMember(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		
+		return sqlSession.update("memberMapper.updateMember", map);
 	}
 	
 }

@@ -1,5 +1,11 @@
 package com.kh.spacetime.member.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.member.model.service.MemberService;
@@ -106,10 +113,9 @@ public class MemberController {
 	@RequestMapping("insert.me")
 	public String insertMember(Member m, Model model, HttpSession session) {
 		
-		System.out.println(m.getBirthday());
 		// 암호화 작업 (암호문을 만들어내는 과정)
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemPwd());
-		System.out.println("암호문 : " + encPwd);
+		// System.out.println("암호문 : " + encPwd);
 		// => 같은 평문이여도 매번 다른 암호문 결과가 나옴
 		// => 평문 + salt(랜덤값) => 암호화 작업이 이루어지기 때문
 		
@@ -163,7 +169,7 @@ public class MemberController {
 	 * 프로필 마이페이지로 포워딩하는 메소드 - 경미
 	 * @return
 	 */
-	@RequestMapping("detail.me")
+	@RequestMapping("myPage.me")
 	public String detailMember() {
 		return "member/memberDetailView";
 	}
@@ -231,6 +237,116 @@ public class MemberController {
 			return "redirect:/";
 		}
 		
+	}
+	
+	/**
+	 * 회원정보 변경 메소드 - 경미
+	 * @param m
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("update.me")
+	public String updateMember(Member m, MultipartFile upfile, Model model, HttpSession session) {
+		
+		String memId = ((Member)session.getAttribute("loginMember")).getMemId();
+		m.setMemId(memId);
+		
+		String profilePath = ((Member)session.getAttribute("loginMember")).getProfilePath();
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("memId", memId);
+		
+		if(m.getNickname() != null ){
+			// 닉네임이 현재 닉네임이 아닐 때 : && !m.getNickname().equals(originNick)
+			map.put("nickname", m.getNickname());
+			if(!upfile.getOriginalFilename().equals("") && profilePath != null) {
+				// 프로필 사진이 있을 때
+				map.put("profilePath", "resources/uploadFiles/member/" + saveFile(upfile, session));
+				
+				String realPath = session.getServletContext().getRealPath(profilePath);
+				new File(realPath).delete();
+			}
+			else if(!upfile.getOriginalFilename().equals("")) {
+				map.put("profilePath", "resources/uploadFiles/member/" + saveFile(upfile, session));
+			}
+ 		}
+		
+		if(m.getPhone() != null) {
+			map.put("phone", m.getPhone());
+		}
+		else if(m.getMemPwd() != null) {
+			// 암호화
+			String encPwd = bcryptPasswordEncoder.encode(m.getMemPwd());
+			
+			map.put("memPwd", encPwd);
+		}
+		else if(m.getBankName() != null) {
+			map.put("bankName", m.getBankName());
+			map.put("accountNum", m.getAccountNum());
+		}
+		
+		int result = memberService.updateMember(map);
+		
+		if(result > 0) { // 성공
+			
+			// 수정 성공일 경우 DB 로부터 수정된 회원의 정보를 다시 조회해서
+			// session 에 loginUser 키값으로 덮어씌워야 함!!
+			// => 이 때, 기존의 loginMember 메소드를 재활용해서 조회해온다.
+			Member updateMem = memberService.loginMember(m);
+			session.setAttribute("loginMember", updateMem);
+			
+			// session 에 일회성 알람 문구도 담기
+			session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
+			
+			// 마이페이지 url 재요청
+			return "redirect:/myPage.me";
+		}
+		else { // 실패 => 에러문구를 담아서 에러페이지로 포워딩
+			
+			model.addAttribute("errorMsg", "회원정보 변경 실패");
+			
+			// /WEB-INF/views/common/errorPage.jsp
+			return "common/errorPage";
+		}
+	}
+	
+	/**
+	 * 프로필 업로드용 메소드 - 경미
+	 * @param upfile
+	 * @param session
+	 * @return
+	 */
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+		
+		// 파일명 수정 작업 후 서버에 업로드 시키기
+		// 예) "flower.png" => "2022112210405012345.png"
+		// 1. 원본파일명 뽑아오기
+		String originName = upfile.getOriginalFilename(); // "flower.png"
+		
+		// 2. 시간 형식을 문자열로 뽑아내기
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // "20221122104050"
+		
+		// 3. 뒤에 붙을 5자리 랜덤값 뽑기
+		int ranNum = (int)(Math.random() * 90000) + 10000; // 5자리 랜덤값
+		
+		// 4. 원본파일로부터 확장자만 뽑기
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
+		
+		// 5. 모두 이어 붙이기
+		String changeName = currentTime + ranNum + ext;
+		
+		// 6. 업로드 하고자 하는 서버의 물리적인 실제 경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/member/");
+		
+		// 7. 경로와 수정파일명을 합체 후 파일을 업로드해주기
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
 	}
 	
 }
