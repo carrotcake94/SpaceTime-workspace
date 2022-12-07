@@ -213,6 +213,7 @@
 						//console.log(markers);
 						//console.log(rect);
 						selectList(rect);
+						
 						//console.log("최초 메소드 종료 후");
 						//console.log(spaceListArr);
 						//console.log(markers);
@@ -223,18 +224,36 @@
 					var picList = document.querySelector("#picList");
 					var filter = document.querySelector("#mapFilter");
 	                
+					//"검색" 클릭 시, 기존의 정보들을 초기화한 후 다시 selectList()메소드 실행
 	                document.querySelector("#test").onclick = () => {
-	                	removeMarker();
-	                	
+	                	spaceListArr = [];
 	                	getMapRect();
+	                	
+	                	for(var i in markers){
+	                    	if(markers[i]._lat > rect.bounds._min._lat ||
+	                    		markers[i]._lat < rect.bounds._max._lat ||
+	                    			markers[i]._lng > rect.bounds._min._lng ||
+	                    				markers[i]._lng < rect.bounds._max._lng){
+	                    		markers[i] = null;
+	                    	}
+	                    }
+	                	markers = markers.filter( element => {
+	                		return element !== null;
+	                	});
+	                	
+	                	//근데 왜 기존의 마커는 안 없어지는거야;
+	                	//https://navermaps.github.io/maps.js/docs/tutorial-marker-viewport.example.html
+	                	//여기서hideMarker메소드 더 찾아봐 ;;
 	                	
 	                	selectList(rect);
 	                	
-	                	console.log(markers);
-	                	console.log(spaceListArr);
-	                	console.log(rect);
 	                }
 	                
+	                function resetInfo(rect, markers) {
+	                	rect = [];
+	                	markers
+	                	spaceListArr = [];
+	                }
 	                //document.querySelector("#mapResearch").onclick = () => {
 	                //	console.log(rect);
 	                //	selectList(rect);

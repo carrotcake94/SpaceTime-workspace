@@ -28,14 +28,15 @@ function loadMap() {
 }
 
 //기존의 마커, 리스트, 범위를 초기화하는 메소드
-function removeMarker() {
+function resetInfo(rect, markers) {
 	//console.log("초기화 전");
 	//console.log(markers);
 	//console.log(spaceListArr);
 	//console.log(rect);
 	
 	rect = [];
-	markers = [];
+	hideMarker(rect, markers);
+	console.log(markers);
 	spaceListArr = [];
 }
 
@@ -50,25 +51,6 @@ function getMapRect() {
 	});
 }
 
-//변경된 범위를 바탕으로 마커를 업데이트하는 메소드
-function updateMarkers(map, markers) {
-
-    var mapBounds = map.getBounds();
-    var marker, position;
-
-    for (var i = 0; i < markers.length; i++) {
-
-        marker = markers[i]
-        position = marker.getPosition();
-
-        if (mapBounds.hasLatLng(position)) {
-            showMarker(map, marker);
-        } else {
-            hideMarker(map, marker);
-        }
-    }
-}
-
 //지도의 정보를 불러와 마커를 추가하는 메소드
 function selectList(rect) {
 	$.ajax({
@@ -81,8 +63,7 @@ function selectList(rect) {
 			min_lng : rect.bounds._min._lng
 		},
     	success : function(listArr) {
-    		for(var i = 0; i < listArr.length; i++) {
-    			//console.log(spaceListArr);
+    		for(var i in listArr) {
     			spaceListArr[i] = listArr[i]; //게시판형-사진형 리스트 변환을 위해 spaceListArr에 담아둠
     			
     			//markers배열에 순서대로 객체의 위도,경도를 부여하며 담음
@@ -102,13 +83,26 @@ function selectList(rect) {
 	});
 }
 
-
+function hideMarker(rect, markers) {
+	for(var i in markers){
+    	if(markers[i]._lat > rect.bounds._min._lat &&
+    		markers[i]._lat < rect.bounds._max._lat &&
+    			markers[i]._lng > rect.bounds._min._lng &&
+    				markers[i]._lng < rect.bounds._max._lng){
+    		markers[i] = null;
+    	}
+    }
+	markers = markers.filter( element => {
+		return element !== null;
+	});
+	console.log(markers);
+}
 
 //사진형 리스트로 전환하기 위한 메소드
 //리스트에 해당하는 DOM요소에 필요한 값을 추가하여 "#picList"안에 뿌려주는 구문
 function toPicList() {
 	var picContent = "";
-	console.log(spaceListArr);
+	//console.log(spaceListArr);
 	for(var i = 0; i < spaceListArr.length; i++){
 		picContent += "<div class='picList_content'"> +
 						"<div class='picList_content_pic'>" + + "</div>" +
