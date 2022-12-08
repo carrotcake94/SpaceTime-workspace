@@ -20,7 +20,7 @@ public interface CommonService {
 	Report selectReport(int reportNo);
 	
 	// 신고 처리 (승인, 반려)
-	int updateReport(Report r);
+	int updateReport(HashMap<String, String> map);
 	
 	// 관리자페이지 매출 리스트 조회 + 페이징 처리 
 	// 매출이 있는 공간 총 개수 

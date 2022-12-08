@@ -663,7 +663,7 @@
                                 <th>계좌번호</th>
                                 <td>
                                     <input type="text" id="accountNum" name="accountNum" class="form-control mb-2" placeholder="- 없이 숫자만 입력" required>
-                                    <span class="error_next_box" id="accountMsg">-을 제외하여 유효한 계좌번호를 입력해주세요.</span>
+                                    <span class="error_next_box" id="accountMsg">- 을 제외하여 유효한 계좌번호를 입력해주세요.</span>
                                 </td>
                             </tr>
                             <tr>

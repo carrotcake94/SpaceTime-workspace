@@ -1,6 +1,7 @@
 package com.kh.spacetime.common.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -40,6 +41,10 @@ public class CommonDao {
 	
 	
 	// 신고 처리 (승인, 반려)
+	public int updateReport(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+	
+		return sqlSession.update("commonMapper.updateReport", map);
+	}
 	
 	// ---------------------------------------------------------------------------------------- 매출관리페이지 
 	

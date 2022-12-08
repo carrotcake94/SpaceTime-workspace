@@ -166,16 +166,16 @@
             <!-- 탭 메뉴 -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active active" data-toggle="tab" href="#all">전체 신고</a>
+                    <a class="nav-link active reportStatus" data-toggle="tab" href="#all" data-value="all">전체 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#wait">미처리 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#wait" data-value="wait">미처리 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#accept">승인된 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#accept" data-value="accept">승인된 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#deny">반려된 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#deny" data-value="deny">반려된 신고</a>
                 </li>
             </ul>
             
@@ -183,7 +183,7 @@
             <div class="tab-content">
                 
                 <!--============================ 전체 조회 ============================-->
-                <div class="tab-pane container active" id="all" align="right">
+                <div class="tab-pane container active" id="all" align="right" value="all">
                     <table class="table reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
@@ -435,7 +435,7 @@
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
+                                <li class="page-item page-btn"><a class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -536,12 +536,37 @@
         $(function() {
             
             // 탭메뉴 클릭시 탭마다 클릭 이벤트 걸기 
-            // 각 탭이 클릭됬을 경우 => ajax 해당 쿼리문까지 다녀오기 (요청시 전달값이 다르게)
+            // 각 탭이 클릭됐을 경우 => ajax 해당 쿼리문까지 다녀오기 (요청시 전달값이 다르게)
             // 응답데이터 리턴 => success function 내부에 동적으로 요소를 각 탭에 맞는 테이블에 찍어내기 (tbody에!!)
             
         });
     
     </script>
+    
+    <script>
+        $(function() {
+            $("li.nav-item").click(function() {
+            	
+	            var tab = $(this).children().text();
+	            
+	            console.log(tab);
+	            alert(tab);
+	            
+	            $.ajax({
+	            	url : "rlist.ad",
+	            	data : {},
+	            	success : function(result) {
+	            		
+	            		console.log("쿼리문까지 갔다 왔나..?");
+	            	}, error : function(result) {
+	            		console.log("ajax 통신 실패!");
+	            	}
+	            	
+	            });
+            });
+        });
+    </script>
+
     
 </body>
 </html>

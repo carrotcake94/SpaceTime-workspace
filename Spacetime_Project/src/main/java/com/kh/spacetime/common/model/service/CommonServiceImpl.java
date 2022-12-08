@@ -1,6 +1,7 @@
 package com.kh.spacetime.common.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,9 @@ public class CommonServiceImpl implements CommonService {
 
 	// 신고 처리 (승인, 반려)
 	@Override
-	public int updateReport(Report r) {
+	public int updateReport(HashMap<String, String> map) {
 		
-		return 0;
+		return commonDao.updateReport(sqlSession, map);
 	}
 
 	// 관리자페이지 매출 리스트 조회 + 페이징 처리 

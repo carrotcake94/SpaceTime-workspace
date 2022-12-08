@@ -1,6 +1,9 @@
 package com.kh.spacetime.common.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,6 +65,43 @@ public class CommonController {
 		mv.addObject("r", r).setViewName("common/adminReportDetail");
 		
 		return mv;
+	}
+	
+	/**
+	 * 관리자 신고처리 메소드 - 혜민
+	 * @param r
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("updateReport.ad")
+	public String updateReport(Report r, Model model, HttpSession session) {
+		
+		// System.out.println(r.getReportNo());
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		String reportNo = Integer.toString(r.getReportNo());
+		
+		map.put("reportNo", reportNo);
+		
+		if(r.getReportStatus() != null) {
+			map.put("reportStatus", r.getReportStatus());
+			map.put("reportAnswer", r.getReportAnswer());
+		}
+		
+		int result = commonService.updateReport(map);
+		
+		if(result > 0) { // 신고처리 성공 
+			
+			session.setAttribute("alertMsg", "신고처리가 완료되었습니다.");
+			return "redirect:/rdetail.ad?rpno=" + r.getReportNo();
+			
+		} else { // 신고처리 실패 
+			
+			model.addAttribute("errorMsg", "신고처리 실패");
+			return "common/errorPage";
+		}
 	}
 	
 	/**

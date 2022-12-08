@@ -29,20 +29,20 @@
 	<select id="selectReportListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM REPORT
-<!-- 		<if test="condition == 'all'">
-			WHERE REPORT_STATUS = 'Y'
-			AND REPORT_STATUS = 'N'
-			AND REPORT_STATUS = 'D'
-		</if>
-		<if test="condition == 'wait'">
-			WHERE REPORT_STATUS = 'N'
-		</if>
-		<if test="condition == 'accept'">
-			WHERE REPORT_STATUS = 'Y'
-		</if>
-		<if test="condition == 'deny'">
-			WHERE REPORT_STATUS = 'D'
-		</if> -->
+		<choose>
+			<when test="tab == '전체 신고'">
+				WHERE REPORT_STATUS IN ('Y', 'N', 'D')
+			</when>
+			<when test="tab == '미처리 신고'">
+				WHERE REPORT_STATUS = 'N'
+			</when>
+			<when test="tab == '승인된 신고'">
+				WHERE REPORT_STATUS = 'Y'
+			</when>
+			<when test="tab == '반려된 신고'">
+				WHERE REPORT_STATUS = 'D'
+			</when>
+		</choose>
 	</select>
 	
 	<!-- 신고 리스트 조회 -->
@@ -50,20 +50,20 @@
 		SELECT REPORT_NO, MEM_ID AS "REPORTED_MEM_NO", REPORT_TYPE, REPORT_CONTENT, TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE", REPORT_STATUS
 		FROM REPORT 
 		JOIN MEMBER ON (REPORTED_MEM_NO = MEM_NO)
-<!-- 		<if test="condition == 'all'">
-			WHERE REPORT_STATUS = 'Y'
-			AND REPORT_STATUS = 'N'
-			AND REPORT_STATUS = 'D'
-		</if>
-		<if test="condition == 'wait'">
-			WHERE REPORT_STATUS = 'N'
-		</if>
-		<if test="condition == 'accept'">
-			WHERE REPORT_STATUS = 'Y'
-		</if>
-		<if test="condition == 'deny'">
-			WHERE REPORT_STATUS = 'D'
-		</if> -->
+		<choose>
+			<when test="tab == '전체 신고'">
+				WHERE REPORT_STATUS IN ('Y', 'N', 'D')
+			</when>
+			<when test="tab == '미처리 신고'">
+				WHERE REPORT_STATUS = 'N'
+			</when>
+			<when test="tab == '승인된 신고'">
+				WHERE REPORT_STATUS = 'Y'
+			</when>
+			<when test="tab == '반려된 신고'">
+				WHERE REPORT_STATUS = 'D'
+			</when>
+		</choose>
 		ORDER BY REPORT_NO DESC
 	</select> 
 	
@@ -77,6 +77,13 @@
 	</select>
 	
 	<!-- 신고 처리 (승인, 반려) -->
+	<update id="updateReport" parameterType="hashmap">
+		UPDATE REPORT
+		   SET REPORT_STATUS = #{reportStatus}
+		     , REPORT_ANSWER = #{reportAnswer}
+		     , MODIFY_DATE = SYSDATE
+		WHERE REPORT_NO = #{reportNo}
+	</update>
 	
 
 	<!-- 관리자페이지 매출 리스트 조회 + 페이징 처리 -->	
@@ -92,7 +99,7 @@
 		FROM RESERVE R
 		JOIN SPACE USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
-		WHERE MEM_STATUS = 'Y'
+		WHERE MEM_STATUS = 'N'
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE
 		ORDER BY SPACE_NO DESC
 	</select>

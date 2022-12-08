@@ -219,8 +219,8 @@
                     <tbody id="myTable">
                     	<c:forEach var="s" items="${list}">
 	                        <tr data-toggle="modal" data-target="#salesDetail">
-	                            <td>${s.stypeNo}</td>
-	                            <td>${s.hostNo}</td>
+	                            <td>${s.memName}</td>
+	                            <td>${s.memNo}</td>
 	                            <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${s.spaceTitle}</td>
 	                            <td>${s.price}</td>
 	                            <td>정산상태..</td>

@@ -93,6 +93,7 @@
 
                 <!-- 신고 정보 -->
                 <div class="report_info" align="center">
+                    <input type="hidden" name="rpno" value="${r.reportNo}">
                     <table id="report_detail"> 
                         <tr>
                             <th style="width: 150px;">신고일</th>
@@ -119,7 +120,7 @@
                     <table class="report_answer" align="center">
                         <tr>
                             <th style="width: 150px;" rowspan="2">관리자 답변</th>
-                            <td style="width: 500px;">
+                            <td style="width: 400px;">
                                 <div id="reportStatus" align="left">
                                     <c:choose>
                                         <c:when test="${r.reportStatus eq 'Y'}">
@@ -135,19 +136,61 @@
                                 </div>
                                 <div id="reportAnswer" align="left">${r.reportAnswer}</div>
                             </td>
+                            <td align="right" style="width: 100px;">
+                                <a class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#answer">처리하기</a>
+                            </td>
                         </tr>
                     </table>
                 </div>
             </div>
-            <br>
-            <div class="btns" align="center">
-                <a class="btn btn-sm btn-primary" onclick="postFormSubmit();">처리하기</a>
-            </div>
+        </div>
+    </div>
+    
+    
+    <!-- 신고 상세내역 모달창 -->
+    <div class="modal fade" id="answer">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
             
-            <form id="postForm" action="" method="post">
-                <input type="hidden" name="rno" value="${r.reportNo}">
-            </form>
-                    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">신고 처리</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <form action="updateReport.ad" method="post">
+                <input type="hidden" name="reportNo" value="${r.reportNo}">
+	                <div class="modal-body">
+	                    <!-- 신고 정보 -->
+	                    <div class="report_info">
+	                        <table class="report_answer" align="center">
+	                            <tr>
+	                                <th style="width: 200px;" rowspan="2" align="left">관리자 답변</th>
+	                                <td style="width: 500px;">
+	                                    <!-- 승인, 반려 선택 -->
+	                                    <div id="reportStatus" align="left">
+	                                        <div class="form-group">
+	                                            <select class="form-control" name="reportStatus" style="width: 70%;">
+	                                                <option value="N">미처리</option>
+	                                                <option value="Y">승인</option>
+	                                                <option value="D">반려</option>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                    <input type="text" class="form-control mb-2" style="width:100%;" name="reportAnswer" placeholder="ex) 양식에 맞춰 신고해주세요." value="${r.reportAnswer}">
+	                                </td>
+	                            </tr>
+	                        </table>
+	                    </div>
+	                </div>
+	                
+	                <!-- Modal footer -->
+	                <div class="modal-footer">
+	                    <button type="submit" class="btn btn-primary">확인</button>
+	                </div>
+                </form>
+            </div>
         </div>
     </div>
 
