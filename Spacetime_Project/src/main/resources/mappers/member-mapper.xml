@@ -75,6 +75,22 @@
 		WHERE NICKNAME = #{checkNick}
 	</select>
 	
+	<!-- 이메일 중복체크 쿼리문 - 경미 -->
+	<select id="emailCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+		 WHERE EMAIL = #{checkEmail}
+	</select>
+	
+	<!-- 아이디 찾기 쿼리문 - 경미 -->
+	<select id="findId" parameterType="member" resultType="String">
+		SELECT MEM_ID
+		  FROM MEMBER
+		 WHERE EMAIL = #{email}
+		   AND MEM_NAME = #{memName}
+		   AND PHONE = #{phone}
+	</select>
+	
 	<!-- 회원정보 업데이트용 쿼리문 - 경미 -->
 	<update id="updateMember" parameterType="hashmap">
 		UPDATE MEMBER

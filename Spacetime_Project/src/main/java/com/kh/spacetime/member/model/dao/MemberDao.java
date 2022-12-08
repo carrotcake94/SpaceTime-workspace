@@ -59,6 +59,28 @@ public class MemberDao {
 	}
 	
 	/**
+	 * 이메일 중복체크 Dao - 경미
+	 * @param sqlSession
+	 * @param checkEmail
+	 * @return
+	 */
+	public int emailCheck(SqlSessionTemplate sqlSession, String checkEmail) {
+		
+		return sqlSession.selectOne("memberMapper.emailCheck", checkEmail);
+	}
+	
+	/**
+	 * 아이디 찾기 Dao - 경미
+	 * @param sqlSession
+	 * @param m
+	 * @return
+	 */
+	public String findId(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.findId", m);
+	}
+	
+	/**
 	 * 회원 탈퇴 Dao - 경미
 	 * @param sqlSession
 	 * @param memNo

@@ -37,13 +37,19 @@ public class MemberServiceImpl implements MemberService{
 
 		return memberDao.insertMember(sqlSession, m);
 	}
-
+	
+	/**
+	 * 회원정보 업데이트 서비스 - 경미
+	 */
 	@Override
 	public int updateMember(HashMap<String, String> map) {
 		
 		return memberDao.updateMember(sqlSession, map);
 	}
-
+	
+	/**
+	 * 회원 탈퇴 서비스 - 경미
+	 */
 	@Override
 	public int deleteMember(int memNo) {
 		return memberDao.deleteMember(sqlSession, memNo);
@@ -66,6 +72,21 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.nickCheck(sqlSession, checkNick);
 	}
 	
+	/**
+	 * 이메일 중복체크 서비스 - 경미
+	 */
+	@Override
+	public int emailCheck(String checkEmail) {
+		return memberDao.emailCheck(sqlSession, checkEmail);
+	}
+
+	/**
+	 * 아이디 찾기 서비스  - 경미
+	 */
+	@Override
+	public String findId(Member m) {
+		return memberDao.findId(sqlSession, m);
+	}
 	
 	/**
 	 * 회원 수 조회 - 혜민 
@@ -93,5 +114,7 @@ public class MemberServiceImpl implements MemberService{
 		
 		return memberDao.selectMember(sqlSession, memNo);
 	}
+
+
 
 }
