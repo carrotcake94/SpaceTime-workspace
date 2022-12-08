@@ -49,5 +49,8 @@ public interface ReserveService {
 	
 	ArrayList<Reserve> selectMyReserveSortList(PageInfo pi, Member m);
 	
+
+	/* 예약 상세 */
+	Reserve selectMyReserve(int reserveNo);
 	
 }

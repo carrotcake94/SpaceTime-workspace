@@ -355,7 +355,7 @@
                 <option>예약취소</option>
                 <option>예약확정</option>
                 <option>이용완료</option>
-                <option>예약반려</option>
+                <option>예약반려</option> 
             </select>
         </div>
   
@@ -431,7 +431,7 @@
 				                </button>
 				              </div>
 				              <div>
-				                <span class="stitle">${ r.memNo }</span>
+				                <span class="stitle">${ r.memNo }</span> <input type="hidden" class="rnoInput" value="${ r.reserveNo }"/>
 				                <hr />
 				                ${ r.denyMessage }
 				                <span class="sprice">${ r.price }</span>
@@ -452,7 +452,16 @@
 				                </c:when>
 				                <c:otherwise>
 				                  <div class="space_btn_area">
-				                    <button style="width: 100%;" class="btn-reserveList">예약내역 확인</button>
+				                    <button style="width: 100%;" class="btn-reserveList detailBtn" >예약내역 확인</button>
+				                	<script>
+						                	$(function() {
+						                		$(".detailBtn").click(function() {
+						                			console.log($(".rnoInput").val());
+						                			location.href = "reserveDetail.re?rno=" + $(".rnoInput").val();
+						                		});
+						                	});
+				                	</script>
+				                
 				                </div>
 				                </c:otherwise>
 				              </c:choose>              

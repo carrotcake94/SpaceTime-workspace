@@ -86,26 +86,27 @@
                 <table>                    
                 	<tr>
                         <td>예약번호</td>
-                        <td>1221129</td>
+                        <td>${r.reserveNo }</td>
                     </tr>
                     <tr>
                         <td>신청일</td>
-                        <td>2022.11.21</td>
+                        <td>${ r.reserveDate }</td>
                     </tr>
                     <tr>
                         <td>예약공간</td>
-                        <td>[신대방] 호리존,타일존에조튼,1.대형 코너 호리존
+                        <td>
+                       		${ r. spaceTitle}
                         </td>
                     </tr>
                     <tr>
                         <td>예약내용</td>
-                        <td>2022.12.01 0시-2시</td>
+                        <td>${ r.useDate } ${ r.startTime }시 - ${ r.endTime}시</td>
                     </tr>
                     <tr>
                         <td>예약인원</td>
-                        <td>6명</td>
+                        <td>${ r.reserveCount }명</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>추가옵션</td>
                         <td>없음</td>
                     </tr>
@@ -116,7 +117,7 @@
                     <tr>
                         <td>사용목적</td>
                         <td>없음</td>
-                    </tr>
+                    </tr> -->
                 </table>
               </div>
               
@@ -125,16 +126,16 @@
                 <!-- 예약자 정보 -->
                 <table>
                     <tr>
-                        <td>예약자명</td>
-                        <td>장하연</td>
+                        <td>예약자 아이디</td>
+                        <td>${r.nickname }</td>
                     </tr>
                     <tr>
                         <td>연락처</td>
-                        <td>01046692962</td>
+                        <td>${ r.denyMessage }</td>
                     </tr>
                     <tr>
                         <td>이메일</td>
-                        <td>jhy2962@gmail.com</td>
+                        <td>${ r.email }</td>
                     </tr>
                 </table>
 
@@ -173,19 +174,19 @@
                 <table>
                     <tr>
                         <td>예약 날짜</td>
-                        <td>2022.12.19</td>
+                        <td>${ r.useDate }</td>
                     </tr>
                     <tr>
                         <td>예약 시간</td>
-                        <td>0시 - 2시 (2시간)</td>
+                        <td>${ r.startTime }시 - ${ r.endTime }시 (${r.endTime - r.startTime }시간)</td>
                     </tr>
                     <tr>
                         <td>예약 인원</td>
-                        <td>6명</td>
+                        <td>${ r.reserveCount }명</td>
                     </tr>
                     <tr>
                         <td>결제 정보</td>
-                        <td>카드결제</td>
+                        <td>${ r.payMethod }</td>
                     </tr>
                 </table>
         
@@ -194,13 +195,14 @@
               <hr>
 
               <div style="text-align: right;">
-                <h4>총 금액 30000원</h4>
+                <h4>총 금액 ${ r.price }원</h4>
               </div>
 
               <!-- 지도 넣을 공간  -->
               <div align="center">
-					<!-- <h1>!!!지도가 들어갈 공간!!!</h1> -->
-					<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+              		<br><br><br><br><br><br><br><br>
+						<h1>!!!지도가 들어갈 공간!!!</h1> 
+					<br><br><br><br><br><br><br><br>
              </div>
 
 
@@ -210,23 +212,23 @@
                 <table >
                     <tr>
                         <td>예약날짜</td>
-                        <td>2022.12.19</td>
+                        <td>${ r.useDate }</td>
                     </tr>
                     <tr>
                         <td>예약시간</td>
-                        <td>0-2시 (2시간)</td>
+                        <td>${ r.startTime }시 - ${ r.endTime }시 (${r.endTime - r.startTime }시간)</td>
                     </tr>
                     <tr>
                         <td>예약인원</td>
-                        <td>6명</td>
+                        <td>${ r.reserveCount }명</td>
                     </tr>
                     <tr>
                         <td>결제정보</td>
-                        <td>카드결제</td>
+                        <td>${ r.payMethod }</td>
                     </tr>
                     <tr>
                         <td>결제금액</td>
-                        <td> 30000원</td>
+                        <td> ${ r.price }원</td>
                     </tr>
                  </table>
 
@@ -237,7 +239,8 @@
                  <input type="button" class="btn btn-primary" value="확인">
               </div>
               
-                <br><br><br>
+                <br>
+                <br><br>
             
               
         </div>
@@ -274,7 +277,7 @@
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-cancle" onclick="">취소</button>
+                            <button type="button" class="btn-cancle" onclick="$('#cancle-modal').modal('hide');">취소</button>
                             <button type="button" class="btn btn-primary" onclick="">확인</button>
                         </div>
                     </div>

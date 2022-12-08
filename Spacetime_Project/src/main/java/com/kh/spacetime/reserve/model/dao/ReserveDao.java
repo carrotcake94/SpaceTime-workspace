@@ -69,6 +69,15 @@ public class ReserveDao {
 
 		return (ArrayList) sqlSession.selectList("reserveMapper.selectMyReserveSortList", m, rowBounds);
 	}
+	
+	/* 예약 상세 */
+	public Reserve selectMyReserve(SqlSessionTemplate sqlSession, int reserveNo) {
+		
+		
+		return sqlSession.selectOne("reserveMapper.selectMyReserve", reserveNo);
+		
+	}
+	
 
 	// 정현-------------------------------------------
 

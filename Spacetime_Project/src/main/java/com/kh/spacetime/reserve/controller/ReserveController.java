@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
@@ -143,6 +144,21 @@ public class ReserveController {
 //		System.out.println(list);
 		
 		return "reserve/reserveFilterList";
+	}
+	
+	/* 예약 상세 */
+	@RequestMapping("reserveDetail.re")
+	public ModelAndView selectMyReserveDetail(int rno, ModelAndView mv) {
+
+		
+		System.out.println("rno: " + rno);
+		Reserve r = reserveService.selectMyReserve(rno);
+		
+		System.out.println("r: " + r);
+		
+		mv.addObject("r", r).setViewName("reserve/reserveDetailView");
+		
+		return mv;
 	}
 
 }

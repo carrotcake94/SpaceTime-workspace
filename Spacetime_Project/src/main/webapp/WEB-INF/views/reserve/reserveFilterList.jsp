@@ -352,11 +352,11 @@
           <label for="sort_select">정렬조건선택</label>
             <select id="sort_select" name="selectbox">
                 <option selected>정렬조건선택</option>
-                <option>예약대기</option>
-                <option>예약취소</option>
-                <option>예약확정</option>
-                <option>이용완료</option>
-                <option>예약반려</option>
+                <option value="예약대기">예약대기</option>
+                <option value="예약취소">예약취소</option>
+                <option value="예약확정">예약확정</option>
+                <option value="이용완료">이용완료</option>
+                <option value="예약반려">예약반려</option>
             </select>
         </div>
   

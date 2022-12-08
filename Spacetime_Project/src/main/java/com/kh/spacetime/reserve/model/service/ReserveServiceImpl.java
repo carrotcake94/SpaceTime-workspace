@@ -96,5 +96,14 @@ public class ReserveServiceImpl implements ReserveService {
 		
 		return reserveDao.selectMyReserveSortList(sqlSession, pi, m);
 	}
+	
+
+	/* 예약 상세 */
+	@Override
+	public Reserve selectMyReserve(int reserveNo) {
+		
+		return reserveDao.selectMyReserve(sqlSession, reserveNo);
+		
+	}
 
 }
