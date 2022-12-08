@@ -97,13 +97,14 @@ public class ReserveController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list",list);
 		
-//		System.out.println(list);
-		
 		return "reserve/reserveList";
 		
 	}
 	
 	/* 마이페이지 예약리스트 - 드롭박스 정렬 (예약대기 / 예약취소 / 예약확정 / 이용완료 ) */
+	
+
+	static int listCount = 0; // 초기화 
 	
 	@RequestMapping("myReserveSort.re")
 	public String selectMyReserveListSort(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session, String selectbox) {
@@ -115,7 +116,6 @@ public class ReserveController {
 		m.setMemNo(memNo);
 		m.setMemId(selectbox);  // => 아이디 아닌데 그냥 형 맞아서 넣음 
 		
-		int listCount = 0; // 초기화 
 		
 		switch(selectbox) {
 		case "예약대기" : selectbox = "W"; listCount = reserveService.selectMyReserveListSortCount(m); break;
@@ -127,7 +127,6 @@ public class ReserveController {
 		
 		m.setMemId(selectbox);  // 밑에 메소드에서 재활용할거 
 		
-		System.out.println(selectbox);
 		
 		int pageLimit = 10;
 		int boardLimit = 9;
@@ -140,8 +139,12 @@ public class ReserveController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list",list);
 		
-//		System.out.println(listCount); 
-//		System.out.println(list);
+		
+		
+		
+		model.addAttribute("selectbox", selectbox);
+		
+		System.out.println(selectbox);
 		
 		return "reserve/reserveFilterList";
 	}
@@ -151,7 +154,6 @@ public class ReserveController {
 	public ModelAndView selectMyReserveDetail(int rno, ModelAndView mv) {
 
 		
-//		System.out.println("rno: " + rno);
 		Reserve r = reserveService.selectMyReserve(rno);
 		
 		

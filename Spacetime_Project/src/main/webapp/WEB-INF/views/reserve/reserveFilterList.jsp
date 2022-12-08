@@ -388,7 +388,7 @@
 				
 				$(document).ready(function() {
 		      		$("#sort_select").change(function(){
-		      			/* console.log("테스트 : " + $(this).val()); */
+		      			console.log("테스트 : " + $(this).val());
 		      			var select = $(this).val();
 		      		});
 		      	});
@@ -443,7 +443,7 @@
 				
 				              <c:set var="today" value="<%= today %>" /> 
 							
-								      <!-- ststus 가 'Y' 이고 사용일이 현재날짜를 지난 경우 -->
+							<!-- ststus 가 'Y' 이고 사용일이 현재날짜를 지난 경우 -->
 				              <c:choose>
 				                <c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate)}">
 				                  <div class="space_btn_area">
@@ -464,15 +464,6 @@
 		</c:choose>
 
 
-
-
-
-
-
-
-
-
-
         </div>
         <script>
           $(function () {
@@ -490,20 +481,7 @@
   
   
   
-  		<!-- 페이징처리 -->
-  
-<!--   
-        <ul class="pagination">
-          <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
-          <li class="page-item page-btn">
-            <a id="active-page" class="page-link">1</a>
-          </li>
-          <li class="page-item page-btn"><a class="page-link">2</a></li>
-          <li class="page-item page-btn"><a class="page-link">3</a></li>
-          <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
-        </ul>
-         -->
-        
+  		<!-- 페이징처리 -->        
         <div id="pagingArea">
                 <ul class="pagination">
 			      	<c:choose>
@@ -511,19 +489,23 @@
 				   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
 				   		</c:when>
 				   		<c:otherwise>
-				   			<li class="page-item"><a class="page-link" href="myReserveSort.re?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+				   			<li class="page-item"><a class="page-link" href="myReserveSort.re?cpage=${ pi.currentPage - 1 }&selectbox=${ selectbox }">&lt;</a></li>
 				   		</c:otherwise>
 				   	</c:choose>	       
+				   	
+				   	
 				       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-				       	<li class="page-item page-btn"><a class="page-link" href="myReserveSort.re?cpage=${ p }">${ p }</a></li>
+				       	<li class="page-item page-btn"><a class="page-link" href="myReserveSort.re?cpage=${ p }&selectbox=${ selectbox }">${ p }</a></li>
 				       </c:forEach>
+				       
+				       
 				       <c:choose>
-				       	<c:when test="${ pi.currentPage eq pi.maxPage }">
-				       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
-				       	</c:when>
-				       	<c:otherwise>
-				      	 	<li class="page-item no-page-next"><a class="page-link" href="myReserveSort.re?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-				       	</c:otherwise>
+					       	<c:when test="${ pi.currentPage eq pi.maxPage }">
+					       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+					       	</c:when>
+					       	<c:otherwise>
+					      	 	<li class="page-item no-page-next"><a class="page-link" href="myReserveSort.re?cpage=${ pi.currentPage + 1 }&selectbox=${ selectbox }">&gt;</a></li>
+					       	</c:otherwise>
 				       </c:choose>	       
      			 </ul>
             </div>
