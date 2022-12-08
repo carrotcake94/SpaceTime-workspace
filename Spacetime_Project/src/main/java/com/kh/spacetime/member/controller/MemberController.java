@@ -3,6 +3,7 @@ package com.kh.spacetime.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -15,10 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.service.MemberService;
 import com.kh.spacetime.member.model.vo.Member;
 
@@ -347,6 +351,46 @@ public class MemberController {
 		}
 		
 		return changeName;
+	}
+	
+	/**
+	 * 관리자 회원관리 리스트 조회 메소드 - 혜민
+	 * @param currentPage
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("mlist.ad")
+	public String selectMemberList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
+		
+		int listCount = memberService.selectMemberListCount();
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Member> list = memberService.selectMemberList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "member/adminMember";
+	}
+	
+	/**
+	 * 회원정보 상세조회 메소드 - 혜민 
+	 * @param mno
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping("mdetail.ad")
+	public ModelAndView selectMember(int mno, ModelAndView mv) {
+		
+		Member loginMember = memberService.selectMember(mno);
+		
+		mv.addObject("loginMember", loginMember).setViewName("member/adminMemberDetail");
+		
+		return mv;
 	}
 	
 }

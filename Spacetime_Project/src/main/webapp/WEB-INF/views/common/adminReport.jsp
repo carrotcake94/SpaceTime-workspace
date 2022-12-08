@@ -131,9 +131,7 @@
 </head>
 <body>
 
-    
     <div id="header_container"><jsp:include page="header.jsp" /></div>
-    
     
     <jsp:include page="adminNavi.jsp" />
     
@@ -186,7 +184,7 @@
                 
                 <!--============================ 전체 조회 ============================-->
                 <div class="tab-pane container active" id="all" align="right">
-                    <table class="table" class="reportList" style="table-layout:fixed;">
+                    <table class="table reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -253,7 +251,7 @@
             
                 <!--============================ 미처리 조회 ============================-->
                 <div class="tab-pane container fade" id="wait" align="right" name="condition" value="wait">
-                    <table class="table" class="reportList" style="table-layout:fixed;">
+                    <table class="table reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -320,7 +318,7 @@
 
                 <!--============================ 승인 조회 ============================-->
                 <div class="tab-pane container fade" id="accept" align="right" name="condition" value="accept">
-                    <table class="table" class="reportList" style="table-layout:fixed;">
+                    <table class="table reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -387,7 +385,7 @@
 
                 <!--============================ 반려 조회 ============================-->
                 <div class="tab-pane container fade" id="deny" align="right" name="condition" value="deny">
-                    <table class="table" class="reportList" style="table-layout:fixed;">
+                    <table class="table reportList" style="table-layout:fixed;">
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
@@ -459,7 +457,7 @@
     <!-- 신고 상세페이지로 연결 -->
     <script>
         $(function() {
-            $("#reportList>tbody>tr").click(function() {
+            $(".reportList>tbody>tr").click(function() {
                 location.href = "rdetail.ad?rpno=" + $(this).children().eq(0).text();
             });
         });
@@ -535,13 +533,13 @@
     </form>
     
     <script>
-    	$(function() {
-    		
-    		// 탭메뉴 클릭시 탭마다 클릭 이벤트 걸기
-    		// 각 탭이 클릭됬을 경우 => ajax 해당 쿼리문까지 다녀오기 (요청시 전달값이 다르게)
-    		// 응답데이터 리턴 => success function 내부에 동적으로 요소를 각 탭에 맞는 테이블에 찍어내기 (tbody에!!)
-    		
-    	});
+        $(function() {
+            
+            // 탭메뉴 클릭시 탭마다 클릭 이벤트 걸기 
+            // 각 탭이 클릭됬을 경우 => ajax 해당 쿼리문까지 다녀오기 (요청시 전달값이 다르게)
+            // 응답데이터 리턴 => success function 내부에 동적으로 요소를 각 탭에 맞는 테이블에 찍어내기 (tbody에!!)
+            
+        });
     
     </script>
     

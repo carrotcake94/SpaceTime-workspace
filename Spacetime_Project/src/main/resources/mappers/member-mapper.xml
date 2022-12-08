@@ -27,38 +27,38 @@
 	<!-- 로그인용 쿼리문 - 경미 -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
 		SELECT *
-		  FROM MEMBER
-		 WHERE MEM_ID = #{memId}
-		   AND MEM_STATUS = 'N'
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+		AND MEM_STATUS = 'N'
 	</select>
 	
 	<!-- 회원가입용 쿼리문 - 경미 -->
 	<insert id="insertMember" parameterType="member">
 		INSERT INTO MEMBER (MEM_NO
-						  , MEM_ID
-						  , MEM_PWD
-						  , MEM_NAME
-						  , GENDER
-						  , BIRTHDAY
-						  , NICKNAME
-						  , PHONE
-						  , EMAIL)
+						, MEM_ID
+						, MEM_PWD
+						, MEM_NAME
+						, GENDER
+						, BIRTHDAY
+						, NICKNAME
+						, PHONE
+						, EMAIL)
 					VALUES (SEQ_MNO.NEXTVAL
-						  , #{memId}
-						  , #{memPwd}
-						  , #{memName}
-						  , #{gender}
-						  , TO_DATE(#{birthday}, 'YYYYMMDD')
-						  , #{nickname}
-						  , #{phone}
-						  , #{email})
+						, #{memId}
+						, #{memPwd}
+						, #{memName}
+						, #{gender}
+						, TO_DATE(#{birthday}, 'YYYYMMDD')
+						, #{nickname}
+						, #{phone}
+						, #{email})
 	</insert>
 	
 	<!-- 회원 탈퇴용 쿼리문 - 경미 -->
 	<update id="deleteMember" parameterType="_int">
 		UPDATE MEMBER
-		   SET MEM_STATUS = 'Y'
-		 WHERE MEM_NO = #{memNo}
+		SET MEM_STATUS = 'Y'
+		WHERE MEM_NO = #{memNo}
 	</update>
 	
 	<!-- 아이디 중복체크 쿼리문 - 경미 -->
@@ -81,7 +81,7 @@
 		<choose>
 			<when test="profilePath != null">
 				SET PROFILE_PATH = #{profilePath}
-				  , NICKNAME = #{nickname}
+				, NICKNAME = #{nickname}
 			</when>
 			<when test="profilePath == null and nickname != null">
 				SET NICKNAME = #{nickname}
@@ -94,10 +94,35 @@
 			</when>
 			<when test="bankName != null">
 				SET BANK_NAME = #{bankName}
-				  , ACCOUNT_NUM = #{accountNum}
+				, ACCOUNT_NUM = #{accountNum}
 			</when>
 		</choose>
-		 WHERE MEM_ID = #{memId}
-		   AND MEM_STATUS = 'N'
-    </update>
+		WHERE MEM_ID = #{memId}
+		AND MEM_STATUS = 'N'
+	</update>
+	
+	<!-- 회원수 조회용 쿼리문 - 혜민 -->
+	<select id="selectMemberListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEM_STATUS = 'N'
+	</select>
+	
+	<!-- 회원 리스트 조회용 쿼리문 - 혜민 -->
+	<select id="selectMemberList" resultMap="memberResultSet">
+		SELECT MEM_NO, MEM_NAME, MEM_ID, NICKNAME, GR_NAME AS "GR_CODE", ENROLL_DATE, MEM_STATUS, BLACKLIST_YN
+		FROM MEMBER
+		JOIN MEMBER_GRADE USING (GR_CODE)
+		ORDER BY MEM_NO DESC
+		<!-- 호스트일때, 게스트일때, 블랙리스트일때 나중에 조건 추가 -->
+	</select>
+	
+	<!-- 회원 상세정보 조회용 쿼리문 - 혜민 -->
+	<select id="selectMember" parameterType="_int" resultMap="memberResultSet">
+		SELECT MEM_NO, MEM_ID, MEM_NAME, GENDER, NICKNAME, PHONE, EMAIL, PROFILE_PATH, ENROLL_DATE, HOST_STATUS, BANK_NAME, ACCOUNT_NUM, BLACKLIST_YN, BLACKLIST_REASON, MEM_STATUS, GR_NAME AS "GR_CODE"
+		FROM MEMBER
+		JOIN MEMBER_GRADE USING (GR_CODE)
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
 </mapper>

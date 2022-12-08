@@ -121,17 +121,17 @@
                             <th style="width: 150px;" rowspan="2">관리자 답변</th>
                             <td style="width: 500px;">
                                 <div id="reportStatus" align="left">
-                                	<c:choose>
-	                                    <c:when test="${r.reportStatus eq 'Y'}">
-	                                        승인
-	                                    </c:when>
-	                                    <c:when test="${r.reportStatus eq 'N'}">
-	                                        미처리
-	                                    </c:when>
-	                                    <c:when test="${r.reportStatus eq 'D'}">
-	                                        반려
-	                                    </c:when>
-	                                </c:choose>
+                                    <c:choose>
+                                        <c:when test="${r.reportStatus eq 'Y'}">
+                                            승인
+                                        </c:when>
+                                        <c:when test="${r.reportStatus eq 'N'}">
+                                            미처리
+                                        </c:when>
+                                        <c:when test="${r.reportStatus eq 'D'}">
+                                            반려
+                                        </c:when>
+                                    </c:choose>
                                 </div>
                                 <div id="reportAnswer" align="left">${r.reportAnswer}</div>
                             </td>

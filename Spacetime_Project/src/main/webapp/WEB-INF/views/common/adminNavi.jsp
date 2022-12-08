@@ -93,8 +93,8 @@
                         <li class="naviSub"><a href="slist.ad" class="navi">매출 관리</a></li>
                     </ul>
                 </li>
-                <li class="naviMenu"><a href="#" class="navi">회원 관리</a></li>
-                <li class="naviMenu"><a href="#" class="navi">공간 관리</a></li>
+                <li class="naviMenu"><a href="mlist.ad" class="navi">회원 관리</a></li>
+                <li class="naviMenu"><a href="splist.ad" class="navi">공간 관리</a></li>
                 <li class="naviMenu"><a href="rlist.ad" class="navi">신고 관리</a></li>
             </ul>
         </div>

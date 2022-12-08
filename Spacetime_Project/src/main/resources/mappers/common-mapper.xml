@@ -31,8 +31,8 @@
 		FROM REPORT
 <!-- 		<if test="condition == 'all'">
 			WHERE REPORT_STATUS = 'Y'
-			  AND REPORT_STATUS = 'N'
-			  AND REPORT_STATUS = 'D'
+			AND REPORT_STATUS = 'N'
+			AND REPORT_STATUS = 'D'
 		</if>
 		<if test="condition == 'wait'">
 			WHERE REPORT_STATUS = 'N'
@@ -49,11 +49,11 @@
 	<select id="selectReportList" resultMap="reportResultSet">
 		SELECT REPORT_NO, MEM_ID AS "REPORTED_MEM_NO", REPORT_TYPE, REPORT_CONTENT, TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE", REPORT_STATUS
 		FROM REPORT 
-   		JOIN MEMBER ON (REPORTED_MEM_NO = MEM_NO)
+		JOIN MEMBER ON (REPORTED_MEM_NO = MEM_NO)
 <!-- 		<if test="condition == 'all'">
 			WHERE REPORT_STATUS = 'Y'
-			  AND REPORT_STATUS = 'N'
-			  AND REPORT_STATUS = 'D'
+			AND REPORT_STATUS = 'N'
+			AND REPORT_STATUS = 'D'
 		</if>
 		<if test="condition == 'wait'">
 			WHERE REPORT_STATUS = 'N'
@@ -96,7 +96,7 @@
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE
 		ORDER BY SPACE_NO DESC
 	</select>
-	 
+	
 	<!-- 공간별 매출 상세조회 -->
 
 </mapper>

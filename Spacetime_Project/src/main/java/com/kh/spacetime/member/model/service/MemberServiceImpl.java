@@ -1,11 +1,13 @@
 package com.kh.spacetime.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.member.model.dao.MemberDao;
 import com.kh.spacetime.member.model.vo.Member;
 
@@ -62,6 +64,34 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int nickCheck(String checkNick) {
 		return memberDao.nickCheck(sqlSession, checkNick);
+	}
+	
+	
+	/**
+	 * 회원 수 조회 - 혜민 
+	 */
+	@Override
+	public int selectMemberListCount() {
+		
+		return memberDao.selectMemberListCount(sqlSession);
+	}
+
+	/**
+	 * 회원 리스트 조회 - 혜민 
+	 */
+	@Override
+	public ArrayList<Member> selectMemberList(PageInfo pi) {
+		
+		return memberDao.selectMemberList(sqlSession, pi);
+	}
+
+	/**
+	 * 회원정보 상세조회 - 혜민 
+	 */
+	@Override
+	public Member selectMember(int memNo) {
+		
+		return memberDao.selectMember(sqlSession, memNo);
 	}
 
 }

@@ -11,11 +11,9 @@ public interface CommonService {
 	
 	// 관리자페이지 신고 리스트 조회 + 페이징 처리 
 	// 신고 글 총 개수 
-//	int selectReportListCount(String condition);
 	int selectReportListCount();
 	
 	// 신고 리스트 조회 
-//	ArrayList<Report> selectReportList(String condition, PageInfo pi);
 	ArrayList<Report> selectReportList(PageInfo pi);
 	
 	// 신고 상세조회 
