@@ -513,7 +513,7 @@
                 <li><a href="#">홈으로</a></li>
                 <li><a href="#">공지사항</a></li>
                 <li><a href="#">뉴스레터</a></li>
-                <li><a href="#">서비스정보</a></li>
+                <li><a href="introduction.co">서비스정보</a></li>
             </ul>
             <ul>
                 <li><a href="logout.me">로그아웃</a></li>

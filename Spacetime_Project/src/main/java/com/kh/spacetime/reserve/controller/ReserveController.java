@@ -104,7 +104,7 @@ public class ReserveController {
 	/* 마이페이지 예약리스트 - 드롭박스 정렬 (예약대기 / 예약취소 / 예약확정 / 이용완료 ) */
 	
 
-	static int listCount = 0; // 초기화 
+	static int listCount = 0; // 초기화 필터 페이징때문에 밖에 빼둠요 ~~~~~~
 	
 	@RequestMapping("myReserveSort.re")
 	public String selectMyReserveListSort(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model, HttpSession session, String selectbox) {

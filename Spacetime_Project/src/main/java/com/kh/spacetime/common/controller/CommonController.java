@@ -87,5 +87,15 @@ public class CommonController {
 		
 		return "common/adminSales";
 	}
+	
+	
+	/**
+	 * 헤더에서 서비스정보 페이지 이동 - 하연 
+	 */
+	@RequestMapping("introduction.co")
+	public String introduction() {
+		
+		return "common/introduction";
+	}
 
 }
