@@ -601,7 +601,6 @@
                                 <button type="submit" id="leaveMem" class="btn btn-danger" style="width: 150px; color:black; background-color: lightgray; border-color: lightgray;">탈퇴</button>
                             </div>
                         </div>
-                        
                     </div>
                 </form>
             </div>

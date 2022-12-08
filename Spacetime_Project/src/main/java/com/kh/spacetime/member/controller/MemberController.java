@@ -33,7 +33,11 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	private BCryptPasswordEncoder bcryptPasswordEncoder; // 암호화
+	
+	@Autowired
+	private MailSendService mailService; // 이메일 인증
+	
 	
 	/**
 	 * 로그인 페이지로 포워딩하는 메소드 - 경미
@@ -170,6 +174,29 @@ public class MemberController {
 	}
 	
 	/**
+	 * 이메일 중복 체크 - 경미
+	 * @param checkEmail
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="emailCheck.me", produces="text/html; charset=UTF-8")
+	public String emailCheck(String checkEmail) {
+		int count = memberService.emailCheck(checkEmail);
+		return (count > 0)? "NNNNN" : "NNNNY";
+	}
+	
+	/**
+	 * 이메일 본인인증(회원가입) - 경미
+	 * @param email
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="confirmEmail.me", produces="text/html; charset=UTF-8")
+	public String confirmEmail(String email) {
+		return mailService.joinEmail(email);
+	}
+	
+	/**
 	 * 프로필 마이페이지로 포워딩하는 메소드 - 경미
 	 * @return
 	 */
@@ -195,6 +222,30 @@ public class MemberController {
 		else {
 			return "NNNNN";
 		}
+	}
+	
+	/**
+	 * 아이디 찾기 메소드 - 경미
+	 * @param m
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="findId.me", produces="text/html; charset=UTF-8")
+	public String findId(Member m, HttpSession session) {
+		String memId = memberService.findId(m);
+		return (memId != null)? memId : "NNNNN";
+	}
+	
+	/**
+	 * 이메일 본인인증(비밀번호 변경용) - 경미
+	 * @param email
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="findPwd.me", produces="text/html; charset=UTF-8")
+	public String findPwd(String email) {
+		return mailService.pwdEmail(email);
 	}
 	
 	/**

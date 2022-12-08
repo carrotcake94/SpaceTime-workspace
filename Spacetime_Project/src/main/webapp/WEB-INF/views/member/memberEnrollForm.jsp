@@ -40,6 +40,10 @@
         height: 50px;   
     }
 
+	#emailConfirm {
+		display:none;
+	}
+
     #birthday-area>input, #birthday-area>select { 
         width: 32%; 
         height:50px; 
@@ -364,7 +368,9 @@
 	                        <input id="email" name="email" class="form-control" type="email" placeholder="이메일">
 	                        <span class="error_next_box" id="emailMsg">이메일 주소를 다시 확인해주세요.</span>
 	                        <!-- 이메일 본인인증 -->
-	                        <button type="button" style="background: #277BC0; color: white; margin-top: 10px;">이메일 본인인증</button>
+	                        <button id="emailConfirmBtn" type="button" style="background: #277BC0; color: white; margin-top: 10px;">이메일 본인인증</button>
+							<input id="emailConfirm" name="emailConfirm" class="form-control" type="text" placeholder="인증 번호를 입력해주세요.">
+							<span class="error_next_box" id="emailConfirmMsg"></span>
 	                        <hr>
 
 	                        <input id="nickname" name="nickname" class="form-control" type="text" placeholder="닉네임" required>
@@ -398,7 +404,7 @@
 								<!-- VO로 합치기 위해 input type="hidden" 으로 생년월일 다 합쳐서 birthday로 넘길 것 -->
 	                        </div>
 	                        <span class="error_next_box" id="birthdayMsg">생년월일을 다시 확인해주세요.</span>
-	                        <input id="phone" name="phone" class="form-control" type="text" placeholder="전화번호">
+	                        <input id="phone" name="phone" class="form-control" type="text" placeholder="전화번호(- 제외)">
 							<span class="error_next_box" id="phoneMsg">-을 제외한 유효한 전화번호를 입력해주세요.</span>
 							<!-- 정규식 검사 -->
 	                        <script>
@@ -417,43 +423,43 @@
 											return true;
 										}
 									}, keyup:function() {
-										// 아이디 중복체크
-										// 최소 8글자 이상으로 아이디값이 입력되어 있을 때만 ajax 요청
-										if($("#memId").val().length >= 8) {
+											// 아이디 중복체크
+											// 최소 8글자 이상으로 아이디값이 입력되어 있을 때만 ajax 요청
+											if($("#memId").val().length >= 8) {
 
-											$.ajax({
-												url : "idCheck.me",
-												data : {checkId : $("#memId").val()},
-												success : function(result) {
-													
-													// console.log(result);
-													
-													if(result == "NNNNN") { // 사용 불가능
+												$.ajax({
+													url : "idCheck.me",
+													data : {checkId : $("#memId").val()},
+													success : function(result) {
 														
-														// 빨간색 메세지 출력
-														$("#idCheckMsg").show();
-														$("#idCheckMsg").css("color", "red").text("이미 사용중이거나 탈퇴한 아이디입니다.");
+														// console.log(result);
 														
-														// 버튼 비활성화
-														$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
-														
-													} else { // 사용 가능
-														// 버튼 활성화
-														$("#idCheckMsg").hide();
-														$("#join_form button[type=submit]").css("background-color", "#FFB200").attr("disabled", false);
+														if(result == "NNNNN") { // 사용 불가능
+															
+															// 빨간색 메세지 출력
+															$("#idCheckMsg").show();
+															$("#idCheckMsg").css("color", "red").text("이미 사용중이거나 탈퇴한 아이디입니다.");
+															
+															// 버튼 비활성화
+															$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+															
+														} else { // 사용 가능
+															// 버튼 활성화
+															$("#idCheckMsg").hide();
+															$("#join_form button[type=submit]").css("background-color", "#FFB200").attr("disabled", false);
+														}
+													},
+													error : function() {
+														console.log("아이디 중복 체크용 ajax 통신 실패!");
 													}
-												},
-												error : function() {
-													console.log("아이디 중복 체크용 ajax 통신 실패!");
-												}
-											});
-										} else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
-											
-											$("#idCheckMsg").hide();
-											$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+												});
+											} else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
+												
+												$("#idCheckMsg").hide();
+												$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+											}
 										}
-									}
-								})
+									})
 
 									$("#memPwd").blur(function() {
 										// 비밀번호 정규식
@@ -498,7 +504,7 @@
 										}
 									})
 
-									$("#email").blur(function() {
+									$("#email").on({blur:function() {
 										// 이메일 정규식
 										// - 이메일주소 시작은 숫자나 알파벳으로 시작됨
 										// - 이메일 첫째자리 뒤에는 -_. 을 포함하여 들어올 수 있음
@@ -506,6 +512,7 @@
 										// - . 이 최소한 하나는 있어야 하며 마지막 마디는 2-3자리 여야 함
 										let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
 										if(!regExp.test($("#email").val())) {
+											$("#emailMsg").text("유효한 이메일 주소를 입력해주세요.");
 											$("#emailMsg").css("display", "block");
 											$("#email").select(); // 재입력 유도
 											return false;
@@ -513,7 +520,104 @@
 											$("#emailMsg").css("display", "none");
 											return true;
 										}
+									}, keyup:function() {
+										// 이메일 중복체크
+										// 최소 15글자 이상으로 이메일값이 입력되어 있을 때만 ajax 요청
+										if($("#email").val().length >= 15) {
+
+											$.ajax({
+												url : "emailCheck.me",
+												data : {checkEmail : $("#email").val()},
+												success : function(result) {
+													
+													// console.log(result);
+													
+													if(result == "NNNNN") { // 사용 불가능
+														
+														// 빨간색 메세지 출력
+														$("#emailMsg").css("color", "red").text("가입된 이메일이 존재합니다. 다른 이메일을 입력해주세요.");
+														$("#emailMsg").show();
+														$("#email").select(); // 재입력 유도
+
+														// 버튼 비활성화
+														$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+														
+													} else { // 사용 가능
+														// 버튼 활성화
+														$("#emailMsg").hide();
+														$("#join_form button[type=submit]").css("background-color", "#FFB200").attr("disabled", false);
+													}
+												},
+												error : function() {
+													console.log("이메일 중복 체크용 ajax 통신 실패!");
+												}
+											});
+											} else { // 15글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
+
+												$("#emailMsg").hide();
+												$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+											}
+										}
+									});
+
+									let code;
+									$("#emailConfirmBtn").click(function() {
+										// 이메일 인증
+										let email = $('#email').val(); // 이메일 주소값 얻어오기!
+										const checkInput = $('#emailConfirm'); // 인증번호 입력하는곳 
+										
+										$.ajax({
+											type : 'get',
+											url : 'confirmEmail.me?email='+email,
+											success : function (data) {
+												checkInput.show();
+												code = data;
+												alert('인증번호가 전송되었습니다.');
+											}			
+										});
+
 									})
+
+									$("#emailConfirm").on({blur:function() {
+										// 이메일 인증번호 정규식
+										let regExp = /^[0-9]{6,6}$/;
+										if(!regExp.test($("#emailConfirm").val())) {
+											$("#emailConfirmMsg").text("인증번호는 6글자입니다.");
+											$("#emailConfirmMsg").show();
+											$("#emailConfirm").select(); // 재입력 유도
+											return false;
+										} else {
+											return true;
+										}
+									}, keyup:function() {
+											// 이메일 인증번호 비교 
+											// 최소 6글자 이상으로 닉네임값이 입력되어 있을 때만 ajax 요청
+											if($("#emailConfirm").val().length >= 6) {
+
+												let inputCode = $(this).val();
+												
+												if(inputCode === code){
+													$('#emailConfirmMsg').show();
+													$('#emailConfirmMsg').text("인증번호가 일치합니다.");
+													$('#emailConfirmMsg').css('color', 'green');
+													$('#email').attr('readonly', true);
+
+													$("#join_form button[type=submit]").css("background-color", "#FFB200").attr("disabled", false);
+													$('#emailConfirm').attr('readonly', true);
+												}else{
+													$('#emailConfirmMsg').text("인증번호가 일치하지 않습니다. 인증번호 혹은 이메일 주소를 다시 확인해주세요.");
+													$('#emailConfirmMsg').show();
+													$('#emailConfirmMsg').css('color', 'red');
+													$('#email').attr('readonly', false);
+													// 버튼 비활성화
+													$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+												}
+											} else { // 6글자 미만일 때
+												$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
+											}
+										}
+									})
+
 
 									$("#nickname").on({blur:function() {
 										// 닉네임 정규식
@@ -565,7 +669,7 @@
 											$("#join_form button[type=submit]").css("background-color", "lightgray").attr("disabled", true);
 											}
 										}
-									})
+									});
 
 									$("#yyyy").blur(function() {
 										// 생년 정규식
@@ -588,7 +692,7 @@
 											$("#yyMsg").css("display", "none");
 											return true;
 										}
-									})
+									});
 
 									$("#dd").blur(function() {
 										// 생일 정규식
@@ -605,7 +709,7 @@
 											return true;
 										}
 
-									})
+									});
 
 									$("#phone").blur(function() {
 										// 핸드폰 번호 정규식
@@ -618,16 +722,15 @@
 											$("#phoneMsg").css("display", "none");
 											return true;
 										}
-									})
+									});
 
 									$("button[type=submit]").click(function() {
 										// 생일 입력 다 되면 전부 합치기
 										let birthday = "" + $("#yyyy").val() + $("#MM").val() + $("#dd").val();
 										console.log(birthday);
 										$("#birthday").val(birthday);
-									})
-								})
-
+									});
+								});
 							</script>
 	                        <div class="agree_box" style="margin-top: 30px;">
 	                            <p><input id="allAgree" type="checkbox"> <label for="allAgree">아래 약관에 모두 동의합니다.</label></p> 

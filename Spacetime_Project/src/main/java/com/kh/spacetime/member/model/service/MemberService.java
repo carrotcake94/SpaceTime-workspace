@@ -27,6 +27,12 @@ public interface MemberService {
 	// 닉네임 중복체크 서비스 (select)
 	int nickCheck(String checkNick);
 	
+	// 이메일 중복체크 서비스 (select)
+	int emailCheck(String checkEmail);
+	
+	// 아이디 찾기 서비스 (select)
+	String findId(Member m);
+	
 	//	-------------------------------------- 관리자 페이지
 	// 회원수 조회  
 	int selectMemberListCount();
