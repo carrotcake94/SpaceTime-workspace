@@ -1,5 +1,8 @@
 package com.kh.spacetime.space.model.vo;
 
+import com.kh.spacetime.member.model.vo.Member;
+import com.kh.spacetime.reserve.model.vo.Reserve;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,4 +30,10 @@ public class Review {
 	
 	private int reserveNo;//
 	private String spaceTitle;//
+	
+	//정현 join용
+	private Space space;
+	private Member member;
+	private Reserve reserve;
+	
 }

@@ -1,6 +1,7 @@
 package com.kh.spacetime.reserve.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -85,7 +86,7 @@ public class ReserveDao {
 	}
 
 	// 정현-------------------------------------------
-
+	// 호스트 공간 예약 리스트 개수 가져오기-정현
 	public int selectHostReserveListCount(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("reserveMapper.selectHostReserveListCount", memNo);
 	}
@@ -100,4 +101,26 @@ public class ReserveDao {
 
 		return (ArrayList) sqlSession.selectList("reserveMapper.selectHostReserveList", memNo, rowBounds);
 	}
+	// 호스트 예약관리 상태 업데이트 리스트 - 정현
+	public int updateHostReserve(SqlSessionTemplate sqlSession, Reserve r) {
+		return sqlSession.update("reserveMapper.updateHostReserve", r);
+	}
+	// 호스트 검색 예약관리 리스트 총 개수 - 정현
+	public int searchHostReserveListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("reserveMapper.searchHostReserveListCount", map);
+	}
+
+	// 호스트 검색 예약관리 리스트  - 정현
+	public ArrayList<Reserve> searchHostReserveList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList) sqlSession.selectList("reserveMapper.searchHostReserveList", map, rowBounds);
+	}
+	
+	
+	// -------------------------------------------정현
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -323,16 +324,17 @@
 	<div id="spReviewDiv">
       <div class="space-main-title">이용 후기 관리</div>
       <hr />
-      <form action="" method="get" id="revListSearchForm">
+      <form action="schHostRvwList.rv" method="get" id="revListSearchForm">
         <section id="theme1">
           <div class="rev-select">
             <div class="text">공간 전체</div>
             <ul class="option-list">
-              <li class="option">공간 전체</li>
-              <li class="option">당산 아리오 파티룸</li>
-              <li class="option">강남 헬리오 클럽</li>
-              <li class="option">합정 스터디베스트리움 카페</li>
+            <li class="option">공간 전체</li>
+           	<c:forEach var="s" items="${sList }">
+           	<li class="option">${s.spaceTitle }</li>
+           	</c:forEach>
             </ul>
+            <input type="hidden" name="spaceTitle" value="공간 전체">
           </div>
         </section>
         <section id="theme2">
@@ -340,9 +342,10 @@
             <div class="text">답글 상태</div>
             <ul class="option-list">
               <li class="option">답글 전체</li>
-              <li class="option">답글있음</li>
-              <li class="option">답글없음</li>
+              <li class="option">답글 있음</li>
+              <li class="option">답글 없음</li>
             </ul>
+            <input type="hidden" name="hostAnswer" value="">
           </div>
         </section>
         <input
@@ -350,36 +353,40 @@
           name="keyword"
           placeholder="예약번호 또는 예약자명"
         />
-
-        <button type="submit" onclick="">검색</button>
+        <button type="submit" >검색</button>
       </form>
-      <div class="review-area" id="review1">
-        <div class="rtitle">예약번호<span>★★★★★</span></div>
-        <div class="rwriter">제임스 - 아리오 파티룸</div>
+      <c:forEach var="r" items="${rList }" varStatus="status.index">
+      <div class="review-area" id="review${r.reviewNo}">
+        <div class="rtitle">예약번호${r.reserve.reserveNo}<span>${r.rating}</span></div>
+        <div class="rwriter">${r.member.memName } - ${r.space.spaceTitle }</div>
         <div class="rcontent-area">
-          <div class="rcontent">
-            예쁜 식기가 준비되어있어서 파티하기에 완벽했습니다.!!!인테리어가
-            이뻐요<br />인테리어가 이뻐요 인테리어가 이뻐요
-          </div>
+          <div class="rcontent">${r.reviewCont}</div>
           <div class="rcontent-img-area">
             <div>
-              <div>
-                <img class="img1" src="resources/images/space/space/166916214.jpg" alt="" />
-              </div>
-              <div>
-                <img class="img2" src="resources/images/space/space/166028842.jpg" alt="" />
-              </div>
-              <div>
-                <img class="img3" src="resources/images/space/space/166916214.jpg" alt="" />
-              </div>
+            	<c:if test="${!empty r.reviewAttach1 }">
+           		 <div>
+	                <img class="img1" src="resources/uploadFiles/space/space/${r.reviewAttach1}" alt="" />
+	              </div>
+            	</c:if>
+            	<c:if test="${!empty r.reviewAttach2 }">
+           		 <div>
+	                <img class="img2" src="resources/uploadFiles/space/space/${r.reviewAttach2}" alt="" />
+	              </div>
+            	</c:if>
+            	<c:if test="${!empty r.reviewAttach3 }">
+           		 <div>
+	                <img class="img3" src="resources/uploadFiles/space/space/${r.reviewAttach3}" alt="" />
+	              </div>
+            	</c:if>
             </div>
           </div>
         </div>
-        <div class="rdate">2022-11-30 15:33:20</div>
+        <div class="rdate">${r.reviewEnrollDate }</div>
 
         <div class="hotitle">호스트 답글</div>
-
-        <div class="answer-area">
+        <c:choose>
+        <c:when test="${empty r.hostAnswer}">
+         <div class="answer-area">
           <div class="answer-text">
             <textarea
               name="hostAnswer"
@@ -388,46 +395,19 @@
             ></textarea>
             <div class="lcount"><span>0</span> / 100</div>
           </div>
-
           <button>등록</button>
         </div>
-      </div>
-      <div class="review-area" id="review2">
-        <div class="rtitle">예약번호<span>★★★★</span></div>
-        <div class="rwriter">필란 - 당산 할리오</div>
-        <div class="rcontent-area">
-          <div class="rcontent">
-            전반적으로 만족스럽지만 난방이 안되서 좀 추웠어요 ㅠ
-          </div>
-          <div class="rcontent-img-area">
-            <div>
-              <div>
-                <img class="img1" src="resources/images/space/space/166916214.jpg" alt="" />
-              </div>
-              <div>
-                <img class="img2" src="resources/images/space/space/166028842.jpg" alt="" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="rdate">2022-11-30 15:33:20</div>
-
-        <div class="hotitle">호스트 답글</div>
-
+        </c:when>
+        <c:otherwise>
         <div class="answer-area">
-          <div class="answer-text">
-            <textarea
-              name="hostAnswer"
-              placeholder="이용후기를 남긴 고객에게 전하는 답글을 작성해주세요."
-              maxlength="100"
-            ></textarea>
-            <div class="lcount"><span>0</span> / 100</div>
-          </div>
-
-          <button>등록</button>
+        <div>
+	        ${r.hostAnswer }
         </div>
+        </div>
+        </c:otherwise>
+        </c:choose>
       </div>
-
+      </c:forEach>
       <ul class="pagination">
         <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
         <li class="page-item page-btn">
@@ -485,8 +465,8 @@
       });
 
       $("section").on("click", ".option", function () {
-        console.log($(this).text());
         $(this).parent().siblings("div").text($(this).text());
+        $(this).parent().siblings("input").val($(this).text())
       });
 
       // img 컨트롤

@@ -1,17 +1,18 @@
 package com.kh.spacetime.reserve.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 
-/**
- * @author 정현
- *
- */
-public interface ReserveService {
 
+public interface ReserveService {
+	/**
+	 * @author 정현
+	 *
+	 */
 	//  호스트 예약관리 리스트 개수
 	int selectHostReserveListCount(int memNo);
 
@@ -22,14 +23,16 @@ public interface ReserveService {
 	Reserve selectReserve(int reserveNo);
 
 	// 예약상태 수정
-	int updateReserve(Reserve r);
+	int updateHostReserve(Reserve r);
 
 	//  호스트 예약관리 검색 리스트 개수
-	int searchHostReserveListCount();
+	int searchHostReserveListCount(HashMap<String, String> map);
 
 	// 호스트 예약관리 검색 리스트 
-	ArrayList<Reserve> searchHostReserveList(PageInfo pi);
+	ArrayList<Reserve> searchHostReserveList(HashMap<String, String> map, PageInfo pi);
 	
+	
+	// ---------------------정현
 	
 	/**
 	 * @author 하연 

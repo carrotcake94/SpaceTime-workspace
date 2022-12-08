@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +61,10 @@
         background-color: #eeeeee;
         color: black;
       }
+      .no-page-prev a, .no-page-next a {
+      background-color: #eeeeee !important;
+      }
+      
 
       .pagination a:hover {
         color: rgb(253, 193, 55);
@@ -76,7 +82,7 @@
       }
 
       /* 예약 정보 모달 */
-      #reserve-info-Modal .modal-content {
+      #reserveInfoModal .modal-content {
         width: 700px;
         margin: auto;
         border: none;
@@ -84,7 +90,7 @@
         overflow: hidden;
       }
 
-      #reserve-info-Modal .modal-header {
+      #reserveInfoModal .modal-header {
         background-color: rgb(39, 123, 192);
         text-align: center;
         color: white;
@@ -94,18 +100,18 @@
         margin-bottom: 10px;
       }
 
-      #reserve-info-Modal .modal-body {
+      #reserveInfoModal .modal-body {
         padding: 15px 30px;
       }
 
-      #reserve_Info_tb {
+      #reserveInfotb {
         background-color: white;
         table-layout: fixed;
         margin: 0;
         color: rgb(66, 66, 66);
       }
 
-      #reserve_Info_tb td {
+      #reserveInfotb td {
         vertical-align: middle;
         padding: 0;
         height: 50px;
@@ -113,18 +119,18 @@
         font-weight: 600;
       }
 
-      #reserve_Info_tb tr:nth-child(2) > td {
+      #reserveInfotb tr:nth-child(2) > td {
         font-size: 23px;
         font-weight: 800;
         color: rgb(14, 99, 168);
       }
 
-      #reserve-info-Modal .modal-footer {
+      #reserveInfoModal .modal-footer {
         margin: 0 auto 20px;
         border: none;
       }
 
-      #reserve-info-Modal button {
+      #reserveInfoModal button {
         color: white;
         width: 250px;
         height: 60px;
@@ -136,21 +142,21 @@
         border: none;
       }
 
-      #reserve-info-Modal button:nth-child(1) {
+      #reserveInfoModal button:nth-child(1) {
         background-color: rgb(231, 76, 60);
       }
 
-      #reserve-info-Modal button:nth-child(2) {
+      #reserveInfoModal button:nth-child(2) {
         background-color: rgb(253, 193, 55);
       }
 
-      #reserve-info-Modal button:nth-child(1):hover {
+      #reserveInfoModal button:nth-child(1):hover {
         background-color: rgb(236, 50, 29);
         font-size: 22px;
         font-weight: 600;
       }
 
-      #reserve-info-Modal button:nth-child(2):hover {
+      #reserveInfoModal button:nth-child(2):hover {
         background-color: rgb(255, 187, 27);
         font-size: 22px;
         font-weight: 600;
@@ -160,7 +166,7 @@
       /* -------------------------------------- */
 
       /* 예약 확정 모달 */
-      #rev-confirm-Modal .modal-content {
+      #revConfirmModal .modal-content {
         width: 450px;
         margin: auto;
         border: 1px solid gray;
@@ -169,7 +175,7 @@
         margin-top: 150px;
       }
 
-      #rev-confirm-Modal .modal-header {
+      #revConfirmModal .modal-header {
         background-color: rgb(39, 123, 192);
         text-align: center;
         color: white;
@@ -180,25 +186,25 @@
         margin-bottom: 10px;
       }
 
-      #rev-confirm-Modal .modal-body {
+      #revConfirmModal .modal-body {
         text-align: center;
         margin-top: 30px;
       }
 
-      #rev-confirm-Modal h4 {
+      #revConfirmModal h4 {
         margin-bottom: 20px;
       }
 
-      #rev-confirm-Modal h5 {
+      #revConfirmModal h5 {
         color: rgb(39, 123, 192);
       }
 
-      #rev-confirm-Modal .modal-footer {
+      #revConfirmModal .modal-footer {
         margin: 0 auto 20px;
         border: none;
       }
 
-      #rev-confirm-Modal button {
+      #revConfirmModal button {
         color: white;
         width: 150px;
         height: 60px;
@@ -210,21 +216,21 @@
         border: none;
       }
 
-      #rev-confirm-Modal button:nth-child(1) {
+      #revConfirmModal button:nth-child(1) {
         background-color: rgb(158, 158, 158);
       }
 
-      #rev-confirm-Modal button:nth-child(2) {
+      #revConfirmModal button:nth-child(2) {
         background-color: rgb(253, 193, 55);
       }
 
-      #rev-confirm-Modal button:nth-child(1):hover {
+      #revConfirmModal button:nth-child(1):hover {
         background-color: rgb(136, 136, 136);
         font-size: 20px;
         font-weight: 600;
       }
 
-      #rev-confirm-Modal button:nth-child(2):hover {
+      #revConfirmModal button:nth-child(2):hover {
         background-color: rgb(255, 187, 27);
         font-size: 20px;
         font-weight: 600;
@@ -233,7 +239,7 @@
 
       /* -------------------------------------- */
       /* 예약 취소 모달 */
-      #rev-reject-Modal .modal-content {
+      #revRejectModal .modal-content {
         background-color: lightgray;
         border-radius: 20px;
         width: 500px;
@@ -243,17 +249,17 @@
         padding: 20px;
       }
 
-      #rev-reject-Modal .modal-body {
+      #revRejectModal .modal-body {
         background-color: white;
         border-radius: 15px;
       }
 
-      #rev-reject-Modal form {
+      #revRejectModal form {
         width: 100%;
         height: 100%;
       }
 
-      #rev-reject-Modal textarea {
+      #revRejectModal textarea {
         width: 100%;
         height: 80%;
         border-radius: 5px;
@@ -263,7 +269,7 @@
         resize: none;
       }
 
-      #rev-reject-Modal button {
+      #revRejectModal button {
         width: 80px;
         height: 50px;
         vertical-align: middle;
@@ -276,7 +282,7 @@
         border: none;
       }
 
-      #rev-reject-Modal button:hover {
+      #revRejectModal button:hover {
         font-size: 22px;
         color: #ffff00;
         font-weight: 700;
@@ -289,14 +295,15 @@
 	<div class="main">
 	<div id="reserveList_Host">
       <div>예약 관리 리스트</div>
-      <form action="" method="get" id="revList_Search">
+      <form action="schRevHostList.re" method="get" id="revList_Search">
         <input
           type="search"
           name="keyword"
           placeholder="예약번호 또는 예약자명"
+          value="${keyword }"
         />
 
-        <button type="submit" onclick="">검색</button>
+        <button type="submit">검색</button>
       </form>
       <table class="table table-hover">
         <thead>
@@ -310,103 +317,105 @@
           </tr>
         </thead>
         <tbody>
-          <tr onclick="revInfoModalOpen()">
-            <td>123123</td>
-            <td>공간1</td>
-            <td>김나나</td>
-            <td>2022-11-15</td>
-            <td>50000</td>
-            <td>확정</td>
+         <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
+         <c:forEach var="r" items="${rList}" varStatus="status">
+         <tr onclick="revInfoModalOpen(this)">
+            <td>${r.reserveNo}</td>
+            <td>${r.space.spaceTitle}</td>
+            <td>${r.member.memName}</td>
+            <td>${r.useDate }</td>
+            <td>${r.space.spaceSubTitle}</td>
+            <td>
+	            <c:choose>
+	            <c:when test="${today >= r.useDate }">
+	            	 <c:choose>
+		             <c:when test="${r.reserveStatus eq 'W'}">승인불가</c:when>
+		             <c:when test="${r.reserveStatus eq 'Y'}">이용완료</c:when>
+		             <c:when test="${r.reserveStatus eq 'N'}">예약거절</c:when>
+		             <c:when test="${r.reserveStatus eq 'C'}">고객취소</c:when>
+		             </c:choose>
+	            </c:when>
+	            <c:otherwise>
+	            	<c:choose>
+		             <c:when test="${r.reserveStatus eq 'W'}">승인대기</c:when>
+		             <c:when test="${r.reserveStatus eq 'Y'}">예약확정</c:when>
+		             <c:when test="${r.reserveStatus eq 'N'}">예약거절</c:when>
+		             <c:when test="${r.reserveStatus eq 'C'}">고객취소</c:when>
+		             </c:choose>
+	            </c:otherwise>
+	            </c:choose>
+            </td>
+            <input type="hidden"  value="${r.reserveCount }">
+            <input type="hidden"  value="${r.startTime }">
+         	<input type="hidden"  value="${r.endTime }">
+         	<input type="hidden"  value="${r.denyMessage }">
+         	<input type="hidden"  value="${r.member.phone }">
           </tr>
-          <tr>
-            <td>123123</td>
-            <td>공간1</td>
-            <td>김나나</td>
-            <td>2022-11-15</td>
-            <td>50000</td>
-            <td>확정</td>
-          </tr>
-          <tr>
-            <td>123123</td>
-            <td>공간1</td>
-            <td>김나나</td>
-            <td>2022-11-15</td>
-            <td>50000</td>
-            <td>확정</td>
-          </tr>
-          <tr>
-            <td>123123</td>
-            <td>공간1</td>
-            <td>김나나</td>
-            <td>2022-11-15</td>
-            <td>50000</td>
-            <td>확정</td>
-          </tr>
-          <tr>
-            <td>123123</td>
-            <td>공간1</td>
-            <td>김나나</td>
-            <td>2022-11-15</td>
-            <td>50000</td>
-            <td>확정</td>
-          </tr>
+         </c:forEach>
         </tbody>
       </table>
-      <script>
-        function revInfoModalOpen() {
-          $("#reserve-info-Modal").modal("show");
-        }
-      </script>
+      
       <ul class="pagination">
-        <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
-        <li class="page-item page-btn">
-          <a id="active-page" class="page-link">1</a>
-        </li>
-        <li class="page-item page-btn"><a class="page-link">2</a></li>
-        <li class="page-item page-btn"><a class="page-link">3</a></li>
-        <li class="page-item page-btn"><a class="page-link">4</a></li>
-        <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
+        <c:choose>
+	   		<c:when test="${ pi.currentPage eq 1 }">
+	   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
+	   		</c:when>
+	   		<c:otherwise>
+	   			<li class="page-item"><a class="page-link" href="revHostList.re?rpage=${ pi.currentPage - 1 }">&lt;</a></li>
+	   		</c:otherwise>
+	   	</c:choose>	       
+	       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	       	<li class="page-item page-btn"><a class="page-link" href="revHostList.re?rpage=${ p }">${ p }</a></li>
+	       </c:forEach>
+	       <c:choose>
+	       	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+	       	</c:when>
+	       	<c:otherwise>
+	      	 	<li class="page-item no-page-next"><a class="page-link" href="revHostList.re?rpage=${ pi.currentPage + 1 }">&gt;</a></li>
+	       	</c:otherwise>
+	       </c:choose>
       </ul>
     </div>
 
     <!-- 예약정보 Modal -->
-    <div class="modal" id="reserve-info-Modal">
+    <div class="modal" id="reserveInfoModal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">예약 정보</div>
           <!-- Modal body -->
           <div class="modal-body">
-            <table id="reserve_Info_tb" class="table table-borderless">
+            <table id="reserveInfotb" class="table table-borderless">
               <tbody>
                 <tr>
                   <td style="width: 20%">예약번호</td>
-                  <td>4546</td>
+                  <td id="revNo"></td>
                 </tr>
                 <tr>
                   <td colspan="2">
-                    <span style="cursor: pointer">당산 제임스킴 회의실</span>
+                    <span id="revTitle" style="cursor: pointer"></span>
                   </td>
                 </tr>
                 <tr>
                   <td>예약자</td>
-                  <td>김나나</td>
+                  <td id="revName"></td>
                 </tr>
                 <tr>
                   <td>예약인원</td>
-                  <td>6명</td>
+                  <td id="revCount"></td>
                 </tr>
                 <tr>
                   <td>예약시간</td>
-                  <td>2022-11-15(화) 15:00 ~ 19:00 4시간</td>
+                  <td id="revTime"></td>
                 </tr>
                 <tr>
                   <td>연락처</td>
-                  <td>010-9059-5891</td>
+                  <td id="revPhone"></td>
                 </tr>
                 <tr>
                   <td>금액</td>
-                  <td>48,000원</td>
+                  <td id="revPrice"></td>
                 </tr>
               </tbody>
             </table>
@@ -415,15 +424,13 @@
           <div class="modal-footer">
             <button
               type="button"
-              data-toggle="modal"
-              data-target="#rev-reject-Modal"
+              onclick="reserveModal()"
             >
               예약 취소
             </button>
             <button
               type="button"
-              data-toggle="modal"
-              data-target="#rev-confirm-Modal"
+              onclick="confirmModal()"
             >
               예약 확정
             </button>
@@ -433,7 +440,7 @@
     </div>
 
     <!-- 예약 확정 Modal -->
-    <div class="modal" id="rev-confirm-Modal">
+    <div class="modal" id="revConfirmModal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal Header -->
@@ -445,25 +452,31 @@
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">
-            <button type="button" data-dismiss="modal">닫기</button>
-            <button type="button" onclick="">확인</button>
+        	  <form action="updateHostRev.re" method="post">
+	            <button type="button" data-dismiss="modal">닫기</button>
+	            <button type="submit" >확인</button>
+	            <input type="hidden" name="reserveNo" value="">
+	            <input type="hidden" name="reserveStatus" value="Y">
+	            <input type="hidden" name="denyMessage" value="">
+            </form>
           </div>
         </div>
       </div>
     </div>
 
     <!-- 예약 취소 Modal -->
-    <div class="modal" id="rev-reject-Modal">
+    <div class="modal" id="revRejectModal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <!-- Modal body -->
           <div class="modal-body">
-            <form action="" method="post">
+            <form action="updateHostRev.re" method="post">
               <textarea
                 name="denyMessage"
                 placeholder="예약 취소 사유를 입력해주세요."
               ></textarea>
               <input type="hidden" name="reserveNo" value="" />
+              <input type="hidden" name="reserveStatus" value="N">
               <button type="submit">확인</button>
             </form>
           </div>
@@ -471,9 +484,67 @@
       </div>
     </div>
 	
-	
 	</div>	
 	<jsp:include page="../common/footer.jsp" />
 	</div>
+	<script>
+	function getDayOfWeek(date){ 
+	    const week = ['일', '월', '화', '수', '목', '금', '토'];
+	    const dayOfWeek = week[new Date(date).getDay()];
+	    return dayOfWeek;
+	}
+	
+    function revInfoModalOpen(tr) {
+    	$("#revNo").text($(tr).children().eq(0).text());
+    	$("#revTitle").text($(tr).children().eq(1).text());
+    	$("#revName").text($(tr).children().eq(2).text());
+    	$("#revCount").text($(tr).children("input").eq(0).val()+"명");
+    	var totime = $(tr).children("input").eq(2).val() - $(tr).children("input").eq(1).val();
+    	var useDate = $(tr).children().eq(3).text();
+    	var str = useDate+"("+getDayOfWeek(useDate)+") "+$(tr).children("input").eq(1).val()+":00 ~ "+$(tr).children("input").eq(2).val()+":00 "+totime+"시간";
+    	$("#revTime").text(str);
+    	$("#revPhone").text($(tr).children("input").eq(4).val());
+    	$("#revPrice").text($(tr).children().eq(4).text()+"원");
+       $("#reserveInfoModal").modal("show");
+ 
+    	
+//        <td>${r.reserveNo}</td>
+//        <td>${r.space.spaceTitle}</td>
+//        <td>${r.member.memName}</td>
+//        <td>${r.useDate }</td>
+//        <td>${r.space.spaceSubTitle}</td>
+//        <td>승인불가
+
+//        </td>
+// <input type="hidden"  value="${r.reserveCount }">
+//        <input type="hidden"  value="${r.startTime }">
+//     	<input type="hidden"  value="${r.endTime }">
+//     	<input type="hidden"  value="${r.denyMessage }">
+//     	<input type="hidden"  value="${r.member.phone }">
+       
+    }
+	$(function() {
+		reserveInfoModal
+		$(".page-link").each(function() {
+      		if ($(this).text() ==${ pi.currentPage}) {
+      			$(this).attr("id", "active-page");
+      			$(this).parent().addClass("disabled");
+      		} else {
+      			$(this).removeAttr("id", "active-page");
+      		}
+      	});
+	});
+	
+	confirmModal = () => {
+		$("#revConfirmModal input[name='reserveNo']").val($("#reserveInfoModal #revNo").text());
+		$("#revConfirmModal").modal("show");
+	}
+	
+	reserveModal = () => {
+		$("#revRejectModal input[name='reserveNo']").val($("#reserveInfoModal #revNo").text());
+		$("#revRejectModal").modal("show");
+	}
+	
+	</script>
 </body>
 </html>

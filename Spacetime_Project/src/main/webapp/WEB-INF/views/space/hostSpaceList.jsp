@@ -208,11 +208,9 @@
         background-color: rgb(253, 193, 55);
         color: white;
       }
-
       .page-btn {
         margin: 0 5px;
       }
-
       /* ---------- */
 
 
@@ -441,18 +439,18 @@
 	   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
 	   		</c:when>
 	   		<c:otherwise>
-	   			<li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">Previous</a></li>
+	   			<li class="page-item"><a class="page-link" href="hostSpaceList.sp?spage=${ pi.currentPage - 1 }">&lt;</a></li>
 	   		</c:otherwise>
 	   	</c:choose>	       
 	       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	       	<li class="page-item page-btn"><a class="page-link" href="hostSpaceList?spage=${ p }">${ p }</a></li>
+	       	<li class="page-item page-btn"><a class="page-link" href="hostSpaceList.sp?spage=${ p }">${ p }</a></li>
 	       </c:forEach>
 	       <c:choose>
 	       	<c:when test="${ pi.currentPage eq pi.maxPage }">
 	       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
 	       	</c:when>
 	       	<c:otherwise>
-	      	 	<li class="page-item no-page-next"><a class="page-link" href="hostSpaceList?spage=${ pi.currentPage + 1 }">&gt;</a></li>
+	      	 	<li class="page-item no-page-next"><a class="page-link" href="hostSpaceList.sp?spage=${ pi.currentPage + 1 }">&gt;</a></li>
 	       	</c:otherwise>
 	       </c:choose>	       
       </ul>

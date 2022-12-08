@@ -50,5 +50,150 @@
 		A.Review_No = #{reviewNo}
 	</select>  
 	
+	<!-- 	정현 start -->
+	<!-- 	호스트 나의 소유 공간 리스트 set  -->
+	<resultMap id="spaceTitleSet" type="space">
+		<result column="SPACE_NO" property="spaceNo" />
+		<result column="SPACE_TITLE" property="spaceTitle" />
+	</resultMap>
+	
+	<resultMap id="hostReviewListSet" type="review">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REVIEW_CONT" property="reviewCont" />
+		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
+		<result column="RATING" property="rating" />
+		<result column="REVIEW_ATTACH1" property="reviewAttach1" />
+		<result column="REVIEW_ATTACH2" property="reviewAttach2" />
+		<result column="REVIEW_ATTACH3" property="reviewAttach3" />
+		<result column="HOST_ANSWER" property="hostAnswer" />
+		<collection property="space" ofType="space" >
+			<result column="SPACE_TITLE" property="spaceTitle" />
+		</collection>
+		<collection  property="member" ofType="member" >
+			<result column="MEM_NAME" property="memName" />
+		</collection>
+		<collection  property="reserve" ofType="reserve" >
+			<result column="RESERVE_NO" property="reserveNo" />
+		</collection>
+	</resultMap>	
+
+	<!-- 	공간 타입 리스트 전체 선택 -->
+	<select id="selectMySpaceList" parameterType="_int" resultMap="spaceTitleSet">
+		SELECT SPACE_NO, SPACE_TITLE
+		FROM SPACE
+		WHERE HOST_NO = #{memNo}
+	</select>
+
+	<!-- 호스트 이용후기 관리 리스트  개수 -->
+	<select id="selectHostReviewListCount" parameterType="_int" resultType="_int">
+ 	   SELECT COUNT(*)
+       FROM (
+       SELECT REVIEW_NO
+       FROM REVIEW R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo})
+                    AND REVIEW_STATUS = 'N'
+      ) 
+	</select>
+	<!-- 	호스트 이용후기 관리 리스트-->
+	<select id="selectHostReviewList" parameterType="_int" resultMap="hostReviewListSet">
+	   SELECT  REVIEW_NO
+	   			, REVIEW_CONT
+                , TO_CHAR(REVIEW_ENROLL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEW_ENROLL_DATE
+                , RATING
+                , REVIEW_ATTACH1
+                , REVIEW_ATTACH2
+                , REVIEW_ATTACH3
+                , HOST_ANSWER
+                , M.MEM_NAME
+                , S.SPACE_TITLE
+                , V.RESERVE_NO
+       FROM REVIEW R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo}
+       ) AND REVIEW_STATUS = 'N' ORDER BY REVIEW_NO DESC
+	</select>
+	<!-- 호스트 검색 이용후기 관리 리스트  개수 -->
+	<select id="searchHostReviewListCount" parameterType="hashmap" resultType="_int">
+ 	   SELECT COUNT(*)
+       FROM (
+       SELECT  REVIEW_NO
+       FROM REVIEW R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo})
+		AND REVIEW_STATUS = 'N'
+		<if test='!spaceTitle.equals("공간 전체")'>
+		AND S.SPACE_TITLE = #{spaceTitle}
+		</if>
+		<if test='hostAnswer.equals("답글 있음")'>
+		AND HOST_ANSWER IS NOT NULL
+		</if>
+		<if test='hostAnswer.equals("답글 없음")'>
+		AND HOST_ANSWER IS NULL
+		</if>
+      	AND (M.MEM_NAME LIKE '%' || #{keyword} || '%'
+        OR  V.RESERVE_NO LIKE '%' || #{keyword} || '%'))
+	</select>
+	<!-- 	호스트 검색 이용후기 관리 리스트-->
+	<select id="searchHostReviewList" parameterType="hashmap" resultMap="hostReviewListSet">
+	   SELECT  REVIEW_NO
+	   			, REVIEW_CONT
+                , TO_CHAR(REVIEW_ENROLL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEW_ENROLL_DATE
+                , RATING
+                , REVIEW_ATTACH1
+                , REVIEW_ATTACH2
+                , REVIEW_ATTACH3
+                , HOST_ANSWER
+                , M.MEM_NAME
+                , S.SPACE_TITLE
+                , V.RESERVE_NO
+       FROM REVIEW R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo}
+       ) AND REVIEW_STATUS = 'N'
+       <if test='!spaceTitle.equals("공간 전체")'>
+		AND S.SPACE_TITLE = #{spaceTitle}
+		</if>
+		<if test='hostAnswer.equals("답글 있음")'>
+		AND HOST_ANSWER IS NOT NULL
+		</if>
+		<if test='hostAnswer.equals("답글 없음")'>
+		AND HOST_ANSWER IS NULL
+		</if>
+       AND (M.MEM_NAME LIKE '%' || #{keyword} || '%'
+        OR  V.RESERVE_NO LIKE '%' || #{keyword} || '%')
+        ORDER BY REVIEW_NO DESC
+	</select>
+	
+	<!-- 	호스트 이용후기 답글 신청 -->
+	<update id="updateReviewAnswer" parameterType="reserve">
+		UPDATE RESERVE
+	    SET RESERVE_STATUS = #{reserveStatus}
+	     , DENY_MESSAGE = #{denyMessage}
+		 WHERE RESERVE_NO = #{reserveNo}
+	</update>
+	
+	<!-- 정현 End -->
+	
 	
 </mapper>
