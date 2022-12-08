@@ -166,28 +166,20 @@ public class ReserveController {
 		ArrayList<Reserve> list = reserveService.selectMyReservetList(pi, memNo);
 
 		model.addAttribute("pi", pi);
-<<<<<<< Updated upstream
 		model.addAttribute("list",list);
 		
-=======
 		model.addAttribute("list", list);
 
 //		System.out.println(list);
 
->>>>>>> Stashed changes
 		return "reserve/reserveList";
 
 	}
 
 	/* 마이페이지 예약리스트 - 드롭박스 정렬 (예약대기 / 예약취소 / 예약확정 / 이용완료 ) */
-<<<<<<< Updated upstream
 	
-
 	static int listCount = 0; // 초기화 필터 페이징때문에 밖에 빼둠요 ~~~~~~
-	
-=======
 
->>>>>>> Stashed changes
 	@RequestMapping("myReserveSort.re")
 	public String selectMyReserveListSort(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
 			Model model, HttpSession session, String selectbox) {
@@ -197,7 +189,6 @@ public class ReserveController {
 		// selectbox 랑 memNo 같이 묶어서 보내기 위한 객체
 		Member m = new Member();
 		m.setMemNo(memNo);
-<<<<<<< Updated upstream
 		m.setMemId(selectbox);  // => 아이디 아닌데 그냥 형 맞아서 넣음 
 		
 		
@@ -210,9 +201,7 @@ public class ReserveController {
 		}
 		
 		m.setMemId(selectbox);  // 밑에 메소드에서 재활용할거 
-		
-		
-=======
+
 		m.setMemId(selectbox); // => 아이디 아닌데 그냥 형 맞아서 넣음
 
 		int listCount = 0; // 초기화
@@ -244,7 +233,6 @@ public class ReserveController {
 
 		System.out.println(selectbox);
 
->>>>>>> Stashed changes
 		int pageLimit = 10;
 		int boardLimit = 9;
 
@@ -253,7 +241,6 @@ public class ReserveController {
 		ArrayList<Reserve> list = reserveService.selectMyReserveSortList(pi, m);
 
 		model.addAttribute("pi", pi);
-<<<<<<< Updated upstream
 		model.addAttribute("list",list);
 		
 		
@@ -263,13 +250,11 @@ public class ReserveController {
 		
 		System.out.println(selectbox);
 		
-=======
 		model.addAttribute("list", list);
 
 		System.out.println(listCount);
 //		System.out.println(list);
 
->>>>>>> Stashed changes
 		return "reserve/reserveFilterList";
 	}
 	

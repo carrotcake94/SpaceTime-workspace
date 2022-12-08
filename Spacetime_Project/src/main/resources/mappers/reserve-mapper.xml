@@ -174,7 +174,6 @@
 			 WHERE RESERVE_NO = #{reserveNo}
 		</select>
 		
-<<<<<<< Updated upstream
 		<update id="cancleMyReserve" parameterType="_int">
 			UPDATE RESERVE
 			   SET RESERVE_STATUS = 'C'
@@ -182,9 +181,7 @@
 		</update>
 			
 	<!-- 	정현 -->
-=======
 	<!-- 	정현 start -->
->>>>>>> Stashed changes
 	<!-- 	호스트 예약 관리리스트 set  -->
 	<resultMap id="hostReserveListSet" type="reserve">
 		<result column="RESERVE_NO" property="reserveNo" />
