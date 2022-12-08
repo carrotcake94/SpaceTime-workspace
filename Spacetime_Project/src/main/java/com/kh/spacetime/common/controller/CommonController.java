@@ -31,18 +31,25 @@ public class CommonController {
 	 * @return
 	 */
 	@RequestMapping("rlist.ad")
-	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
+	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, String tab, Model model) {
 
 		// System.out.println("cpage : " + currentPage);
+		System.out.println(tab);
+		HashMap<String, String> map = new HashMap<>();
+		map.put("tab", tab);
 		
-		int listCount = commonService.selectReportListCount();
+		int listCount = commonService.selectReportListCount(map);
+		
+		System.out.println(listCount);
 		
 		int pageLimit = 5;
 		int boardLimit = 10;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		ArrayList<Report> list = commonService.selectReportList(pi);
+		ArrayList<Report> list = commonService.selectReportList(pi, map);
+		
+		System.out.println(list);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);

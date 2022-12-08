@@ -24,16 +24,16 @@ public class CommonServiceImpl implements CommonService {
 	// 관리자페이지 신고 리스트 조회 + 페이징 처리 
 	// 신고 글 총 개수 
 	@Override
-	public int selectReportListCount() {
+	public int selectReportListCount(HashMap<String, String> map) {
 		
-		return commonDao.selectReportListCount(sqlSession);
+		return commonDao.selectReportListCount(sqlSession, map);
 	}
 
 	// 신고 리스트 조회 
 	@Override
-	public ArrayList<Report> selectReportList(PageInfo pi) {
-		
-		return commonDao.selectReportList(sqlSession, pi);
+	public ArrayList<Report> selectReportList(PageInfo pi, HashMap<String, String> map) {
+		System.out.println(map);
+		return commonDao.selectReportList(sqlSession, pi, map);
 	}
 
 	// 신고 상세조회 

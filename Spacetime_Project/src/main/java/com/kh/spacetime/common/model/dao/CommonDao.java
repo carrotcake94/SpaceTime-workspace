@@ -17,20 +17,20 @@ public class CommonDao {
 	// ---------------------------------------------------------------------------------------- 신고관리페이지 
 	
 	// 신고 리스트 페이징 
-	public int selectReportListCount(SqlSessionTemplate sqlSession) {
+	public int selectReportListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
-		return sqlSession.selectOne("commonMapper.selectReportListCount");
+		return sqlSession.selectOne("commonMapper.selectReportListCount", map);
 	}
 	
 	// 신고 리스트 조회 
-	public ArrayList<Report> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Report> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("commonMapper.selectReportList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("commonMapper.selectReportList", map, rowBounds);
 	}
 	
 	// 신고 상세조회 

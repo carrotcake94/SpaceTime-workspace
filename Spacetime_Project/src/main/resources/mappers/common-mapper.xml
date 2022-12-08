@@ -26,44 +26,42 @@
 	
 	
 	<!-- 신고 글 총 개수 -->
-	<select id="selectReportListCount" resultType="_int">
+	<select id="selectReportListCount" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
 		FROM REPORT
-		<choose>
-			<when test="tab == '전체 신고'">
+		
+			<if test="tab == '전체 신고'">
 				WHERE REPORT_STATUS IN ('Y', 'N', 'D')
-			</when>
-			<when test="tab == '미처리 신고'">
+			</if>
+			<if test="tab == '미처리 신고'">
 				WHERE REPORT_STATUS = 'N'
-			</when>
-			<when test="tab == '승인된 신고'">
+			</if>
+			<if test="tab == '승인된 신고'">
 				WHERE REPORT_STATUS = 'Y'
-			</when>
-			<when test="tab == '반려된 신고'">
+			</if>
+			<if test="tab == '반려된 신고'">
 				WHERE REPORT_STATUS = 'D'
-			</when>
-		</choose>
+			</if>
+		
 	</select>
 	
 	<!-- 신고 리스트 조회 -->
-	<select id="selectReportList" resultMap="reportResultSet">
+	<select id="selectReportList" parameterType="hashmap" resultMap="reportResultSet">
 		SELECT REPORT_NO, MEM_ID AS "REPORTED_MEM_NO", REPORT_TYPE, REPORT_CONTENT, TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE", REPORT_STATUS
 		FROM REPORT 
 		JOIN MEMBER ON (REPORTED_MEM_NO = MEM_NO)
-		<choose>
-			<when test="tab == '전체 신고'">
+			<if test="tab == '전체 신고'">
 				WHERE REPORT_STATUS IN ('Y', 'N', 'D')
-			</when>
-			<when test="tab == '미처리 신고'">
+			</if>
+			<if test="tab == '미처리 신고'">
 				WHERE REPORT_STATUS = 'N'
-			</when>
-			<when test="tab == '승인된 신고'">
+			</if>
+			<if test="tab == '승인된 신고'">
 				WHERE REPORT_STATUS = 'Y'
-			</when>
-			<when test="tab == '반려된 신고'">
+			</if>
+			<if test="tab == '반려된 신고'">
 				WHERE REPORT_STATUS = 'D'
-			</when>
-		</choose>
+			</if>
 		ORDER BY REPORT_NO DESC
 	</select> 
 	

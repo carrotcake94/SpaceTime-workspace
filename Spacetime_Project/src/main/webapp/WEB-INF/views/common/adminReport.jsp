@@ -166,16 +166,16 @@
             <!-- 탭 메뉴 -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active reportStatus" data-toggle="tab" href="#all" data-value="all">전체 신고</a>
+                    <a class="nav-link active reportStatus" data-toggle="tab" href="#all">전체 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link reportStatus" data-toggle="tab" href="#wait" data-value="wait">미처리 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#wait">미처리 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link reportStatus" data-toggle="tab" href="#accept" data-value="accept">승인된 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#accept">승인된 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link reportStatus" data-toggle="tab" href="#deny" data-value="deny">반려된 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#deny">반려된 신고</a>
                 </li>
             </ul>
             
@@ -545,19 +545,50 @@
     
     <script>
         $(function() {
+        	
+        	var tab = '전체신고';
+	        console.log(tab);
+        	
             $("li.nav-item").click(function() {
             	
-	            var tab = $(this).children().text();
+	            tab = $(this).children().text();
 	            
-	            console.log(tab);
-	            alert(tab);
+	            /* alert(tab); */
 	            
 	            $.ajax({
 	            	url : "rlist.ad",
-	            	data : {},
+	            	data : {tab : tab},
 	            	success : function(result) {
 	            		
-	            		console.log("쿼리문까지 갔다 왔나..?");
+	            		// console.log("쿼리문까지 갔다 왔나..?");
+	            		var resultStr = "";
+	            		
+	            		for(var i = 0; i < result.length; i++) {
+	            			
+	            			resultStr += "<tr data-toggle="modal" data-target="#reportDetail">"
+				                      +      "<td>" + result[i].reportNo + "</td>"
+				                      +      "<td>" + result[i].reportedMemNo + "</td>"
+				                      +      "<td>" + result[i].reportType + "</td>"
+				                      +      "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;''>" + result[i]reportContent + "</td>"
+				                      +      "<td>" + result[i].reportDate + "</td>"
+				                      +      "<td>"
+				                      +          "<c:choose>"
+				                      +              "<c:when test=" + { result[i].reportStatus eq 'Y' } + ">"
+				                      +                  승인
+				                      +              </c:when>
+				                      +              <c:when test="${r.reportStatus eq 'N'}">
+				                      +                  미처리
+				                      +              </c:when>
+				                      +              <c:when test="${r.reportStatus eq 'D'}">
+				                      +                  반려
+				                      +              </c:when>
+				                      +          </c:choose>
+				                      +      </td>
+				                      +  </tr>	
+	            		}
+	            		
+	            		
+	            		
 	            	}, error : function(result) {
 	            		console.log("ajax 통신 실패!");
 	            	}
