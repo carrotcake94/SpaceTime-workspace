@@ -174,6 +174,7 @@
 			 WHERE RESERVE_NO = #{reserveNo}
 		</select>
 		
+<<<<<<< Updated upstream
 		<update id="cancleMyReserve" parameterType="_int">
 			UPDATE RESERVE
 			   SET RESERVE_STATUS = 'C'
@@ -181,6 +182,9 @@
 		</update>
 			
 	<!-- 	정현 -->
+=======
+	<!-- 	정현 start -->
+>>>>>>> Stashed changes
 	<!-- 	호스트 예약 관리리스트 set  -->
 	<resultMap id="hostReserveListSet" type="reserve">
 		<result column="RESERVE_NO" property="reserveNo" />
@@ -192,18 +196,16 @@
 		<result column="PRICE" property="price" />
 		<result column="RESERVE_STATUS" property="reserveStatus" />
 		<result column="DENY_MESSAGE" property="denyMessage" />
-		<collection resultMap="spaceSet" property="space" />
-		<collection resultMap="memberSet" property="member" />
+		<collection property="space" ofType="space" >
+			<result column="SPACE_TITLE" property="spaceTitle" />
+		</collection>
+		<collection  property="member" ofType="member" >
+			<result column="MEM_NAME" property="memName" />
+			<result column="PHONE" property="phone" />
+		</collection>
 	</resultMap>	
-	<resultMap id="spaceSet" type="space">
-		<result column="SPACE_TITLE" property="spaceTitle" />
-	</resultMap>	
-	<resultMap id="memberSet" type="member">
-		<result column="MEM_NAME" property="memName" />
-		<result column="PHONE" property="phone" />
-	</resultMap>	
-	<!-- 	정현 -->
-	<!-- 	호스트 예약 리스트  개수 -->
+
+	<!-- 호스트 예약 리스트  개수 -->
 	<select id="selectHostReserveListCount" parameterType="_int" resultType="_int">
  	   SELECT COUNT(*)
        FROM (
@@ -235,8 +237,55 @@
                     SELECT SPACE_NO
                     FROM SPACE
                     WHERE HOST_NO = #{memNo}
-       )
+       )ORDER BY RESERVE_NO DESC
 	</select>
+	<!-- 호스트 검색 예약 리스트  개수 -->
+	<select id="searchHostReserveListCount" parameterType="hashmap" resultType="_int">
+ 	   SELECT COUNT(*)
+        FROM (
+        SELECT RESERVE_NO
+       FROM RESERVE R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo}
+       )
+       AND (MEM_NAME LIKE '%' || #{keyword} || '%'
+        OR  RESERVE_NO LIKE '%' || #{keyword} || '%'))
+	</select>
+	<!-- 	호스트 검색 예약 리스트-->
+	<select id="searchHostReserveList" parameterType="hashmap" resultMap="hostReserveListSet">
+	   SELECT RESERVE_NO
+	   			, RESERVE_COUNT
+                , TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS USE_DATE
+                , START_TIME, END_TIME, PRICE
+                , RESERVE_STATUS
+                , R.DENY_MESSAGE
+                , M.MEM_NAME
+                , M.PHONE
+                , S.SPACE_TITLE
+       FROM RESERVE R
+       JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
+       WHERE R.SPACE_NO IN (
+                    SELECT SPACE_NO
+                    FROM SPACE
+                    WHERE HOST_NO = #{memNo}
+       )
+       AND (MEM_NAME LIKE '%' || #{keyword} || '%'
+        OR  RESERVE_NO LIKE '%' || #{keyword} || '%')
+        ORDER BY RESERVE_NO DESC
+	</select>
+	
+	<!-- 	공간 재검수 신청 -->
+	<update id="updateHostReserve" parameterType="reserve">
+		UPDATE RESERVE
+	    SET RESERVE_STATUS = #{reserveStatus}
+	     , DENY_MESSAGE = #{denyMessage}
+		 WHERE RESERVE_NO = #{reserveNo}
+	</update>
 	
 	<!-- 정현 End -->
 
