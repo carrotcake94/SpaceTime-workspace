@@ -78,6 +78,11 @@ public class ReserveDao {
 		
 	}
 	
+	/* 예약 취소 */
+	public int cancleMyReserve(SqlSessionTemplate sqlSession, int rno) {
+		
+		return sqlSession.update("reserveMapper.cancleMyReserve", rno);
+	}
 
 	// 정현-------------------------------------------
 

@@ -105,5 +105,11 @@ public class ReserveServiceImpl implements ReserveService {
 		return reserveDao.selectMyReserve(sqlSession, reserveNo);
 		
 	}
+	
+	/* 예약 취소 */
+	@Override
+	public int cancleMyReserve(int rno) {
 
+		return reserveDao.cancleMyReserve(sqlSession, rno);
+	}
 }

@@ -456,7 +456,7 @@
 				                	<script>
 						                	$(function() {
 						                		$(".detailBtn").click(function() {
-						                			console.log($(".rnoInput").val());
+						                			/* console.log($(".rnoInput").val()); */
 						                			location.href = "reserveDetail.re?rno=" + $(".rnoInput").val();
 						                		});
 						                	});

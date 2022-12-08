@@ -53,4 +53,7 @@ public interface ReserveService {
 	/* 예약 상세 */
 	Reserve selectMyReserve(int reserveNo);
 	
+	/* 예약 취소 */
+	int cancleMyReserve(int rno);
+	
 }

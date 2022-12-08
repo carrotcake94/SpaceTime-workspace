@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +48,7 @@
         padding: 5px;
       }
       
-      .btn-cancle {
+      .btn-back {
       	background-color: lightgray;
 	    display: inline-block;
 	    font-weight: 400;
@@ -150,21 +152,7 @@
         
                 이용8일 전 총 금액의 100% 환불<br><br>
         
-                이용7일 전 환불 불가<br><br>
-        
-                이용6일 전 환불 불가<br><br>
-        
-                이용5일 전 환불 불가<br><br>
-        
-                이용4일 전 환불 불가<br><br>
-        
-                이용3일 전 환불 불가<br><br>
-        
-                이용2일 전 환불 불가<br><br>
-        
-                이용 전날 환불 불가<br><br>
-        
-                이용 당일 환불 불가
+                이용7일 전 ~ 이용 당일 환불 불가
         
               </div>
               
@@ -234,7 +222,7 @@
 
                  <br>
 
-                 <input type="button" class="btn-cancle" value="예약취소" data-toggle="modal"
+                 <input type="button" class="btn-back" value="예약취소" data-toggle="modal"
                  data-target="#cancle-modal">
                  <input type="button" class="btn btn-primary" value="확인">
               </div>
@@ -246,8 +234,17 @@
         </div>
        
         <jsp:include page="../common/footer.jsp" />
-
-
+        
+        <!--  jstl 형변환 -->
+		<c:set var="now" value="<%=new java.util.Date()%>" />
+		<fmt:formatDate var="now" value="${now}" pattern="yyyyMMdd" />
+		<fmt:parseDate var="useDate" value="${r.useDate}" pattern="yyyy-MM-dd HH:mm:ss.S"/> <!-- String 을 Date 로 바꿈 -->
+		<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
+		
+                                    <c:out value="${useDate1}" />
+                                    <c:out value="${now}" />
+                                    <c:out value="${useDate1 - now}" />
+                                    
         <!-- 취소 Modal -->
         <div class="modal" id="cancle-modal">
             <div class="modal-dialog">
@@ -257,28 +254,56 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                         <div style="padding:30px;">
-                            <b>예약을 취소하시겠습니까?</b>
+                            <b>정말로 예약을 취소하시겠습니까?</b>
                             <br><br>
                             <table style="line-height: 2; padding: 5px;">
                                 <tr>
                                     <td>결제금액</td>
-                                    <td>30000원</td>
+                                    <td>${ r.price }원</td>
                                 </tr>
                                 <tr>
                                     <td>차감금액</td>
-                                    <td>1000원</td>
+                                    <td>
+                                    <c:choose>
+                                    	<c:when  test="${(useDate1 - now) >= 8 }">
+                                    		0 원 
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		${ r.price } 원
+                                    	</c:otherwise>
+                                    </c:choose>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>환불금액</td>
-                                    <td>29000원</td>
+                                    <td>
+                                    <c:choose>
+                                    	<c:when  test="${(useDate1 - now) >= 8 }">
+                                    		${ r.price } 원
+                                    	</c:when>
+                                    	<c:otherwise>
+                                    		0 원
+                                    	</c:otherwise>
+                                    </c:choose>
+                                    </td>
                                 </tr>
                             </table>
                             <br>
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-cancle" onclick="$('#cancle-modal').modal('hide');">취소</button>
-                            <button type="button" class="btn btn-primary" onclick="">확인</button>
+                            <button type="button" class="btn-back" style="background-color: #007bff; color:white;" onclick="$('#cancle-modal').modal('hide');">뒤로가기</button>
+                            <button type="button" class="btn btn-primary btn-cancle" style="background-color: lightgray; border-color: lightgray; color:black;" onclick="reserveNoSubmit();">예약취소</button>
+                            
+                            <form id="rnoSubmit" action="" method="post">
+				            	<input type="hidden" name="rno" value="${ r.reserveNo }">
+				            </form>
+                            
+                            <script>
+	                            function reserveNoSubmit() {
+	    		            		$("#rnoSubmit").attr("action", "cancleMyReserve.re").submit();
+	    		            	}
+		                	</script>
                         </div>
                     </div>
                 </div>

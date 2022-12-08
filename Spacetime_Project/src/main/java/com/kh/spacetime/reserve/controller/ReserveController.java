@@ -140,7 +140,7 @@ public class ReserveController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list",list);
 		
-		System.out.println(listCount); 
+//		System.out.println(listCount); 
 //		System.out.println(list);
 		
 		return "reserve/reserveFilterList";
@@ -151,14 +151,26 @@ public class ReserveController {
 	public ModelAndView selectMyReserveDetail(int rno, ModelAndView mv) {
 
 		
-		System.out.println("rno: " + rno);
+//		System.out.println("rno: " + rno);
 		Reserve r = reserveService.selectMyReserve(rno);
 		
-		System.out.println("r: " + r);
 		
 		mv.addObject("r", r).setViewName("reserve/reserveDetailView");
 		
 		return mv;
+	}
+	
+
+	// 예약 취소 
+	@RequestMapping("cancleMyReserve.re")
+	public String cancleMyReserve(int rno, HttpSession session, Model model) {
+		
+		int result = reserveService.cancleMyReserve(rno);
+		
+		if(result > 0) { // 예약 취소 성공 
+			session.setAttribute("alertMsg", "예약이 취소되었습니다.");;
+		}
+		return "redirect:/myReserve.re";
 	}
 
 }
