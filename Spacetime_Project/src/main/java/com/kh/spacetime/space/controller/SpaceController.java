@@ -318,6 +318,7 @@ public class SpaceController {
 	        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 	        
 	        ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
+	        
 	        return new Gson().toJson(listArr);
 	    }
 

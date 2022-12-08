@@ -1,108 +1,93 @@
-/**
- * 
- */
- 
- var rect; // 지도에서 로딩된 화면의 범위를 잡아주는 객체
-var markers = [];; // 마커표시를 위해 위치정보들을 담아두는 배열
-var infowindows = [];
-var spaceListArr;
-var rect;
+var HOME_PATH, map;
 
-//지도를 로딩하는 메소드
-function loadMap() {
-	var HOME_PATH = window.HOME_PATH || '.';
-	//최초로 가리키는 곳 (학원)
-	map = new naver.maps.Map('map', {
-		center: new naver.maps.LatLng(37.53306, 126.89632),
-		zoom: 13
-	});
-	
-	//최초로 로딩된 지도의 범위
-	rect = new naver.maps.Rectangle({
-	    strokeOpacity: 0,
-	    strokeWeight: 0,
-	    fillOpacity: 0.2,
-	    bounds: map.getBounds(), // 지도의 bounds와 동일한 크기의 사각형을 그림
-	    map: map
-	});
-}
+function loadMap(){
 
-//기존의 마커, 리스트, 범위를 초기화하는 메소드
-function resetInfo(rect, markers) {
-	//console.log("초기화 전");
-	//console.log(markers);
-	//console.log(spaceListArr);
-	//console.log(rect);
-	
-	rect = [];
-	hideMarker(rect, markers);
-	console.log(markers);
-	spaceListArr = [];
-}
-
-//변경된 지도의 범위를 불러오는 메소드
-function getMapRect() {
-	rect = new naver.maps.Rectangle({
-	    strokeOpacity: 0,
-	    strokeWeight: 0,
-	    fillOpacity: 0.2,
-	    bounds: map.getBounds(), // 지도의 bounds와 동일한 크기의 사각형을 그림
-	    map: map
-	});
 }
 
 //지도의 정보를 불러와 마커를 추가하는 메소드
-function selectList(rect) {
-	$.ajax({
-		url: "selectSpace.mp",
-		type: "get",
-		data : {
-			max_lat : rect.bounds._max._lat,
-			max_lng : rect.bounds._max._lng,
-			min_lat : rect.bounds._min._lat,
-			min_lng : rect.bounds._min._lng
-		},
-    	success : function(listArr) {
-    		for(var i in listArr) {
-    			spaceListArr[i] = listArr[i]; //게시판형-사진형 리스트 변환을 위해 spaceListArr에 담아둠
-    			
-    			//markers배열에 순서대로 객체의 위도,경도를 부여하며 담음
-    			markers[i] = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
-				
-				//부여된 위치에 따라 지도에 마커 추가 후, 기존의 마커 숨김 처리
-				markers.push(new naver.maps.Marker({
-					map: map,
-					position: markers[i]
-				}));
-    		}
-    		console.log("데이터 불러오기 성공");
-    	},
-    	error : function() {
-    		console.log("selectList() ajax실패");
-    	}
-	});
+function selectList(bounds) {
+
 }
 
-function hideMarker(rect, markers) {
-	for(var i in markers){
-    	if(markers[i]._lat > rect.bounds._min._lat &&
-    		markers[i]._lat < rect.bounds._max._lat &&
-    			markers[i]._lng > rect.bounds._min._lng &&
-    				markers[i]._lng < rect.bounds._max._lng){
-    		markers[i] = null;
-    	}
-    }
-	markers = markers.filter( element => {
-		return element !== null;
-	});
-	console.log(markers);
+var markers = [];
+
+function createMarker() {
+	console.log(spaceListArr);
+	for(var i = 0; i < spaceListArr; i++){
+		console.log(spaceListArr);
+	}
+	//spaceListArr의 위도 경도 뽑기
+	//반복문을 돌면서 각 spaceListArr[i]의 위도, 경도를 marker의 position에 담기
+	
 }
+
+
+function updateMarkers(map, markers) {
+    var mapBounds = map.getBounds();
+    var marker, position;
+    
+    for (var i = 0; i < markers.length; i++) {
+
+        position = markers[i].getPosition();
+        console.log(markers[i].getPosition());
+	}
+	
+    if (mapBounds.hasLatLng()) {
+        showMarker(map, marker);
+    } else {
+        hideMarker(map, marker);
+    }
+}
+
+function showMarker(map, marker) {
+
+    if (marker.setMap()) return;
+    marker.setMap(map);
+}
+
+function hideMarker(map, marker) {
+
+    if (!marker.setMap()) return;
+    marker.setMap(null);
+}
+
+function updateMarker(spaceListArr, markers, map){
+	for(var i in spaceListArr){
+		marker[i] = new naver.maps.Marker({
+			position : new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude),
+			map: map
+		})
+	}
+}
+/***************************************************************************************/
+//마커 업데이트
+function putMarkers(spaceListArr, markers, map){
+	for(var i = 0; i < spaceListArr.length; i++){
+		var position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude)
+		var marker = new naver.maps.Marker({
+			position : position,
+			map: map
+		});
+		markers.push(marker);
+	}
+	
+	var mapBounds = map.getBounds();
+
+    for (var i = 0; i < markers.length; i++) {
+        if (mapBounds.hasLatLng(markers[i].getPosition())) {
+            showMarker(map, markers[i]);
+        } else {
+            hideMarker(map, markers[i]);
+        }
+    }
+}
+
 
 //사진형 리스트로 전환하기 위한 메소드
 //리스트에 해당하는 DOM요소에 필요한 값을 추가하여 "#picList"안에 뿌려주는 구문
 function toPicList() {
 	var picContent = "";
-	//console.log(spaceListArr);
+	console.log(spaceListArr);
 	for(var i = 0; i < spaceListArr.length; i++){
 		picContent += "<div class='picList_content'"> +
 						"<div class='picList_content_pic'>" + + "</div>" +

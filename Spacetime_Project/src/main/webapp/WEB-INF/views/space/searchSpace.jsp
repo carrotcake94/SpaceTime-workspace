@@ -184,81 +184,73 @@
 				<div id="map">
 				</div>
 				<script>
-					var markers = [];
-					var spaceListArr = [];
+						
+						var map;
+						var markers = [];
+						var spaceListArr = [];
+						
 					
-					/* document.querySelector("#listOption_filter").onclick = filter => {						
-						filterOpenClose();
-					} */
-					
-					//게시판형 리스트로 변환
-					/* lineList.onclick = () => {
-						console.log("lineList Clicked");
-	                    picList.style.display="none";
-	                    this.style.display="block";
-	                    toPicList();
-	                }; */
-	                
-	                //사진형 리스트로 변환
-					/* picList.addEventListener("click", picList => {
-						console.log("picList Clicked");
-	                    toPicList();
-					}) */
 					$(function(){
-						loadMap();
+						HOME_PATH = window.HOME_PATH || '.';
+						map = new naver.maps.Map('map', {
+								center: new naver.maps.LatLng(37.53306, 126.89632),
+								zoom: 13
+						});
 						
-						// console.log(rect); // loadMap()에서 뽑아온 변수 , 잘 출력됨 
-						console.log("최초 메소드 시작 전");
-						//console.log(spaceListArr);
-						//console.log(markers);
-						//console.log(rect);
-						selectList(rect);
+						var bounds = map.getBounds();
 						
-						//console.log("최초 메소드 종료 후");
-						//console.log(spaceListArr);
-						//console.log(markers);
+						$.ajax({
+							url: "selectSpace.mp",
+							type: "get",
+							data : {
+								max_lat : bounds._max._lat,
+								max_lng : bounds._max._lng,
+								min_lat : bounds._min._lat,
+								min_lng : bounds._min._lng
+							},
+					    	success : function(listArr) {
+					    		
+					    		// 여기서 스트레이트로 다 찍기 
+					    		for(var i in listArr) {
+					    			spaceListArr[i] = listArr[i]; //게시판형-사진형 리스트 변환을 위해 spaceListArr에 담아둠
+					    			
+					    			position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
+									
+									//부여된 위치에 따라 지도에 마커 추가 후, 기존의 마커 숨김 처리
+									markers.push(new naver.maps.Marker({
+										map: map,
+										position: position
+									}));
+									//console.log(markers[i].getPosition());
+					    		} // 핀꽂기 성공
+					    		// + 옆에 리스트형 응답데이터 listArr 다 뿌려주고 나서 코드 이관 고민해보기
+					    		
+					    		console.log("데이터 불러오기 성공!");
+					    		
+					    	},
+					    	error : function() {
+					    		console.log("selectList() ajax실패");
+					    	}
+						});
+						console.log(spaceListArr);
+						console.log(spaceListArr[0]);
+						
+						
+
+
 					});
 	                
+		                
+	                	
+		                document.querySelector("#test").onclick = () => {
+		                	console.log(spaceListArr);
+		                	console.log(spaceListArr[0].latitude);
+		                }
+						
 	                //불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
-					var lineList = document.querySelector("#lineList");
-					var picList = document.querySelector("#picList");
-					var filter = document.querySelector("#mapFilter");
-	                
-					//"검색" 클릭 시, 기존의 정보들을 초기화한 후 다시 selectList()메소드 실행
-	                document.querySelector("#test").onclick = () => {
-	                	spaceListArr = [];
-	                	getMapRect();
-	                	
-	                	for(var i in markers){
-	                    	if(markers[i]._lat > rect.bounds._min._lat ||
-	                    		markers[i]._lat < rect.bounds._max._lat ||
-	                    			markers[i]._lng > rect.bounds._min._lng ||
-	                    				markers[i]._lng < rect.bounds._max._lng){
-	                    		markers[i] = null;
-	                    	}
-	                    }
-	                	markers = markers.filter( element => {
-	                		return element !== null;
-	                	});
-	                	
-	                	//근데 왜 기존의 마커는 안 없어지는거야;
-	                	//https://navermaps.github.io/maps.js/docs/tutorial-marker-viewport.example.html
-	                	//여기서hideMarker메소드 더 찾아봐 ;;
-	                	
-	                	selectList(rect);
-	                	
-	                }
-	                
-	                function resetInfo(rect, markers) {
-	                	rect = [];
-	                	markers
-	                	spaceListArr = [];
-	                }
-	                //document.querySelector("#mapResearch").onclick = () => {
-	                //	console.log(rect);
-	                //	selectList(rect);
-	                //}
-	                
+					//var lineList = document.querySelector("#lineList");
+					//var picList = document.querySelector("#picList");
+					//var filter = document.querySelector("#mapFilter");
 				</script>
 			</div>
 		</div>
