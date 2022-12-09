@@ -178,7 +178,7 @@ public class ReserveController {
 
 	/* 마이페이지 예약리스트 - 드롭박스 정렬 (예약대기 / 예약취소 / 예약확정 / 이용완료 ) */
 	
-	static int listCount = 0; // 초기화 필터 페이징때문에 밖에 빼둠요 ~~~~~~
+	static int sortListCount = 0; // 초기화 - 필터 페이징때문에 밖에 빼둠요 ~~~~~~
 
 	@RequestMapping("myReserveSort.re")
 	public String selectMyReserveListSort(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
@@ -188,71 +188,47 @@ public class ReserveController {
 
 		// selectbox 랑 memNo 같이 묶어서 보내기 위한 객체
 		Member m = new Member();
-		m.setMemNo(memNo);
-		m.setMemId(selectbox);  // => 아이디 아닌데 그냥 형 맞아서 넣음 
-		
-		
-		switch(selectbox) {
-		case "예약대기" : selectbox = "W"; listCount = reserveService.selectMyReserveListSortCount(m); break;
-		case "예약취소" : selectbox = "C"; listCount = reserveService.selectMyReserveListSortCount(m); break;
-		case "예약반려" : selectbox = "N"; listCount = reserveService.selectMyReserveListSortCount(m); break;
-		case "예약확정" : selectbox = "Y"; listCount = reserveService.selectMyReserveListSortConfirmCount(m); break; // 기본 카운트 
-		case "이용완료" : selectbox = "Y"; listCount = reserveService.selectMyReserveListSortUsedCount(m); break; // 현재날짜 비교해서 이용완료 뽑는 카운트 
-		}
-		
-		m.setMemId(selectbox);  // 밑에 메소드에서 재활용할거 
-
+		m.setMemNo(memNo);		
 		m.setMemId(selectbox); // => 아이디 아닌데 그냥 형 맞아서 넣음
-
-		int listCount = 0; // 초기화
 
 		switch (selectbox) {
 		case "예약대기":
 			selectbox = "W";
-			listCount = reserveService.selectMyReserveListSortCount(m);
+			sortListCount = reserveService.selectMyReserveListSortCount(m);
 			break;
 		case "예약취소":
 			selectbox = "C";
-			listCount = reserveService.selectMyReserveListSortCount(m);
+			sortListCount = reserveService.selectMyReserveListSortCount(m);
 			break;
 		case "예약반려":
 			selectbox = "N";
-			listCount = reserveService.selectMyReserveListSortCount(m);
+			sortListCount = reserveService.selectMyReserveListSortCount(m);
 			break;
 		case "예약확정":
 			selectbox = "Y";
-			listCount = reserveService.selectMyReserveListSortConfirmCount(m);
+			sortListCount = reserveService.selectMyReserveListSortConfirmCount(m);
 			break; // 기본 카운트
 		case "이용완료":
 			selectbox = "Y";
-			listCount = reserveService.selectMyReserveListSortUsedCount(m);
+			sortListCount = reserveService.selectMyReserveListSortUsedCount(m);
 			break; // 현재날짜 비교해서 이용완료 뽑는 카운트
 		}
 
 		m.setMemId(selectbox); // 밑에 메소드에서 재활용할거
 
-		System.out.println(selectbox);
 
 		int pageLimit = 10;
 		int boardLimit = 9;
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		PageInfo pi = Pagination.getPageInfo(sortListCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Reserve> list = reserveService.selectMyReserveSortList(pi, m);
 
 		model.addAttribute("pi", pi);
 		model.addAttribute("list",list);
-		
-		
-		
-		
 		model.addAttribute("selectbox", selectbox);
-		
-		System.out.println(selectbox);
-		
-		model.addAttribute("list", list);
 
-		System.out.println(listCount);
+//		System.out.println(listCount);
 //		System.out.println(list);
 
 		return "reserve/reserveFilterList";
@@ -264,7 +240,6 @@ public class ReserveController {
 
 		
 		Reserve r = reserveService.selectMyReserve(rno);
-		
 		
 		mv.addObject("r", r).setViewName("reserve/reserveDetailView");
 		

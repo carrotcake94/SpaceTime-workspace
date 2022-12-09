@@ -224,8 +224,8 @@
 
                  <input type="button" class="btn-back" value="예약취소" data-toggle="modal"
                  data-target="#cancle-modal">
-                 <input type="button" class="btn btn-primary" value="확인">
-              </div>
+                 <button class="btn btn-primary" onclick="history.back()">확인</button>
+                 </div>
               
                 <br>
                 <br><br>
