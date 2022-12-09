@@ -249,6 +249,32 @@ public class MemberController {
 	}
 	
 	/**
+	 * 비밀번호 변경 - 경미
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("pChange.me")
+	public String changePwd(Member m, HttpSession session, Model model) {
+		
+		// 암호화
+		m.setMemPwd(bcryptPasswordEncoder.encode(m.getMemPwd()));
+		int result = memberService.changePwd(m);
+		
+		if(result > 0) { // 성공
+			
+			session.setAttribute("alertMsg", "성공적으로 비밀번호가 변경되었습니다.");
+			
+			return "redirect:/";
+		}
+		else { // 실패 => 에러문구를 담아서 에러페이지로 포워딩
+			
+			model.addAttribute("errorMsg", "회원정보 변경 실패");
+			
+			return "common/errorPage";
+		}
+	}
+	
+	/**
 	 * 회원 탈퇴용 메소드 - 경미
 	 * @param memPwd
 	 * @param memId
@@ -345,23 +371,17 @@ public class MemberController {
 		
 		if(result > 0) { // 성공
 			
-			// 수정 성공일 경우 DB 로부터 수정된 회원의 정보를 다시 조회해서
-			// session 에 loginUser 키값으로 덮어씌워야 함!!
-			// => 이 때, 기존의 loginMember 메소드를 재활용해서 조회해온다.
 			Member updateMem = memberService.loginMember(m);
 			session.setAttribute("loginMember", updateMem);
 			
-			// session 에 일회성 알람 문구도 담기
 			session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
 			
-			// 마이페이지 url 재요청
 			return "redirect:/myPage.me";
 		}
 		else { // 실패 => 에러문구를 담아서 에러페이지로 포워딩
 			
 			model.addAttribute("errorMsg", "회원정보 변경 실패");
 			
-			// /WEB-INF/views/common/errorPage.jsp
 			return "common/errorPage";
 		}
 	}

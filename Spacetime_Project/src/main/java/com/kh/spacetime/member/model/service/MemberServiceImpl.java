@@ -88,6 +88,17 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.findId(sqlSession, m);
 	}
 	
+	
+	/**
+	 * 비밀번호 변경 서비스 - 경미
+	 */
+	@Override
+	public int changePwd(Member m) {
+		return memberDao.changePwd(sqlSession, m);
+	}
+
+	// --------------------------------------------------------------
+	
 	/**
 	 * 회원 수 조회 - 혜민 
 	 */

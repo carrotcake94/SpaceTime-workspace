@@ -89,7 +89,16 @@
 		 WHERE EMAIL = #{email}
 		   AND MEM_NAME = #{memName}
 		   AND PHONE = #{phone}
+		   AND MEM_STATUS = 'N'
 	</select>
+	
+	<!-- 비밀번호 변경용 쿼리문 - 경미 -->
+	<update id="changePwd" parameterType="member">
+		UPDATE MEMBER
+		   SET MEM_PWD = #{memPwd}
+		 WHERE MEM_ID = #{memId}
+		   AND MEM_STATUS = 'N'
+	</update>
 	
 	<!-- 회원정보 업데이트용 쿼리문 - 경미 -->
 	<update id="updateMember" parameterType="hashmap">

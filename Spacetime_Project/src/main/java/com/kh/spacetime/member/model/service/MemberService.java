@@ -33,6 +33,9 @@ public interface MemberService {
 	// 아이디 찾기 서비스 (select)
 	String findId(Member m);
 	
+	// 비밀번호 변경 서비스 (update)
+	int changePwd(Member m);
+	
 	//	-------------------------------------- 관리자 페이지
 	// 회원수 조회  
 	int selectMemberListCount();

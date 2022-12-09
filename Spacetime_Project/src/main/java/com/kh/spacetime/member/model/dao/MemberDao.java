@@ -81,6 +81,17 @@ public class MemberDao {
 	}
 	
 	/**
+	 * 비밀번호 변경 Dao - 경미
+	 * @param sqlSession
+	 * @param m
+	 * @return
+	 */
+	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.changePwd", m);
+	}
+	
+	/**
 	 * 회원 탈퇴 Dao - 경미
 	 * @param sqlSession
 	 * @param memNo
@@ -101,6 +112,8 @@ public class MemberDao {
 		
 		return sqlSession.update("memberMapper.updateMember", map);
 	}
+	
+	// ------------------------------------------------------------
 	
 	/**
 	 * 	회원 수 조회 - 혜민 

@@ -255,7 +255,7 @@
         border-radius: 6px;
     }
 
-    .btn {
+    .btns>.btn {
         background-color: #277BC0;
         margin: 0;
         padding: 0;
@@ -1014,7 +1014,7 @@
 	                                    </div>
 	                                </div> 
 	                                <div class="btns full">
-	                                    <a class="btn" onclick="btnClose();">확인</a>
+	                                    <a class="btn" onclick="btnClose();" style="background-color: #277BC0;">확인</a>
 	                                </div>
 	                                <script>
 	                                    function btnClose() {
@@ -1248,7 +1248,7 @@
 	                                    </div>
 	                                </div> 
 	                                <div class="btns full">
-	                                    <a class="btn" onclick="btnClose2();">확인</a>
+	                                    <a class="btn" onclick="btnClose2();" style="background-color: #277BC0;">확인</a>
 	                                </div>
 	                                <script>
 	                                    function btnClose2() {

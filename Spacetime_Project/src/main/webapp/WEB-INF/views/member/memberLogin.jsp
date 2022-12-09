@@ -346,7 +346,31 @@
                                         $("#findPwdBtn").attr("disabled", true);
                                     }
                                 }
-                            })
+                            });
+
+                            $("#findPwdBtn").click(function() {
+                                $("#findPwd .modal-title").text("비밀번호 변경");
+                                $("#findPwd_form").attr("action", "pChange.me");
+                                $("#findPwd_form>.modal-body").html(
+                                    "<input name='memId' type='text' class='form-control' placeholder='아이디'><input id='memPwd2' name='memPwd' type='password' class='form-control' placeholder='새 비밀번호' required><input id='pwOk' type='password' class='form-control' placeholder='새 비밀번호 확인' required><span class='error_next_box' id='pswd2Msg'>비밀번호가 일치하지 않습니다.</span>"
+                                );
+                                $("#findPwd_form .btns").html("<button id='pwdChange' type='submit' class='btn btn-primary'>변경</button>");
+                            });
+
+                            $("#pwOk").on({keyup:function() {
+                                // 비밀번호 유효성 검사
+								let pwOk = $("#pwOk").val();
+								if($("#memPwd2").val() != (pwOk)) {
+									$("#pwd2Msg").css("display", "block");
+									// $("#memPwd").select(); // 비밀번호부터 재입력 유도
+									$("#pwdChange").attr("disabled", true);
+									return false;
+								} else {
+									$("#pwd2Msg").css("display", "none");
+									$("#pwdChange").attr("disabled", false);
+									return true;
+								}
+                            }});
                         })
                     </script>
                 </div>
