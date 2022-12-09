@@ -21,7 +21,6 @@ public class CommonServiceImpl implements CommonService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	// 관리자페이지 신고 리스트 조회 + 페이징 처리 
 	// 신고 글 총 개수 
 	@Override
 	public int selectReportListCount(HashMap<String, String> map) {
@@ -32,7 +31,7 @@ public class CommonServiceImpl implements CommonService {
 	// 신고 리스트 조회 
 	@Override
 	public ArrayList<Report> selectReportList(PageInfo pi, HashMap<String, String> map) {
-		System.out.println(map);
+		//System.out.println("서비스 :" + map);
 		return commonDao.selectReportList(sqlSession, pi, map);
 	}
 
@@ -50,7 +49,6 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.updateReport(sqlSession, map);
 	}
 
-	// 관리자페이지 매출 리스트 조회 + 페이징 처리 
 	// 매출이 있는 공간 총 개수 
 	@Override
 	public int selectSalesListCount() {

@@ -5,11 +5,14 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.service.CommonService;
@@ -25,22 +28,38 @@ public class CommonController {
 	private CommonService commonService;
 	
 	/**
-	 * 관리자 신고관리 리스트 조회 메소드 - 혜민 
+	 * 관리자 신고관리 리스트 페이지로 포워딩 - 혜민 
 	 * @param currentPage
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("rlist.ad")
-	public String selectReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, String tab, Model model) {
+	@RequestMapping(value="rlist.ad")
+	public String selectReportList() {
 
-		// System.out.println("cpage : " + currentPage);
-		System.out.println(tab);
+		// /WEB-INF/views/common/adminReport.jsp
+		return "common/adminReport";
+	}
+	
+	/**
+	 * 신고페이지 리스트 조회 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @param tab
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="ajaxrlist.ad", produces="application/json; charset=UTF-8")
+	public String ajaxRList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, String tab) {
+		
+		//System.out.println("컨트롤러 현재페이지 : " + currentPage);
+		//System.out.println("컨트롤러 현재 탭 : " + tab);
+		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("tab", tab);
 		
 		int listCount = commonService.selectReportListCount(map);
 		
-		System.out.println(listCount);
+		System.out.println("listCount : " + listCount);
 		
 		int pageLimit = 5;
 		int boardLimit = 10;
@@ -49,13 +68,40 @@ public class CommonController {
 		
 		ArrayList<Report> list = commonService.selectReportList(pi, map);
 		
-		System.out.println(list);
+		System.out.println("list : " + list);
+		System.out.println("pi :" + pi);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
+		// JSON 형식으로 pi 랑 list 를 넘겨야함!! (두개를 json 으로 묶어서 응답데이터 보내기!!)
+
+		JSONArray jArr = new JSONArray();
+		for(Report r : list) {
+			JSONObject jObj = new JSONObject();
+			jObj.put("reportNp", r.getReportNo());
+			jObj.put("reportType", r.getReportType());
+			jObj.put("reportContent", r.getReportContent());
+			jObj.put("reportDate", r.getReportDate());
+			jObj.put("reportStatus", r.getReportStatus());
+			jObj.put("reportedMemNo", r.getReportedMemNo());
+			jArr.add(jObj);
+		}
 		
-		// /WEB-INF/views/common/adminReport.jsp
-		return "common/adminReport";
+		JSONObject jObj = new JSONObject();
+		jObj.put("listcount", pi.getListCount());
+		jObj.put("listcount", pi.getListCount());
+		jObj.put("listcount", pi.getListCount());
+		jObj.put("listcount", pi.getListCount());
+		jObj.put("listcount", pi.getListCount());
+		jObj.put("listcount", pi.getListCount());
+		jObj.put("listcount", pi.getListCount()); // 이거 마저 변경 
+		
+		JSONObject json = new JSONObject();
+		json.put("list", jArr); // 0번 인덱스 
+		json.put("pi", jObj); // 1번 인덱스 
+		
+		System.out.println(json);
+		
+		return json.toJSONString();
+//		return new Gson().toJson(list);
 	}
 	
 	/**

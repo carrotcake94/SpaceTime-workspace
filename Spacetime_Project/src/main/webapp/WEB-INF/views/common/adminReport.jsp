@@ -162,20 +162,20 @@
         </div>
 
         <!-- 컨텐츠 탭 -->
-        <div id="tab">
+        <div id="tab" >
             <!-- 탭 메뉴 -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active reportStatus" data-toggle="tab" href="#all">전체 신고</a>
+                    <a class="nav-link active reportStatus" data-toggle="tab" href="#all" onclick="showReportList(1);">전체 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link reportStatus" data-toggle="tab" href="#wait">미처리 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#wait" onclick="showReportList(2);">미처리 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link reportStatus" data-toggle="tab" href="#accept">승인된 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#accept" onclick="showReportList(3);">승인된 신고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link reportStatus" data-toggle="tab" href="#deny">반려된 신고</a>
+                    <a class="nav-link reportStatus" data-toggle="tab" href="#deny" onclick="showReportList(4);">반려된 신고</a>
                 </li>
             </ul>
             
@@ -195,29 +195,7 @@
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
-                        <tbody id="myTable">
-                            <c:forEach var="r" items="${list}">
-                                <tr data-toggle="modal" data-target="#reportDetail">
-                                    <td>${r.reportNo}</td>
-                                    <td>${r.reportedMemNo}</td>
-                                    <td>${r.reportType}</td>
-                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
-                                    <td>${r.reportDate}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${r.reportStatus eq 'Y'}">
-                                                승인
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'N'}">
-                                                미처리
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'D'}">
-                                                반려
-                                            </c:when>
-                                        </c:choose>
-                                    </td>
-                                </tr>	
-                            </c:forEach>
+                        <tbody class="myTable">
                         </tbody>
                     </table>
                     <br>
@@ -234,7 +212,7 @@
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
+                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -262,29 +240,7 @@
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
-                        <tbody id="myTable">
-                            <c:forEach var="r" items="${list}">
-                                <tr data-toggle="modal" data-target="#reportDetail">
-                                    <td>${r.reportNo}</td>
-                                    <td>${r.reportedMemNo}</td>
-                                    <td>${r.reportType}</td>
-                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
-                                    <td>${r.reportDate}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${r.reportStatus eq 'Y'}">
-                                                승인
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'N'}">
-                                                미처리
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'D'}">
-                                                반려
-                                            </c:when>
-                                        </c:choose>
-                                    </td>
-                                </tr>	
-                            </c:forEach>
+                        <tbody class="myTable">
                         </tbody>
                     </table>
                     <br>
@@ -301,7 +257,7 @@
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
+                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -329,29 +285,7 @@
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
-                        <tbody id="myTable">
-                            <c:forEach var="r" items="${list}">
-                                <tr data-toggle="modal" data-target="#reportDetail">
-                                    <td>${r.reportNo}</td>
-                                    <td>${r.reportedMemNo}</td>
-                                    <td>${r.reportType}</td>
-                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
-                                    <td>${r.reportDate}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${r.reportStatus eq 'Y'}">
-                                                승인
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'N'}">
-                                                미처리
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'D'}">
-                                                반려
-                                            </c:when>
-                                        </c:choose>
-                                    </td>
-                                </tr>	
-                            </c:forEach>
+                        <tbody class="myTable">
                         </tbody>
                     </table>
                     <br>
@@ -368,7 +302,7 @@
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
+                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -396,35 +330,13 @@
                                 <th style="width:10%;">처리여부</th>
                             </tr>
                         </thead>
-                        <tbody id="myTable">
-                            <c:forEach var="r" items="${list}">
-                                <tr data-toggle="modal" data-target="#reportDetail">
-                                    <td>${r.reportNo}</td>
-                                    <td>${r.reportedMemNo}</td>
-                                    <td>${r.reportType}</td>
-                                    <td align="left" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.reportContent}</td>
-                                    <td>${r.reportDate}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${r.reportStatus eq 'Y'}">
-                                                승인
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'N'}">
-                                                미처리
-                                            </c:when>
-                                            <c:when test="${r.reportStatus eq 'D'}">
-                                                반려
-                                            </c:when>
-                                        </c:choose>
-                                    </td>
-                                </tr>	
-                            </c:forEach>
+                        <tbody class="myTable">
                         </tbody>
                     </table>
                     <br>
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
-                        <ul class="pagination">
+                         <ul class="pagination">
                             <c:choose>
                                 <c:when test="${pi.currentPage eq 1}">
                                     <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
@@ -435,7 +347,7 @@
                             </c:choose>
 
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
+                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
 
                             <c:choose>
@@ -457,145 +369,68 @@
     <!-- 신고 상세페이지로 연결 -->
     <script>
         $(function() {
-            $(".reportList>tbody>tr").click(function() {
-                location.href = "rdetail.ad?rpno=" + $(this).children().eq(0).text();
+            $(".reportList>tbody").click(function() {
+                location.href = "rdetail.ad?rpno=" + $(this).children().children().eq(0).text();
             });
         });
     </script>
-
-    <!-- 신고 상세내역 모달창 -->
-    <form action="" method="post">
-        <div class="modal fade" id="#">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
-                <div class="modal-content">
+    
+    <!-- 리스트 불러오기... -->
+    <script>
+    
+    $(function() {
+        showReportList(1);
+    })
+    
+    function showReportList(num) {
+        
+        var tab = "전체 신고";
+        
+        switch(num) {
+        case 1 : tab = "전체 신고"; break;
+        case 2 : tab = "미처리 신고"; break;
+        case 3 : tab = "승인된 신고"; break;
+        case 4 : tab = "반려된 신고"; break;
+        }
+        
+        /* alert(tab); */
+        
+        $.ajax({
+            url : "ajaxrlist.ad",
+            data : { tab : tab},
+            success : function(result) { // 이 result에는 pi 와 list 가 들어있어야 한다. 
                 
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">신고내역 상세조회</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
+                console.log(result);
+                var resultStr = "";
+
+                for(var i = 0; i < result.list.length; i++) {
                     
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <!-- 신고 정보 -->
-                        <div class="report_info" align="center">
-                            <table id="report_detail"> 
-                                <tr>
-                                    <th style="width: 150px;">신고일</th>
-                                    <td style="width: 500px;">${r.reportDate}</td>
-                                </tr> 
-                                <tr>
-                                    <th>신고유형</th> 
-                                    <td>${r.reportType}</td>
-                                </tr> 
-                                <tr>
-                                    <th>신고자 ID</th>
-                                    <td>kimkim</td>
-                                </tr>
-                                <tr>
-                                    <th>신고대상 ID</th>
-                                    <td>qwerty1234</td>
-                                </tr>
-                                <tr class="reportContent">
-                                    <th>신고내용</th>
-                                    <td>${r.reportContent}</td>
-                                </tr>                        
-                            </table>
-                        
-                            <table class="report_answer" align="center">
-                                <tr>
-                                    <th style="width: 150px;" rowspan="2">관리자 답변</th>
-                                    <td style="width: 500px;">
-                                        <!-- 승인,반려 선택 -->
-                                        <div id="reportStatus" align="right">
-                                            <div class="form-group select_month">
-                                                <select class="form-control">
-                                                    <option value="N">승인대기</option>
-                                                    <option value="Y">승인</option>
-                                                    <option value="D">반려</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control mb-2" style="width:100%;" placeholder="ex) 양식에 맞춰 신고해주세요.">
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    
-    <script>
-        $(function() {
-            
-            // 탭메뉴 클릭시 탭마다 클릭 이벤트 걸기 
-            // 각 탭이 클릭됐을 경우 => ajax 해당 쿼리문까지 다녀오기 (요청시 전달값이 다르게)
-            // 응답데이터 리턴 => success function 내부에 동적으로 요소를 각 탭에 맞는 테이블에 찍어내기 (tbody에!!)
-            
+                    resultStr += "<tr data-toggle='modal' data-target='#reportDetail'>"
+                                    + "<td>" + result.list[i].reportNo + "</td>"
+                                    + "<td>" + result.list[i].reportedMemNo + "</td>"
+                                    + "<td>" + result.list[i].reportType + "</td>"
+                                    + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>"
+                                    + "<td>" + result.list[i].reportDate + "</td>"
+                                    + "<td>";
+                                            if(result.list[i].reportStatus == 'Y') {
+                                                resultStr += "승인";
+                                            } else if (result.list[i].reportStatus == 'N') {
+                                                resultStr += "미처리";
+                                            } else if (result.list[i].reportStatus == 'D') {
+                                                resultStr += "반려";
+                                            }
+                        resultStr += "</td> </tr>";
+                } 
+                
+                $(".myTable").html(resultStr); 
+                
+            }, error : function() {
+                console.log("탭 선택 ajax 통신 실패ㅠㅠ");
+            }
         });
     
-    </script>
-    
-    <script>
-        $(function() {
-        	
-        	var tab = '전체신고';
-	        console.log(tab);
-        	
-            $("li.nav-item").click(function() {
-            	
-	            tab = $(this).children().text();
-	            
-	            /* alert(tab); */
-	            
-	            $.ajax({
-	            	url : "rlist.ad",
-	            	data : {tab : tab},
-	            	success : function(result) {
-	            		
-	            		// console.log("쿼리문까지 갔다 왔나..?");
-	            		var resultStr = "";
-	            		
-	            		for(var i = 0; i < result.length; i++) {
-	            			
-	            			resultStr += "<tr data-toggle="modal" data-target="#reportDetail">"
-				                      +      "<td>" + result[i].reportNo + "</td>"
-				                      +      "<td>" + result[i].reportedMemNo + "</td>"
-				                      +      "<td>" + result[i].reportType + "</td>"
-				                      +      "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;''>" + result[i]reportContent + "</td>"
-				                      +      "<td>" + result[i].reportDate + "</td>"
-				                      +      "<td>"
-				                      +          "<c:choose>"
-				                      +              "<c:when test=" + { result[i].reportStatus eq 'Y' } + ">"
-				                      +                  승인
-				                      +              </c:when>
-				                      +              <c:when test="${r.reportStatus eq 'N'}">
-				                      +                  미처리
-				                      +              </c:when>
-				                      +              <c:when test="${r.reportStatus eq 'D'}">
-				                      +                  반려
-				                      +              </c:when>
-				                      +          </c:choose>
-				                      +      </td>
-				                      +  </tr>	
-	            		}
-	            		
-	            		
-	            		
-	            	}, error : function(result) {
-	            		console.log("ajax 통신 실패!");
-	            	}
-	            	
-	            });
-            });
-        });
+    }
+
     </script>
 
     

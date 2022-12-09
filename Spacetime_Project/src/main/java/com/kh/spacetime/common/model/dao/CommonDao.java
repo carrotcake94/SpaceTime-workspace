@@ -14,8 +14,6 @@ import com.kh.spacetime.reserve.model.vo.Reserve;
 @Repository
 public class CommonDao {
 	
-	// ---------------------------------------------------------------------------------------- 신고관리페이지 
-	
 	// 신고 리스트 페이징 
 	public int selectReportListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
@@ -45,8 +43,6 @@ public class CommonDao {
 	
 		return sqlSession.update("commonMapper.updateReport", map);
 	}
-	
-	// ---------------------------------------------------------------------------------------- 매출관리페이지 
 	
 	// 매출이 있는 공간 리스트 페이징  
 	public int selectSalesListCount(SqlSessionTemplate sqlSession) {
