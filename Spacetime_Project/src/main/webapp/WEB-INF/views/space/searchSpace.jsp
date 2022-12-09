@@ -8,7 +8,6 @@
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
 	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script>
-	<script src="resources/js/map.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -82,77 +81,14 @@
 					<!-- 필터 열고 닫는 구문 -->
 					<!-- 사진형 리스트 -->
 					<div id="picList">
-						<div>
+						<!-- <div>
 							<div class="picList_content">
 								<input type="hidden" name="spaceNo" value="">
 								<div class="picList_content_pic">이미지</div>
 								<div class="picList_content_spaceTitle">상호명</div>
 								<div class="picList_content_price">가격</div>
 							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceTitle">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
-						<div id="pic_pagination">
-							<a class="pic_pagination" href="#"><img src="resources/images/main/leftPointer.png"></a>
-							<a class="pic_pagination">1</a>
-							<a class="pic_pagination">2</a>
-							<a class="pic_pagination">3</a>
-							<a class="pic_pagination" href="#"><img src="resources/images/main/rightPointer.png"></a>
-						</div>
+						</div> -->
 					</div>
 					
 					<!-- 게시판형 리스트 -->
@@ -184,45 +120,91 @@
 				<div id="map">
 				</div>
 				<script>
-						
-						var map;
-						var markers = [];
-						var spaceListArr = [];
-						
+					var spaceListArr = [];
+					var markers = [];
+					var a = [];
 					
-					$(function(){
-						HOME_PATH = window.HOME_PATH || '.';
-						map = new naver.maps.Map('map', {
-								center: new naver.maps.LatLng(37.53306, 126.89632),
-								zoom: 13
-						});
-						
-						var bounds = map.getBounds();
-						
+					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
+					var lineList = document.querySelector("#listOption_lineList");
+					var picList = document.querySelector("#listOption_picList");
+					var filter = document.querySelector("#mapFilter");
+					
+					//지도 실행구문
+					var HOME_PATH = window.HOME_PATH || '.';
+					var map = new naver.maps.Map('map', {
+						center: new naver.maps.LatLng(37.538798, 126.996526),
+						zoom: 12
+					});
+					
+					//표시된 지도의 범위
+					var mapBounds = map.getBounds();
+					
+					window.onload = () => {
+						selectList();
+						updateMarkers(map, markers);
+					};
+					
+					function selectList(map) {
 						$.ajax({
 							url: "selectSpace.mp",
 							type: "get",
 							data : {
-								max_lat : bounds._max._lat,
-								max_lng : bounds._max._lng,
-								min_lat : bounds._min._lat,
-								min_lng : bounds._min._lng
+								max_lat : mapBounds._max._lat,
+								max_lng : mapBounds._max._lng,
+								min_lat : mapBounds._min._lat,
+								min_lng : mapBounds._min._lng
 							},
 					    	success : function(listArr) {
-					    		
-					    		// 여기서 스트레이트로 다 찍기 
 					    		for(var i in listArr) {
-					    			spaceListArr[i] = listArr[i]; //게시판형-사진형 리스트 변환을 위해 spaceListArr에 담아둠
-					    			
-					    			position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
+					    			spaceListArr[i] = listArr[i];
+						    		//불러온 장소정보를 바탕으로 마커찍기 (O)
+					    			//markers배열에 순서대로 객체의 위도,경도를 부여하며 담음
+					    			var position = new naver.maps.LatLng(listArr[i].latitude, listArr[i].longitude)
+					    			var marker = new naver.maps.Marker({
+					    				position : position,
+					    				map: map
+					    			});
+					    			markers.push(marker);	
+					    		}
+				    			//console.log(listArr); //(O)
+				    			//console.log(markers); //(O)
+				    			
+					    		for(var i = 0; i < listArr.length; i++){
+						    		//사진형게시판에 정보를 담아 출력
+						    		var picContent = "<div>" + 
+					    							 "<div>" + 
+														 "<div class='lineList_content'>" + 
+														 "<input type='hidden' name='spaceNo' value='" + listArr[i].spaceNo + "'>" +
+														 "<div class='lineList_content_spaceTitle'>" + listArr[i].spaceTitle + "</div>" + 
+														 "<div class='lineList_content_hashTag'>해시태그</div>" + 
+														 "<div class='lineList_content_extraInfo'>" + 
+															 "<div class='lineList_content_price'>" + listArr[i].hourPrice + "원/ 시간</div>" + 
+															 "<div class='lineList_content_reviewCount'>리뷰갯수</div>" + 
+															 "<div class='lineList_content_like'>좋아요</div>" + 
+														 "</div>" + 
+													 "</div>" + 
+												 "</div>";
+									//console.log(picContent); //(O)
+									//picList.append(picContent);
 									
-									//부여된 위치에 따라 지도에 마커 추가 후, 기존의 마커 숨김 처리
-									markers.push(new naver.maps.Marker({
-										map: map,
-										position: position
-									}));
-									//console.log(markers[i].getPosition());
-					    		} // 핀꽂기 성공
+									lineContent = "<div>" + 
+													  "<div class='lineList_content'>" +
+													  	  "<input type='hidden' name='spaceNo' value='" + listArr[i].spaceNo + "'>" +
+														  "<div class='lineList_content_spaceTitle'>" + listArr[i].spaceTitle + "</div>" +
+														  "<div class='lineList_content_hashTag'>" + listArr[i].hashTag + "</div>" +
+														  "<div class='lineList_content_extraInfo'>" +
+															  "<div class='lineList_content_price'>" + listArr[i].hourPrice + "원/ 시간</div>" +
+															  "<div class='lineList_content_reviewCount'>" + listArr[i].reviewCount + "</div>" +
+															  "<div class='lineList_content_like'>" + listArr[i].likeCount + "</div>" +
+														  "</div>" +
+													  "</div>" +
+												  "</div>";
+									//console.log(lineContent); //(O)
+									//lineList.append(lineContent);
+					    		}
+	
+								
+					    		// 핀꽂기 성공
 					    		// + 옆에 리스트형 응답데이터 listArr 다 뿌려주고 나서 코드 이관 고민해보기
 					    		
 					    		console.log("데이터 불러오기 성공!");
@@ -232,25 +214,67 @@
 					    		console.log("selectList() ajax실패");
 					    	}
 						});
-						console.log(spaceListArr);
-						console.log(spaceListArr[0]);
-						
-						
+					}
+					
+					function updateMarkers(map, markers) {
+					    var position;
 
+					    for (var i = 0; i < markers.length; i++) {
+					        position = markers[i].getPosition();
+
+					        if (mapBounds.hasLatLng(markers[i])) {
+					            showMarker(map, markers[i]);
+					        } else {
+					            hideMarker(map, markers[i]);
+					        }
+					    }
+					}
+
+					function showMarker(map, marker) {
+					    if (marker.setMap()) return;
+					    marker.setMap(map);
+					}
+
+					function hideMarker(map, marker) {
+					    if (!marker.setMap()) return;
+					    marker.setMap(null);
+					}
+					
+					picList.onclick = () => {
+						console.log("사진형");
+						picList.style.display="block";
+						lineList.style.display="none";
+					}
+					
+					lineList.onclick = () => {
+						console.log("게시판형");
+						picList.style.display="block";
+						lineList.style.display="none";
+					}
+					
+	                document.querySelector("#test").onclick = () => {
+	                	//console.log(spaceListArr); //(o)
+	                	//console.log(markers); //(o)
+	                }
+	                
+	                naver.maps.Event.addListener(map, 'zoom_changed', function() {
+	                	spaceListArr = [];
+						markers = [];
+	                	
+	                	console.log(spaceListArr);
+	                	selectList(map);
+					    updateMarkers(map, markers);
 
 					});
-	                
-		                
-	                	
-		                document.querySelector("#test").onclick = () => {
-		                	console.log(spaceListArr);
-		                	console.log(spaceListArr[0].latitude);
-		                }
+
+					naver.maps.Event.addListener(map, 'dragend', function() {
+						spaceListArr = [];
+						markers = [];
 						
-	                //불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
-					//var lineList = document.querySelector("#lineList");
-					//var picList = document.querySelector("#picList");
-					//var filter = document.querySelector("#mapFilter");
+						selectList(map);
+					    updateMarkers(map, markers);
+					});
+					
 				</script>
 			</div>
 		</div>

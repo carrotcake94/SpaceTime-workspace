@@ -1,25 +1,47 @@
 var HOME_PATH, map;
 
 function loadMap(){
-
+	HOME_PATH = window.HOME_PATH || '.';
+						
+	map = new naver.maps.Map('map', {
+		center: new naver.maps.LatLng(37.53306, 126.89632),
+		zoom: 13
+	});
 }
 
 //지도의 정보를 불러와 마커를 추가하는 메소드
 function selectList(bounds) {
-
+	$.ajax({
+		url: "selectSpace.mp",
+		type: "get",
+		data : {
+			max_lat : bounds._max._lat,
+			max_lng : bounds._max._lng,
+			min_lat : bounds._min._lat,
+			min_lng : bounds._min._lng
+		},
+		success : function(listArr) {
+			// 여기서 스트레이트로 다 찍기 
+			for(var i in listArr) {
+				spaceListArr[i] = listArr[i]; //게시판형-사진형 리스트 변환을 위해 spaceListArr에 담아둠
+				
+				var marker = {
+						map: map,
+						position: new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude)
+				}
+				
+				markers.push(marker);
+			}
+		}
+	});
 }
 
 var markers = [];
 
-function createMarker() {
-	console.log(spaceListArr);
-	for(var i = 0; i < spaceListArr; i++){
-		console.log(spaceListArr);
-	}
-	//spaceListArr의 위도 경도 뽑기
-	//반복문을 돌면서 각 spaceListArr[i]의 위도, 경도를 marker의 position에 담기
-	
-}
+
+
+
+
 
 
 function updateMarkers(map, markers) {
