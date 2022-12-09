@@ -2,7 +2,6 @@ package com.kh.spacetime.space.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -211,11 +210,7 @@ public class SpaceController {
 		// 첨부파일 rename 문자열 리스트
 		ArrayList<String> imgStrList = new ArrayList<String>();
 
-		NumberFormat numberFormat = NumberFormat.getInstance();
 		for (Space s : spaceList) {
-			// 원 콤마로 표현
-			s.setHashtag(numberFormat.format(s.getHourPrice()));
-
 			ArrayList<SpaceAttachment> aList = spaceService.selectSpaceAttachmentList(s.getSpaceNo());
 			s.setSpaceSubTitle(aList.get(0).getAttachmentReName());
 

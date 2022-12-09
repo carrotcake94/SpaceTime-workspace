@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
@@ -165,10 +166,6 @@ public class ReviewController {
 //		Member loginMember = (Member)session.getAttribute("loginMember");
 //		int memNo = Integer.parseInt(loginMember.getMemNo());
 		String memNo = "5";
-		
-		System.out.println("검색어:"+keyword);
-		System.out.println("공간명:"+spaceTitle);
-		System.out.println("답급유무:"+hostAnswer);
 
 		HashMap<String, String> map = new HashMap<String, String>();
 
@@ -179,16 +176,12 @@ public class ReviewController {
 
 
 		int listCount = reviewService.searchHostReviewListCount(map);
-		System.out.println(listCount);
 		int pageLimit = 10;
 		int boardLimit = 3;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Review> rList = reviewService.searchHostReviewList(map, pi);
-		System.out.println(rList);
-		
-		
 		ArrayList<Space> sList = reviewService.selectMySpaceList(Integer.parseInt(memNo));
 
 		model.addAttribute("sList", sList);
@@ -196,7 +189,47 @@ public class ReviewController {
 		model.addAttribute("rList", rList);
 
 		return "space/hostReviewList";
-//		return "redirect:/hostRvwList.rv";
+	}
+	
+	
+	/**
+	 * @author 정현 호스트 이용후기 답글 달기
+	 */
+	@ResponseBody
+	@RequestMapping(value="inHostAns.rv", produces="text/html; charset=UTF-8")
+	public String insertReviewAnswer(Review r   ) {
+		int result = reviewService.insertReviewAnswer(r);
+		
+		if (result > 0) {
+		} else {
+		}
+		return "";
+	}
+	/**
+	 * @author 정현 호스트 이용후기 답글 수정
+	 */
+	@ResponseBody
+	@RequestMapping(value="udpHostAns.rv", produces="text/html; charset=UTF-8")
+	public String updateReviewAnswer(Review r   ) {
+		int result = reviewService.updateReviewAnswer(r);
+		
+		if (result > 0) {
+		} else {
+		}
+		return "";
+	}
+	/**
+	 * @author 정현 호스트 이용후기 답글 삭제
+	 */
+	@ResponseBody
+	@RequestMapping(value="delHostAns.rv", produces="text/html; charset=UTF-8")
+	public String deleteReviewAnswer(int rno) {
+		int result = reviewService.deleteReviewAnswer(rno);
+		
+		if (result > 0) {
+		} else {
+		}
+		return "";
 	}
 
 	// ------------------정현

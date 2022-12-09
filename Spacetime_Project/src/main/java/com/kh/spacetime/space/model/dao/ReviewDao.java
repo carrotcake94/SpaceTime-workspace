@@ -32,20 +32,21 @@ public class ReviewDao {
 
 		return sqlSession.selectOne("reviewMapper.selectReview", reviewNo);
 	}
+
 	public int deleteReview(SqlSessionTemplate sqlSession, int reviewNo) {
-		
+
 		return sqlSession.update("reviewMapper.deleteReview", reviewNo);
 	}
-	
+
 	public int updateReview(SqlSessionTemplate sqlSession, Review r) {
-		
+
 		return sqlSession.update("reviewMapper.updateReview", r);
 	}
 
 	// 정현--------------------
 	// 호스트 소유 공간 리스트 가져오기-정현
 	public ArrayList<Space> selectMySpaceList(SqlSessionTemplate sqlSession, int memNo) {
-		return (ArrayList)sqlSession.selectList("reviewMapper.selectMySpaceList", memNo);
+		return (ArrayList) sqlSession.selectList("reviewMapper.selectMySpaceList", memNo);
 	}
 
 	// 호스트 이용후기 리스트 개수 가져오기-정현
@@ -65,8 +66,18 @@ public class ReviewDao {
 	}
 
 	// 호스트 이용후기 답글 달기
+	public int insertReviewAnswer(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("reviewMapper.insertReviewAnswer", r);
+	}
+
+	// 호스트 이용후기 답글 수정
 	public int updateReviewAnswer(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.update("reviewMapper.updateReviewAnswer", r);
+	}
+
+	// 호스트 이용후기 답글 삭제
+	public int deleteReviewAnswer(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.update("reviewMapper.deleteReviewAnswer", rno);
 	}
 
 	// 호스트 검색 이용후기 리스트 총 개수 - 정현

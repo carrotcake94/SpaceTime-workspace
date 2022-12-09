@@ -84,14 +84,12 @@
 		<result column="REVIEW_ATTACH2" property="reviewAttach2" />
 		<result column="REVIEW_ATTACH3" property="reviewAttach3" />
 		<result column="HOST_ANSWER" property="hostAnswer" />
+		<result column="RESERVE_NO" property="reserveNo" />
 		<collection property="space" ofType="space" >
 			<result column="SPACE_TITLE" property="spaceTitle" />
 		</collection>
 		<collection  property="member" ofType="member" >
 			<result column="MEM_NAME" property="memName" />
-		</collection>
-		<collection  property="reserve" ofType="reserve" >
-			<result column="RESERVE_NO" property="reserveNo" />
 		</collection>
 	</resultMap>	
 
@@ -103,20 +101,21 @@
 	</select>
 
 	<!-- 호스트 이용후기 관리 리스트  개수 -->
-	<select id="selectHostReviewListCount" parameterType="_int" resultType="_int">
- 	   SELECT COUNT(*)
+	<select id="selectHostReviewListCount" parameterType="_int" resultType="_int">    
+      SELECT COUNT(*)
        FROM (
        SELECT REVIEW_NO
        FROM REVIEW R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
-       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
-      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
-       WHERE R.SPACE_NO IN (
+       JOIN RESERVE V ON R.RESERVE_NO = V.RESERVE_NO
+       JOIN SPACE S ON V.SPACE_NO = S.SPACE_NO
+       WHERE S.SPACE_NO IN (
                     SELECT SPACE_NO
                     FROM SPACE
                     WHERE HOST_NO = #{memNo})
-                    AND REVIEW_STATUS = 'N'
-      ) 
+     AND REVIEW_STATUS = 'N'
+      )
+      
 	</select>
 	<!-- 	호스트 이용후기 관리 리스트-->
 	<select id="selectHostReviewList" parameterType="_int" resultMap="hostReviewListSet">
@@ -133,9 +132,9 @@
                 , V.RESERVE_NO
        FROM REVIEW R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
-       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
-      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
-       WHERE R.SPACE_NO IN (
+       JOIN RESERVE V ON R.RESERVE_NO = V.RESERVE_NO
+       JOIN SPACE S ON V.SPACE_NO = S.SPACE_NO
+       WHERE S.SPACE_NO IN (
                     SELECT SPACE_NO
                     FROM SPACE
                     WHERE HOST_NO = #{memNo}
@@ -143,33 +142,35 @@
 	</select>
 	<!-- 호스트 검색 이용후기 관리 리스트  개수 -->
 	<select id="searchHostReviewListCount" parameterType="hashmap" resultType="_int">
- 	   SELECT COUNT(*)
+	
+  	   SELECT COUNT(*)
        FROM (
-       SELECT  REVIEW_NO
+       SELECT REVIEW_NO
        FROM REVIEW R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
-       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
-      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
-       WHERE R.SPACE_NO IN (
+       JOIN RESERVE V ON R.RESERVE_NO = V.RESERVE_NO
+       JOIN SPACE S ON V.SPACE_NO = S.SPACE_NO
+       WHERE S.SPACE_NO IN (
                     SELECT SPACE_NO
                     FROM SPACE
                     WHERE HOST_NO = #{memNo})
-		AND REVIEW_STATUS = 'N'
-		<if test='!spaceTitle.equals("공간 전체")'>
-		AND S.SPACE_TITLE = #{spaceTitle}
-		</if>
-		<if test='hostAnswer.equals("답글 있음")'>
-		AND HOST_ANSWER IS NOT NULL
-		</if>
-		<if test='hostAnswer.equals("답글 없음")'>
-		AND HOST_ANSWER IS NULL
-		</if>
-      	AND (M.MEM_NAME LIKE '%' || #{keyword} || '%'
-        OR  V.RESERVE_NO LIKE '%' || #{keyword} || '%'))
+      AND REVIEW_STATUS = 'N'
+	<if test='!spaceTitle.equals("공간 전체")'>
+	AND S.SPACE_TITLE = #{spaceTitle}
+	</if>
+	<if test='hostAnswer.equals("답글 있음")'>
+	AND HOST_ANSWER IS NOT NULL
+	</if>
+	<if test='hostAnswer.equals("답글 없음")'>
+	AND HOST_ANSWER IS NULL
+	</if>
+     	AND (M.MEM_NAME LIKE '%' || #{keyword} || '%'
+       OR  V.RESERVE_NO LIKE '%' || #{keyword} || '%'))
+       
 	</select>
 	<!-- 	호스트 검색 이용후기 관리 리스트-->
 	<select id="searchHostReviewList" parameterType="hashmap" resultMap="hostReviewListSet">
-	   SELECT  REVIEW_NO
+	SELECT  REVIEW_NO
 	   			, REVIEW_CONT
                 , TO_CHAR(REVIEW_ENROLL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEW_ENROLL_DATE
                 , RATING
@@ -182,9 +183,9 @@
                 , V.RESERVE_NO
        FROM REVIEW R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
-       JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
-      JOIN RESERVE V ON R.MEM_NO = V.MEM_NO
-       WHERE R.SPACE_NO IN (
+       JOIN RESERVE V ON R.RESERVE_NO = V.RESERVE_NO
+       JOIN SPACE S ON V.SPACE_NO = S.SPACE_NO
+       WHERE S.SPACE_NO IN (
                     SELECT SPACE_NO
                     FROM SPACE
                     WHERE HOST_NO = #{memNo}

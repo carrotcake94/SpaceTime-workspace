@@ -101,7 +101,7 @@
       }
 
       #reserveInfoModal .modal-body {
-        padding: 15px 30px;
+        padding: 15px 50px;
       }
 
       #reserveInfotb {
@@ -114,8 +114,8 @@
       #reserveInfotb td {
         vertical-align: middle;
         padding: 0;
-        height: 50px;
-        font-size: 18px;
+        height: 55px;
+        font-size: 20px;
         font-weight: 600;
       }
 
@@ -161,6 +161,27 @@
         font-size: 22px;
         font-weight: 600;
         color: black;
+      }
+      #statusMsg {
+     	font-size: 30px;
+        font-weight: 700;
+        padding: 10px 30px;
+        border-radius: 3px;
+    
+      }
+      .span-use {
+          background-color: rgb(255, 187, 27);
+      }
+      .span-exp{
+         background-color: lightgray;
+         color: gray;
+      }
+      .span-confirm {
+          background-color: rgb(39, 123, 192);
+      }
+      .span-refuse, .span-cancle {
+        background-color: rgb(236, 50, 29);
+        color:white;
       }
 
       /* -------------------------------------- */
@@ -317,14 +338,14 @@
           </tr>
         </thead>
         <tbody>
-         <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd" />
+         <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd HH:MM:ss" />
          <c:forEach var="r" items="${rList}" varStatus="status">
          <tr onclick="revInfoModalOpen(this)">
             <td>${r.reserveNo}</td>
             <td>${r.space.spaceTitle}</td>
             <td>${r.member.memName}</td>
             <td>${r.useDate }</td>
-            <td>${r.space.spaceSubTitle}</td>
+            <td><fmt:formatNumber value="${r.price}" />원</td>
             <td>
 	            <c:choose>
 	            <c:when test="${today >= r.useDate }">
@@ -350,6 +371,7 @@
          	<input type="hidden"  value="${r.endTime }">
          	<input type="hidden"  value="${r.denyMessage }">
          	<input type="hidden"  value="${r.member.phone }">
+         	<input type="hidden"  value="${r.reserveStatus}">
           </tr>
          </c:forEach>
         </tbody>
@@ -422,18 +444,7 @@
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">
-            <button
-              type="button"
-              onclick="reserveModal()"
-            >
-              예약 취소
-            </button>
-            <button
-              type="button"
-              onclick="confirmModal()"
-            >
-              예약 확정
-            </button>
+         
           </div>
         </div>
       </div>
@@ -505,6 +516,46 @@
     	$("#revTime").text(str);
     	$("#revPhone").text($(tr).children("input").eq(4).val());
     	$("#revPrice").text($(tr).children().eq(4).text()+"원");
+    	
+    	
+    	let today = new Date();
+    	
+    	var useday = useDate+" "+$(tr).children("input").eq(1).val()+":00:00";
+    	console.log(today);
+    	console.log(useday);
+    	
+    	const date1 = new Date(today);
+    	const date2 = new Date(useday);
+    	
+    	// 공간 상태
+    	let status = $(tr).children("input").eq(5).val();
+    	// 지금 시간이 이용 시작시간보다 크면
+    	var str =""
+    	if(date1.getTime() > date2.getTime()) {
+    		if(status == 'W') {
+    			str += "<span id='statusMsg' class='span-exp'>예약 승인 기한 만료</span>";
+    		}else if(status == 'Y') {
+    			str += "<span id='statusMsg' class='span-use'>이용 완료</span>";
+    		}else if(status == 'N') {
+    			str += "<span id='statusMsg' class='span-refuse'>예약 거절</span>";
+    		}else if(status == 'C') {
+    			str += "<span id='statusMsg' class='span-cancle'>사용자 취소</span>";
+    		}
+    		str+= "</span>"
+    	}else {
+    		if(status == 'W') {
+    				 str += "<button type='button' onclick='reserveModal()'' >예약 취소</button>";
+    				 str +=  "<button type='button' onclick='confirmModal()'' >예약 확정</button>";
+    		}else if(status == 'Y') {
+    			str += "<span id='statusMsg' class='span-confirm'>예약 확정</span>";
+    		}else if(status == 'N') {
+    			str += "<span id='statusMsg' class='span-refuse'>예약 거절</span>";
+    		}else if(status == 'C') {
+    			str += "<span id='statusMsg' class='span-cancle'>사용자 취소</span>";
+    		}
+    	}
+    	$("#reserveInfoModal .modal-footer").html(str);
+        
        $("#reserveInfoModal").modal("show");
  
     	
@@ -524,7 +575,6 @@
        
     }
 	$(function() {
-		reserveInfoModal
 		$(".page-link").each(function() {
       		if ($(this).text() ==${ pi.currentPage}) {
       			$(this).attr("id", "active-page");

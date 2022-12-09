@@ -63,43 +63,53 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	// 정현--------------------
-	// 호스트 소유 공간 리스트  - 정현
+	// 호스트 소유 공간 리스트 - 정현
 	@Override
 	public ArrayList<Space> selectMySpaceList(int memNo) {
 		return reviewDao.selectMySpaceList(sqlSession, memNo);
 	}
-	
-	// 호스트 예약관리 리스트 개수 - 정현
+
+	// 호스트 이용후기관리 리스트 개수 - 정현
 	@Override
 	public int selectHostReviewListCount(int memNo) {
 		return reviewDao.selectHostReviewListCount(sqlSession, memNo);
 	}
 
-	// 호스트 예약관리 리스트 - 정현
+	// 호스트 이용후기관리 리스트 - 정현
 	@Override
 	public ArrayList<Review> selectHostReviewList(int memNo, PageInfo pi) {
 		return reviewDao.selectHostReviewList(sqlSession, memNo, pi);
 	}
 
-	// 호스트 예약관리 상태 업데이트 리스트 - 정현
+	// 호스트 이용후기 답글 달기 - 정현
+	@Override
+	public int insertReviewAnswer(Review r) {
+		return reviewDao.insertReviewAnswer(sqlSession, r);
+	}
+
+	// 호스트 이용후기 답글 수정 - 정현
 	@Override
 	public int updateReviewAnswer(Review r) {
 		return reviewDao.updateReviewAnswer(sqlSession, r);
 	}
+	
+	// 호스트 이용후기 답글 삭제
+	@Override
+	public int deleteReviewAnswer(int rno) {
+		return reviewDao.deleteReviewAnswer(sqlSession, rno);
+	}
 
-	// 호스트 검색 예약관리 리스트 총 개수 - 정현
+	// 호스트 검색 이용후기관리 리스트 개수 - 정현
 	@Override
 	public int searchHostReviewListCount(HashMap<String, String> map) {
 		return reviewDao.searchHostReviewListCount(sqlSession, map);
 	}
 
-	// 호스트 검색 예약관리 리스트 - 정현
+	// 호스트 검색 이용후기관리 리스트 - 정현
 	@Override
 	public ArrayList<Review> searchHostReviewList(HashMap<String, String> map, PageInfo pi) {
 		return reviewDao.searchHostReviewList(sqlSession, map, pi);
 	}
 	// ---------------------정현
-
-	
 
 }

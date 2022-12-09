@@ -46,11 +46,7 @@ public class ReserveController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Reserve> rList = reserveService.selectHostReserveList(memNo, pi);
-		NumberFormat numberFormat = NumberFormat.getInstance();
-		for (Reserve r : rList) {
-			// 원 콤마로 표현
-			r.getSpace().setSpaceSubTitle(numberFormat.format(r.getPrice()));
-		}
+		
 		Date now = new Date();
 		model.addAttribute("now", now);
 		model.addAttribute("pi", pi);
@@ -82,11 +78,7 @@ public class ReserveController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Reserve> rList = reserveService.searchHostReserveList(map, pi);
-		NumberFormat numberFormat = NumberFormat.getInstance();
-		for (Reserve r : rList) {
-			// 원 콤마로 표현
-			r.getSpace().setSpaceSubTitle(numberFormat.format(r.getPrice()));
-		}
+
 		Date now = new Date();
 		model.addAttribute("now", now);
 		model.addAttribute("pi", pi);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,6 @@
       }
 
       #spReviewDiv {
-        overflow: hidden;
         width: 800px;
         margin: 30px auto;
         color: rgb(54, 54, 54);
@@ -61,6 +61,10 @@
         border: none;
         font-size: 18px;
       }
+      
+      #revListSearchForm button:hover {
+        font-size: 20px;
+      }
 
       /* select box*/
       #theme1,
@@ -100,13 +104,14 @@
         top: 100%;
         left: 0;
         width: 100%;
-        overflow: hidden;
-        max-height: 0;
+        overflow: auto;
         display: none;
+
       }
 
       .rev-select.active .option-list {
-        max-height: none;
+        max-height: 190px;
+        z-index:3;
       }
 
       .option {
@@ -223,22 +228,21 @@
         margin-bottom: 30px;
       }
       .answer-text,
-      .answer-area > button {
-        height: 100px;
+      .answer-area > .sub-btn {
+        height: 120px;
       }
 
       .answer-text {
         border: 1px solid lightgray;
         width: calc(100% - 150px);
         padding: 10px;
-        overflow: hidden;
         margin: 0;
         float: left;
       }
 
       .answer-text > textarea {
         width: 100%;
-        height: 100%;
+        height: calc(100% - 25px);
         font-size: 15px;
         font-weight: 500;
         border: none;
@@ -250,12 +254,12 @@
       .lcount {
         float: right;
         margin: 5px;
-        font-size: 17px;
+        font-size: 12px;
         font-weight: 500;
         color: rgb(127, 127, 127);
       }
 
-      .answer-area > button {
+      .answer-area > .sub-btn {
         float: right;
         width: 150px;
         text-align: center;
@@ -266,6 +270,28 @@
         color: white;
       }
 
+
+	  .upd-btn, .del-btn {
+	  	float: right;
+        width: 150px;
+        height: 50px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 500;
+        border: none;
+        border-radius: 5px;
+        margin:20px 0 0 20px;
+        background-color: rgb(39, 123, 192);
+        color: white;
+	  }
+	  .del-btn {
+	    background-color: gray;
+	  }
+	  .del-btn:hover, .upd-btn:hover {
+	    font-size: 22px;
+	  }
+	  
+	  
       /* -------------*/
       /* 리뷰 이미지 모달 */
       #reviewImgModal .modal-content {
@@ -357,7 +383,12 @@
       </form>
       <c:forEach var="r" items="${rList }" varStatus="status.index">
       <div class="review-area" id="review${r.reviewNo}">
-        <div class="rtitle">예약번호${r.reserve.reserveNo}<span>${r.rating}</span></div>
+        <div class="rtitle">예약번호${r.reserveNo}
+        	<span>
+        	<fmt:parseNumber var="i" value="${r.rating/2}" integerOnly="true" />
+        	<c:set var="j" value="${r.rating%2}" />
+        	<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class="fa fa-star-half-o" aria-hidden="true"></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if></span>
+        </div>
         <div class="rwriter">${r.member.memName } - ${r.space.spaceTitle }</div>
         <div class="rcontent-area">
           <div class="rcontent">${r.reviewCont}</div>
@@ -384,6 +415,8 @@
         <div class="rdate">${r.reviewEnrollDate }</div>
 
         <div class="hotitle">호스트 답글</div>
+        <form  method="post" id="hostAnswerForm">
+        <input type="hidden" name="reviewNo" value="${r.reviewNo }">
         <c:choose>
         <c:when test="${empty r.hostAnswer}">
          <div class="answer-area">
@@ -395,17 +428,20 @@
             ></textarea>
             <div class="lcount"><span>0</span> / 100</div>
           </div>
-          <button>등록</button>
+          <button type="button" class="sub-btn" onclick="answerSub(1)">등록</button>
         </div>
         </c:when>
         <c:otherwise>
         <div class="answer-area">
-        <div>
+        <div >
 	        ${r.hostAnswer }
         </div>
+        <button type="button" class="upd-btn">수정</button>
+        <button type="button" class="del-btn" onclick="answerSub(2)">삭제</button>
         </div>
         </c:otherwise>
         </c:choose>
+        </form>
       </div>
       </c:forEach>
       <ul class="pagination">
@@ -513,6 +549,25 @@
       $("#reviewImgModal img").addClass(rId + "-img" + index);
       $("#reviewImgModal img").attr("src", $("#" + rId + " .img" + index).attr("src"));
     }
+    // 글자수 체크
+	$(function() {
+		$('#spInsertForm input').keyup(function () {		
+            $(this).parent().prev().children().children().first().text($(this).val().length);  			
+		});
+		$('.answer-text textarea').keyup(function () {		
+			 $(this).next().children().first().text($(this).val().length);  
+		});
+	});
+    
+	answerSub = (type) => {
+		if(type == 1) {
+			$("#hostAnswerForm").attr("action", "inHostAns.rv");
+		}else {
+			$("#hostAnswerForm").attr("action", "delHostAns.rv");
+		}
+		$("#hostAnswerForm").submit();
+	}
+    
   </script>
 	</div>
 	
