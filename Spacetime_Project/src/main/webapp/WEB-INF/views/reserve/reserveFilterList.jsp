@@ -406,9 +406,17 @@
 			</c:when>
 			<c:otherwise>
 				          <c:forEach var="r" items="${ list }">
+				          
+				         		 <!--  jstl 형변환 -->
+								<c:set var="now" value="<%=new java.util.Date()%>" />
+								<fmt:formatDate var="now" value="${now}" pattern="yyyyMMdd" />
+								<fmt:parseDate var="useDate" value="${r.useDate}" pattern="yyyyMMdd"/> <!-- String 을 Date 로 바꿈 -->
+								<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
+				          
+				          
             		            <div class="space">
 				              <div class="img_area">
-				                <img src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
+				                <img src="resources/images/space/space/${ r.attachmentRename }" alt="사진 없음" />
 				                <div class="img_btn_area">
 				                  <button type="button" class="button_img button_img_prev">
 				                    <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -422,8 +430,14 @@
 				                		<c:when test="${ r.reserveStatus eq 'W' }">
 				                			예약 대기 
 				                		</c:when>
-				                		<c:when test="${ r.reserveStatus eq 'Y' }">
+				                		<c:when test="${ r.reserveStatus eq 'Y'  and useDate1 > now }">
 				                			예약 확정 
+				                		</c:when>
+				                		<c:when test="${ r.reserveStatus eq 'C' }">
+				                			예약 취소
+				                		</c:when>
+				                		<c:when test="${ r.reserveStatus eq 'N' }">
+				                			예약 반려
 				                		</c:when>
 				                		<c:otherwise>
 				                			이용 완료 

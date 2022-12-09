@@ -412,7 +412,7 @@
 				          
             		            <div class="space">
 				              <div class="img_area">
-				                <img src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
+				                <img src="resources/images/space/space/${ r.attachmentRename }" alt="사진 없음" />
 				                <div class="img_btn_area">
 				                  <button type="button" class="button_img button_img_prev">
 				                    <i class="fa fa-angle-left" aria-hidden="true"></i>
