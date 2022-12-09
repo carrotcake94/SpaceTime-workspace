@@ -190,7 +190,9 @@ public class ReserveController {
 		Member m = new Member();
 		m.setMemNo(memNo);		
 		m.setMemId(selectbox); // => 아이디 아닌데 그냥 형 맞아서 넣음
-
+		
+		String compare = "";
+				
 		switch (selectbox) {
 		case "예약대기":
 			selectbox = "W";
@@ -205,31 +207,44 @@ public class ReserveController {
 			sortListCount = reserveService.selectMyReserveListSortCount(m);
 			break;
 		case "예약확정":
-			selectbox = "Y";
+			selectbox = "Y"; 
+			System.out.println(selectbox);
 			sortListCount = reserveService.selectMyReserveListSortConfirmCount(m);
 			break; // 기본 카운트
 		case "이용완료":
-			selectbox = "Y";
+			selectbox = "Y"; compare="D";
 			sortListCount = reserveService.selectMyReserveListSortUsedCount(m);
 			break; // 현재날짜 비교해서 이용완료 뽑는 카운트
 		}
 
 		m.setMemId(selectbox); // 밑에 메소드에서 재활용할거
-
-
+		
 		int pageLimit = 10;
 		int boardLimit = 9;
 
 		PageInfo pi = Pagination.getPageInfo(sortListCount, currentPage, pageLimit, boardLimit);
 
-		ArrayList<Reserve> list = reserveService.selectMyReserveSortList(pi, m);
-
+		ArrayList<Reserve> list = null;
+		
+		if(selectbox.equals("W") && compare.equals("")) {
+			list = reserveService.selectMyReserveSortList(pi, m);
+		} else if(selectbox.equals("C") && compare.equals("")) {
+			list = reserveService.selectMyReserveSortList(pi, m);
+		} else if(selectbox.equals("N") && compare.equals("")) {
+			list = reserveService.selectMyReserveSortList(pi, m);
+		} else if(selectbox.equals("Y") && compare.equals("D")) { // 이용완료인경우 
+			list = reserveService.selectMyReserveSortUsedList(pi, m);
+		} else {
+			list = reserveService.selectMyReserveSortConfirmList(pi, m);
+		}
+		
+		System.out.println(list);
+		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list",list);
 		model.addAttribute("selectbox", selectbox);
 
-//		System.out.println(listCount);
-//		System.out.println(list);
+
 
 		return "reserve/reserveFilterList";
 	}

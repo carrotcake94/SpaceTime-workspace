@@ -91,7 +91,18 @@ public class ReserveServiceImpl implements ReserveService {
 
 		return reserveDao.selectMyReserveSortList(sqlSession, pi, m);
 	}
-	
+
+	@Override
+	public ArrayList<Reserve> selectMyReserveSortConfirmList(PageInfo pi, Member m) {
+		
+		return reserveDao.selectMyReserveSortConfirmList(sqlSession, pi, m);
+	}
+
+	@Override
+	public ArrayList<Reserve> selectMyReserveSortUsedList(PageInfo pi, Member m) {
+		
+		return reserveDao.selectMyReserveSortUsedList(sqlSession, pi, m);
+	}
 
 	/* 예약 상세 */
 	@Override
@@ -107,4 +118,5 @@ public class ReserveServiceImpl implements ReserveService {
 
 		return reserveDao.cancleMyReserve(sqlSession, rno);
 	}
+
 }

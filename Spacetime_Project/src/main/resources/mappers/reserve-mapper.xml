@@ -13,6 +13,7 @@
 			<result column="SPACE_TITLE" property="memNo" />
 			<result column="ADDRESS_DEFAULT" property="denyMessage" />
 			<result column="ATTACHMENT_NO" property="endTime" />
+			<result column="ATTACHMENT_RENAME" property="attachmentRename" />
 		</resultMap>
 		
 		<!--   하연 : 조인떄문에 야매로 가공한 resultSet 입니다.. -->
@@ -51,6 +52,7 @@
 			     , ATTACHMENT_NO
 			     , PRICE
 			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			     , ATTACHMENT_RENAME
 			FROM RESERVE R
 			JOIN SPACE USING (SPACE_NO)
 			JOIN MEMBER USING (MEM_NO)
@@ -99,6 +101,7 @@
 			     , ATTACHMENT_NO
 			     , PRICE
 			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			     , ATTACHMENT_RENAME
 			FROM RESERVE R
 			JOIN SPACE USING (SPACE_NO)
 			JOIN MEMBER USING (MEM_NO)
@@ -119,6 +122,7 @@
 			     , ATTACHMENT_NO
 			     , PRICE
 			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			     , ATTACHMENT_RENAME
 			FROM RESERVE R
 			JOIN SPACE USING (SPACE_NO)
 			JOIN MEMBER USING (MEM_NO)
@@ -141,6 +145,7 @@
 			     , ATTACHMENT_NO
 			     , PRICE
 			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
+			     , ATTACHMENT_RENAME
 			FROM RESERVE R
 			JOIN SPACE USING (SPACE_NO)
 			JOIN MEMBER USING (MEM_NO)

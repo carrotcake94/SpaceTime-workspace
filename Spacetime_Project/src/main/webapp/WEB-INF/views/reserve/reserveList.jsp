@@ -396,7 +396,6 @@
         
         
         <div id="space_area">
-
 		<c:choose>
 			<c:when test="${ empty list }">
 				<div style="width:100%; display: block; text-align:center; margin: 80px 0px;">
@@ -405,6 +404,12 @@
 			</c:when>
 			<c:otherwise>
 				          <c:forEach var="r" items="${ list }">
+				          	    <!--  jstl 형변환 -->
+								<c:set var="now" value="<%=new java.util.Date()%>" />
+								<fmt:formatDate var="now" value="${now}" pattern="yyyyMMdd" />
+								<fmt:parseDate var="useDate" value="${r.useDate}" pattern="yyyyMMdd"/> <!-- String 을 Date 로 바꿈 -->
+								<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
+				          
             		            <div class="space">
 				              <div class="img_area">
 				                <img src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
@@ -416,17 +421,24 @@
 				                    <i class="fa fa-angle-right" aria-hidden="true"></i>
 				                  </button>
 				                </div>
-				                <button class="space_state conwait">
+				                <button class="space_state conwait" id="selectText" name="selectText">
 				                    <c:choose>
 				                		<c:when test="${ r.reserveStatus eq 'W' }">
 				                			예약 대기 
 				                		</c:when>
-				                		<c:when test="${ r.reserveStatus eq 'Y' }">
+				                		<c:when test="${ r.reserveStatus eq 'Y'  and useDate1 > now }">
 				                			예약 확정 
+				                		</c:when>
+				                		<c:when test="${ r.reserveStatus eq 'C' }">
+				                			예약 취소
+				                		</c:when>
+				                		<c:when test="${ r.reserveStatus eq 'N' }">
+				                			예약 반려
 				                		</c:when>
 				                		<c:otherwise>
 				                			이용 완료 
 				                		</c:otherwise>
+				                		
 				                	</c:choose>
 				                </button>
 				              </div>

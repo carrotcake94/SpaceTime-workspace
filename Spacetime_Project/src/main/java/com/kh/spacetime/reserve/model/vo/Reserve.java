@@ -38,5 +38,6 @@ public class Reserve {
 		private String payMethod;
 		private String spaceTitle;
 		private String nickname;
+		private String attachmentRename;
 
 }

@@ -51,7 +51,10 @@ public interface ReserveService {
 	int selectMyReserveListSortUsedCount(Member m);
 	
 	ArrayList<Reserve> selectMyReserveSortList(PageInfo pi, Member m);
+
+	ArrayList<Reserve> selectMyReserveSortConfirmList(PageInfo pi, Member m);
 	
+	ArrayList<Reserve> selectMyReserveSortUsedList(PageInfo pi, Member m);
 
 	/* 예약 상세 */
 	Reserve selectMyReserve(int reserveNo);

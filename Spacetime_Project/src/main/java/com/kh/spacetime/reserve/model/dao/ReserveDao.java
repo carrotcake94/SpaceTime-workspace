@@ -71,6 +71,26 @@ public class ReserveDao {
 		return (ArrayList) sqlSession.selectList("reserveMapper.selectMyReserveSortList", m, rowBounds);
 	}
 	
+	public ArrayList<Reserve> selectMyReserveSortConfirmList(SqlSessionTemplate sqlSession, PageInfo pi, Member m) {
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList) sqlSession.selectList("reserveMapper.selectMyReserveSortConfirmList", m, rowBounds);
+	}
+	
+	public ArrayList<Reserve> selectMyReserveSortUsedList(SqlSessionTemplate sqlSession, PageInfo pi, Member m) {
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList) sqlSession.selectList("reserveMapper.selectMyReserveSortUsedList", m, rowBounds);
+	}
+	
 	/* 예약 상세 */
 	public Reserve selectMyReserve(SqlSessionTemplate sqlSession, int reserveNo) {
 		
