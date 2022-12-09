@@ -32,6 +32,15 @@ public class ReviewDao {
 
 		return sqlSession.selectOne("reviewMapper.selectReview", reviewNo);
 	}
+	public int deleteReview(SqlSessionTemplate sqlSession, int reviewNo) {
+		
+		return sqlSession.update("reviewMapper.deleteReview", reviewNo);
+	}
+	
+	public int updateReview(SqlSessionTemplate sqlSession, Review r) {
+		
+		return sqlSession.update("reviewMapper.updateReview", r);
+	}
 
 	// 정현--------------------
 	// 호스트 소유 공간 리스트 가져오기-정현

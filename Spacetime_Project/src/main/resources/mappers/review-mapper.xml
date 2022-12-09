@@ -10,7 +10,6 @@
 		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
 		<result column="REVIEW_NO" property="reviewNo" />
 	</resultMap>
-	
 	<!-- 리스트조회 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -20,7 +19,8 @@
 	
 	<select id="selectList" resultMap="reviewResultSet" parameterType="_int">
 		SELECT
-		C.RESERVE_NO		--예약번호
+		A.REVIEW_NO
+		, C.RESERVE_NO		--예약번호
 		, B.SPACE_TITLE		--공간장소
 		, A.REVIEW_CONT		--리뷰내용
 		, A.RATING			--평점
@@ -33,13 +33,15 @@
 		ON B.SPACE_NO = C.SPACE_NO
 		WHERE
 		A.MEM_NO = #{memNo}
+		AND REVIEW_STATUS = 'N'
 		ORDER BY REVIEW_NO DESC
 	</select>
 	
 	<!--상세페이지-->
 	<select id="selectReview" parameterType="_int" resultMap="reviewResultSet"> 
-		SELECT
-		B.SPACE_TITLE --공간명
+		SELECT 
+		A.REVIEW_NO AS "REVIEW_NO"
+		, B.SPACE_TITLE --공간명
 		, A.RATING --평점
 		, TO_CHAR(A.REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE --등록일
 		, A.REVIEW_CONT --내용
@@ -49,6 +51,22 @@
 		WHERE
 		A.Review_No = #{reviewNo}
 	</select>  
+	
+	<!-- 삭제 -->
+	<update id="deleteReview" parameterType="_int">
+		UPDATE REVIEW
+		   SET REVIEW_STATUS = 'Y'
+		 WHERE REVIEW_NO = #{reviewNo}
+	</update>
+	
+	<!-- 업데이트 -->
+	<update id="updateReview" parameterType="review">
+		UPDATE REVIEW
+		   SET 
+		      RATING = #{rating},
+		      REVIEW_CONT = #{reviewCont}
+		 WHERE REVIEW_NO = #{reviewNo}
+	</update>
 	
 	<!-- 	정현 start -->
 	<!-- 	호스트 나의 소유 공간 리스트 set  -->

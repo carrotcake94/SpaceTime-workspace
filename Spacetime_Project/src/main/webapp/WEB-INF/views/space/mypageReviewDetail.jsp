@@ -171,9 +171,9 @@
 						<th class="review date"><h3><b>등록일</b></h3></th>
 					</tr>
 					<tr>
-						<td class="review spaceTitle">신대방 파티룸</td>
-						<td class="review rate">⭐⭐⭐⭐</td>
-						<td class="review date">2022-10-31</td>
+						<td class="review spaceTitle">${r.spaceTitle }</td>
+						<td class="review rate">${r.rating }</td>
+						<td class="review date">${r.reviewEnrollDate }</td>
 					</tr>
 					<tr>
 						<th colspan="3" class="review"><h3><b>내용</b></h3></th>					
@@ -193,19 +193,38 @@
 					</tr>
 					<tr>
 						<td colspan="3" class="reviewContent">
-						파티룸 상태가 너무 깔끔해요.<br>
-						다음에 친구들이랑 또 방문해서 재밌게 놀고싶어요.
-						</td>
+						${r.reviewCont}
 					</tr>
 				</table>
 			</div>
 			<br><br>
 
 			<div class="btns" align="center">
-				<a href="" type="button" class="btn btn-sm btn-secondary">목록</a>
-				<a href="" type="button" class="btn btn-sm btn-warning">수정</a>
-				<a href="" type="button" class="btn btn-sm btn-danger">삭제</a>
+				<a href="list.re" type="button" class="btn btn-sm btn-secondary">목록</a>
+				<a type="button" class="btn btn-sm btn-warning" onclick="postFormSubmit(1);">수정</a>
+				<a type="button" class="btn btn-sm btn-danger" onclick="postFormSubmit(2);">삭제</a>
 			</div>
+			<br><br>
+	            
+	            <form id="postForm" action="" method="get">
+	            	<input type="hidden" name="reviewNo" value="${r.reviewNo}">
+	            	<%-- <input type="hidden" name="filePath" value="${ r.changeName }"> --%>
+	            </form>
+	            
+	            <script>
+	            	function postFormSubmit(num) {
+	            		
+	            		// action 속성값을 부여 후 연이어서 곧바로 submit 시키기
+	            		if(num == 1) { // 수정하기 버튼 클릭 시 num == 1 : updateForm.re
+	            			
+	            			$("#postForm").attr("action", "updateForm.re?reviewNo=${r.reviewNo}").submit();
+	            		} else { // 삭제하기 버튼 클릭 시 num == 2 : delete.re
+	            			
+	            			$("#postForm").attr("action", "delete.re").submit();
+	            		}
+	            	}
+	            </script>
+			
 
 		</div>
 

@@ -51,9 +51,9 @@ public class ReviewController {
 	}
 
 	@RequestMapping("detail.re")
-	public ModelAndView selectBoard(int rno, ModelAndView mv) {
+	public ModelAndView selectBoard(int rde, ModelAndView mv) {
 
-		Review r = reviewService.selectReview(rno);
+		Review r = reviewService.selectReview(rde);
 
 		// 조회된 데이터를 담아서space/mypageReviewDetail.jsp 로 포워딩
 		mv.addObject("r", r).setViewName("space/mypageReviewDetail");
@@ -61,6 +61,62 @@ public class ReviewController {
 		return mv;
 
 		// return "space/mypageReviewDetail";
+	}
+
+
+	//리뷰 삭제
+	@RequestMapping("delete.re")
+	public String deleteReview(int reviewNo, String filePath, HttpSession session, Model model) {
+	
+	// System.out.println(rno);
+	
+	int result = reviewService.deleteReview(reviewNo);
+	System.out.println("rde : " + reviewNo);
+	
+	if(result > 0) { // 게시글 삭제 성공
+		
+		// 게시판 리스트 페이지 url 재요청
+		session.setAttribute("alertMsg", "성공적으로 리뷰가 삭제되었습니다.");
+		
+		return "redirect:/list.re";
+	}
+	else { // 게시글 삭제 실패
+		
+		model.addAttribute("errorMsg", "리뷰 삭제 실패");
+		
+		return "common/errorPage";
+	}
+}
+
+	@RequestMapping("updateForm.re")
+	public String updateFormReview(int reviewNo, Model model) {
+		Review r = reviewService.selectReview(reviewNo); // 기존의 상세보기 서비스를 재활용
+		
+		model.addAttribute("r", r);
+	
+		return "space/mypageReviewUpdate";
+	}
+	
+	@RequestMapping("update.re")
+	public String updateReview(Review r, HttpSession session, Model model) {
+		System.out.println("123"+r);
+		// Service 단으로 r 보내기'
+		int rno = r.getReviewNo();
+		int result = reviewService.updateReview(r);
+	
+		if(result > 0) { // 게시글 수정 성공
+			
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 수정되었습니다.");
+			
+			// 리뷰 상세보기 페이지로 url 재요청
+			return "redirect:/detail.re?rde=" + rno;
+		}
+		else { // 게시글 수정 실패
+			
+			model.addAttribute("errorMsg", "리뷰 수정 실패");
+			
+			return "common/errorPage";
+		}
 	}
 
 	@RequestMapping("bookmark.sp")

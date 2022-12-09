@@ -96,6 +96,7 @@
 							<td>${r.reviewCont}</td>
 							<td>${r.rating}</td>
 							<td>${r.reviewEnrollDate}</td>
+							<input type="hidden" value="${r.reviewNo}">
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -104,7 +105,7 @@
 					$(function() {
 						$("#reviewList>tbody>tr").click(function() {
 							
-							location.href = "detail.re?rde=" + $(this).children().eq(0).text();
+							location.href = "detail.re?rde=" + $(this).children().eq(5).val();
 						});
 					});
 			</script>

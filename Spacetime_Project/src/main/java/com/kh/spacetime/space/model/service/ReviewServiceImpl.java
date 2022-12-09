@@ -42,20 +42,18 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public Review selectReview(int reviewNo) {
-		return reviewDao.selectreview(sqlSession, reviewNo);
+		return reviewDao.selectReview(sqlSession, reviewNo);
 
 	}
 
 	@Override
 	public int deleteReview(int reviewNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewDao.deleteReview(sqlSession, reviewNo);
 	}
 
 	@Override
 	public int updateReview(Review r) {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewDao.updateReview(sqlSession, r);
 	}
 
 	@Override

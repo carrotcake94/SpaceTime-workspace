@@ -66,7 +66,7 @@
 	.rate {width: 40%;}
 
 	.reviewImg { padding-top: 20px; }
-
+	.reviewDetail{padding :10px;}
 </style>
 
 </head>
@@ -79,26 +79,43 @@
 		
 		<!--컨텐츠작성부분-->
 		<div id="content_2">
-			<form action="" method="post">
+			<form action="update.re" method="post" enctype="">
+			<input id="reviewNo" type="hidden" name="reviewNo" value="${r.reviewNo}">
+			<script>
+				$(function() {
+					$("#reviewNo").val();
+				})
+			</script>
+				<br>
 				<div id="reviewDetail">
-					<table id="reviewTable">
+					<table id="reviewTable" style="border:1px red;">
 						<tr>
-							<th class="review sapeceTitle"><h3><b>공간명</b></h3></th>
+							<th class="review sapeceTitle"><h3><b>공간명321313</b></h3></th>
 							<th class="review rate"><h3><b>평점</b></h3></th>
+							<th class="review date"><h3><b>등록일</b></h3></th>
 						</tr>
 						<tr>
-							<td class="review spaceTitle">신대방 파티룸</td>
+							<td class="review spaceTitle" required>${r.spaceTitle }</td>
 							<!-- 리뷰를 작성하는 공간명을 그대로 가져와서 보여주는 것이므로 공간명을 내가 쓰진 않음 -->
 							<td class="review rate">
-								<div class="form-group" >
-									<select name="" class="form-control mb-2">
+								<div class="form-group"  >
+									<!-- <select name="" class="form-control mb-2">
 										<option value="5">⭐⭐⭐⭐⭐</option>
 										<option value="4">⭐⭐⭐⭐</option>
 										<option value="3">⭐⭐⭐</option>
 										<option value="2">⭐⭐</option>
 										<option value="1">⭐</option>
+									</select> -->
+										<select class="form-control mb-2" name="rating">
+										<option value="5">5</option>
+										<option value="4">4</option>
+										<option value="3">3</option>
+										<option value="2">2</option>
+										<option value="1">1</option>
+										<%-- <option value="${r.rating }"></option> --%>
 									</select>
 								</div>
+								<td class="review date">${r.reviewEnrollDate }</td>
 							</td>
 						</tr>
 						<tr>
@@ -120,7 +137,7 @@
 						</tr>
 						<tr>
 							<td colspan="3" class="reviewContent">
-								<textarea class="form-control" rows="5" placeholder="이용후기를 작성해주세요."></textarea>
+								<textarea class="form-control" name="reviewCont" rows="5">${r.reviewCont }</textarea>
 								<!-- 텍스트에디터 사용하면 textarea 자동으로 바뀌니까 건드리지 마세욥 -->
 							</td>
 						</tr>
@@ -129,8 +146,9 @@
 				<br><br>
 
 				<div class="btns" align="center">
-					<a href="" type="button" class="btn btn-sm btn-secondary">취소</a>
-					<a href="" type="button" class="btn btn-sm btn-primary">수정</a>
+					
+					<button type="submit" class="btn btn-sm btn-primary">수정</button>
+					<button type="button" class="btn btn-sm btn-secondary" onclick="javascript:history.go(-1);">취소</button>
 				</div>
 			</form>
 
