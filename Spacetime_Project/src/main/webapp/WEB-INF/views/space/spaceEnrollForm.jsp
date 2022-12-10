@@ -874,8 +874,8 @@
            $("input[name=openTime]").focus();
            return false;
        }
-     	if($("input[name=closeTime]").val()>23) {
-     		alert("시작시간은 1~24까지 설정 가능합니다.");
+     	if($("input[name=closeTime]").val()>24) {
+     		alert("종료시간은 1~24까지 설정 가능합니다.");
            $("input[name=closeTime]").focus();
            return false;
        }
