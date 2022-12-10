@@ -124,6 +124,13 @@
         background-color: #f2f2f2;
       }
 
+  	  .nodata {
+	  	text-align: center;
+	  	 font-size: 25px;
+        font-weight: 600;
+	  
+	  }
+
       /* -------------*/
       /* 페이지네이션 */
       .pagination {
@@ -385,6 +392,13 @@
         />
         <button type="submit" >검색</button>
       </form>
+      
+      <c:choose>
+      <c:when test="${rList.size() eq 0}">
+      	<div class="nodata">이용후기가 없습니다.<br></div>     
+      </c:when>
+      <c:otherwise>
+      
       <c:forEach var="r" items="${rList }" varStatus="status.index">
       <div class="review-area" id="review${r.reviewNo}">
         <div class="rtitle">예약번호${r.reserveNo}
@@ -451,21 +465,23 @@
 	   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
 	   		</c:when>
 	   		<c:otherwise>
-	   			<li class="page-item"><a class="page-link" href="hostRvwList.rv?rpage=${ pi.currentPage - 1 }">&lt;</a></li>
+	   			<li class="page-item no-page-prev"><a class="page-link" >&lt;</a></li>
 	   		</c:otherwise>
 	   	</c:choose>	       
 	       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	       	<li class="page-item page-btn"><a class="page-link" href="hostRvwList.rv?rpage=${ p }">${ p }</a></li>
+	       	<li class="page-item page-btn"><a class="page-link" >${ p }</a></li>
 	       </c:forEach>
 	       <c:choose>
 	       	<c:when test="${ pi.currentPage eq pi.maxPage }">
 	       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
 	       	</c:when>
 	       	<c:otherwise>
-	      	 	<li class="page-item no-page-next"><a class="page-link" href="hostRvwList.rv?rpage=${ pi.currentPage + 1 }">&gt;</a></li>
+	      	 	<li class="page-item no-page-next"><a class="page-link" >&gt;</a></li>
 	       	</c:otherwise>
 	       </c:choose>
       </ul>
+      </c:otherwise>
+      </c:choose>
     </div>
 
     <!-- 이미지 뷰 Modal -->
@@ -512,18 +528,20 @@
     	var key= "${key}";
     	var stitle = "${stitle}";
     	var hanswer = "${hanswer}";
-    	var prevNo = "${pi.currentPage}"-1;
-		var nextNo = "${pi.currentPage}"+1;
+    	var prevNo = "${pi.currentPage-1}";
+		var nextNo = "${pi.currentPage+1}";
+		console.log(prevNo);
+		console.log(nextNo);
 		
 		if(key == "" && stitle == "" &&  hanswer == "") {
 			$(".no-page-prev>a").click(function() {
-				location.href ="hostRvwList.re?rpage="+prevNo;
+				location.href ="hostRvwList.rv?rpage="+prevNo;
 			});
-			$(".no-page-btn>a").click(function() {
-				location.href ="hostRvwList.re?rpage="+$(this).text();
+			$(".page-btn>a").click(function() {
+				location.href ="hostRvwList.rv?rpage="+$(this).text();
 			});
 			$(".no-page-next>a").click(function() {
-				location.href ="hostRvwList.re?rpage="+nextNo;
+				location.href ="hostRvwList.rv?rpage="+nextNo;
 			});
      	}else {
      		console.log(key);
@@ -542,13 +560,13 @@
      		}
      		
      		$(".no-page-prev>a").click(function() {
-				location.href ="hostRvwList.re?rpage="+prevNo+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
+				location.href ="schHostRvwList.rv?rpage="+prevNo+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
 			});
-			$(".no-page-btn>a").click(function() {
-				location.href ="hostRvwList.re?rpage="+$(this).text()+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
+			$(".page-btn>a").click(function() {
+				location.href ="schHostRvwList.rv?rpage="+$(this).text()+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
 			});
 			$(".no-page-next>a").click(function() {
-				location.href ="hostRvwList.re?rpage="+nextNo+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
+				location.href ="schHostRvwList.rv?rpage="+nextNo+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
 			});
 		}
     	
