@@ -43,12 +43,6 @@ public interface ReviewService {
 	// 호스트 이용후기 답글 달기
 	int insertReviewAnswer(Review r);
 
-	// 호스트 이용후기 답글 수정
-	int updateReviewAnswer(Review r);
-
-	// 호스트 이용후기 답글 삭제
-	int deleteReviewAnswer(int rno);
-
 	// 호스트 이용후기 관리 검색 리스트 개수
 	int searchHostReviewListCount(HashMap<String, String> map);
 

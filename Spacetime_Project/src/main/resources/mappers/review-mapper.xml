@@ -204,12 +204,11 @@
         ORDER BY REVIEW_NO DESC
 	</select>
 	
-	<!-- 	호스트 이용후기 답글 신청 -->
-	<update id="updateReviewAnswer" parameterType="reserve">
-		UPDATE RESERVE
-	    SET RESERVE_STATUS = #{reserveStatus}
-	     , DENY_MESSAGE = #{denyMessage}
-		 WHERE RESERVE_NO = #{reserveNo}
+	<!-- 	호스트 이용후기 답글 등록 및 삭제 -->
+	<update id="insertReviewAnswer" parameterType="review">
+		UPDATE REVIEW
+	    SET HOST_ANSWER = #{hostAnswer}
+		 WHERE REVIEW_NO = #{reviewNo}
 	</update>
 	
 	<!-- 정현 End -->

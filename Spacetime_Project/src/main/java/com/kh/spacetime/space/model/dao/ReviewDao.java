@@ -70,16 +70,6 @@ public class ReviewDao {
 		return sqlSession.update("reviewMapper.insertReviewAnswer", r);
 	}
 
-	// 호스트 이용후기 답글 수정
-	public int updateReviewAnswer(SqlSessionTemplate sqlSession, Review r) {
-		return sqlSession.update("reviewMapper.updateReviewAnswer", r);
-	}
-
-	// 호스트 이용후기 답글 삭제
-	public int deleteReviewAnswer(SqlSessionTemplate sqlSession, int rno) {
-		return sqlSession.update("reviewMapper.deleteReviewAnswer", rno);
-	}
-
 	// 호스트 검색 이용후기 리스트 총 개수 - 정현
 	public int searchHostReviewListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("reviewMapper.searchHostReviewListCount", map);

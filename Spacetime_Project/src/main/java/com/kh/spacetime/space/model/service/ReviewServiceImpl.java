@@ -87,17 +87,6 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.insertReviewAnswer(sqlSession, r);
 	}
 
-	// 호스트 이용후기 답글 수정 - 정현
-	@Override
-	public int updateReviewAnswer(Review r) {
-		return reviewDao.updateReviewAnswer(sqlSession, r);
-	}
-	
-	// 호스트 이용후기 답글 삭제
-	@Override
-	public int deleteReviewAnswer(int rno) {
-		return reviewDao.deleteReviewAnswer(sqlSession, rno);
-	}
 
 	// 호스트 검색 이용후기관리 리스트 개수 - 정현
 	@Override

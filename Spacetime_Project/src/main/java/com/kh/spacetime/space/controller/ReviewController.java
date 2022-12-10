@@ -159,9 +159,9 @@ public class ReviewController {
 	 */
 	@RequestMapping("schHostRvwList.rv")
 	public String searchHostReviewList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
-			@RequestParam(value = "keyword", defaultValue = "") String keyword,
-			@RequestParam(value = "spaceTitle", defaultValue = "") String spaceTitle,
-			@RequestParam(value = "hostAnswer", defaultValue = "") String hostAnswer, Model model) {
+			@RequestParam(value = "key", defaultValue = "") String keyword,
+			@RequestParam(value = "stitle", defaultValue = "") String spaceTitle,
+			@RequestParam(value = "hanswer", defaultValue = "") String hostAnswer, Model model) {
 
 //		Member loginMember = (Member)session.getAttribute("loginMember");
 //		int memNo = Integer.parseInt(loginMember.getMemNo());
@@ -184,6 +184,9 @@ public class ReviewController {
 		ArrayList<Review> rList = reviewService.searchHostReviewList(map, pi);
 		ArrayList<Space> sList = reviewService.selectMySpaceList(Integer.parseInt(memNo));
 
+		model.addAttribute("key", keyword);
+		model.addAttribute("stitle", spaceTitle);
+		model.addAttribute("hanswer", hostAnswer);
 		model.addAttribute("sList", sList);
 		model.addAttribute("pi", pi);
 		model.addAttribute("rList", rList);
@@ -197,39 +200,13 @@ public class ReviewController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="inHostAns.rv", produces="text/html; charset=UTF-8")
-	public String insertReviewAnswer(Review r   ) {
+	public String insertReviewAnswer(Review r ) {
 		int result = reviewService.insertReviewAnswer(r);
 		
 		if (result > 0) {
 		} else {
 		}
-		return "";
-	}
-	/**
-	 * @author 정현 호스트 이용후기 답글 수정
-	 */
-	@ResponseBody
-	@RequestMapping(value="udpHostAns.rv", produces="text/html; charset=UTF-8")
-	public String updateReviewAnswer(Review r   ) {
-		int result = reviewService.updateReviewAnswer(r);
-		
-		if (result > 0) {
-		} else {
-		}
-		return "";
-	}
-	/**
-	 * @author 정현 호스트 이용후기 답글 삭제
-	 */
-	@ResponseBody
-	@RequestMapping(value="delHostAns.rv", produces="text/html; charset=UTF-8")
-	public String deleteReviewAnswer(int rno) {
-		int result = reviewService.deleteReviewAnswer(rno);
-		
-		if (result > 0) {
-		} else {
-		}
-		return "";
+		return r.getHostAnswer();
 	}
 
 	// ------------------정현

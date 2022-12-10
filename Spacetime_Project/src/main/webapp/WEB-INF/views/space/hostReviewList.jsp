@@ -138,6 +138,9 @@
         background-color: #eeeeee;
         color: black;
       }
+      .no-page-prev a, .no-page-next a {
+      background-color: #eeeeee !important;
+      }
 
       .pagination a:hover {
         color: rgb(253, 193, 55);
@@ -271,6 +274,7 @@
       }
 
 
+
 	  .upd-btn, .del-btn {
 	  	float: right;
         width: 150px;
@@ -353,30 +357,30 @@
       <form action="schHostRvwList.rv" method="get" id="revListSearchForm">
         <section id="theme1">
           <div class="rev-select">
-            <div class="text">공간 전체</div>
+            <div class="text stext">공간 전체</div>
             <ul class="option-list">
             <li class="option">공간 전체</li>
            	<c:forEach var="s" items="${sList }">
            	<li class="option">${s.spaceTitle }</li>
            	</c:forEach>
             </ul>
-            <input type="hidden" name="spaceTitle" value="공간 전체">
+            <input type="hidden" name="stitle" value="공간 전체">
           </div>
         </section>
         <section id="theme2">
           <div class="rev-select">
-            <div class="text">답글 상태</div>
+            <div class="text htext">답글 상태</div>
             <ul class="option-list">
               <li class="option">답글 전체</li>
               <li class="option">답글 있음</li>
               <li class="option">답글 없음</li>
             </ul>
-            <input type="hidden" name="hostAnswer" value="">
+            <input type="hidden" name="hanswer" value="">
           </div>
         </section>
         <input
           type="search"
-          name="keyword"
+          name="key"
           placeholder="예약번호 또는 예약자명"
         />
         <button type="submit" >검색</button>
@@ -415,7 +419,6 @@
         <div class="rdate">${r.reviewEnrollDate }</div>
 
         <div class="hotitle">호스트 답글</div>
-        <form  method="post" id="hostAnswerForm">
         <input type="hidden" name="reviewNo" value="${r.reviewNo }">
         <c:choose>
         <c:when test="${empty r.hostAnswer}">
@@ -428,33 +431,40 @@
             ></textarea>
             <div class="lcount"><span>0</span> / 100</div>
           </div>
-          <button type="button" class="sub-btn" onclick="answerSub(1)">등록</button>
+          <button type="button" class="sub-btn" onclick="answerSub(this)">등록</button>
         </div>
         </c:when>
         <c:otherwise>
         <div class="answer-area">
-        <div >
-	        ${r.hostAnswer }
-        </div>
-        <button type="button" class="upd-btn">수정</button>
-        <button type="button" class="del-btn" onclick="answerSub(2)">삭제</button>
+        <div style="white-space:pre;">${r.hostAnswer }</div>
+        <button type="button" class="upd-btn" onclick="answerMod(this, 1)">수정</button>
+        <button type="button" class="del-btn" onclick="answerMod(this, 2)">삭제</button>
         </div>
         </c:otherwise>
         </c:choose>
-        </form>
       </div>
       </c:forEach>
+    
       <ul class="pagination">
-        <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
-        <li class="page-item page-btn">
-          <a id="active-page" class="page-link">1</a>
-        </li>
-        <li class="page-item page-btn"><a class="page-link">2</a></li>
-        <li class="page-item page-btn"><a class="page-link">3</a></li>
-        <li class="page-item page-btn"><a class="page-link">4</a></li>
-        <li class="page-item page-btn"><a class="page-link">5</a></li>
-
-        <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
+ 		   <c:choose>
+	   		<c:when test="${ pi.currentPage eq 1 }">
+	   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
+	   		</c:when>
+	   		<c:otherwise>
+	   			<li class="page-item"><a class="page-link" href="hostRvwList.rv?rpage=${ pi.currentPage - 1 }">&lt;</a></li>
+	   		</c:otherwise>
+	   	</c:choose>	       
+	       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	       	<li class="page-item page-btn"><a class="page-link" href="hostRvwList.rv?rpage=${ p }">${ p }</a></li>
+	       </c:forEach>
+	       <c:choose>
+	       	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+	       	</c:when>
+	       	<c:otherwise>
+	      	 	<li class="page-item no-page-next"><a class="page-link" href="hostRvwList.rv?rpage=${ pi.currentPage + 1 }">&gt;</a></li>
+	       	</c:otherwise>
+	       </c:choose>
       </ul>
     </div>
 
@@ -489,6 +499,61 @@
     <script>
 
     $(function () {
+    	//페이징
+    	$(".page-link").each(function() {
+      		if ($(this).text() ==${ pi.currentPage}) {
+      			$(this).attr("id", "active-page");
+      			$(this).parent().addClass("disabled");
+      		} else {
+      			$(this).removeAttr("id", "active-page");
+      		}
+      	});
+    	
+    	var key= "${key}";
+    	var stitle = "${stitle}";
+    	var hanswer = "${hanswer}";
+    	var prevNo = "${pi.currentPage}"-1;
+		var nextNo = "${pi.currentPage}"+1;
+		
+		if(key == "" && stitle == "" &&  hanswer == "") {
+			$(".no-page-prev>a").click(function() {
+				location.href ="hostRvwList.re?rpage="+prevNo;
+			});
+			$(".no-page-btn>a").click(function() {
+				location.href ="hostRvwList.re?rpage="+$(this).text();
+			});
+			$(".no-page-next>a").click(function() {
+				location.href ="hostRvwList.re?rpage="+nextNo;
+			});
+     	}else {
+     		console.log(key);
+     		console.log(stitle);
+     		console.log(hanswer);
+     		$(".stext").text(stitle);
+     		
+     		$("input[name=stitle]").val(stitle);     		
+     		$("input[name=key]").val(key);
+     		
+     		if(hanswer == "") {
+     			$(".htext").text("답글 전체");
+     		}else {
+     			$(".htext").text(hanswer);
+     			$("input[name=hanswer]").val(hanswer);
+     		}
+     		
+     		$(".no-page-prev>a").click(function() {
+				location.href ="hostRvwList.re?rpage="+prevNo+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
+			});
+			$(".no-page-btn>a").click(function() {
+				location.href ="hostRvwList.re?rpage="+$(this).text()+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
+			});
+			$(".no-page-next>a").click(function() {
+				location.href ="hostRvwList.re?rpage="+nextNo+"&stitle="+stitle+"&hanswer="+hanswer+"&key="+key;
+			});
+		}
+    	
+    	
+    	
       // 셀렉트 컨트롤
       $(".rev-select").click(function () {
         if ($(this).hasClass("active") == false) {
@@ -551,21 +616,71 @@
     }
     // 글자수 체크
 	$(function() {
-		$('#spInsertForm input').keyup(function () {		
-            $(this).parent().prev().children().children().first().text($(this).val().length);  			
-		});
-		$('.answer-text textarea').keyup(function () {		
+		$('.answer-area').on("keyup", "textarea", function () {		
 			 $(this).next().children().first().text($(this).val().length);  
 		});
 	});
     
-	answerSub = (type) => {
-		if(type == 1) {
-			$("#hostAnswerForm").attr("action", "inHostAns.rv");
-		}else {
-			$("#hostAnswerForm").attr("action", "delHostAns.rv");
+	answerSub = (btn) => {
+		var $b = $(btn);
+		var reviewNo = $b.parent().prev().val();
+		var hostAnswer = $b.prev().children().first().val();
+
+		if(hostAnswer.trim() == "") {
+  			alert("답글을 입력해주세요.");
+  			$b.prev().children().first().val("");
+  			$b.prev().children().first().focus();
+  			return false;
+  		}
+		$.ajax({
+			url : "inHostAns.rv",
+			data : {
+				reviewNo : reviewNo,
+				hostAnswer : hostAnswer
+			},
+			success : result => {
+				var str = "<div style='white-space:pre;'>"+result+"</div>";
+			    str += "<button type='button' class='upd-btn' onclick='answerMod(this,1)''>수정</button>";
+			    str += "<button type='button' class='del-btn' onclick='answerMod(this,2)''>삭제</button>";
+				
+			    $b.parent().html(str);
+			},
+			error : () => {
+				console.log("통신 실패");
+			}
+		});
+	}
+	
+	answerMod = (btn, type) => {
+		var $b = $(btn);
+		var reviewNo = $b.parent().prev().val();
+		var hostAnswer = $b.prev().text();
+		
+		var str = "<div class='answer-text'>";
+		if(type == 1) { //답글 수정
+			str += "<textarea name='hostAnswer' placeholder='이용후기를 남긴 고객에게 전하는 답글을 작성해주세요.'' maxlength='100' >"+hostAnswer+"</textarea>";
+            str += "<div class='lcount'><span>"+hostAnswer.length+"</span> / 100</div>";
+		}else  { //답글 삭제
+			hostAnswer= null;
+			$.ajax({
+				type: "post",
+				url : "inHostAns.rv",
+				async:false,
+				data : {
+					reviewNo : reviewNo,
+				},
+				success : result => {
+					str += "<textarea name='hostAnswer' placeholder='이용후기를 남긴 고객에게 전하는 답글을 작성해주세요.'' maxlength='100' ></textarea>";
+		            str += "<div class='lcount'><span>0</span> / 100</div>";
+				},
+				error : () => {
+					console.log("통신 실패");
+				}
+			});
 		}
-		$("#hostAnswerForm").submit();
+		str += "</div>";
+        str += "<button type='button' class='sub-btn' onclick='answerSub(this)''>등록</button>";
+		$b.parent().html(str);
 	}
     
   </script>
