@@ -481,7 +481,7 @@
             운영 시작시간
           </div>
           <div class="space-small-content">
-            <input type="number" name="openTime" placeholder="시작시간" />
+            <input type="number" name="openTime" placeholder="시작시간"  />
           </div>
         </div>
         <div class="space-small">
@@ -489,7 +489,7 @@
             운영 종료시간
           </div>
           <div class="space-small-content">
-            <input type="number" name="closeTime" placeholder="종료시간" />
+            <input type="number" name="closeTime" placeholder="종료시간"  />
           </div>
         </div>
       </div>
@@ -620,10 +620,14 @@
 
       // 추가 이미지 첨부
       $(".thum-img-btn").click(function () {
-        thumNo++;
-        $(".file-area").append("<input type='file' name='upfile' id='thum" + thumNo + "' style='display:none;' >");
-        $("#thum" + thumNo).click();
-
+    	  //추가이미지 개수
+    	 if ($(".thum-img-area>div>div").length < 10) {
+    		 thumNo++;
+    	     $(".file-area").append("<input type='file' name='upfile' id='thum" + thumNo + "' style='display:none;' >");
+    	     $("#thum" + thumNo).click();
+    	 }else {
+    		alert("추가 이미지는 10장이 최대입니다."); 
+    	 }
       });
       $(".file-area").on("change", "input[name='upfile']", function () {
         if ($(this)[0].files.length == 1) {
@@ -746,6 +750,7 @@
           $(this).val($(this).val().substr(0, $(this).val().length - 1));
         }
       });
+        
       $(".hashtag-area").on("click", "i", function () {
         $(this).parent().remove();
       });
@@ -861,6 +866,16 @@
        }
      	if(!regExp.test($("input[name=closeTime]").val())) {
      		alert("종료시간은 숫자만 입력 가능합니다 .");
+           $("input[name=closeTime]").focus();
+           return false;
+       }
+     	if($("input[name=openTime]").val()>23) {
+     		alert("시작시간은 0~23까지 설정 가능합니다.");
+           $("input[name=openTime]").focus();
+           return false;
+       }
+     	if($("input[name=closeTime]").val()>23) {
+     		alert("시작시간은 1~24까지 설정 가능합니다.");
            $("input[name=closeTime]").focus();
            return false;
        }
