@@ -621,12 +621,12 @@
       // 추가 이미지 첨부
       $(".thum-img-btn").click(function () {
     	  //추가이미지 개수
-    	 if ($(".thum-img-area>div>div").length < 10) {
+    	 if ($(".thum-img-area>div>div").length < 15) {
     		 thumNo++;
     	     $(".file-area").append("<input type='file' name='upfile' id='thum" + thumNo + "' style='display:none;' >");
     	     $("#thum" + thumNo).click();
     	 }else {
-    		alert("추가 이미지는 10장이 최대입니다."); 
+    		alert("추가 이미지는 15장이 최대입니다."); 
     	 }
       });
       $(".file-area").on("change", "input[name='upfile']", function () {
