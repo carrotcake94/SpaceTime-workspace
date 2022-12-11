@@ -305,7 +305,7 @@ public class SpaceController {
 	        map.put("max_lng", max_lng);
 	        map.put("min_lat", min_lat);
 	        map.put("min_lng", min_lng);
-	        
+	        //System.out.println(map);
 	        int listCount = spaceService.selectListCountForMap(map);
 	        int pageLimit = 3;
 	        int boardLimit = 10;
@@ -313,9 +313,9 @@ public class SpaceController {
 	        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 	        
 	        ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
-	        
 	        return new Gson().toJson(listArr);
 	    }
+
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
 	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니여도 된다!!

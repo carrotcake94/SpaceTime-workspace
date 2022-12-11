@@ -99,12 +99,13 @@ public class SpaceDao {
 	}
 
 	// 지도 공간 리스트 -성훈
-	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi) {
+	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi){
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-
-		return (ArrayList) sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
+		//System.out.println(map);
+		
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
 	}
 
 }

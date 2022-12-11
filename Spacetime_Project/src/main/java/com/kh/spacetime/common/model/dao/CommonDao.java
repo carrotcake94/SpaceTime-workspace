@@ -68,7 +68,6 @@ public class CommonDao {
 	public ArrayList<String> autoComplete(SqlSessionTemplate sqlSession, String keyword) {
 		
 		ArrayList<String> keywords = (ArrayList)sqlSession.selectList("commonMapper.autoComplete", keyword); 
-		System.out.println(keywords);
 		return keywords;
 	}
 }

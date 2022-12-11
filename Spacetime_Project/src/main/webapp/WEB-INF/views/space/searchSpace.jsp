@@ -32,7 +32,7 @@
 						</div>
 					</div>
 
-					<form action="" method="get" id="mapFilter">
+					<form action="" method="get" id="mapFilter" style="display:none;">
 						<div id="mapFilter_option_date">
 							<div class="mapFilter_option_title">날짜</div>
 							<div>
@@ -89,9 +89,8 @@
 							</div>
 						</div>
 					</div>
-					
 					<!-- 게시판형 리스트 -->
-					<div id="lineList">
+					<div id="lineList" style="display: none;">
 						<div>
 							<div class="lineList_content">
 								<div class="lineList_content_spaceName">공간명</div>
@@ -104,39 +103,58 @@
 							</div>
 						</div> 
 					</div>
-				<!-- 지도 -->
-				<div id="map">1
 				</div>
+				<!-- 지도 -->
+				<div id="map">
+				</div>
+				
 				<script>
 					var spaceListArr = [];
 					var markers = [];
-					var map;
-					var HOME_PATH;
+					var map, HOME_PATH;
 					
 					window.onload = () => {
 						loadMap(map, HOME_PATH);
-						//selectList(map);
-						//loadList(spaceListArr);
+						selectList(map);
+						loadList(spaceListArr);
 						//console.log("loadList 완료");
-						//updateMarkers(spaceListArr, markers);
+						updateMarkers(spaceListArr, markers);
 						//console.log("updateMarkers 완료");
  					};
  					
 					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
 					var lineListBtn = document.querySelector("#listOption_lineList");
-					var lineList = document.querySelector("#lineList");
 					var picListBtn = document.querySelector("#listOption_picList");
+					var filterBtn = document.querySelector("#listOption_filter");
 					var picList = document.querySelector("#picList");
+					var lineList = document.querySelector("#lineList");
 					var filter = document.querySelector("#mapFilter");
 					
 					
 					var test = document.querySelector("#test");
-					
-					test.onclick = (spaceListArr, markers) => {
-						console.log("clicked");
-						console.log(spaceListArr);
-						updateMarkers(spaceListArr, markers);
+					test.onclick = () => {
+						selectList(map);
+						updateMarkers();
 					}
+					
+					
+					//O
+					picListBtn.onclick = () => {
+						toPicList();
+					}
+					
+					//O
+					lineListBtn.onclick = () => {
+						toLineList();
+					}
+					
+					//O
+					filterBtn.onclick = () => {
+						console.log(filter);
+						filterOpenClose();
+					}
+					
+					
 				</script>
 			</div>
 		</div>

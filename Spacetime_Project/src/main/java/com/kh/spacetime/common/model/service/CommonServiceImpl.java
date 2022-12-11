@@ -70,6 +70,7 @@ public class CommonServiceImpl implements CommonService {
 		return null;
 	}
 
+	//검색어 자동완성
 	@Override
 	public ArrayList<String> autoComplete(String keyword) {
 		

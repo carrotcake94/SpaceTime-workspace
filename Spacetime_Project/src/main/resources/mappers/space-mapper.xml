@@ -249,7 +249,7 @@
 	
 	
 	<!-- 지도 공간 리스트 (사진형게시판) -성훈 -->
-	<select id="selectListForMap" parameterType="hashmap" resultMap="spaceResultSet">
+	<select id="selectListForMap" parameterType="_double" resultMap="spaceResultSet">
 	    SELECT SPACE_NO, 
 	           SPACE_TITLE, 
 	           HOUR_PRICE, 
@@ -259,8 +259,8 @@
 	           ATTACHMENT_RENAME
 	      FROM SPACE
 	      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
-	     WHERE LATITUDE BETWEEN #{min_lat} AND #{max_lat}
-	       AND LONGITUDE BETWEEN #{min_lng} AND #{max_lng}
+	     WHERE LATITUDE BETWEEN #{map.min_lat} AND #{map.max_lat}
+	       AND LONGITUDE BETWEEN #{map.min_lng} AND #{map.max_lng}
 	       AND SPACE_STATUS = 'Y'
 	       AND ATTACHMENT_LEVEL = 1
 	</select>

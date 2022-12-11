@@ -191,6 +191,7 @@ public class CommonController {
 		return "common/introduction";
 	}
 	
+	//검색어 자동완성
 	@ResponseBody
 	@RequestMapping(value="autoComplete.co", produces="text/html; charset=UTF-8")
 	public ModelAndView autoComplete(String keyword, ModelAndView mv) {
@@ -200,5 +201,11 @@ public class CommonController {
 		mv.setViewName("common/main");
 		return mv;
 	}
+	
+	//카테고리 페이지 이동
+//	@RequestMapping("moveCategoryPage.co")
+//	public String moveCategoryPage(@RequestParam(value="e")String category) {
+//		return "space/" + valueOf(category);
+//	}
 
 }

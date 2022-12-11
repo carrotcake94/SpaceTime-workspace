@@ -28,10 +28,6 @@
     position: relative;
 }
 
-#map * {
-	z-index: 1;
-}
-
 #mapResearch {
 	width : 10%;
 	height: 5%;

@@ -30,6 +30,6 @@ public interface CommonService {
 	// 공간 매출 상세조회 
 	Reserve selectSales(int spaceNo);
 	
-	ArrayList autoComplete(String keyword);
+	ArrayList<String> autoComplete(String keyword);
 
 }
