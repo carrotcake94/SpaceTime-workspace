@@ -19,6 +19,5 @@ public class Notice {
 	private String noticeTitle; // NOTICE_TITLE	VARCHAR2(100 BYTE)
 	private String noticeCont; // NOTICE_CONTENT	VARCHAR2(400 BYTE)
 	private Date noticeEnrollDate; // NOTICE_ENROLL_DATE	DATE
-	private int noticeCount; // NOTICE_COUNT	NUMBER
 	private String noticeStatus; // NOTICE_STATUS	CHAR(1 BYTE)
 }
