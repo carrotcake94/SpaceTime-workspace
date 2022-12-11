@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
-	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script>
+	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nrd3zj6gm7"></script>
 	<script src="resources/js/map.js"></script>
 </head>
 <body>
@@ -81,22 +81,31 @@
 					
 					<!-- 사진형 리스트 -->
 					<div id="picList">
+						<div>
+							<div class="picList_content">
+								<div class="picList_content_pic">이미지</div>
+								<div class="picList_content_spaceName">상호명</div>
+								<div class="picList_content_price">가격</div>
+							</div>
+						</div>
 					</div>
 					
 					<!-- 게시판형 리스트 -->
 					<div id="lineList">
-						<div id="">
-							<a class="pagination" href="#"><img src="resources/images/main/leftPointer.png"></a>
-							<a class="pagination">1</a>
-							<a class="pagination">2</a>
-							<a class="pagination">3</a>
-							<a class="pagination" href="#"><img src="resources/images/main/rightPointer.png"></a>
-						</div>
+						<div>
+							<div class="lineList_content">
+								<div class="lineList_content_spaceName">공간명</div>
+								<div class="lineList_content_spaceInfo">공간설명</div>
+								<div class="lineList_content_extraInfo">
+									<div class="lineList_content_price">가격</div>
+									<div class="lineList_content_loc">위치(동)</div>
+									<div class="lineList_content_like">좋아요</div>
+								</div>
+							</div>
+						</div> 
 					</div>
-				</div>
 				<!-- 지도 -->
-				<a id="mapResearch" style="z-index: 0; position: absolute;">검색</a>
-				<div id="map">
+				<div id="map">1
 				</div>
 				<script>
 					var spaceListArr = [];
@@ -104,19 +113,24 @@
 					var map;
 					var HOME_PATH;
 					
-					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
-					var lineList = document.querySelector("#listOption_lineList");
-					var picList = document.querySelector("#listOption_picList");
-					var filter = document.querySelector("#mapFilter");
-					
 					window.onload = () => {
+						console.log(map);
 						loadMap(map, HOME_PATH);
+						console.log(map);
 						selectList(map);
 						//loadList(spaceListArr);
 						//console.log("loadList 완료");
-						updateMarkers(spaceListArr, markers);
+						//updateMarkers(spaceListArr, markers);
 						//console.log("updateMarkers 완료");
-					};
+ 					};
+ 					
+					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
+					var lineListBtn = document.querySelector("#listOption_lineList");
+					var lineList = document.querySelector("#lineList");
+					var picListBtn = document.querySelector("#listOption_picList");
+					var picList = document.querySelector("#picList");
+					var filter = document.querySelector("#mapFilter");
+					
 					
 					var test = document.querySelector("#test");
 					
@@ -125,8 +139,6 @@
 						console.log(spaceListArr);
 						updateMarkers(spaceListArr, markers);
 					}
-					
-				
 				</script>
 			</div>
 		</div>

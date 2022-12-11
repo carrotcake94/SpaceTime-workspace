@@ -1,4 +1,4 @@
-function loadMap(){
+function loadMap(map, HOME_PATH){
 	HOME_PATH = window.HOME_PATH || '.';
 						
 	map = new naver.maps.Map('map', {
@@ -6,11 +6,11 @@ function loadMap(){
 		zoom: 12
 	});
 	
-	return HOME_PATH, map;
+	return map, HOME_PATH;
 }
 
 //지도의 정보를 불러와 마커를 추가하는 메소드
-function selectList() {
+function selectList(map) {
 	$.ajax({
 		url: "selectSpace.mp",
 		type: "get",
@@ -23,6 +23,7 @@ function selectList() {
 		},
 		success : (listArr) => {
 			spaceListArr = listArr;
+			console.log(spaceListArr);
 			console.log("ajax성공");
 		},
 		error : () => {
@@ -36,19 +37,13 @@ function loadList(spaceListArr){
 	var picContent = "";
 	var lineContent = "";
 	for(var i = 0; i < spaceListArr.length; i++){
-		picContent = "<div>" + 
-						 "<div>" + 
-							 "<div class='lineList_content'>" + 
-							 "<input type='hidden' name='spaceNo' value='" + spaceListArr[i].spaceNo + "'>" +
-							 "<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" + 
-							 "<div class='lineList_content_hashTag'>해시태그</div>" + 
-							 "<div class='lineList_content_extraInfo'>" + 
-								 "<div class='lineList_content_price'>" + spaceListArr[i].hourPrice + "원/ 시간</div>" + 
-								 "<div class='lineList_content_reviewCount'>리뷰갯수</div>" + 
-								 "<div class='lineList_content_like'>좋아요</div>" + 
-							 "</div>" + 
-						 "</div>" + 
-					 "</div>";
+		picContent = "<div>" +
+						"<div class='picList_content'>" +
+								"<div class='picList_content_pic'>이미지</div>" +
+								"<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
+								"<div class='picList_content_price'>" + " + spaceListArr[i].hourPrice + " + "원 / 시간</div>" +
+							"</div>" +
+						"</div>" +
 		picList.append(picContent);
 		
 		lineContent = "<div>" + 

@@ -438,6 +438,9 @@
     </div>
     
 	<script>
+		document.querySelector("#m_search_btn").onclick = () => {
+			location.href="searchSpaceList.mp";
+		}
 		//검색어 자동완성기능
 		//### Cause: java.lang.UnsupportedOperationException
 		/* $(function(){

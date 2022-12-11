@@ -194,9 +194,7 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value="autoComplete.co", produces="text/html; charset=UTF-8")
 	public ModelAndView autoComplete(String keyword, ModelAndView mv) {
-		ArrayList<String> keywords = new ArrayList<>(); 
-				
-		keywords = commonService.autoComplete(keyword);
+		ArrayList<String> keywords = commonService.autoComplete(keyword);
 		
 		mv.addObject(keywords);
 		mv.setViewName("common/main");
