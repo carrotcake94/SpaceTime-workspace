@@ -241,9 +241,9 @@
 		<fmt:parseDate var="useDate" value="${r.useDate}" pattern="yyyy-MM-dd HH:mm:ss.S"/> <!-- String 을 Date 로 바꿈 -->
 		<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
 		
-                                   <%--  <c:out value="${useDate1}" />
+                                    <c:out value="${useDate1}" />
                                     <c:out value="${now}" />
-                                    <c:out value="${useDate1 - now}" /> --%>
+                                    <c:out value="${useDate1 - now}" />
                                     
         <!-- 취소 Modal -->
         <div class="modal" id="cancle-modal">

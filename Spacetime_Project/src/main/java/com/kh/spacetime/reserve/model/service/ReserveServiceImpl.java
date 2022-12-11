@@ -11,6 +11,7 @@ import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.dao.ReserveDao;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Space;
 
 @Service
 public class ReserveServiceImpl implements ReserveService {
@@ -117,6 +118,20 @@ public class ReserveServiceImpl implements ReserveService {
 	public int cancleMyReserve(int rno) {
 
 		return reserveDao.cancleMyReserve(sqlSession, rno);
+	}
+	
+	/* 예약 신고 */
+	@Override
+	public Space reportMemberInfo(int reserveNo) {
+		
+		return reserveDao.reportMemberInfo(sqlSession, reserveNo);
+		
+	}
+	
+	@Override
+	public int insertReportMyReserve(Space s) {
+
+		return reserveDao.insertReportMyReserve(sqlSession, s);
 	}
 
 }

@@ -459,13 +459,14 @@
 				                <c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate)}">
 				                  <div class="space_btn_area">
 				                  <button style="width: 70%" class="btn btn-warning">리뷰 작성하기</button>
-				                  <button style="width: 30%" class="btn btn-danger">신고하기</button>
+				                  <button style="width: 30%" class="btn btn-danger" data-toggle="modal" data-target="#report-Modal">신고하기</button>
 				                </div>
 				                </c:when>
 				                <c:otherwise>
 				                  <div class="space_btn_area">
 				                    <button style="width: 100%;" class="btn-reserveList detailBtn" >예약내역 확인</button>
 				                	<script>
+				                			/* 예약내역확인버튼  */
 						                	$(function() {
 						                		$(".detailBtn").click(function() {
 						                			/* console.log($(".rnoInput").val()); */
@@ -482,15 +483,6 @@
 
 			</c:otherwise>
 		</c:choose>
-
-
-
-
-
-
-
-
-
 
 
         </div>
@@ -547,35 +539,74 @@
 				       </c:choose>	       
      			 </ul>
             </div>
-        
-        
-        
+            <!-- <form id="rnoSubmit" action="" method="post">
+              <input type="hidden" name="rno" value="${ r.reserveNo }">
+            </form> -->
       </div>
   
-      <!-- 공간 검수 반려 확정 Modal -->
-      <div class="modal" id="refuse-info-Modal">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">검수 반려</div>
-            <!-- Modal body -->
-            <div class="modal-body">
+      <!--공간 신고 Modal -->
+      <div class="modal" id="report-Modal">
+        <form action="reportMyReserve.re" method="get" id="reportInfoSubmit">
+        <input type="hidden" name="rno" id="rno"> 
+        <script>
+       		 $("#rno").val($(".rnoInput").val());
+        </script>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">공간 신고</div>
+              <!-- Modal body -->
+              <div class="modal-body">
+                
+              <!--  신고유형 선택 드롭박스  -->
               <div>
-                아래 사유로 검수가 반려되었습니다.<br />
-                수정 후 재검수 신청을 해주시기 바랍니다.
-              </div>
-              <div>
-                (반려 메시지)공간 고유 이름을 등록해주시고 블라 블라 블라 블라전체
+                <b>신고유형</b> <br>
+                <div class="selectType">
+                  <label for="type_select">신고유형선택</label>
+                    <select id="type_select" name="reportType">
+                        <option>욕설</option>
+                        <option>인신공격</option>
+                        <option>음란</option>
+                        <option>비매너</option>
+                        <option>혐오컨텐츠</option> 
+                        <option>시설물관련</option> 
+                        <option>기타</option> 
+                    </select>
+                </div>
+                </div>
+                <br>
+                <!-- 신고내용 -->
+                <b>신고내용</b>  <br>
+                <div>
+                  <textarea id="reportContent" name="reportContent" cols="50" rows="3" placeholder="신고 내용을 입력해주세요."></textarea>
+                </div>              
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" onclick="$('#report-Modal').modal('hide');">취소</button>
+                  <button type="submit" class="reportBtn btn btn-danger">신고하기</button>
+                </div>
               </div>
             </div>
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" onclick="">관리자 문의</button>
-              <button type="button" onclick="">재검수 신청</button>
-            </div>
-          </div>
-        </div>
+        </form>
+        
+        
       </div>
+      
+      <script>
+      	/* 리뷰작성하기버튼  */
+  	
+	  	/* 신고버튼  */
+/* 	  	$(function() {
+	  		$(".reportBtn").click(function() {
+	  			location.href = "reportMyReserve.re?rno=" + $(".rnoInput").val() + "&reportType=" + $("#type_select").val() + "&reportContnet=" + $("#reportContnet").val();
+	  		});
+	  	}); */
+      	
+/* 	  	function reportInfoSubmit() {
+    		$("#reportInfoSubmit").attr("action", "reportMyReserve.re").submit(); */
+    	} 
+      </script>
 	
 	<jsp:include page="../common/footer.jsp" />
 	

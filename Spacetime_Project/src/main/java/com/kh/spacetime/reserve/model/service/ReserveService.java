@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Space;
 
 
 public interface ReserveService {
@@ -61,5 +62,9 @@ public interface ReserveService {
 	
 	/* 예약 취소 */
 	int cancleMyReserve(int rno);
+	
+	/* 예약 신고 */
+	Space reportMemberInfo(int rno);
+	int insertReportMyReserve(Space s);
 	
 }

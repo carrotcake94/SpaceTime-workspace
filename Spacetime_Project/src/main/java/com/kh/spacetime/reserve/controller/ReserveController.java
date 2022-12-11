@@ -1,6 +1,5 @@
 package com.kh.spacetime.reserve.controller;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +18,7 @@ import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.service.ReserveService;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Space;
 
 @Controller
 public class ReserveController {
@@ -262,6 +262,30 @@ public class ReserveController {
 		
 		if(result > 0) { // 예약 취소 성공 
 			session.setAttribute("alertMsg", "예약이 취소되었습니다.");;
+		}
+		return "redirect:/myReserve.re";
+	}
+	
+	// 예약 신고 
+	@RequestMapping("reportMyReserve.re")
+	public String reportMyReserve(int rno, String reportType, String reportContent, HttpSession session, Model model) {
+		
+		// 일단 신고자번호, 신고당한사람번호 가져오기 
+		
+		Space s = reserveService.reportMemberInfo(rno);
+		
+		s.setHourPrice(rno); // 임시로 형 맞는 hourPrice 에 rno 넣기 
+		s.setAddressDefault(reportType); // 임시 
+		s.setAddressDetail(reportContent); // 임시 
+		
+		
+		System.out.println(s);
+		
+		// 가져온 정보로 insert 하기 
+		int result = reserveService.insertReportMyReserve(s);
+		
+		if(result > 0) { // 신고 insert 성공 
+			session.setAttribute("alertMsg", "신고가 접수되었습니다.");;
 		}
 		return "redirect:/myReserve.re";
 	}

@@ -104,6 +104,27 @@ public class ReserveDao {
 		
 		return sqlSession.update("reserveMapper.cancleMyReserve", rno);
 	}
+	
+	/* 예약 신고 */
+	
+	public Space reportMemberInfo(SqlSessionTemplate sqlSession, int reserveNo) {
+		
+		
+		return sqlSession.selectOne("reserveMapper.reportMemberInfo", reserveNo);
+		
+	}
+	
+	public int insertReportMyReserve(SqlSessionTemplate sqlSession, Space s) {
+		
+		return sqlSession.update("reserveMapper.insertReportMyReserve", s);
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	// 정현-------------------------------------------
 	// 호스트 공간 예약 리스트 개수 가져오기-정현

@@ -37,6 +37,13 @@
 			<!-- SPACE 테이블 -->
 			<result column="SPACE_TITLE" property="spaceTitle" />
 		</resultMap>
+		
+		<!--   하연 : 조인떄문에 야매로 가공한 resultSet 입니다.. -->
+		<resultMap id="joinReportMemberInfoSet" type="space">
+			<result column="SPACE_NO" property="spaceNo" />
+			<result column="MEM_NO" property="stypeNo" />
+			<result column="HOST_NO" property="hostNo" />
+		</resultMap>
 
 		<select id="selectMyReserveListCount" resultType="_int">
 			SELECT COUNT(*)
@@ -184,6 +191,33 @@
 			   SET RESERVE_STATUS = 'C'
 			 WHERE RESERVE_NO = #{rno}
 		</update>
+		
+		<select id="reportMemberInfo" resultMap="joinReportMemberInfoSet">
+			SELECT SPACE_NO
+			     , HOST_NO
+			     , MEM_NO
+			FROM SPACE
+			JOIN RESERVE USING(SPACE_NO)
+			WHERE SPACE_NO = (SELECT SPACE_NO
+			                    FROM RESERVE
+			                    WHERE RESERVE_NO = #{rno})
+			 AND RESERVE_NO = #{rno}
+		</select>
+		
+		<insert  id="insertReportMyReserve" parameterType="space">
+			INSERT INTO REPORT
+				VALUES(SEQ_RPNO.NEXTVAL
+				     , #{addressDefault}
+				     , #{addressDetail}
+				     , SYSDATE
+				     , 'N'
+				     , null
+				     , null
+				     , #{stypeNo}
+				     , #{hostNo})
+		</insert>
+		
+		
 			
 	<!-- 	정현 -->
 	<!-- 	정현 start -->
