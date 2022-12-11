@@ -39,7 +39,8 @@
     <!-- summernote css/js-->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-
+	
+	<script src="resources/js/main.js"></script>
    <style>
     
    		/*
@@ -425,31 +426,28 @@
                 style="color: #FFB200;">T</span><span>ime</span>
         </div>
         <div id="m_search_btn">
-            <i class="fa fa-search" aria-hidden="true"></i>
+            <i class="fa fa-search"aria-hidden="true"></i>
         </div>
-        
-        <script>
-        	var searchBtn = document.querySelector("#m_search_btn");
-        	
-        	document.querySelector("#m_search_btn").onclick = () => {
-        		location.href = "searchSpaceList.mp";
-        	}
-        	 /* 
-           	$(function() {
-           		searchBtn.onclick(() => {
-           			location.href = "searchSpaceList.sp";
-           		});
-           	}); */
-           </script>
-        
         <div id="m_search_bar">
-            <input type="search" name="keyword">
+            <input type="search" id="searchInput" name="keyword">
         </div>
         <div id="menu_btn">
             <i class="fa fa-bars" aria-hidden="true" data-toggle="modal" data-target="#main-menu-Modal">
             </i>
         </div>
     </div>
+    
+	<script>
+		//검색어 자동완성기능
+		//### Cause: java.lang.UnsupportedOperationException
+		/* $(function(){
+			var searchInput = document.querySelector("#searchInput");
+			
+			window.addEventListener("keyup", () => {
+				autoComplete(searchInput);
+			})
+		}); */
+	</script>
     <!-- 슬라이드 메뉴 -->
     <div id="overlay"></div>
     <div id="main-slidemenu">

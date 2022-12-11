@@ -70,5 +70,11 @@ public class CommonServiceImpl implements CommonService {
 		return null;
 	}
 
+	@Override
+	public ArrayList<String> autoComplete(String keyword) {
+		
+		return commonDao.autoComplete(sqlSession, keyword);
+	}
+
 
 }

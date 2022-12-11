@@ -101,6 +101,8 @@
 				<script>
 					var spaceListArr = [];
 					var markers = [];
+					var map;
+					var HOME_PATH;
 					
 					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
 					var lineList = document.querySelector("#listOption_lineList");
@@ -108,11 +110,23 @@
 					var filter = document.querySelector("#mapFilter");
 					
 					window.onload = () => {
-						loadMap();
-						selectList();
-						loadList(spaceListArr);
+						loadMap(map, HOME_PATH);
+						selectList(map);
+						//loadList(spaceListArr);
+						//console.log("loadList 완료");
 						updateMarkers(spaceListArr, markers);
+						//console.log("updateMarkers 완료");
 					};
+					
+					var test = document.querySelector("#test");
+					
+					test.onclick = (spaceListArr, markers) => {
+						console.log("clicked");
+						console.log(spaceListArr);
+						updateMarkers(spaceListArr, markers);
+					}
+					
+				
 				</script>
 			</div>
 		</div>

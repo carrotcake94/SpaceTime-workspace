@@ -102,4 +102,11 @@
 	
 	<!-- 공간별 매출 상세조회 -->
 
+	<!-- 검색어 자동완성 -->
+	<select id="autoComplete" parameterType="string" resultType="arraylist">
+	SELECT SPACE_NO
+	  FROM SPACE
+	 WHERE INSTR(SPACE_TITLE, #{keyword}) > 0
+	   AND SPACE_STATUS = 'Y'
+	</select>
 </mapper>

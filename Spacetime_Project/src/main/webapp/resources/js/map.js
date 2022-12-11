@@ -1,6 +1,3 @@
-var HOME_PATH;
-var map;
-
 function loadMap(){
 	HOME_PATH = window.HOME_PATH || '.';
 						
@@ -69,33 +66,47 @@ function loadList(spaceListArr){
 		lineList.append(lineContent);
 	}
 }
-///////씨발이까지했고만
 
 function updateMarkers(spaceListArr, markers) {
-    for (var i = 0; i < spaceListArr.length; i++) {
-        var position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
-        
-    	var marker = new naver.maps.Marker({
+	console.log("updateMarkers 진입");
+	console.log(spaceListArr);
+	var bounds = map.getBounds();
+	markers = [];
+	
+	if(spaceListArr.length == 0) return;
+	var position, marker;
+	
+    for(var i = 0; i < spaceListArr.length; i++) {
+        position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
+    	marker = new naver.maps.Marker({
 			position : position,
+			title : i,
 			map: map
 		});
         markers.push(marker);
         
-	    if (map.getBounds().hasLatLng(marker.position)) {
-	        showMarker(map, markers[i]);
+        
+        coord = { lat : spaceListArr[i].latitude, lng : spaceListArr[i].longitude };
+        console.log("여기");
+	    if (bounds.hasLatLng(coord)) {
+	    	showMarker( marker);
+	    	console.log("생성완료");
 	    } else {
-	        hideMarker(map, markers[i]);
+	    	hideMarker(marker);
+	    	console.log("없애기완료");
 	    }
 	}
 }
 
-function showMarker(map, marker) {
-    if (marker.setMap()) return;
+function showMarker(marker) {
+
+    if (marker.getMap()) return;
     marker.setMap(map);
 }
 
-function hideMarker(map, marker) {
-    if (!marker.setMap()) return;
+function hideMarker(marker) {
+
+    if (!marker.getMap()) return;
     marker.setMap(null);
 }
 

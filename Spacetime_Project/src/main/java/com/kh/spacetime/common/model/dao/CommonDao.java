@@ -62,5 +62,13 @@ public class CommonDao {
 	}
 	
 	// 공간 매출 상세조회 
-
+	
+	
+	//검색어 자동완성기능
+	public ArrayList<String> autoComplete(SqlSessionTemplate sqlSession, String keyword) {
+		
+		ArrayList<String> keywords = (ArrayList)sqlSession.selectList("commonMapper.autoComplete", keyword); 
+		System.out.println(keywords);
+		return keywords;
+	}
 }

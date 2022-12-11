@@ -83,14 +83,14 @@
 				</div>
 				
 				<script>
-					$(function(){
+					/* $(function(){
 						var nextCategory = document.querySelector("#category_bundle"):nth-child(8):nth-child(10);
 						
 						document.querySelector("#nextBtn").onclick() = () => {
 							
 							
 						}
-					})
+					}) */
 				</script>
 				
 				
@@ -125,12 +125,8 @@
 						</div>
 					</div>
 				</div>
-
-				<script>
-					$(function() {
-						document.querySelector("")
-					})
-				</script>
+				
+				
 				<!-- 리뷰 ZONE -->
 				<div id="main_reviewZone">
 					<div id="main_reviewZone_title">
