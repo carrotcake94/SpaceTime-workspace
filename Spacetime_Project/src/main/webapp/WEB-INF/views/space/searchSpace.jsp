@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
-	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nrd3zj6gm7"></script>
+	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script>
 	<script src="resources/js/map.js"></script>
 </head>
 <body>
@@ -114,10 +114,8 @@
 					var HOME_PATH;
 					
 					window.onload = () => {
-						console.log(map);
 						loadMap(map, HOME_PATH);
-						console.log(map);
-						selectList(map);
+						//selectList(map);
 						//loadList(spaceListArr);
 						//console.log("loadList 완료");
 						//updateMarkers(spaceListArr, markers);

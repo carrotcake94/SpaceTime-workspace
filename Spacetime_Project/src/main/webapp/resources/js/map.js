@@ -1,12 +1,13 @@
-function loadMap(map, HOME_PATH){
+var map, HOME_PATH;
+
+function loadMap(){
 	HOME_PATH = window.HOME_PATH || '.';
-						
-	map = new naver.maps.Map('map', {
-		center: new naver.maps.LatLng(37.538798, 126.996526),
-		zoom: 12
-	});
-	
-	return map, HOME_PATH;
+
+    //최초로 가리키는 곳 (학원)
+    map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng(37.53306, 126.89632),
+        zoom: 13
+    });
 }
 
 //지도의 정보를 불러와 마커를 추가하는 메소드
