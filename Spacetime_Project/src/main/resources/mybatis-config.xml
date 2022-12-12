@@ -12,7 +12,7 @@
 		<typeAlias type="com.kh.spacetime.board.model.vo.Notice" alias="notice" />
 		<typeAlias type="com.kh.spacetime.board.model.vo.Newsletter" alias="newsletter" />
 		<typeAlias type="com.kh.spacetime.reserve.model.vo.Reserve" alias="reserve" />
-		<typeAlias type="com.kh.spacetime.reserve.model.vo.Payments" alias="payments" />
+		<typeAlias type="com.kh.spacetime.reserve.model.vo.Payment" alias="payment" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.Space" alias="space" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.SpaceAttachment" alias="spaceAttachment" />
 		<typeAlias type="com.kh.spacetime.space.model.vo.SpaceType" alias="spaceType" />
