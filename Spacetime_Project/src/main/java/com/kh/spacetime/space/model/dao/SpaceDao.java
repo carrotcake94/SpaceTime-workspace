@@ -98,6 +98,7 @@ public class SpaceDao {
 		return sqlSession.selectOne("spaceMapper.selectListCountForMap", map);
 	}
 
+	/********성훈*****************************************/
 	// 지도 공간 리스트 -성훈
 	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi){
 		int limit = pi.getBoardLimit();
@@ -106,6 +107,17 @@ public class SpaceDao {
 		
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
 	}
+	
+	// 지도 필터링 공간 갯수 조회 -성훈
+	public int filterListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+	    return sqlSession.selectOne("spaceMapper.filterListCountForMap", map);
+	}
+
+	// 지도 필터링 공간 리스트 -성훈
+	public ArrayList<Space> filterListForMap(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+		return (ArrayList)sqlSession.selectList("spaceMapper.filterListForMap", map);
+	}
+	/*****************************************************/
 	
 	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
 	public ArrayList<Space> selectListForNewsletter(SqlSessionTemplate sqlSession, List<String> list) {

@@ -30,11 +30,23 @@ function selectList(map) {
 	});
 };
 
-
-function test(sno) {
-	console.log("clicked");
-	console.log(sno);
-	location.href='spaceDetail.sp?sno=" + spaceListArr[i].spaceNo + "'
+function filterMap() {
+	$.ajax({
+		url: "mapFilter.mp",
+		type: "get",
+		async: false,
+		data : {
+			date : document.querySelector("input[name=date]"),
+			area : document.querySelector("select[name=area]"),			
+			category : $("#mapFilter_category_list").serialized(),
+			min_price : document.querySelector("#min_price").value,
+			max_price : document.querySelector("#max_price").value
+		},
+		success : () => {
+		},
+		error : () => {
+		}
+	});
 }
 
 function loadList(spaceListArr){

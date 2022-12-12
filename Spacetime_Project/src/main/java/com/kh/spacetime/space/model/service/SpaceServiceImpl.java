@@ -107,17 +107,29 @@ public class SpaceServiceImpl implements SpaceService {
 		return spaceDao.reInsertSpace(sqlSession, spaceNo);
 	}
 	
+	/*******성훈********************************************/
 	// 지도에 표시될 공간 갯수 조회 -성훈
 	@Override
 	public int selectListCountForMap(HashMap<String, Double> map) {
-		return spaceDao.selectListCountForMap(sqlSession, map);
+	    return spaceDao.selectListCountForMap(sqlSession, map);
 	}
-	
+
 	// 지도 공간 리스트 -성훈
 	@Override
 	public ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi) {
-		return spaceDao.selectListForMap(sqlSession, map, pi);
+	    return spaceDao.selectListForMap(sqlSession, map, pi);
 	}
+
+	@Override
+	public int filterListCountForMap(HashMap<String, String> map) {
+	    return spaceDao.filterListCountForMap(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Space> filterListForMap(HashMap<String, String> map, PageInfo pi) {
+	    return spaceDao.filterListForMap(sqlSession, map, pi);
+	}
+	/*****************************************************/
 
 	/*
 	 * 하연  ------------------------------------

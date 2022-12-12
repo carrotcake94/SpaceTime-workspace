@@ -52,11 +52,19 @@ public interface SpaceService {
 	// 공간 재검수 등록 -정현
 	int reInsertSpace(int spaceNo);
 
+	/******성훈*********************************************/
 	// 지도에 표시될 공간 갯수 조회 -성훈
 	int selectListCountForMap(HashMap<String, Double> map);
 
 	// 지도 공간 리스트 -성훈
 	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
+
+	// 지도 필터링 공간 갯수 조회 -성훈
+	int filterListCountForMap(HashMap<String, String> map);
+
+	// 지도 필터링 공간 리스트 -성훈
+	ArrayList<Space> filterListForMap(HashMap<String, String> map, PageInfo pi);
+	/*****************************************************/
 	
 	/*
 	 * 하연  -------------------------------------
