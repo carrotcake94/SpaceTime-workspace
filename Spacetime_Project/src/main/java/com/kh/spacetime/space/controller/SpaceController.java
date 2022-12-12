@@ -411,6 +411,9 @@ public class SpaceController {
 		if(result > 0) { // 신고 insert 성공 
 			session.setAttribute("alertMsg", "신고가 접수되었습니다.");;
 		}
+		
+		mv.addObject("s", s);
+		
 		mv.setViewName("space/spaceDetailView");
 		
 		return mv;
