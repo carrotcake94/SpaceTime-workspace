@@ -57,5 +57,16 @@ public interface SpaceService {
 
 	// 지도 공간 리스트 -성훈
 	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
+	
+	
+	/*
+	 * 하연  
+	 */
+	
+	// 공간 상세 조회 
+	Space selectSpaceDetail(int spaceNo);
+	
+	// 공간 상세 조회 - Attachment
+	SpaceAttachment selectSpaceDetailAttachment(int spaceNo);
 
 }

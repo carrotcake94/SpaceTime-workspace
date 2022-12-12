@@ -255,11 +255,11 @@
 
         <div id="content">
             <div class="sheader" style="padding-top: 100px;">
-                구로 넷마루 LED전광판 스튜디오
+                ${ s.spaceTitle }
             </div>
 
             <div class="sub_title">
-                200인치 전광판이 있는 방송국 느낌나는 스튜디오
+                ${ s.spaceSubTitle }
             </div>
 
             <table>
@@ -267,7 +267,7 @@
                     <td  style="padding-right: 100px;" align="center">
                         <!-- 공간이미지, 제목 등 -->
                         <div class="space">
-                            <img class="space_img" src="resources/images/space/space/166028706_.jpg" alt="사진 없음" />
+                            <img class="space_img" src="resources/images/space/space/test.jpeg" alt="사진 없음" />
                                 <div class="img_btn_area">
                                     <button type="button" class="button_img button_img_prev">
                                     <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -323,98 +323,98 @@
                                                 <!-- <span class="time time_half">오전</span> -->
                                                 <a class="time_box">
                                                   <span class="time">0</span> 
-                                                  <span class="price">15,000</span>
+                                                  <span class="price">${ s.hourPrice }</span>
                                                 </a>
                                               </li>
                                               <li class="swiper-slide able swiper-slide-next">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">1</span> 
-                                                <span class="price">15,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">2</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">3</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">4</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">5</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">6</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">7</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">8</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                                 <!----> 
                                                 <a class="time_box">
                                                   <span class="time">9</span> 
-                                                  <span class="price">12,000</span>
+                                                  <span class="price">${s.hourPrice }</span>
                                                 </a>
                                               </li>
                                               <li class="swiper-slide able">
                                                 <!----> 
                                                 <a class="time_box">
                                                   <span class="time">10</span> 
-                                                  <span class="price">12,000</span>
+                                                  <span class="price">${s.hourPrice }</span>
                                                 </a>
                                               </li>
                                               <li class="swiper-slide able">
                                                 <!----> 
                                                 <a class="time_box">
                                                   <span class="time">11</span> 
-                                                  <span class="price">12,000</span>
+                                                  <span class="price">${s.hourPrice }</span>
                                                 </a>
                                               </li>
                                               <li class="swiper-slide able">
                                                 <!-- <span class="time time_half">오후</span>  -->
                                                 <a class="time_box">
                                                 <span class="time">12</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <li class="swiper-slide able">
                                               <!----> 
                                               <a class="time_box">
                                                 <span class="time">13</span> 
-                                                <span class="price">12,000</span>
+                                                <span class="price">${s.hourPrice }</span>
                                               </a>
                                             </li>
                                             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
@@ -481,7 +481,8 @@
 
                         <!-- 공간소개 -->
                         <h3>공간소개</h3>
-                        <p>이런 분들이 많이 찾으십니다.
+                        <p>
+                        	<!-- 이런 분들이 많이 찾으십니다.
                             <br> 
                             비대면 강의 스트리밍을 원하시는 분
                             <br> 
@@ -497,7 +498,8 @@
                             <br>
                             모든 방문자의 성함 및 연락처를 적어주셔야합니다.*
                             <br><br>
-                            - 저희 스튜디오는 매일 1회 이상 소독을 진행하고 있습니다 -
+                            - 저희 스튜디오는 매일 1회 이상 소독을 진행하고 있습니다 - -->
+                            ${ s.spaceInfo }
                         </p>
 
                         <br><br><br><br><br>
@@ -549,7 +551,7 @@
                           <table style="line-height: 2; padding: 5px;">
                               <tr>
                                   <td>예약공간</td>
-                                  <td>공간이름이들어갈자리</td>
+                                  <td>${ s.spaceTitle }</td>
                               </tr>
                               <tr>
                                   <td>예약날짜</td>

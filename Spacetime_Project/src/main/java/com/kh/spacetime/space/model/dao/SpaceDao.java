@@ -107,4 +107,17 @@ public class SpaceDao {
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
 	}
 
+	/*
+	 *  하연 
+	 */
+	
+	// 공간 상세 
+	public Space selectSpaceDetail(SqlSessionTemplate sqlSession, int spaceNo) {
+		return sqlSession.selectOne("spaceMapper.selectSpaceDetail", spaceNo);
+	}
+	
+	// 공간 상세 - Attachment
+	public SpaceAttachment selectSpaceDetailAttachment(SqlSessionTemplate sqlSession, int spaceNo) {
+		return sqlSession.selectOne("spaceMapper.selectSpaceDetailAttachment", spaceNo);
+	}
 }

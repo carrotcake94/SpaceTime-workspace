@@ -162,10 +162,10 @@
 						console.log(a.value); */
 						
 						// 임시로 걍 해놈 
-						var classVal=$(".picList_content").children().val();
+						var sno=$(".picList_content").children().val();
 						// console.log(classVal);
 						
-						location.href = "detail.sp?sno=" + classVal;
+						location.href = "detail.sp?sno=" + sno;
 						
 					}
 					

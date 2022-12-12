@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
+import com.kh.spacetime.reserve.model.vo.Reserve;
 import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
@@ -353,5 +354,42 @@ public class SpaceController {
 
 		return changeName;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * @author 하연 
+	 * 공간 상세페이지 ^___^
+	 */
+	@RequestMapping("detail.sp")
+	public ModelAndView selectMyReserveDetail(int sno, ModelAndView mv) {
+
+		
+		Space s = spaceService.selectSpaceDetail(sno);
+		
+		SpaceAttachment sa = spaceService.selectSpaceDetailAttachment(sno);
+		
+		System.out.println(sa);
+		
+		mv.addObject("s", s);
+		mv.addObject("sa", sa);
+		mv.setViewName("space/spaceDetailView");
+		
+		return mv;
+	}
+	
 	
 }

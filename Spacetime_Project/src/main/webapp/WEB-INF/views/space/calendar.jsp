@@ -32,7 +32,7 @@
 <style type="text/css">
     *{padding: 0px; margin: 0px;}  /* 브라우저별 기본 여백 차이가 있기에 작성한다. */
     body{font-size: 9pt;}
-    td{font-size: 9pt;}
+    td{font-size: 9pt; background-color: white;}
     a{cusor: pointer; color: #000000; text-decoration: none; font-size: 9pt; line-height: 150%;}
     .day-tr td:hover { background-color: lightgrey; cursor: pointer; }
     

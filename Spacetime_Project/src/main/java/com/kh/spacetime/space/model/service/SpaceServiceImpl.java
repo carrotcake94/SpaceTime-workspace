@@ -119,4 +119,21 @@ public class SpaceServiceImpl implements SpaceService {
 		return spaceDao.selectListForMap(sqlSession, map, pi);
 	}
 
+	
+	/*
+	 * 하연  
+	 */
+	
+	// 공간 상세 
+	@Override
+	public Space selectSpaceDetail(int spaceNo) {
+		return spaceDao.selectSpaceDetail(sqlSession, spaceNo);
+	}
+	
+	// 공간 상세 - Attachment
+	@Override
+	public SpaceAttachment selectSpaceDetailAttachment(int spaceNo) {
+		return spaceDao.selectSpaceDetailAttachment(sqlSession, spaceNo);
+	}
+
 }
