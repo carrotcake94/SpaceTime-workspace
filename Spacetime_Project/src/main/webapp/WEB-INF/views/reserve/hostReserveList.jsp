@@ -48,6 +48,12 @@
         border: none;
         font-size: 18px;
       }
+      
+      #hReserveTb th,
+	   #hReserveTb td {
+			text-align: center;
+		}
+      
 
       .pagination {
         justify-content: center;
@@ -326,7 +332,7 @@
 
         <button type="submit">검색</button>
       </form>
-      <table class="table table-hover">
+      <table id="hReserveTb" class="table table-hover">
         <thead>
           <tr>
             <th>예약번호</th>
@@ -444,7 +450,6 @@
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">
-         
           </div>
         </div>
       </div>
@@ -515,7 +520,7 @@
     	var str = useDate+"("+getDayOfWeek(useDate)+") "+$(tr).children("input").eq(1).val()+":00 ~ "+$(tr).children("input").eq(2).val()+":00 "+totime+"시간";
     	$("#revTime").text(str);
     	$("#revPhone").text($(tr).children("input").eq(4).val());
-    	$("#revPrice").text($(tr).children().eq(4).text()+"원");
+    	$("#revPrice").text($(tr).children().eq(4).text());
     	
     	
     	let today = new Date();

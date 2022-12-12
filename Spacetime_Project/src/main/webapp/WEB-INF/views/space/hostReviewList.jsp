@@ -106,8 +106,12 @@
         width: 100%;
         overflow: auto;
         display: none;
-
       }
+      .stext {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
       .rev-select.active .option-list {
         max-height: 190px;
@@ -130,8 +134,8 @@
         font-weight: 600;
 	  
 	  }
-
       /* -------------*/
+      
       /* 페이지네이션 */
       .pagination {
         justify-content: center;
@@ -517,7 +521,7 @@
     $(function () {
     	//페이징
     	$(".page-link").each(function() {
-      		if ($(this).text() ==${ pi.currentPage}) {
+      		if ($(this).text() =="${pi.currentPage}") {
       			$(this).attr("id", "active-page");
       			$(this).parent().addClass("disabled");
       		} else {
@@ -544,9 +548,6 @@
 				location.href ="hostRvwList.rv?rpage="+nextNo;
 			});
      	}else {
-     		console.log(key);
-     		console.log(stitle);
-     		console.log(hanswer);
      		$(".stext").text(stitle);
      		
      		$("input[name=stitle]").val(stitle);     		
@@ -585,7 +586,7 @@
 
       $("section").on("click", ".option", function () {
         $(this).parent().siblings("div").text($(this).text());
-        $(this).parent().siblings("input").val($(this).text())
+        $(this).parent().siblings("input").val($(this).text());
       });
 
       // img 컨트롤
