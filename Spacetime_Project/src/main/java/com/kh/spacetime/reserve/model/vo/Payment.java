@@ -1,5 +1,5 @@
 package com.kh.spacetime.reserve.model.vo;
 
-public class Payments {
+public class Payment {
 
 }
