@@ -114,7 +114,7 @@ public class SpaceDao {
 	}
 
 	/*
-	 *  하연 
+	 * 하연  ------------------------------------
 	 */
 	
 	// 공간 상세 
@@ -126,4 +126,12 @@ public class SpaceDao {
 	public SpaceAttachment selectSpaceDetailAttachment(SqlSessionTemplate sqlSession, int spaceNo) {
 		return sqlSession.selectOne("spaceMapper.selectSpaceDetailAttachment", spaceNo);
 	}
+	
+	// 공간 신고 
+	public int insertSpaceReport(SqlSessionTemplate sqlSession, Space s) {
+		return sqlSession.delete("spaceMapper.insertSpaceReport", s);
+	}
+	
+	
+	// ------------- 하연 끝 ^0^ ---------------
 }

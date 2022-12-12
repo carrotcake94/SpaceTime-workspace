@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
+import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Space;
@@ -375,14 +376,12 @@ public class SpaceController {
 	 * 공간 상세페이지 ^___^
 	 */
 	@RequestMapping("detail.sp")
-	public ModelAndView selectMyReserveDetail(int sno, ModelAndView mv) {
+	public ModelAndView selectSpaceDetailAttachment(int sno, ModelAndView mv) {
 
 		
 		Space s = spaceService.selectSpaceDetail(sno);
 		
 		SpaceAttachment sa = spaceService.selectSpaceDetailAttachment(sno);
-		
-		System.out.println(sa);
 		
 		mv.addObject("s", s);
 		mv.addObject("sa", sa);
@@ -390,6 +389,37 @@ public class SpaceController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("reportSpace.sp")
+	public ModelAndView insertSpaceReport(int sno, String reportType, String reportContent, HttpSession session, ModelAndView mv) {
+		
+	
+		int mno = ((Member) session.getAttribute("loginMember")).getMemNo();
+		
+		Space sHostNo = spaceService.selectSpaceDetail(sno);
+		
+		Space s = new Space();
+		s.setSpaceNo(sno);
+		s.setMaxPeople(mno); // 임시 - 신고한 회원번호 
+		s.setHostNo(sHostNo.getHostNo());
+		s.setAddressDefault(reportType); // 임시 - 리포트 타입 
+		s.setAddressDetail(reportContent); // 임시 - 리포트 내용 
+		
+		int result = spaceService.insertSpaceReport(s);
+		
+		
+		if(result > 0) { // 신고 insert 성공 
+			session.setAttribute("alertMsg", "신고가 접수되었습니다.");;
+		}
+		
+		mv.addObject("s", s);
+		
+		mv.setViewName("space/spaceDetailView");
+		
+		return mv;
+	
+	}
+	
 	
 	
 }

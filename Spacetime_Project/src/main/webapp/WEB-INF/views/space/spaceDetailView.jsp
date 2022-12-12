@@ -285,7 +285,7 @@
                         <div class="reserve">
                             <div id="reserve_title" style="font-size: 25px; font-weight: 800;">
                                 예약하기
-                                <button type="button" class="img_btn" id="report_btn"><img src="resources/images/space/siren_icon.png" width="40px" height="30px"></button>
+                                <button type="button" class="img_btn" id="report_btn" data-toggle="modal" data-target="#report-Modal"><img src="resources/images/space/siren_icon.png" width="40px" height="30px"></button>
                                 <button type="button" class="img_btn" id="like_btn"><img src="resources/images/space/like_icon.png" width="35px" height="35px"></button>
                             </div>
 
@@ -682,6 +682,53 @@
                   </div>
               </div>
           </div>
+      </div>
+
+	<!--공간 신고 Modal -->
+      <div class="modal" id="report-Modal">
+        <form action="reportSpace.sp" method="get" id="reportInfoSubmit">
+        <input type="hidden" name="sno" id="sno" value="${ s.spaceNo }"> 
+        <%-- <input type="hidden" name="mno" id="mno" value="${ loginUser.getMemNo }">  --%>
+        <script>
+        </script>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">공간 신고</div>
+              <!-- Modal body -->
+              <div class="modal-body">
+                
+              <!--  신고유형 선택 드롭박스  -->
+              <div>
+                <b>신고유형</b> <br>
+                <div class="selectType">
+                  <label for="type_select">신고유형선택</label>
+                    <select id="type_select" name="reportType">
+                        <option>욕설</option>
+                        <option>인신공격</option>
+                        <option>음란</option>
+                        <option>비매너</option>
+                        <option>혐오컨텐츠</option> 
+                        <option>시설물관련</option> 
+                        <option>기타</option> 
+                    </select>
+                </div>
+                </div>
+                <br>
+                <!-- 신고내용 -->
+                <b>신고내용</b>  <br>
+                <div>
+                  <textarea id="reportContent" name="reportContent" cols="50" rows="3" placeholder="신고 내용을 입력해주세요."></textarea>
+                </div>              
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" onclick="$('#report-Modal').modal('hide');">취소</button>
+                  <button type="submit" class="reportBtn btn btn-danger">신고하기</button>
+                </div>
+              </div>
+            </div>
+        </form>
       </div>
 
 	
