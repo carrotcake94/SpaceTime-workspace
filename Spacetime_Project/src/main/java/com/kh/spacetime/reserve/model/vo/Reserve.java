@@ -17,7 +17,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Reserve {
-	
 		private int reserveNo;	//	RESERVE_NO	NUMBER
 		private int reserveCount;	//	RESERVE_COUNT	NUMBER
 		private String reserveDate;	//	RESERVE_DATE	DATE
@@ -31,7 +30,6 @@ public class Reserve {
 		private String denyMessage;	//	DENY_MESSAGE	VARCHAR2(600 BYTE)
 		private Space space;  // join용 정현
 		private Member member;  // join용 정현
-		
 		
 		// resultSet join 때문에 추가좀 하겠습니다.. => 하연 
 		private String email; 

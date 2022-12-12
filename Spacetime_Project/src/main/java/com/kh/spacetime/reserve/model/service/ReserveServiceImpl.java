@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.dao.ReserveDao;
+import com.kh.spacetime.reserve.model.vo.Payment;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 import com.kh.spacetime.space.model.vo.Space;
 
@@ -22,6 +23,7 @@ public class ReserveServiceImpl implements ReserveService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	// 정현----------------------
 	// 호스트 예약관리 리스트 개수 - 정현
 	@Override
 	public int selectHostReserveListCount(int memNo) {
@@ -53,6 +55,27 @@ public class ReserveServiceImpl implements ReserveService {
 	public ArrayList<Reserve> searchHostReserveList(HashMap<String, String> map, PageInfo pi) {
 		return reserveDao.searchHostReserveList(sqlSession, map, pi);
 	}
+	// 호스트 정산  리스트 개수 - 정현
+	@Override
+	public int selectHostCalculListCount(int memNo) {
+		return reserveDao.selectHostCalculListCount(sqlSession, memNo);
+	}
+	// 호스트 정산  리스트  - 정현
+	@Override
+	public ArrayList<Payment> selectHostCalculList(int memNo, PageInfo pi) {
+		return reserveDao.selectHostCalculList(sqlSession, memNo, pi);
+	}
+	// 호스트 검색 정산  리스트 개수 - 정현
+	@Override
+	public int searchHostCalculListCount(HashMap<String, String> map) {
+		return reserveDao.searchHostCalculListCount(sqlSession, map);
+	}
+	// 호스트 검색 정산  리스트  - 정현
+	@Override
+	public ArrayList<Payment> searchHostCalculList(HashMap<String, String> map, PageInfo pi) {
+		return reserveDao.searchHostCalculList(sqlSession, map, pi);
+	}
+	// ---------------------정현
 
 	// ----------- 하연 --------------------
 
@@ -133,5 +156,7 @@ public class ReserveServiceImpl implements ReserveService {
 
 		return reserveDao.insertReportMyReserve(sqlSession, s);
 	}
+
+	
 
 }

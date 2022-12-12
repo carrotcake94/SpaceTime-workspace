@@ -17,7 +17,11 @@ import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.service.ReserveService;
+import com.kh.spacetime.reserve.model.vo.Payment;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.service.ReviewService;
+import com.kh.spacetime.space.model.service.ReviewServiceImpl;
+import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
 
 @Controller
@@ -25,6 +29,9 @@ public class ReserveController {
 
 	@Autowired
 	private ReserveService reserveService;
+	
+	@Autowired
+	private ReviewService reviewService;
 
 	// 정현---------------------
 	/**
@@ -46,7 +53,7 @@ public class ReserveController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Reserve> rList = reserveService.selectHostReserveList(memNo, pi);
-		
+
 		Date now = new Date();
 		model.addAttribute("now", now);
 		model.addAttribute("pi", pi);
@@ -67,10 +74,10 @@ public class ReserveController {
 		String memNo = "5";
 
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		map.put("memNo", memNo);
 		map.put("keyword", keyword);
-		
+
 		int listCount = reserveService.searchHostReserveListCount(map);
 		int pageLimit = 10;
 		int boardLimit = 3;
@@ -88,26 +95,70 @@ public class ReserveController {
 	}
 
 	/**
-	 * 호스트 정산내역 리스트
-	 * 
-	 * @author 정현
+	 * @author 정현 호스트 정산 리스트
 	 */
-	@RequestMapping("calList.ho")
-	public String selectHostCalculationList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
+	@RequestMapping("hostCalList.re")
+	public String selectHostReviewList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
 			Model model) {
 
-		// 연결 전
-//		int listCount = reserveService.selectHostReserveListCount();
-//
-//		int pageLimit = 10;
-//		int boardLimit = 5;
-//
-//		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-//
-//		ArrayList<Reserve> list = reserveService.selectHostReserveList(pi);
-//
-//		model.addAttribute("pi", pi);
-//		model.addAttribute("list", list);
+//		Member loginMember = (Member)session.getAttribute("loginMember");
+//		int memNo = loginMember.getMemNo();
+		int memNo = 5;
+
+		int listCount = reserveService.selectHostCalculListCount(memNo);
+		int pageLimit = 10;
+		int boardLimit = 3;
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		ArrayList<Payment> pList = reserveService.selectHostCalculList(memNo, pi);
+		ArrayList<Space> sList = reviewService.selectMySpaceList(memNo);
+
+		model.addAttribute("sList", sList);
+		model.addAttribute("pList", pList);
+		model.addAttribute("pi", pi);
+
+		return "reserve/hostCalculationList";
+	}
+
+	/**
+	 * @author 정현 호스트 검색 정산 리스트
+	 */
+	@RequestMapping("schhostCalList.re")
+	public String searchHostReviewList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
+			@RequestParam(value = "cstatus", defaultValue = "") String calStatus,
+			@RequestParam(value = "stitle", defaultValue = "") String spaceTitle,
+			@RequestParam(value = "sdate", defaultValue = "") String sdate,
+			@RequestParam(value = "edate", defaultValue = "") String edate, Model model) {
+
+//		Member loginMember = (Member)session.getAttribute("loginMember");
+//		int memNo = Integer.parseInt(loginMember.getMemNo());
+		String memNo = "5";
+
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		map.put("memNo", memNo);
+		map.put("spaceTitle", spaceTitle);
+		map.put("calStatus", calStatus);
+		map.put("sdate", sdate);
+		map.put("edate", edate);
+		
+		int listCount = reserveService.searchHostCalculListCount(map);
+		int pageLimit = 10;
+		int boardLimit = 3;
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		ArrayList<Payment> pList = reserveService.searchHostCalculList(map, pi);
+		ArrayList<Space> sList = reviewService.selectMySpaceList(Integer.parseInt(memNo));
+
+		model.addAttribute("sList", sList);
+		model.addAttribute("stitle", spaceTitle);
+		model.addAttribute("cstatus", calStatus);
+		model.addAttribute("sdate", sdate);
+		model.addAttribute("edate", edate);
+		model.addAttribute("pList", pList);
+		model.addAttribute("pi", pi);
 
 		return "reserve/hostCalculationList";
 	}
@@ -158,8 +209,8 @@ public class ReserveController {
 		ArrayList<Reserve> list = reserveService.selectMyReservetList(pi, memNo);
 
 		model.addAttribute("pi", pi);
-		model.addAttribute("list",list);
-		
+		model.addAttribute("list", list);
+
 		model.addAttribute("list", list);
 
 //		System.out.println(list);
@@ -169,7 +220,7 @@ public class ReserveController {
 	}
 
 	/* 마이페이지 예약리스트 - 드롭박스 정렬 (예약대기 / 예약취소 / 예약확정 / 이용완료 ) */
-	
+
 	static int sortListCount = 0; // 초기화 - 필터 페이징때문에 밖에 빼둠요 ~~~~~~
 
 	@RequestMapping("myReserveSort.re")
@@ -180,11 +231,11 @@ public class ReserveController {
 
 		// selectbox 랑 memNo 같이 묶어서 보내기 위한 객체
 		Member m = new Member();
-		m.setMemNo(memNo);		
+		m.setMemNo(memNo);
 		m.setMemId(selectbox); // => 아이디 아닌데 그냥 형 맞아서 넣음
-		
+
 		String compare = "";
-				
+
 		switch (selectbox) {
 		case "예약대기":
 			selectbox = "W";
@@ -199,93 +250,91 @@ public class ReserveController {
 			sortListCount = reserveService.selectMyReserveListSortCount(m);
 			break;
 		case "예약확정":
-			selectbox = "Y"; 
+			selectbox = "Y";
 			System.out.println(selectbox);
 			sortListCount = reserveService.selectMyReserveListSortConfirmCount(m);
 			break; // 기본 카운트
 		case "이용완료":
-			selectbox = "Y"; compare="D";
+			selectbox = "Y";
+			compare = "D";
 			sortListCount = reserveService.selectMyReserveListSortUsedCount(m);
 			break; // 현재날짜 비교해서 이용완료 뽑는 카운트
 		}
 
 		m.setMemId(selectbox); // 밑에 메소드에서 재활용할거
-		
+
 		int pageLimit = 10;
 		int boardLimit = 9;
 
 		PageInfo pi = Pagination.getPageInfo(sortListCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Reserve> list = null;
-		
-		if(selectbox.equals("W") && compare.equals("")) {
+
+		if (selectbox.equals("W") && compare.equals("")) {
 			list = reserveService.selectMyReserveSortList(pi, m);
-		} else if(selectbox.equals("C") && compare.equals("")) {
+		} else if (selectbox.equals("C") && compare.equals("")) {
 			list = reserveService.selectMyReserveSortList(pi, m);
-		} else if(selectbox.equals("N") && compare.equals("")) {
+		} else if (selectbox.equals("N") && compare.equals("")) {
 			list = reserveService.selectMyReserveSortList(pi, m);
-		} else if(selectbox.equals("Y") && compare.equals("D")) { // 이용완료인경우 
+		} else if (selectbox.equals("Y") && compare.equals("D")) { // 이용완료인경우
 			list = reserveService.selectMyReserveSortUsedList(pi, m);
 		} else {
 			list = reserveService.selectMyReserveSortConfirmList(pi, m);
 		}
-		
+
 		System.out.println(list);
-		
+
 		model.addAttribute("pi", pi);
-		model.addAttribute("list",list);
+		model.addAttribute("list", list);
 		model.addAttribute("selectbox", selectbox);
-
-
 
 		return "reserve/reserveFilterList";
 	}
-	
+
 	/* 예약 상세 */
 	@RequestMapping("reserveDetail.re")
 	public ModelAndView selectMyReserveDetail(int rno, ModelAndView mv) {
 
-		
 		Reserve r = reserveService.selectMyReserve(rno);
-		
+
 		mv.addObject("r", r).setViewName("reserve/reserveDetailView");
-		
+
 		return mv;
 	}
-	
 
-	// 예약 취소 
+	// 예약 취소
 	@RequestMapping("cancleMyReserve.re")
 	public String cancleMyReserve(int rno, HttpSession session, Model model) {
-		
+
 		int result = reserveService.cancleMyReserve(rno);
-		
-		if(result > 0) { // 예약 취소 성공 
-			session.setAttribute("alertMsg", "예약이 취소되었습니다.");;
+
+		if (result > 0) { // 예약 취소 성공
+			session.setAttribute("alertMsg", "예약이 취소되었습니다.");
+			;
 		}
 		return "redirect:/myReserve.re";
 	}
-	
-	// 예약 신고 
+
+	// 예약 신고
 	@RequestMapping("reportMyReserve.re")
 	public String reportMyReserve(int rno, String reportType, String reportContent, HttpSession session, Model model) {
-		
-		// 일단 신고자번호, 신고당한사람번호 가져오기 
-		
+
+		// 일단 신고자번호, 신고당한사람번호 가져오기
+
 		Space s = reserveService.reportMemberInfo(rno);
-		
-		s.setHourPrice(rno); // 임시로 형 맞는 hourPrice 에 rno 넣기 
-		s.setAddressDefault(reportType); // 임시 
-		s.setAddressDetail(reportContent); // 임시 
-		
-		
+
+		s.setHourPrice(rno); // 임시로 형 맞는 hourPrice 에 rno 넣기
+		s.setAddressDefault(reportType); // 임시
+		s.setAddressDetail(reportContent); // 임시
+
 		System.out.println(s);
-		
-		// 가져온 정보로 insert 하기 
+
+		// 가져온 정보로 insert 하기
 		int result = reserveService.insertReportMyReserve(s);
-		
-		if(result > 0) { // 신고 insert 성공 
-			session.setAttribute("alertMsg", "신고가 접수되었습니다.");;
+
+		if (result > 0) { // 신고 insert 성공
+			session.setAttribute("alertMsg", "신고가 접수되었습니다.");
+			;
 		}
 		return "redirect:/myReserve.re";
 	}

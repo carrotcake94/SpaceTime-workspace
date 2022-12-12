@@ -323,6 +323,121 @@
 		 WHERE RESERVE_NO = #{reserveNo}
 	</update>
 	
+	
+	<!-- 	정현 호스트 정산내역 리스트 -->
+	<!-- 	호스트 정산 리스트 resultset  -->
+	<resultMap id="hostCalculListSet" type="payment">
+		<result column="CAL_STATUS" property="payStatus" />
+		<result column="RESERVE_NO" property="reserveNo" />
+		<result column="PAY_METHOD" property="payMethod" />
+		<collection property="reserve" ofType="reserve" >
+			<result column="RESERVE_COUNT" property="reserveCount" />	
+			<result column="LAST_DAY" property="reserveDate" />	
+			<result column="USE_DATE" property="useDate" />
+			<result column="START_TIME" property="startTime" />	
+			<result column="END_TIME" property="endTime" />		
+			<result column="PRICE" property="price" />	
+			<result column="MEM_NAME" property="memNo" />
+			<result column="PHONE" property="denyMessage" />
+			<result column="SPACE_TITLE" property="spaceTitle" />
+		</collection>
+	</resultMap>		
+
+	<!-- 호스트 정산 리스트  개수 -->
+	<select id="selectHostCalculListCount" parameterType="_int" resultType="_int">
+ 	    SELECT COUNT(*)
+		FROM (
+		SELECT P.RESERVE_NO
+		FROM PAYMENT P
+		JOIN RESERVE  R ON P.RESERVE_NO = R.RESERVE_NO
+		JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+		JOIN SPACE S ON S.SPACE_NO = R.SPACE_NO
+		WHERE PAY_STATUS = 'N'
+		AND HOST_NO = #{memNo}
+		)
+	</select>
+	<!-- 	호스트 정산 리스트-->
+	<select id="selectHostCalculList" parameterType="_int" resultMap="hostCalculListSet">
+	<![CDATA[
+	    SELECT P.RESERVE_NO, SPACE_TITLE, M.MEM_NAME, PHONE, PRICE, TO_CHAR(LAST_DAY(USE_DATE),'YYYY-MM-DD') LAST_DAY
+	    , TO_CHAR(USE_DATE,'YYYY-MM-DD') USE_DATE, PAY_METHOD, RESERVE_COUNT,START_TIME,END_TIME
+		, CASE WHEN USE_DATE < SYSDATE
+		AND TO_CHAR(SYSDATE,'YYYY-MM-DD') >  LAST_DAY(USE_DATE)
+		THEN '완료'
+		ELSE '예정'
+		END CAL_STATUS
+		FROM PAYMENT P
+		JOIN RESERVE  R ON P.RESERVE_NO = R.RESERVE_NO
+		JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+		JOIN SPACE S ON S.SPACE_NO = R.SPACE_NO
+		WHERE PAY_STATUS = 'N'
+		AND HOST_NO = #{memNo}
+		ORDER BY P.RESERVE_NO DESC
+	]]>
+	</select>
+	
+	<!-- 호스트 검색 정산 리스트  개수 -->
+	<select id="searchHostCalculListCount" parameterType="hashmap" resultType="_int">
+	<![CDATA[
+ 	   SELECT COUNT(*) FROM (
+		    SELECT P.RESERVE_NO, SPACE_TITLE, M.MEM_NAME, PRICE, LAST_DAY(USE_DATE) LAST_DAY
+		    , TO_CHAR(USE_DATE,'YYYY-MM-DD') USE_DATE, PAY_METHOD, PAY_STATUS
+		    , CASE WHEN USE_DATE < SYSDATE
+		    AND TO_CHAR(SYSDATE,'YYYY-MM-DD') >  LAST_DAY(USE_DATE)
+		    THEN '완료'
+		    ELSE '예정'
+		    END CAL_STATUS
+		    FROM PAYMENT P
+		    JOIN RESERVE  R ON P.RESERVE_NO = R.RESERVE_NO
+		    JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+		    JOIN SPACE S ON S.SPACE_NO = R.SPACE_NO
+		    WHERE PAY_STATUS = 'N'
+		    AND HOST_NO = #{memNo}
+		    ORDER BY P.RESERVE_NO DESC)
+		WHERE PAY_STATUS = 'N'
+		]]>
+		<if test='!calStatus.equals("전체")'>
+		AND CAL_STATUS= #{calStatus}
+		</if>
+		<if test='!spaceTitle.equals("전체")'>
+		AND SPACE_TITLE = #{spaceTitle}
+		</if>
+		<![CDATA[
+		AND (USE_DATE >= #{sdate} AND USE_DATE <= #{edate})
+		]]>
+	</select>
+	
+	<!-- 	호스트 검색 정산 리스트-->
+	<select id="searchHostCalculList" parameterType="hashmap" resultMap="hostCalculListSet">
+	<![CDATA[
+	   SELECT * FROM (
+		    SELECT P.RESERVE_NO, SPACE_TITLE, M.MEM_NAME, PHONE, PRICE, TO_CHAR(LAST_DAY(USE_DATE),'YYYY-MM-DD') LAST_DAY
+		    , TO_CHAR(USE_DATE,'YYYY-MM-DD') USE_DATE, PAY_METHOD, PAY_STATUS, RESERVE_COUNT,START_TIME,END_TIME
+		    , CASE WHEN USE_DATE < SYSDATE
+		    AND TO_CHAR(SYSDATE,'YYYY-MM-DD') >  LAST_DAY(USE_DATE)
+		    THEN '완료'
+		    ELSE '예정'
+		    END CAL_STATUS
+		    FROM PAYMENT P
+		    JOIN RESERVE  R ON P.RESERVE_NO = R.RESERVE_NO
+		    JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
+		    JOIN SPACE S ON S.SPACE_NO = R.SPACE_NO
+		    WHERE PAY_STATUS = 'N'
+		    AND HOST_NO = #{memNo}
+		    ORDER BY P.RESERVE_NO DESC)
+		WHERE PAY_STATUS = 'N'
+	]]>
+		<if test='!calStatus.equals("전체")'>
+		AND CAL_STATUS= #{calStatus}
+		</if>
+		<if test='!spaceTitle.equals("전체")'>
+		AND SPACE_TITLE = #{spaceTitle}
+		</if>
+	<![CDATA[
+		AND (USE_DATE >= #{sdate} AND USE_DATE <= #{edate})
+	]]>
+	</select>
+	
 	<!-- 정현 End -->
 
 </mapper>
