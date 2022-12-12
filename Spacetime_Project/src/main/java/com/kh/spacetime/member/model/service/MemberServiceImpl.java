@@ -103,18 +103,18 @@ public class MemberServiceImpl implements MemberService{
 	 * 회원 수 조회 - 혜민 
 	 */
 	@Override
-	public int selectMemberListCount() {
+	public int selectMemberListCount(HashMap<String, String> map) {
 		
-		return memberDao.selectMemberListCount(sqlSession);
+		return memberDao.selectMemberListCount(sqlSession, map);
 	}
 
 	/**
 	 * 회원 리스트 조회 - 혜민 
 	 */
 	@Override
-	public ArrayList<Member> selectMemberList(PageInfo pi) {
+	public ArrayList<Member> selectMemberList(PageInfo pi, HashMap<String, String> map) {
 		
-		return memberDao.selectMemberList(sqlSession, pi);
+		return memberDao.selectMemberList(sqlSession, pi, map);
 	}
 
 	/**

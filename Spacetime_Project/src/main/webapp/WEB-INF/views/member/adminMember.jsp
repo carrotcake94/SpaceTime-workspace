@@ -35,6 +35,7 @@
         margin-top: 30px;
         padding: 40px;
         width: 100%;
+        min-width: 600px;
         border-radius: 10px;
         background-color: rgb(235, 235, 235);
     }
@@ -48,7 +49,7 @@
     /* 탭 메뉴 */
     #tab {
         margin: auto;
-        margin-top: 40px;;
+        margin-top: 40px;
         width: 100%;
         min-width: 600px;
     }
@@ -147,16 +148,16 @@
             <!-- 탭 메뉴 -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                <a class="nav-link active all" data-toggle="tab" href="#all">전체 회원</a>
+                <a class="nav-link active all" data-toggle="tab" href="#all" onclick="showMemberList(1);">전체 회원</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link guest" data-toggle="tab" href="#guest">게스트</a>
+                <a class="nav-link guest" data-toggle="tab" href="#guest" onclick="showMemberList(2);">게스트</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link host" data-toggle="tab" href="#host">호스트</a>
+                <a class="nav-link host" data-toggle="tab" href="#host" onclick="showMemberList(3);">호스트</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link black" data-toggle="tab" href="#black">블랙리스트</a>
+                <a class="nav-link black" data-toggle="tab" href="#black" onclick="showMemberList(4);">블랙리스트</a>
                 </li>
             </ul>
             
@@ -185,69 +186,91 @@
                                 <th style="width:15%;">상태</th>
                             </tr>
                         </thead>
-                        <tbody id="myTable">
-                            <c:forEach var="m" items="${list}">
-                                <tr>
-                                    <td>${m.memNo}</td>
-                                    <td>${m.memName}</td>
-                                    <td>${m.memId}</td>
-                                    <td>${m.nickname}</td>
-                                    <td>${m.grCode}</td>
-                                    <td>${m.enrollDate}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${m.memStatus eq 'N' && m.blacklist eq 'N'}">
-                                                가입 
-                                            </c:when>
-                                            <c:when test="${m.memStatus eq 'Y' && m.blacklist eq 'N'}">
-                                                탈퇴 
-                                            </c:when>
-                                            <c:when test="${m.memStatus eq 'N' && m.blacklist eq 'Y'}">
-                                                블랙리스트 
-                                            </c:when>
-                                        </c:choose>	                                
-                                    </td>
-                                </tr>
-                            </c:forEach>
+                        <tbody class="myTable">
                         </tbody>
                     </table>
                     <br>
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="mlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
-            
-                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="" class="page-link" href="mlist.ad?cpage=${p}">${p}</a></li>
-                            </c:forEach>
-                            
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq pi.maxPage}">
-                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="mlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
                         </ul>
                     </div>
                 </div>
 
                 <!--============================ 게스트 조회 ============================--> 
-                <div class="tab-pane container fade" id="guest">게스트</div>
+                <div class="tab-pane container fade" id="guest" align="right" >
+                    <table class="table memberList">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">회원번호</th>
+                                <th style="width:10%;">이름</th>
+                                <th style="width:15%;">ID</th>
+                                <th style="width:20%;">닉네임</th>
+                                <th style="width:10%;">등급</th>
+                                <th style="width:20%;">가입일</th>
+                                <th style="width:15%;">상태</th>
+                            </tr>
+                        </thead>
+                        <tbody class="myTable">
+                        </tbody>
+                    </table>
+                    <br>
+                    <!-- 페이지 버튼 -->
+                    <div class="btnPage" align="center">
+                        <ul class="pagination">
+                        </ul>
+                    </div>
+                </div>
                 
                 <!--============================ 호스트 조회 ============================--> 
-                <div class="tab-pane container fade" id="host">호스트</div>
+                <div class="tab-pane container fade" id="host" align="right" >
+                    <table class="table memberList">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">회원번호</th>
+                                <th style="width:10%;">이름</th>
+                                <th style="width:15%;">ID</th>
+                                <th style="width:20%;">닉네임</th>
+                                <th style="width:10%;">등급</th>
+                                <th style="width:20%;">가입일</th>
+                                <th style="width:15%;">상태</th>
+                            </tr>
+                        </thead>
+                        <tbody class="myTable">
+                        </tbody>
+                    </table>
+                    <br>
+                    <!-- 페이지 버튼 -->
+                    <div class="btnPage" align="center">
+                        <ul class="pagination">
+                        </ul>
+                    </div>
+                </div>
                 
                 <!--============================ 블랙리스트 조회 ============================--> 
-                <div class="tab-pane container fade" id="black">블랙리스트</div>
+                <div class="tab-pane container fade" id="black" align="right" >
+                    <table class="table memberList">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">회원번호</th>
+                                <th style="width:10%;">이름</th>
+                                <th style="width:15%;">ID</th>
+                                <th style="width:20%;">닉네임</th>
+                                <th style="width:10%;">등급</th>
+                                <th style="width:20%;">가입일</th>
+                                <th style="width:15%;">상태</th>
+                            </tr>
+                        </thead>
+                        <tbody class="myTable">
+                        </tbody>
+                    </table>
+                    <br>
+                    <!-- 페이지 버튼 -->
+                    <div class="btnPage" align="center">
+                        <ul class="pagination">
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <br>
@@ -256,11 +279,98 @@
     
     <!-- 회원 상세페이지로 연결 -->
     <script>
-    	$(function() {
-    		$(".memberList>tbody>tr").click(function() {
-    			location.href = "mdetail.ad?mno=" + $(this).children().eq(0).text();
-    		});
-    	});
+        $(function() {
+            $(".memberList>tbody").on("click", ".memberTr", function() {
+                location.href = "mdetail.ad?mno=" + $(this).children(".mno").eq(0).text();
+            });
+        });
+    </script>
+    
+    <!-- 리스트 불러오기 -->
+    <script>
+        
+        $(function() {
+            showMemberList();
+        });
+        
+        function showMemberList(num, currentPage) {
+            
+            var tab = "전체 회원";
+            
+            switch(num) {
+            case 1 : tab = "전체 회원"; break;
+            case 2 : tab = "게스트"; break;
+            case 3 : tab = "호스트"; break;
+            case 4 : tab = "블랙리스트"; break;
+            }
+            
+            /* alert(tab); */
+            
+            $.ajax({
+                url : "ajaxmlist.ad",
+                data : {tab : tab, cpage : currentPage},
+                success : function(result) { 
+                    
+                    /* console.log(result); */
+                    /* console.log(result.pi.listCount); */
+                    
+                    var resultStr = "";
+                    
+                    for(var i = 0; i < result.list.length; i++) {
+                        
+                        resultStr += "<tr class='memberTr'>"
+                                        + "<td class='mno'>" + result.list[i].memNo + "</td>"
+                                        + "<td>" + result.list[i].memName + "</td>"
+                                        + "<td>" + result.list[i].memId + "</td>"
+                                        + "<td>" + result.list[i].nickname + "</td>"
+                                        + "<td>" + result.list[i].grCode + "</td>"
+                                        + "<td>" + result.list[i].enrollDate + "</td>"
+                                        + "<td>";
+                                            if(result.list[i].memStatus == 'N') {
+                                                resultStr += "가입";
+                                            } else if (result.list[i].memStatus == 'Y') {
+                                                resultStr += "탈퇴";
+                                            } else if (result.list[i].memStatus == 'N' && result.list[i].blacklist == 'Y') {
+                                                resultStr += "블랙리스트";
+                                            }                              
+                            resultStr += "</td> </tr>";
+                    }
+                    
+                    $(".myTable").html(resultStr);
+                    
+                    /* console.log("현재페이지 : " + result.pi.currentPage); */
+                    /* console.log("마지막페이지 : " + result.pi.endPage); */
+                    
+                    var resultPi = "";
+                    
+                        if(result.pi.currentPage == 1) {
+                            resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
+                        } else {
+                            resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showMemberList(" + num + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"
+                        }
+                    
+                        for(var p = result.pi.startPage; p <= result.pi.endPage; p++) {
+                            
+                            if(p != result.pi.currentPage) {
+                                resultPi += "<li class='page-item page-btn'><a id='' class='page-link' href='#' onclick='showMemberList(" + num + ", " + p + ");'>" + p +"</a></li>"
+                            } else {
+                                resultPi += "<li class='page-item page-btn' disbled>" + p + "</li>"
+                            }
+                        }
+                        
+                        if(result.pi.currentPage == result.pi.maxPage) {
+                            resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
+                        } else {
+                            resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showMemberList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
+                        }
+
+                    $(".pagination").html(resultPi);
+                    
+                }, error : function() {
+                    console.log("탭 선택 ajax 통신 실패ㅠㅠ");
+                }
+            });
+        }
     </script>
 
 </body>

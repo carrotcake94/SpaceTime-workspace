@@ -130,7 +130,22 @@
 	<select id="selectMemberListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE MEM_STATUS = 'N'
+		<if test="tab == '전체 회원'">
+			WHERE MEM_STATUS = 'N'
+		</if>
+		<if test="tab == '게스트'">
+			WHERE MEM_STATUS = 'N'
+			  AND HOST_STATUS = 'N'
+		</if>
+		<if test="tab == '호스트'">
+			WHERE MEM_STATUS = 'N'
+			  AND HOST_STATUS = 'Y'
+		</if>
+		<if test="tab == '블랙리스트'">
+			WHERE MEM_STATUS = 'N'
+			  AND BLACKLIST_YN = 'Y'
+		</if>
+		AND MEM_STATUS = 'N'
 	</select>
 	
 	<!-- 회원 리스트 조회용 쿼리문 - 혜민 -->
@@ -138,8 +153,22 @@
 		SELECT MEM_NO, MEM_NAME, MEM_ID, NICKNAME, GR_NAME AS "GR_CODE", ENROLL_DATE, MEM_STATUS, BLACKLIST_YN
 		FROM MEMBER
 		JOIN MEMBER_GRADE USING (GR_CODE)
+		<if test="tab == '전체 회원'">
+			WHERE MEM_STATUS = 'N'
+		</if>
+		<if test="tab == '게스트'">
+			WHERE MEM_STATUS = 'N'
+			  AND HOST_STATUS = 'N'
+		</if>
+		<if test="tab == '호스트'">
+			WHERE MEM_STATUS = 'N'
+			  AND HOST_STATUS = 'Y'
+		</if>
+		<if test="tab == '블랙리스트'">
+			WHERE MEM_STATUS = 'N'
+			  AND BLACKLIST_YN = 'Y'
+		</if>
 		ORDER BY MEM_NO DESC
-		<!-- 호스트일때, 게스트일때, 블랙리스트일때 나중에 조건 추가 -->
 	</select>
 	
 	<!-- 회원 상세정보 조회용 쿼리문 - 혜민 -->

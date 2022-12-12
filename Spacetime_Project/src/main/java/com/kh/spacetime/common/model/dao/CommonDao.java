@@ -52,6 +52,7 @@ public class CommonDao {
 	
 	// 매출이 있는 공간 리스트 조회
 	public ArrayList<Reserve> selectSalesList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		// System.out.println("dao까지 오나?");
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;

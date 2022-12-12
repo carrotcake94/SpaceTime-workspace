@@ -11,6 +11,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -425,27 +427,75 @@ public class MemberController {
 	}
 	
 	/**
+	 * 관리자 회원관리 리스트 페이지로 포워딩 - 혜민 
+	 * @return
+	 */
+	@RequestMapping(value="mlist.ad")
+	public String selectMemberList() {
+		
+		return "member/adminMember";
+	}
+	
+	/**
 	 * 관리자 회원관리 리스트 조회 메소드 - 혜민
 	 * @param currentPage
 	 * @param model
+	 * @param tab
 	 * @return
 	 */
-	@RequestMapping("mlist.ad")
-	public String selectMemberList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
+	@ResponseBody
+	@RequestMapping(value="ajaxmlist.ad", produces="application/json; charset=UTF-8")
+	public String ajaxMemberList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, String tab) {
 		
-		int listCount = memberService.selectMemberListCount();
+		// System.out.println("컨트롤러 현재페이지 : " + currentPage);
+		// System.out.println("컨트롤러 현재 탭 : " + tab);
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("tab", tab);
+		
+		int listCount = memberService.selectMemberListCount(map);
+		
+		// System.out.println("listCount : " + listCount);
 		
 		int pageLimit = 5;
 		int boardLimit = 10;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		ArrayList<Member> list = memberService.selectMemberList(pi);
+		ArrayList<Member> list = memberService.selectMemberList(pi, map);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
+		// System.out.println(list);
 		
-		return "member/adminMember";
+		JSONArray jArr = new JSONArray();
+		for(Member m : list) {
+			JSONObject jObj = new JSONObject();
+			jObj.put("memNo", m.getMemNo());
+			jObj.put("memName", m.getMemName());
+			jObj.put("memId", m.getMemId());
+			jObj.put("nickname", m.getNickname());
+			jObj.put("grCode", m.getGrCode());
+			jObj.put("enrollDate", m.getEnrollDate().toString());
+			jObj.put("memStatus", m.getMemStatus());
+			jArr.add(jObj);
+		}
+		
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("listCount", pi.getListCount());
+		jObj.put("currentPage", pi.getCurrentPage());
+		jObj.put("pageLimit", pi.getPageLimit());
+		jObj.put("boardLimit", pi.getBoardLimit());
+		jObj.put("maxPage", pi.getMaxPage());
+		jObj.put("startPage", pi.getStartPage());
+		jObj.put("endPage", pi.getEndPage());
+		
+		JSONObject json = new JSONObject();
+		json.put("list", jArr);
+		json.put("pi", jObj); 
+		
+		// System.out.println(json); // 잘 찍히는데..?
+		
+		return json.toJSONString();
 	}
 	
 	/**

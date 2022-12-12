@@ -89,7 +89,7 @@
                 <li>
                     <span class="naviMenu navi">매출 관리</span>
                     <ul>
-                        <li class="naviSub"><a href="#" class="navi">매출 통계</a></li>
+                        <li class="naviSub"><a href="schart.ad" class="navi">매출 통계</a></li>
                         <li class="naviSub"><a href="slist.ad" class="navi">매출 관리</a></li>
                     </ul>
                 </li>

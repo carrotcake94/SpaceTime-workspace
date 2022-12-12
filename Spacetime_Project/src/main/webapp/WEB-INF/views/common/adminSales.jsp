@@ -41,24 +41,10 @@
 
     /* 검색창 */
     #searchForm {
-        width: 70%;
+        width: 80%;
         min-width: none;
     }
-
-    /* 년도, 월 선택 */
-    .select {
-        width: 100%;
-        margin: auto;
-    }
-    #selectYear, #selectMonth {
-        width: 15%;
-        margin: auto;
-        display: inline-block;
-    }
-    .select_year, .select_month {
-        margin-top: 40px;
-    }
-
+    
     /* 탭 메뉴 */
     #tab {
         margin: auto;
@@ -157,11 +143,14 @@
                 <table align="center" id="searchForm">
                     <tr>
                         <td align="right">
-                            <select name="cate" class="select_category form-control mb-2" style="width:70%;">
+                        	<input type="month" class="mb-2 form-control" style="width:160px; display: inline-block;">
+                        </td>
+                        <td>
+                            <select name="cate" class="select_category form-control mb-2" style="width:100%;">
                                 <option value="All" selected>전체</option>
-                                <option value="reportedMemId">신고대상ID</option>
-                                <option value="reportMemId">신고자ID</option>
-                                <option value="reportContent">내용</option>
+                                <option value="reportedMemId">호스트명</option>
+                                <option value="reportMemId">호스트ID</option>
+                                <option value="reportContent">공간명</option>
                             </select>
                         </td>
                         <td>
@@ -174,35 +163,6 @@
                 </table>
             </div>
 
-            <!-- <div class="select" align="right">
-                년도 선택
-                <div id="selectYear" align="right">
-                    <div class="form-group select_year">
-                        <select class="form-control">
-                            <option value="2022">2022년</option>
-                        </select>
-                    </div>
-                </div> &nbsp;
-                월 선택
-                <div id="selectMonth" align="right">
-                    <div class="form-group select_month">
-                        <select class="form-control">
-                            <option value="01">1월</option>
-                            <option value="02">2월</option>
-                            <option value="03">3월</option>
-                            <option value="04">4월</option>
-                            <option value="05">5월</option>
-                            <option value="06">6월</option>
-                            <option value="07">7월</option>
-                            <option value="08">8월</option>
-                            <option value="09">9월</option>
-                            <option value="10">10월</option>
-                            <option value="11">11월</option>
-                            <option value="12">12월</option>
-                        </select>
-                    </div>
-                </div>
-            </div> -->
             <!-- 컨텐츠 탭 -->
             <div id="tab">
 
@@ -217,13 +177,22 @@
                         </tr>
                     </thead>
                     <tbody id="myTable">
-                    	<c:forEach var="s" items="${list}">
+                    	<c:forEach var="r" items="${list}">
 	                        <tr data-toggle="modal" data-target="#salesDetail">
-	                            <td>${s.memName}</td>
-	                            <td>${s.memNo}</td>
-	                            <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${s.spaceTitle}</td>
-	                            <td>${s.price}</td>
-	                            <td>정산상태..</td>
+	                            <td>${r.memName}</td>
+	                            <td>${r.memId}</td>
+	                            <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.spaceTitle}</td>
+	                            <td>${r.price}</td>
+	                            <td>
+                                    <c:choose>
+                                        <c:when test="${r.useDate > 'SYSDATE'}">
+                                            정산완료 
+                                        </c:when>
+                                        <c:when test="${r.useDate < 'SYSDATE'}">
+                                            미처리
+                                        </c:when>
+                                    </c:choose>
+	                            </td>
 	                        </tr>
                         </c:forEach>
                     </tbody>

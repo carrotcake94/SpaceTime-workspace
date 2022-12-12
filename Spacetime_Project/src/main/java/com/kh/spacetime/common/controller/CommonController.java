@@ -30,8 +30,6 @@ public class CommonController {
 	
 	/**
 	 * 관리자 신고관리 리스트 페이지로 포워딩 - 혜민 
-	 * @param currentPage
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="rlist.ad")
@@ -50,7 +48,7 @@ public class CommonController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="ajaxrlist.ad", produces="application/json; charset=UTF-8")
-	public String ajaxRList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, String tab) {
+	public String ajaxReportList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, String tab) {
 		
 		//System.out.println("컨트롤러 현재페이지 : " + currentPage);
 		//System.out.println("컨트롤러 현재 탭 : " + tab);
@@ -87,7 +85,7 @@ public class CommonController {
 		}
 		
 		JSONObject jObj = new JSONObject();
-		jObj.put("listcount", pi.getListCount());
+		jObj.put("listCount", pi.getListCount());
 		jObj.put("currentPage", pi.getCurrentPage());
 		jObj.put("pageLimit", pi.getPageLimit());
 		jObj.put("boardLimit", pi.getBoardLimit());
@@ -176,6 +174,9 @@ public class CommonController {
 		PageInfo pi = Pagination.getPageInfo(listCount,  currentPage, pageLimit, boardLimit);
 		
 		ArrayList<Reserve> list = commonService.selectSalesList(pi);
+		
+		System.out.println(listCount);
+		System.out.println(list);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);

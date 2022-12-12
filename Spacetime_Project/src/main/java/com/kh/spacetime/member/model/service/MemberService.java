@@ -38,10 +38,10 @@ public interface MemberService {
 	
 	//	-------------------------------------- 관리자 페이지
 	// 회원수 조회  
-	int selectMemberListCount();
+	int selectMemberListCount(HashMap<String, String> map);
 	
 	// 회원 리스트 조회  
-	ArrayList<Member> selectMemberList(PageInfo pi);
+	ArrayList<Member> selectMemberList(PageInfo pi, HashMap<String, String> map);
 	
 	// 회원정보 상세조회 
 	Member selectMember(int memNo);

@@ -39,5 +39,10 @@ public class Reserve {
 		private String spaceTitle;
 		private String nickname;
 		private String attachmentRename;
+		
+		// 매출관리용 join - 혜민
+		private String memName;
+		private String memId;
+		
 
 }

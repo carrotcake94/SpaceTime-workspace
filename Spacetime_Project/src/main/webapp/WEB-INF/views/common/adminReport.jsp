@@ -312,6 +312,8 @@
         }
         
         /* alert(tab); */
+        console.log(tab);
+        console.log(currentPage);
         
         $.ajax({
             url : "ajaxrlist.ad",
@@ -319,13 +321,13 @@
             success : function(result) { // 이 result에는 pi 와 list 가 들어있어야 한다. 
                 
                 console.log(result);
-                console.log(result.pi.listcount);
+                console.log(result.pi.listCount);
                 
                 var resultStr = "";
 
                 for(var i = 0; i < result.list.length; i++) {
                     
-                    resultStr += "<tr data-toggle='modal' data-target='#reportDetail' class='reportTr'>"
+                    resultStr += "<tr class='reportTr'>"
                                     + "<td class='rpno'>" + result.list[i].reportNo + "</td>"
                                     + "<td>" + result.list[i].reportedMemNo + "</td>"
                                     + "<td>" + result.list[i].reportType + "</td>"
@@ -350,27 +352,27 @@
                 
                 var resultPi = "";
                 
-	                if(result.pi.currentPage == 1) {
-	                    resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
-	                } else {
-	                    resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"
-	                }
+                    if(result.pi.currentPage == 1) {
+                        resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
+                    } else {
+                        resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"
+                    }
                 
-	                for(var p = result.pi.startPage; p <= result.pi.endPage; p++) {
-	                    
-	                    if(p != result.pi.startPage) {
-	                        resultPi += "<li class='page-item page-btn'><a id='' class='page-link' href='#' onclick='showReportList(" + num + ", " + p + ");'>" + p +"</a></li>"
-	                    } 
-	                    if(p == result.pi.startPage) {
-	                        resultPi += "<li class='page-item page-btn' disbled>" + p + "</li>"
-	                    }
-	                }
-	                
-	                if(result.pi.currentPage == result.pi.maxPage) {
-	                    resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
-	                } else {
-	                    resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
-	                }
+                    for(var p = result.pi.startPage; p <= result.pi.endPage; p++) {
+                        
+                        if(p != result.pi.currentPage) {
+                            resultPi += "<li class='page-item page-btn'><a id='' class='page-link' href='#' onclick='showReportList(" + num + ", " + p + ");'>" + p +"</a></li>"
+                        } 
+                        if(p == result.pi.currentPage) {
+                            resultPi += "<li class='page-item page-btn' disbled>" + p + "</li>"
+                        }
+                    }
+                    
+                    if(result.pi.currentPage == result.pi.maxPage) {
+                        resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
+                    } else {
+                        resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
+                    }
 
                 $(".pagination").html(resultPi);
                 

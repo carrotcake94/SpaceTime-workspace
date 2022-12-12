@@ -120,9 +120,9 @@ public class MemberDao {
 	 * @param sqlSession
 	 * @return
 	 */
-	public int selectMemberListCount(SqlSessionTemplate sqlSession) {
+	public int selectMemberListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
-		return sqlSession.selectOne("memberMapper.selectMemberListCount");
+		return sqlSession.selectOne("memberMapper.selectMemberListCount", map);
 	}
 	
 	/**
@@ -131,14 +131,14 @@ public class MemberDao {
 	 * @param pi
 	 * @return
 	 */
-	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", map, rowBounds);
 	}
 	
 	public Member selectMember(SqlSessionTemplate sqlSession, int memNo) {

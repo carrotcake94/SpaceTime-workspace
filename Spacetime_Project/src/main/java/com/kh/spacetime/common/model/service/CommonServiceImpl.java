@@ -59,7 +59,7 @@ public class CommonServiceImpl implements CommonService {
 	// 매출이 있는 공간 리스트 조회 
 	@Override
 	public ArrayList<Reserve> selectSalesList(PageInfo pi) {
-		
+		// System.out.println("서비스까지오나?");
 		return commonDao.selectSalesList(sqlSession, pi);
 	}
 
