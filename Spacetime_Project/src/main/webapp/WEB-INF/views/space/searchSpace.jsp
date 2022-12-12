@@ -154,11 +154,19 @@
 					}
 					
 					picList.onclick = (e) => {
-						var a = e.target.closest("#");
+/* 						var a = e.target.closest("#");
 						var aValue = a.value;
+						
 						console.log(a);
 						console.log(aValue);
-						console.log(a.value);
+						console.log(a.value); */
+						
+						// 임시로 걍 해놈 
+						var classVal=$(".picList_content").children().val();
+						// console.log(classVal);
+						
+						location.href = "detail.sp?sno=" + classVal;
+						
 					}
 					
 					lineList.onclick = (e) => {
@@ -168,6 +176,8 @@
 						console.log(aValue);
 						console.log(a.value);
 					}
+					
+					
 					
 					
 				</script>
