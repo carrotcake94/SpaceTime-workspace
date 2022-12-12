@@ -604,8 +604,8 @@
 	  	}); */
       	
 /* 	  	function reportInfoSubmit() {
-    		$("#reportInfoSubmit").attr("action", "reportMyReserve.re").submit(); */
-    	} 
+    		$("#reportInfoSubmit").attr("action", "reportMyReserve.re").submit(); 
+    	} */
       </script>
 	
 	<jsp:include page="../common/footer.jsp" />

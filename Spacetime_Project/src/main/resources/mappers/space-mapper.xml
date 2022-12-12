@@ -264,9 +264,7 @@
 	       AND ATTACHMENT_LEVEL = 1
 	</select>
 	
-	<!-- 
-		하연 
-	 -->
+	<!-- 하연 -->
 	 <select id="selectSpaceDetail" parameterType="_int" resultMap="spaceResultSet">
 		SELECT *
 		FROM SPACE
@@ -278,6 +276,21 @@
 		FROM SPACE_ATTACHMENT
 		WHERE SPACE_NO = #{spaceNo}
 	 </select>
+	 
+	 <insert  id="insertSpaceReport" parameterType="space">
+			INSERT INTO REPORT
+				VALUES(SEQ_RPNO.NEXTVAL
+				     , #{addressDefault}
+				     , #{addressDetail}
+				     , SYSDATE
+				     , 'N'
+				     , null
+				     , null
+				     , #{maxPeople}
+				     , #{hostNo})
+		</insert>
+		
+		<!-- 하연 끝  -->
 	 
 	<!-- 뉴스레터 공간 리스트 해쉬태그 검색 조회 - 경미 -->
 	<select id="selectListForNewsletter" parameterType="java.util.List" resultMap="spaceResultSet">
@@ -294,6 +307,8 @@
 	       	#{item}
 	       </foreach>
 	</select>
+	
+	
 
 	
 </mapper>

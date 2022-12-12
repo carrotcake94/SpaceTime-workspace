@@ -59,7 +59,7 @@ public interface SpaceService {
 	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
 	
 	/*
-	 * 하연  
+	 * 하연  -------------------------------------
 	 */
 	
 	// 공간 상세 조회 
@@ -67,6 +67,12 @@ public interface SpaceService {
 	
 	// 공간 상세 조회 - Attachment
 	SpaceAttachment selectSpaceDetailAttachment(int spaceNo);
+	
+	// 공간 신고 
+	int insertSpaceReport(Space s);
+	
+	// ------------- 하연 끝 ^0^ ---------------
+	
 
 	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
 	ArrayList<Space> selectListForNewsletter(List<String> list);
