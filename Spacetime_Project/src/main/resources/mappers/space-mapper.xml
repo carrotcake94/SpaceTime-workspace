@@ -264,7 +264,6 @@
 	       AND ATTACHMENT_LEVEL = 1
 	</select>
 	
-<<<<<<< Updated upstream
 	<!-- 
 		하연 
 	 -->
@@ -280,7 +279,6 @@
 		WHERE SPACE_NO = #{spaceNo}
 	 </select>
 	 
-=======
 	<!-- 뉴스레터 공간 리스트 해쉬태그 검색 조회 - 경미 -->
 	<select id="selectListForNewsletter" parameterType="java.util.List" resultMap="spaceResultSet">
 	    SELECT SPACE_NO, 
@@ -296,7 +294,6 @@
 	       	#{item}
 	       </foreach>
 	</select>
-	
->>>>>>> Stashed changes
+
 	
 </mapper>
