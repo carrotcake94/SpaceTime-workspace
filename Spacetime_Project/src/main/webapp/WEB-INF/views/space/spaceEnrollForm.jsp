@@ -535,7 +535,7 @@
         연락처
       </div>
       <div class="space-content">
-        <input type="text" class="itype1" name="tel" placeholder="- 포함해서 입력해주세요" />
+        <input type="text" class="itype1" name="tel" placeholder="-없이 입력해주세요" maxlength="12" />
       </div>
       <button type="button" id="spaceInsertBtn"  onclick="valichk()">검수 신청하기</button>
     </form>
@@ -715,10 +715,13 @@
       });
       
       $("input[name=hashtagInput]").focusout(function () {
-        if ($(this).val().trim() != "#") {
+        if ($(this).val().trim() != "#" && $(this).val().trim().substr(0,1) == "#" ) {
           $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
           $(this).val("");
+        }else {
+        	$(this).val("");
         }
+        
         if ($(this).val().trim() == "#") {
           $(this).val("");
         }
@@ -731,15 +734,13 @@
       });
       
       $("input[name=hashtagInput]").keyup(function () {    
-    	  console.log($(this).val());
         //space  
-        if (event.keyCode === 32 && $(this).val().trim() !== "#") {
+        if (event.keyCode === 32 && $(this).val().trim() !== "#" && $(this).val().trim().substr(0,1) == "#") {
           $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
           $(this).val("#");
           return false;
-        }
-        //enter  
-        if (event.keyCode === 13 && $(this).val() != "#") {
+        }else  if (event.keyCode === 13 && $(this).val() != "#" && $(this).val().trim().substr(0,1) == "#") {
+          //enter  
           $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
           $(this).val("#");
           return false;
@@ -747,7 +748,8 @@
         //특수문자 막기
         var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
         if (regExp.test($(this).val().substr(1))) {
-          $(this).val($(this).val().substr(0, $(this).val().length - 1));
+        	$(this).val("#"+$(this).val().replace(regExp, ""));
+//           $(this).val($(this).val().substr(0, $(this).val().length - 1));
         }
       });
         
@@ -888,6 +890,12 @@
   			$("input[name=closeTime]").focus();
   			return false;
   		}
+     	if(!regExp.test($("input[name=tel]").val())) {
+            alert("연락처는 숫자만 입력 가능합니다.");
+            $("input[name=tel]").focus();
+            return false;
+        }
+     	
      	//해시태그 합치기
      	var hashtag = [];
      	$(".hashtag>span").each(function() {
