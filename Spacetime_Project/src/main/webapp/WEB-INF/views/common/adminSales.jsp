@@ -174,8 +174,8 @@
                 </table>
             </div>
 
-            <div class="select" align="right">
-                <!-- 년도 선택 -->
+            <!-- <div class="select" align="right">
+                년도 선택
                 <div id="selectYear" align="right">
                     <div class="form-group select_year">
                         <select class="form-control">
@@ -183,7 +183,7 @@
                         </select>
                     </div>
                 </div> &nbsp;
-                <!-- 월 선택 -->
+                월 선택
                 <div id="selectMonth" align="right">
                     <div class="form-group select_month">
                         <select class="form-control">
@@ -202,7 +202,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- 컨텐츠 탭 -->
             <div id="tab">
 
@@ -244,7 +244,7 @@
                      </c:choose>
 
                      <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                         <li class="page-item page-btn"><a id="active-page" class="page-link" href="slist.ad?cpage=${p}">${p}</a></li>
+                         <li class="page-item page-btn"><a id="" class="page-link" href="slist.ad?cpage=${p}">${p}</a></li>
                      </c:forEach>
 
                      <c:choose>

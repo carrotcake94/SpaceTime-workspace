@@ -59,7 +59,7 @@ public class CommonController {
 		
 		int listCount = commonService.selectReportListCount(map);
 		
-		System.out.println("listCount : " + listCount);
+		// System.out.println("listCount : " + listCount);
 		
 		int pageLimit = 5;
 		int boardLimit = 10;
@@ -68,15 +68,15 @@ public class CommonController {
 		
 		ArrayList<Report> list = commonService.selectReportList(pi, map);
 		
-		System.out.println("list : " + list);
-		System.out.println("pi :" + pi);
+		// System.out.println("list : " + list);
+		// System.out.println("pi :" + pi);
 		
 		// JSON 형식으로 pi 랑 list 를 넘겨야함!! (두개를 json 으로 묶어서 응답데이터 보내기!!)
 
 		JSONArray jArr = new JSONArray();
 		for(Report r : list) {
 			JSONObject jObj = new JSONObject();
-			jObj.put("reportNp", r.getReportNo());
+			jObj.put("reportNo", r.getReportNo());
 			jObj.put("reportType", r.getReportType());
 			jObj.put("reportContent", r.getReportContent());
 			jObj.put("reportDate", r.getReportDate());
@@ -87,21 +87,20 @@ public class CommonController {
 		
 		JSONObject jObj = new JSONObject();
 		jObj.put("listcount", pi.getListCount());
-		jObj.put("listcount", pi.getListCount());
-		jObj.put("listcount", pi.getListCount());
-		jObj.put("listcount", pi.getListCount());
-		jObj.put("listcount", pi.getListCount());
-		jObj.put("listcount", pi.getListCount());
-		jObj.put("listcount", pi.getListCount()); // 이거 마저 변경 
+		jObj.put("currentPage", pi.getCurrentPage());
+		jObj.put("pageLimit", pi.getPageLimit());
+		jObj.put("boardLimit", pi.getBoardLimit());
+		jObj.put("maxPage", pi.getMaxPage());
+		jObj.put("startPage", pi.getStartPage());
+		jObj.put("endPage", pi.getEndPage());
 		
 		JSONObject json = new JSONObject();
 		json.put("list", jArr); // 0번 인덱스 
 		json.put("pi", jObj); // 1번 인덱스 
 		
-		System.out.println(json);
+		// System.out.println(json);
 		
 		return json.toJSONString();
-//		return new Gson().toJson(list);
 	}
 	
 	/**
@@ -114,6 +113,8 @@ public class CommonController {
 	public ModelAndView selectReport(int rpno, ModelAndView mv) {
 		
 		Report r = commonService.selectReport(rpno);
+		
+		// System.out.println(rpno);
 		
 		mv.addObject("r", r).setViewName("common/adminReportDetail");
 		

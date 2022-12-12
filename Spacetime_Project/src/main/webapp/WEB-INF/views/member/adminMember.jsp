@@ -165,14 +165,14 @@
             
                 <!--============================ 전체 조회 ============================-->            
                 <div class="tab-pane container active" id="all" align="right" >
-                    <div class="gradeCate" style="width:15%;">
+<!--                     <div class="gradeCate" style="width:15%;">
                         <select name="cate" class="select_category form-control mb-2">
                             <option value="grade" selected width="15%;">등급</option>
                             <option value="sun">태양</option>
                             <option value="moon">지구</option>
                             <option value="earth">달</option>
                         </select>
-                    </div>
+                    </div> -->
                     <table class="table memberList">
                         <thead>
                             <tr>
@@ -225,7 +225,7 @@
                             </c:choose>
             
                             <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="active-page" class="page-link" href="mlist.ad?cpage=${p}">${p}</a></li>
+                                <li class="page-item page-btn"><a id="" class="page-link" href="mlist.ad?cpage=${p}">${p}</a></li>
                             </c:forEach>
                             
                             <c:choose>

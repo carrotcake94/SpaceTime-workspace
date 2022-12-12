@@ -202,27 +202,6 @@
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
-                            </c:forEach>
-
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq pi.maxPage}">
-                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -247,27 +226,6 @@
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
-                            </c:forEach>
-
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq pi.maxPage}">
-                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -292,27 +250,6 @@
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
                         <ul class="pagination">
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
-                            </c:forEach>
-
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq pi.maxPage}">
-                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
                         </ul>
                     </div>
                 </div> 
@@ -336,28 +273,7 @@
                     <br>
                     <!-- 페이지 버튼 -->
                     <div class="btnPage" align="center">
-                         <ul class="pagination">
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq 1}">
-                                    <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-prev"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                                <li class="page-item page-btn"><a id="" class="page-link" href="rlist.ad?cpage=${p}">${p}</a></li>
-                            </c:forEach>
-
-                            <c:choose>
-                                <c:when test="${pi.currentPage eq pi.maxPage}">
-                                    <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item no-page-next"><a class="page-link" href="rlist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                                </c:otherwise>
-                            </c:choose>
+                        <ul class="pagination">
                         </ul>
                     </div>
                 </div> 
@@ -369,8 +285,10 @@
     <!-- 신고 상세페이지로 연결 -->
     <script>
         $(function() {
-            $(".reportList>tbody").click(function() {
-                location.href = "rdetail.ad?rpno=" + $(this).children().children().eq(0).text();
+            
+            $(".reportList>tbody").on("click", ".reportTr", function() {
+                
+            location.href = "rdetail.ad?rpno=" + $(this).children(".rpno").eq(0).text();
             });
         });
     </script>
@@ -379,10 +297,10 @@
     <script>
     
     $(function() {
-        showReportList(1);
-    })
+        showReportList();
+    });
     
-    function showReportList(num) {
+    function showReportList(num, currentPage) {
         
         var tab = "전체 신고";
         
@@ -397,16 +315,18 @@
         
         $.ajax({
             url : "ajaxrlist.ad",
-            data : { tab : tab},
+            data : {tab : tab, cpage : currentPage},
             success : function(result) { // 이 result에는 pi 와 list 가 들어있어야 한다. 
                 
                 console.log(result);
+                console.log(result.pi.listcount);
+                
                 var resultStr = "";
 
                 for(var i = 0; i < result.list.length; i++) {
                     
-                    resultStr += "<tr data-toggle='modal' data-target='#reportDetail'>"
-                                    + "<td>" + result.list[i].reportNo + "</td>"
+                    resultStr += "<tr data-toggle='modal' data-target='#reportDetail' class='reportTr'>"
+                                    + "<td class='rpno'>" + result.list[i].reportNo + "</td>"
                                     + "<td>" + result.list[i].reportedMemNo + "</td>"
                                     + "<td>" + result.list[i].reportType + "</td>"
                                     + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>"
@@ -423,6 +343,36 @@
                 } 
                 
                 $(".myTable").html(resultStr); 
+                
+                // console.log(result.pi.startPage);
+                // console.log(result.pi.endPage);
+                console.log(result.pi.currentPage);
+                
+                var resultPi = "";
+                
+	                if(result.pi.currentPage == 1) {
+	                    resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
+	                } else {
+	                    resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"
+	                }
+                
+	                for(var p = result.pi.startPage; p <= result.pi.endPage; p++) {
+	                    
+	                    if(p != result.pi.startPage) {
+	                        resultPi += "<li class='page-item page-btn'><a id='' class='page-link' href='#' onclick='showReportList(" + num + ", " + p + ");'>" + p +"</a></li>"
+	                    } 
+	                    if(p == result.pi.startPage) {
+	                        resultPi += "<li class='page-item page-btn' disbled>" + p + "</li>"
+	                    }
+	                }
+	                
+	                if(result.pi.currentPage == result.pi.maxPage) {
+	                    resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
+	                } else {
+	                    resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
+	                }
+
+                $(".pagination").html(resultPi);
                 
             }, error : function() {
                 console.log("탭 선택 ajax 통신 실패ㅠㅠ");

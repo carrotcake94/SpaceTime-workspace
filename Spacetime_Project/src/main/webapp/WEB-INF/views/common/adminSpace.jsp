@@ -105,9 +105,8 @@
                     <td align="right">
                         <select name="cate" class="select_category form-control mb-2" style="width:70%;">
                             <option value="All" selected>전체</option>
-                            <option value="reportedMemId">신고대상ID</option>
-                            <option value="reportMemId">신고자ID</option>
-                            <option value="reportContent">내용</option>
+                            <option value="reportedMemId">호스트ID</option>
+                            <option value="reportMemId">공간이름</option>
                         </select>
                     </td>
                     <td>
@@ -214,7 +213,7 @@
                         <table>
                             <tr>
                                 <th style="width:25%; height: 50px;">공간명</th>
-                                <td>공간이름~~(누르면 공간 상세정보 새창으로~~)</td>
+                                <td style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>공간이름~~(누르면 공간 상세정보 새창으로~~)</td>
                             </tr>
                             <tr>
                                 <th>처리</th>
@@ -225,6 +224,9 @@
                                         <option value="D">반려</option>
                                     </select>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td><textarea class="form-control mb-2" align="left" rows="5" cols="10" placeholder="반려 시 사유를 적어주세요"></textarea></td>
                             </tr>
                         </table>
                     </div>

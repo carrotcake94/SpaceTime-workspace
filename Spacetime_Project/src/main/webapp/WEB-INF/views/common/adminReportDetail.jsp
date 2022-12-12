@@ -137,11 +137,14 @@
                                 <div id="reportAnswer" align="left">${r.reportAnswer}</div>
                             </td>
                             <td align="right" style="width: 100px;">
-                                <a class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#answer">처리하기</a>
+                                <a class="btn btn-sm btn-light" data-toggle="modal" data-target="#answer">처리하기</a>
                             </td>
                         </tr>
                     </table>
                 </div>
+            </div>
+            <div align="center" style="margin-top: 50px;">
+                <a class="btn btn-sm btn-secondary" onclick="history.back();">목록</a>
             </div>
         </div>
     </div>
