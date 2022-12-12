@@ -513,7 +513,7 @@
             <ul>
                 <li><a href="/">홈으로</a></li>
                 <li><a href="list.no">공지사항</a></li>
-                <li><a href="#">뉴스레터</a></li>
+                <li><a href="list.ne">뉴스레터</a></li>
                 <li><a href="introduction.co">서비스정보</a></li>
                 <li><a href="#">이용약관</a></li>
                 <li><a href="#">개인정보처리방침</a></li>

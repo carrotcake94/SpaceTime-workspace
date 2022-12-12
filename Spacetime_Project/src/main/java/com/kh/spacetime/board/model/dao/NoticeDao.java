@@ -81,4 +81,30 @@ public class NoticeDao {
 		
 		return sqlSession.update("noticeMapper.deleteNotice", noticeNo);
 	}
+	
+	/**
+	 * 공지사항 검색 리스트 카운트용 Dao - 경미
+	 * @param sqlSession
+	 * @return
+	 */
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, String searchText) {
+		
+		return sqlSession.selectOne("noticeMapper.selectSearchListCount", searchText);
+	}
+	
+	/**
+	 * 공지사항 검색 리스트 조회용 Dao - 경미
+	 * @param sqlSession
+	 * @param pi
+	 * @return
+	 */
+	public ArrayList<Notice> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, String searchText) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectSearchList", searchText, rowBounds);
+	}
 }

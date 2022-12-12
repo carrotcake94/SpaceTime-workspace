@@ -105,15 +105,21 @@
                 <div id="text" align="center"><p>공지사항</p></div>
                 <div id="serch">
                     <div style="border: 3px solid rgb(39, 123, 192); padding: 20px;">
-                        <table width="100%" height="100px" class="list-area">
-                            <tr>
-                                <td colspan="2">공지사항 검색</td>
-                            </tr>
-                            <tr height="30px">
-                                <td><input type="text" class="form-control" id="" placeholder="검색어를 입력해주세요." style="height:100%"></td>
-                                <td width="200px" align="right"><button type="button" class="btn btn-primary btn-lg" style="width:160px; height:100%; background-color: #277BC0;"><i class="fa-solid fa-magnifying-glass"></i>&ensp;검색</button></td>
-                            </tr>
-                        </table>
+                    	<form method="get" action="searchList.no">
+	                        <table width="100%" height="100px" class="list-area">
+	                            <tr>
+	                                <td colspan="2">공지사항 검색</td>
+	                            </tr>
+	                            <tr height="30px">
+	                                <td><input type="text" name="searchText" class="form-control" placeholder="검색어를 입력해주세요." style="height:100%"></td>
+	                                <td width="200px" align="right">
+		                                <button type="submit" class="btn btn-primary btn-lg" style="width:160px; height:100%; background-color: #277BC0;">
+		                                	<i class="fa-solid fa-magnifying-glass"></i>&ensp;검색
+		                                </button>
+	                                </td>
+	                            </tr>
+	                        </table>
+                        </form>
                     </div>
                 </div>
                 <div>

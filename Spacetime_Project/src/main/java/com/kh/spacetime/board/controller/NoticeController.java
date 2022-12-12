@@ -151,5 +151,30 @@ public class NoticeController {
 			return "common/errorPage";
 		}
 	}
+	
+	/**
+	 * 공지사항 검색 리스트 조회 - 경미
+	 * @param currentPage
+	 * @param searchText
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("searchList.no")
+	public String noticeSearchList(@RequestParam(value="cpage", defaultValue="1")int currentPage, String searchText, Model model) {
+		
+		int listCount = noticeService.selectSearchListCount(searchText);
+
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Notice> list = noticeService.selectSearchList(pi, searchText);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "board/noticeListView";
+	}
 
 }
