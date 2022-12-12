@@ -101,7 +101,7 @@
     }
 
     .p_theme {
-        font-size: 14px;
+        font-size: 20px;
         padding: 0 20px;
         z-index: 100;
     }
@@ -141,24 +141,36 @@
                 <div class="theme_list">
                     <c:forEach var="n" items="${ list }">
                         <div class="flex_wrap column3 fluid list_center">
-                            <article class="box box_space article_theme">
-                                <a href="/theme/1370" class="inner">
-                                    <div class="th_area">
-                                        <div class="center_wrap">
-                                            <div class="center">
-                                                <h3 class="h_theme">
-                                                    ${n.newsTitle}<br>
-                                                </h3> 
-                                                <p class="p_theme">${n.newsNo}</p>
+                            <form method="post" action=""> 
+                                <article class="box box_space article_theme">
+                                    <a class="inner">
+                                        <div class="th_area">
+                                            <div class="center_wrap">
+                                                <div class="center" style="text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;">
+                                                    <h3 class="h_theme">
+                                                        ${n.newsTitle}<br>
+                                                    </h3> 
+                                                    <p class="p_theme">${n.newsNo}</p>
+                                                    <input type="hidden" name="nlno" value="${n.newsNo}">
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div> 
-                                    <span class="th_thumb" style="background-image: url('${n.newsThumbnail}');"></span>
-                                </a>
-                            </article>
+                                        </div> 
+                                        <span class="th_thumb" style="background-image: url('${n.newsThumbnail}');"></span>
+                                    </a>
+                                </article>
+                            </form>
                         </div>
                     </c:forEach>
                 </div>
+                <script>
+                    $(function() {
+                        $(".box").click(function() {
+                        let form = $(this).parent("form");
+                        console.log(form.text());
+                        form.attr("action", "detail.ne").submit();
+                    });
+                    })
+                </script>
             </div>
             <div id="content_3"></div>
         </div>

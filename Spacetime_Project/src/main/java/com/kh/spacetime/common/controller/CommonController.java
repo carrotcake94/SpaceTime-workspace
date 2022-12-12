@@ -194,6 +194,13 @@ public class CommonController {
 		return "common/introduction";
 	}
 	
+	/**
+	 * 
+	 * @param keyword
+	 * @param mv
+	 * @return
+	 * @author 성훈
+	 */
 	//검색어 자동완성
 	@ResponseBody
 	@RequestMapping(value="autoComplete.co", produces="text/html; charset=UTF-8")

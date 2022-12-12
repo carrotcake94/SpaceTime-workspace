@@ -14,4 +14,9 @@ public class NewsletterDao {
 		
 		return (ArrayList)sqlSession.selectList("newsletterMapper.selectList");
 	}
+	
+	public Newsletter selectNewsletter(SqlSessionTemplate sqlSession, int newsNo) {
+		
+		return sqlSession.selectOne("newsletterMapper.selectNewsletter", newsNo);
+	}
 }

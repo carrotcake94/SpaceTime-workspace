@@ -119,7 +119,6 @@ public class SpaceServiceImpl implements SpaceService {
 		return spaceDao.selectListForMap(sqlSession, map, pi);
 	}
 
-	
 	/*
 	 * 하연  
 	 */
@@ -134,6 +133,11 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public SpaceAttachment selectSpaceDetailAttachment(int spaceNo) {
 		return spaceDao.selectSpaceDetailAttachment(sqlSession, spaceNo);
+	}
+	
+	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
+	public ArrayList<Space> selectListForNewsletter(List<String> list) {
+		return spaceDao.selectListForNewsletter(sqlSession, list);
 	}
 
 }

@@ -58,6 +58,7 @@ public interface SpaceService {
 	// 지도 공간 리스트 -성훈
 	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
 	
+<<<<<<< Updated upstream
 	
 	/*
 	 * 하연  
@@ -68,5 +69,9 @@ public interface SpaceService {
 	
 	// 공간 상세 조회 - Attachment
 	SpaceAttachment selectSpaceDetailAttachment(int spaceNo);
+=======
+	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
+	ArrayList<Space> selectListForNewsletter(List<String> list);
+>>>>>>> Stashed changes
 
 }

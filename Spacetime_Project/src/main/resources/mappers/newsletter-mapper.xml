@@ -19,4 +19,11 @@
 		 WHERE NEWS_STATUS = 'N'
 		ORDER BY NEWS_NO DESC
 	</select>
+	
+	<select id="selectNewsletter" parameterType="_int" resultMap="newsletterResultSet">
+		SELECT *
+		  FROM NEWSLETTER
+		 WHERE NEWS_STATUS = 'N'
+		   AND NEWS_NO = #{newsNo}
+	</select>
 </mapper>

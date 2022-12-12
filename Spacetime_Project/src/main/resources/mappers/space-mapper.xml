@@ -247,7 +247,6 @@
 		   AND SPACE_STATUS = 'Y'
 	</select>
 	
-	
 	<!-- 지도 공간 리스트 (사진형게시판) -성훈 -->
 	<select id="selectListForMap" parameterType="hashmap" resultMap="spaceResultSet">
 	    SELECT SPACE_NO, 
@@ -265,6 +264,7 @@
 	       AND ATTACHMENT_LEVEL = 1
 	</select>
 	
+<<<<<<< Updated upstream
 	<!-- 
 		하연 
 	 -->
@@ -280,5 +280,23 @@
 		WHERE SPACE_NO = #{spaceNo}
 	 </select>
 	 
+=======
+	<!-- 뉴스레터 공간 리스트 해쉬태그 검색 조회 - 경미 -->
+	<select id="selectListForNewsletter" parameterType="java.util.List" resultMap="spaceResultSet">
+	    SELECT SPACE_NO, 
+	           SPACE_TITLE, 
+	           HOUR_PRICE, 
+	           HASHTAG, 
+	           ATTACHMENT_RENAME
+	      FROM SPACE
+	      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+	     WHERE SPACE_STATUS = 'Y'
+	       AND ATTACHMENT_LEVEL = 1
+	       <foreach collection="list" item="item" index="index" open="AND (HASHTAG LIKE '%'||" separator="||'%' OR HASHTAG LIKE '%'||" close="||'%')">
+	       	#{item}
+	       </foreach>
+	</select>
+	
+>>>>>>> Stashed changes
 	
 </mapper>

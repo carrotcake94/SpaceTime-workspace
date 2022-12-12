@@ -106,6 +106,12 @@ public class SpaceDao {
 		
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
 	}
+	
+	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
+	public ArrayList<Space> selectListForNewsletter(SqlSessionTemplate sqlSession, List<String> list) {
+		
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForNewsletter", list);
+	}
 
 	/*
 	 *  하연 
