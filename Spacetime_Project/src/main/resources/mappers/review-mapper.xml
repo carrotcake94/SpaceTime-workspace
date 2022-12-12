@@ -9,6 +9,9 @@
 		<result column="RATING" property="rating" />
 		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
 		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REVIEW_ATTACH1" property="reviewAttach1" />
+		<result column="REVIEW_ATTACH2" property="reviewAttach2" />
+		<result column="REVIEW_ATTACH3" property="reviewAttach3" />
 	</resultMap>
 	<!-- 리스트조회 -->
 	<select id="selectListCount" resultType="_int">
@@ -45,6 +48,9 @@
 		, A.RATING --평점
 		, TO_CHAR(A.REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE --등록일
 		, A.REVIEW_CONT --내용
+		, A.REVIEW_ATTACH1
+		, A.REVIEW_ATTACH2
+		, A.REVIEW_ATTACH3
 		FROM REVIEW A
 		INNER JOIN SPACE B
 		ON A.SPACE_NO = B.SPACE_NO
@@ -63,8 +69,11 @@
 	<update id="updateReview" parameterType="review">
 		UPDATE REVIEW
 		   SET 
-		      RATING = #{rating},
-		      REVIEW_CONT = #{reviewCont}
+		      RATING = #{rating}
+		      ,REVIEW_CONT = #{reviewCont}
+		      , REVIEW_ATTACH1 = #{reviewAttach1}
+		      , REVIEW_ATTACH2 = #{reviewAttach2}
+		      , REVIEW_ATTACH3 = #{reviewAttach3}
 		 WHERE REVIEW_NO = #{reviewNo}
 	</update>
 	

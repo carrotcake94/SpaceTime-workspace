@@ -76,6 +76,18 @@ public class CommonServiceImpl implements CommonService {
 		
 		return commonDao.autoComplete(sqlSession, keyword);
 	}
+	
+	// 마이페이지 신고리스트 -신희섭
+	@Override
+	public int selectMypageReportListCount(int reportMemNo) {
+		
+		return commonDao.selectMypageReportListCount(sqlSession, reportMemNo);
+	}
 
+	@Override
+	public ArrayList<Report> selectMypageReportList(int reportMemNo, PageInfo pi) {
+			
+		return commonDao.selectMypageReportList(sqlSession, reportMemNo, pi);
+	}
 
 }

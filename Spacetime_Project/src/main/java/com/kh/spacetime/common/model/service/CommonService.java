@@ -31,5 +31,11 @@ public interface CommonService {
 	Reserve selectSales(int spaceNo);
 	
 	ArrayList<String> autoComplete(String keyword);
+	
+
+	//마이페이지 신고리스트 조회 - 신희섭
+	int selectMypageReportListCount(int reportMemNo);
+	
+	ArrayList<Report> selectMypageReportList(int reportMemNo, PageInfo pi);
 
 }

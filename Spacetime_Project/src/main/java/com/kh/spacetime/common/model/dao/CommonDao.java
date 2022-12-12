@@ -70,4 +70,24 @@ public class CommonDao {
 		ArrayList<String> keywords = (ArrayList)sqlSession.selectList("commonMapper.autoComplete", keyword); 
 		return keywords;
 	}
+	
+	
+	
+	// ---------------------------------------------------------------------------------------- 마이페이지 신고 리스트 신희섭  
+	
+	// 마이페이지신고 리스트 조회 신희섭 
+	public int selectMypageReportListCount(SqlSessionTemplate sqlSession, int reportMemNo) {
+		
+		return sqlSession.selectOne("commonMapper.selectMypageReportListCount", reportMemNo);
+	}
+	
+	public ArrayList<Report> selectMypageReportList(SqlSessionTemplate sqlSession, int reportMemNo, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("commonMapper.selectMypageReportList", reportMemNo, rowBounds);
+	}
 }

@@ -179,15 +179,15 @@
 						<th colspan="3" class="review"><h3><b>내용</b></h3></th>					
 					</tr>
 					<tr class="reviewImg">
-						<td colspan="3" class="row">
+						<td colspan="3" class="row" style="flex-wrap: nowrap;">
 							<div class="column">
-								<img src="../../../resources/images/logo.png" onclick="openModal();currentSlide(1)" class="hover-shadow">
+								<img src="${r.reviewAttach1}" onclick="openModal();currentSlide(1)" class="hover-shadow">
 							</div>
 							<div class="column">
-								<img src="../../../resources/images/logo.png" onclick="openModal();currentSlide(2)" class="hover-shadow">
+								<img src="${r.reviewAttach2}" onclick="openModal();currentSlide(2)" class="hover-shadow">
 							</div>
 							<div class="column">
-								<img src="../../../resources/images/logo.png" onclick="openModal();currentSlide(3)" class="hover-shadow">
+								<img src="${r.reviewAttach3}" onclick="openModal();currentSlide(3)" class="hover-shadow">
 							</div>
 						</td>
 					</tr>
@@ -233,15 +233,15 @@
 			<span class="close cursor" onclick="closeModal()">&times;</span>
 			<div class="modal-content">
 				<div class="mySlides">
-					<img src="../../../resources/images/logo.png" style="width:100%">
+					<img src="${r.reviewAttach1}" style="width:100%">
 				</div>
 
 				<div class="mySlides">
-					<img src="../../../resources/images/logo.png" style="width:100%">
+					<img src="${r.reviewAttach2}" style="width:100%">
 				</div>
 
 				<div class="mySlides">
-					<img src="../../../resources/images/logo.png" style="width:100%">
+					<img src="${r.reviewAttach3}" style="width:100%">
 				</div>
 				<!-- Next/previous controls -->
 				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>

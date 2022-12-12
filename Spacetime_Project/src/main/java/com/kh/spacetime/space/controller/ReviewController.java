@@ -1,6 +1,10 @@
 package com.kh.spacetime.space.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
@@ -52,9 +57,23 @@ public class ReviewController {
 	}
 
 	@RequestMapping("detail.re")
-	public ModelAndView selectBoard(int rde, ModelAndView mv) {
+	public ModelAndView selectBoard(int rde, ModelAndView mv,HttpSession session) {
 
 		Review r = reviewService.selectReview(rde);
+		
+		if( r != null ) {
+			String savePath = "resources/uploadFiles/space/review/";
+			
+			if( r.getReviewAttach1() != null ) {
+				r.setReviewAttach1(savePath + r.getReviewAttach1());
+			}
+			if( r.getReviewAttach2() != null ) {
+				r.setReviewAttach2(savePath + r.getReviewAttach2());
+			}
+			if( r.getReviewAttach3() != null ) {
+				r.setReviewAttach3(savePath + r.getReviewAttach3());
+			}
+		}
 
 		// 조회된 데이터를 담아서space/mypageReviewDetail.jsp 로 포워딩
 		mv.addObject("r", r).setViewName("space/mypageReviewDetail");
@@ -99,8 +118,26 @@ public class ReviewController {
 	}
 	
 	@RequestMapping("update.re")
-	public String updateReview(Review r, HttpSession session, Model model) {
+	public ModelAndView updateReview(Review r, HttpSession session, ModelAndView mv, MultipartFile[] upfile) {
 		System.out.println("123"+r);
+		
+		for (int i = 0; i < upfile.length; i++) {
+
+			if (!upfile[i].getOriginalFilename().equals("")) {
+
+				String changeName = saveFile(upfile[i], session, "space/review/");
+				
+				if( i == 0 ) { 
+					r.setReviewAttach1(changeName);
+				}
+				else if ( i == 1 ) {
+					r.setReviewAttach2(changeName);
+				}
+				else if ( i == 2 ) {
+					r.setReviewAttach3(changeName);
+				}
+			}
+		}
 		// Service 단으로 r 보내기'
 		int rno = r.getReviewNo();
 		int result = reviewService.updateReview(r);
@@ -110,20 +147,57 @@ public class ReviewController {
 			session.setAttribute("alertMsg", "성공적으로 리뷰가 수정되었습니다.");
 			
 			// 리뷰 상세보기 페이지로 url 재요청
-			return "redirect:/detail.re?rde=" + rno;
+			mv.setViewName("redirect:/detail.re?rde=" + rno);
 		}
 		else { // 게시글 수정 실패
 			
-			model.addAttribute("errorMsg", "리뷰 수정 실패");
+			mv.addObject("errorMsg", "리뷰 수정 실패");
+			mv.setViewName("redirect:/common/errorPage");
 			
-			return "common/errorPage";
+			
 		}
+		return mv;
 	}
 
 	@RequestMapping("bookmark.sp")
 	public String bookMark() {
 
 		return "space/mypageBookMark";
+	}
+	
+	/**
+	 * @author 희섭 함수 호출시 route에 본인 업파일 경로 넣으면됨
+	 */
+	public String saveFile(MultipartFile upfile, HttpSession session, String route) {
+
+		// 파일명 수정 작업 후 서버에 업로드 시키기
+		// 예) "flower.png" => "2022112210405012345.png"
+		// 1. 원본파일명 뽑아오기
+		String originName = upfile.getOriginalFilename(); // "flower.png"
+
+		// 2. 시간 형식을 문자열로 뽑아내기
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()); // "20221122104050"
+
+		// 3. 뒤에 붙을 5자리 랜덤값 뽑기
+		int ranNum = (int) (Math.random() * 90000) + 10000; // 5자리 랜덤값
+
+		// 4. 원본파일로부터 확장자만 뽑기
+		String ext = originName.substring(originName.lastIndexOf(".")); // ".png"
+
+		// 5. 모두 이어 붙이기
+		String changeName = currentTime + ranNum + ext;
+
+		// 6. 업로드 하고자 하는 서버의 물리적인 실제 경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/" + route);
+
+		// 7. 경로와 수정파일명을 합체 후 파일을 업로드해주기
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+
+		return changeName;
 	}
 
 	// 정현--------------------

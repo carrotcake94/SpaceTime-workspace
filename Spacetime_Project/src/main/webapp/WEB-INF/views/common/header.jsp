@@ -518,7 +518,7 @@
                 <li><a href="#">이용약관</a></li>
                 <li><a href="#">개인정보처리방침</a></li>
                 <li><a href="#">운영정책</a></li>
-                <li><a href="#">신고함</a></li>
+                <li><a href="report.co">신고함</a></li>
             </ul>
             <ul>
                 <li><a href="logout.me">로그아웃</a></li>

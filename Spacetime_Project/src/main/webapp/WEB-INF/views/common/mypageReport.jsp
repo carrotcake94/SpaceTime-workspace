@@ -83,16 +83,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr data-toggle="modal" data-target="#reportDetail">
-							<td>욕설</td>
-							<td>2022-10-10</td>
-							<td>반려</td>
-						</tr>
-						<tr>
-							<td>시설물 관리 미흡</td>
-							<td>2022-09-11	</td>
-							<td>승인</td>
-						</tr>
+						<c:forEach var="r" items="${ list }">
+							<tr data-toggle="modal" data-target="#reportDetail">
+								<td>${r.reportType}</td>
+								<td>${r.reportDate}</td>
+								<td>
+                                        <c:choose>
+                                            <c:when test="${r.reportStatus eq 'Y'}">
+                                                승인
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'N'}">
+                                                미처리
+                                            </c:when>
+                                            <c:when test="${r.reportStatus eq 'D'}">
+                                                반려
+                                            </c:when>
+                                        </c:choose>
+                                    </td>
+								<input type="hidden" value="${r.reportMemNo}">
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>

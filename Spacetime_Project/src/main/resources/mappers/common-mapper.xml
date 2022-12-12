@@ -109,4 +109,21 @@
 	 WHERE INSTR(SPACE_TITLE, #{keyword}) > 0
 	   AND SPACE_STATUS = 'Y'
 	</select>
+	
+	<!-- 마이페이지 신고리스트 신희섭 -->
+	<select id="selectMypageReportListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+	</select>
+	
+	<select id="selectMypageReportList" parameterType="_int" resultMap="reportResultSet">
+		SELECT REPORT_NO
+			 , REPORT_TYPE
+			 , TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE"
+			 , REPORT_STATUS
+			 , REPORT_MEM_NO 
+		FROM REPORT	 
+		WHERE REPORT_MEM_NO = #{reportMemNo}
+		ORDER BY REPORT_NO DESC
+	</select>
 </mapper>

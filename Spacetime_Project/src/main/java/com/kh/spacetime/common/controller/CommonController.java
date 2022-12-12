@@ -19,6 +19,7 @@ import com.kh.spacetime.common.model.service.CommonService;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.common.template.Pagination;
+import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 
 @Controller
@@ -208,5 +209,32 @@ public class CommonController {
 //	public String moveCategoryPage(@RequestParam(value="e")String category) {
 //		return "space/" + valueOf(category);
 //	}
-
+	
+	
+	/**
+	 * 마이페이지 신고리스트 - 신희섭 
+	 */
+	@RequestMapping("report.co")
+	public String selectmypagereport(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		
+		// System.out.println("cpage : " + currentPage);
+		//int reportMemNo= ((Member)Session.getAttribute("loginMember")).getMemNo() ;
+		Member m = (Member) session.getAttribute("loginMember");
+		int reportMemNo = m.getMemNo();
+		
+		int listCount = commonService.selectMypageReportListCount(reportMemNo);
+		
+		int pageLimit = 10;
+		int boardLimit = 5;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Report> list = commonService.selectMypageReportList(reportMemNo, pi);
+		System.out.println(list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		// /WEB-INF/views/board/boardListView.jsp
+		return "common/mypageReport";
+	}
 }

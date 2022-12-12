@@ -79,7 +79,7 @@
 		
 		<!--컨텐츠작성부분-->
 		<div id="content_2">
-			<form action="update.re" method="post" enctype="">
+			<form action="update.re" method="post" enctype="multipart/form-data">
 			<input id="reviewNo" type="hidden" name="reviewNo" value="${r.reviewNo}">
 			<script>
 				$(function() {
@@ -125,13 +125,13 @@
 							<!-- 이미지 파일 첨부하면 썸네일 미리보기처럼 떴으면 좋겠는데.. -->
 							<td colspan="2" class="row">
 								<div>
-									<input type="file" class="real-upload" accept="image/*">
+									<input type="file" class="real-upload" name="upfile" accept="image/*">
 								</div>
 								<div>
-									<input type="file" class="real-upload" accept="image/*">
+									<input type="file" class="real-upload" name="upfile" accept="image/*">
 								</div>
 								<div>
-									<input type="file" class="real-upload" accept="image/*">
+									<input type="file" class="real-upload" name="upfile" accept="image/*">
 								</div>
 							</td>
 						</tr>
