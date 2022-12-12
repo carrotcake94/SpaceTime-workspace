@@ -81,27 +81,23 @@
 					
 					<!-- 사진형 리스트 -->
 					<div id="picList">
-						<div>
-							<div class="picList_content">
-								<div class="picList_content_pic">이미지</div>
-								<div class="picList_content_spaceName">상호명</div>
-								<div class="picList_content_price">가격</div>
-							</div>
-						</div>
+						<div class='picList_content'>
+						   <div class='picList_content_pic'>이미지</div>
+						   <div class='picList_content_spaceName'>상호명</div>
+						   <div class='picList_content_price click_disable'>원 / 시간</div>
+					   </div>
 					</div>
 					<!-- 게시판형 리스트 -->
 					<div id="lineList" style="display: none;">
-						<div>
-							<div class="lineList_content">
-								<div class="lineList_content_spaceName">공간명</div>
-								<div class="lineList_content_spaceInfo">공간설명</div>
-								<div class="lineList_content_extraInfo">
-									<div class="lineList_content_price">가격</div>
-									<div class="lineList_content_loc">위치(동)</div>
-									<div class="lineList_content_like">좋아요</div>
-								</div>
-							</div>
-						</div> 
+						<div class='lineList_content'>
+						    <div class='lineList_content_spaceTitle'>상호명</div>
+						    <div class='lineList_content_hashtag'></div>
+						    <div class='lineList_content_extraInfo'>
+							    <div class='lineList_content_price'>원 / 시간</div>
+							    <div class='lineList_content_reviewCount'>리뷰갯수</div>
+							    <div class='lineList_content_like'></div>
+						    </div>
+					    </div>
 					</div>
 				</div>
 				<!-- 지도 -->
@@ -117,26 +113,29 @@
 						loadMap(map, HOME_PATH);
 						selectList(map);
 						loadList(spaceListArr);
-						//console.log("loadList 완료");
-						updateMarkers(spaceListArr, markers);
-						//console.log("updateMarkers 완료");
+						insertMarkers();
  					};
  					
-					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
+ 					//필터 Open-Close를 위한 전역변수
+					var filterBtn = document.querySelector("#listOption_filter");
+					var filter = document.querySelector("#mapFilter");
+ 					
+					//게시판 형태 변환을 위한 전역변수(버튼)
 					var lineListBtn = document.querySelector("#listOption_lineList");
 					var picListBtn = document.querySelector("#listOption_picList");
-					var filterBtn = document.querySelector("#listOption_filter");
+					
+					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
 					var picList = document.querySelector("#picList");
 					var lineList = document.querySelector("#lineList");
-					var filter = document.querySelector("#mapFilter");
+					var picContent = picList.innerHTML;
 					
 					
 					var test = document.querySelector("#test");
 					test.onclick = () => {
 						selectList(map);
+						loadList(spaceListArr);
 						updateMarkers();
 					}
-					
 					
 					//O
 					picListBtn.onclick = () => {
@@ -152,6 +151,22 @@
 					filterBtn.onclick = () => {
 						console.log(filter);
 						filterOpenClose();
+					}
+					
+					picList.onclick = (e) => {
+						var a = e.target.closest("#");
+						var aValue = a.value;
+						console.log(a);
+						console.log(aValue);
+						console.log(a.value);
+					}
+					
+					lineList.onclick = (e) => {
+						var a = e.target.closest(".picList_content");
+						var aValue = a.value;
+						console.log(a);
+						console.log(aValue);
+						console.log(a.value);
 					}
 					
 					

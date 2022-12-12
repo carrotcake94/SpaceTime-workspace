@@ -1,12 +1,12 @@
-var map, HOME_PATH;
+var position, marker;
 
 function loadMap(){
 	HOME_PATH = window.HOME_PATH || '.';
 
     //최초로 가리키는 곳 (학원)
     map = new naver.maps.Map('map', {
-        center: new naver.maps.LatLng(37.53306, 126.89632),
-        zoom: 13
+        center: new naver.maps.LatLng(37.539861, 126.990815),
+        zoom: 12
     });
 };
 
@@ -23,61 +23,68 @@ function selectList(map) {
 			min_lng : map.getBounds()._min._lng
 		},
 		success : (listArr) => {
-		console.log(listArr);
 			spaceListArr = listArr;
-			console.log("ajax성공");
 		},
 		error : () => {
-			console.log("ajax실패");
 		}
 	});
 };
 
 
+function test(sno) {
+	console.log("clicked");
+	console.log(sno);
+	location.href='spaceDetail.sp?sno=" + spaceListArr[i].spaceNo + "'
+}
+
 function loadList(spaceListArr){
-	picList.textContent = "";
-	lineList.textContent = "";
-	var picContent = "";
-	var lineContent = "";
+	//기존의 리스트 삭제
+	while(picList.hasChildNodes()){
+		picList.removeChild(picList.firstChild);
+	}
+	while(lineList.hasChildNodes()){
+		lineList.removeChild(lineList.firstChild);
+	}
 	
-	var picContent = document.createElement("div");
-	var lineContent = document.createElement("div");
-	for(var i = 0; i < spaceListArr.length; i++){
-		picContent.innerHTML = "<div>" +
-								  "<div class='picList_content'>" +
-										  "<div class='picList_content_pic'>이미지</div>" +
-										  "<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
-										  "<div class='picList_content_price'>" + " + spaceListArr[i].hourPrice + " + "원 / 시간</div>" +
-									  "</div>" +
-								  "</div>" +
-		picList.append(picContent);
+	//새로운 리스트 생성
+	var picContent, lineCotent;
+	
+	for(var i in spaceListArr){
+		//리스트를 위한 div요소 생성
+		picContent = document.createElement("div");
+		lineContent = document.createElement("div");
 		
-		lineContent.innerHTML = "<div>" + 
-								    "<div class='lineList_content'>" +
-								  	    "<input type='hidden' name='spaceNo' value='" + spaceListArr[i].spaceNo + "'>" +
-									    "<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
-									    "<div class='lineList_content_hashTag'>" + spaceListArr[i].hashTag + "</div>" +
-									    "<div class='lineList_content_extraInfo'>" +
-										    "<div class='lineList_content_price'>" + spaceListArr[i].hourPrice + "원/ 시간</div>" +
-										    "<div class='lineList_content_reviewCount'>" + spaceListArr[i].reviewCount + "</div>" +
-										    "<div class='lineList_content_like'>" + spaceListArr[i].likeCount + "</div>" +
-									    "</div>" +
+		//리스트를 위한 내용물 생성
+		picContent.innerHTML = "<div class='picList_content'>" +
+								   "<input type='hidden' id='" + spaceListArr[i].spaceNo + "' value='" + spaceListArr[i].spaceNo + "'>" +
+								   "<div class='picList_content_pic'>이미지</div>" +
+								   "<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
+								   "<div class='picList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
+							   "</div>";
+		
+		lineContent.innerHTML = "<div class='lineList_content'>" +
+									"<input type='hidden' id='spaceNo' value='" + spaceListArr[i].spaceNo + "'>" +
+								    "<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
+								    "<div class='lineList_content_hashTag click_disable'>" + spaceListArr[i].hashtag + "</div>" +
+								    "<div class='lineList_content_extraInfo'>" +
+									    "<div class='lineList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
+									    "<div class='lineList_content_reviewCount click_disable'>" + spaceListArr[i].reviewCount + "</div>" +
+									    "<div class='lineList_content_like'>" + spaceListArr[i].likeCount + "</div>" +
 								    "</div>" +
 							    "</div>";
+		//생성된 내용물 리스트 칸 안에 넣기
+		picList.append(picContent);
 		lineList.append(lineContent);
-	}
+	}	
 };
 
-function updateMarkers() {
-	console.log("updateMarkers 진입");
-	console.log(spaceListArr);
+function insertMarkers() {
 	var bounds = map.getBounds();
-	markers = [];
 	
 	if(spaceListArr.length == 0) return;
-	var position, marker;
 	
     for(var i = 0; i < spaceListArr.length; i++) {
+    
         position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
     	marker = new naver.maps.Marker({
 			position : position,
@@ -85,31 +92,28 @@ function updateMarkers() {
 			map: map
 		});
         markers.push(marker);
-        
-        
-        coord = { lat : spaceListArr[i].latitude, lng : spaceListArr[i].longitude };
-        console.log("여기");
-	    if (bounds.hasLatLng(coord)) {
-	    	showMarker( marker);
-	    	console.log("생성완료");
-	    } else {
-	    	hideMarker(marker);
-	    	console.log("없애기완료");
-	    }
-		console.log(markers[i]);
 	}
 };
 
-function showMarker(marker) {
-
-    if (marker.getMap()) return;
-    marker.setMap(map);
-};
-
-function hideMarker(marker) {
-
-    if (!marker.getMap()) return;
-    marker.setMap(null);
+function updateMarkers() {
+	//기존의 마커 삭제
+	for(var i in markers){
+		markers[i].setMap(null);
+	}
+	
+	//기존에 담겨있던 필요없는 마커객체 삭제
+	markers.length = spaceListArr.length;
+	
+	//새로운 마커 표시
+	for(var i in spaceListArr){
+		position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
+    	marker = new naver.maps.Marker({
+			position : position,
+			title : i,
+			map: map
+		});
+        markers[i] = marker;
+	}
 };
 
 function filterOpenClose() {
@@ -130,4 +134,8 @@ function toLineList() {
 	if(lineList.style.display != "none") return;
 	lineList.style.display = "block";
 	picList.style.display = "none";
+}
+
+function toSpaceDetail() {
+	location.href = "toSpaceDetail?snum=" + snum;
 }

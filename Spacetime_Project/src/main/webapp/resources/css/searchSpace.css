@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+.click-disable {
+	pointer-events: none;
+}
+
 #search_display * {
     box-sizing: border-box;
 }
