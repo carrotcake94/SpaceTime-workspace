@@ -31,17 +31,16 @@ function selectList(map) {
 };
 
 function filterMap() {
-
 	//지역
 	var area = document.querySelector("#mapFilter_area");
 	var selectedArea = area.options[area.selectedIndex].value;
 	var areaArr = selectedArea.split(',');
 	
-	console.log(areaArr);
-	
 	//카테고리
 	var category = document.querySelectorAll("input[type=checkbox]");
 	var checkedCategory = [];
+	
+	console.log(checkedCategory);
 	
 	for(var i in category){
 		if(category[i].checked == true){
@@ -50,7 +49,9 @@ function filterMap() {
 	}
 	
 	if(checkedCategory.length == 0){
-		checkedCategory = ['1','2','3','4','5','6','7','8','9','10'];
+		for(var i = 0; i < 10; i++){
+		checkedCategory.push(i);
+		}
 	}
 	
 	console.log(checkedCategory);
@@ -65,7 +66,8 @@ function filterMap() {
 			min_price : document.querySelector("#min_price").value,
 			max_price : document.querySelector("#max_price").value
 		},
-		success : () => {
+		success : (listArr) => {
+			console.log(listArr);
 		},
 		error : () => {
 		}
@@ -91,15 +93,13 @@ function loadList(spaceListArr){
 		lineContent = document.createElement("div");
 		
 		//리스트를 위한 내용물 생성
-		picContent.innerHTML = "<div class='picList_content'>" +
-								   "<input type='hidden' id='" + spaceListArr[i].spaceNo + "' value='" + spaceListArr[i].spaceNo + "'>" +
+		picContent.innerHTML = "<div class='picList_content' onclick='movePage(" + spaceListArr[i].spaceNo + ")'>" +
 								   "<div class='picList_content_pic'>이미지</div>" +
 								   "<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
 								   "<div class='picList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
 							   "</div>";
 		
-		lineContent.innerHTML = "<div class='lineList_content'>" +
-									"<input type='hidden' id='spaceNo' value='" + spaceListArr[i].spaceNo + "'>" +
+		lineContent.innerHTML = "<div class='lineList_content' onclick='movePage(" + spaceListArr[i].spaceNo + ")'>" +
 								    "<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
 								    "<div class='lineList_content_hashTag click_disable'>" + spaceListArr[i].hashtag + "</div>" +
 								    "<div class='lineList_content_extraInfo'>" +
@@ -175,4 +175,8 @@ function toLineList() {
 
 function toSpaceDetail() {
 	location.href = "toSpaceDetail?snum=" + snum;
+}
+
+function movePage(cno) {
+	location.href = "link" + cno;
 }

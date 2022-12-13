@@ -25,71 +25,52 @@
 					<div id="prevBtn" class="categoryBtn"><img src="resources/images/main/leftPointer.png"></div>
 					<div id="main_category_bundle">
 						<div class="slider">
-							<div id="category_partyRoom" class="main_category" value="1" onclick="movePage(this)">
+							<div id="category_partyRoom" class="main_category" onclick="movePage(1)">
 								<img src="#">
-								<input type="hidden"/>
 								<div>파티룸</div>
 							</div>
-							<div id="category_cafe" class="main_category" value="2">
+							<div id="category_cafe" class="main_category">
 								<img src="#">
-								<input type="hidden" />
 								<div>카페</div>
 							</div>
-							<div id="category_theather" class="main_category" value="3">
+							<div id="category_theather" class="main_category">
 								<img src="#">
-								<input type="hidden" />
 								<div>극장, 공연장</div>
 							</div>
-							<div id="category_practice" class="main_category" value="4">
+							<div id="category_practice" class="main_category">
 								<img src="#">
-								<input type="hidden" />
 								<div>연습실</div>
 							</div>
-							<div id="category_kitchen" class="main_category" value="5">
+							<div id="category_kitchen" class="main_category">
 								<img src="#">
-								<input type="hidden"/>
 								<div>공유주방</div>
 							</div>
 						</div>
 						<div class="slider">
-							<div id="category_gallery" class="main_category" value="6">
+							<div id="category_gallery" class="main_category">
 								<img src="#">
-								<input type="hidden" value="6"/>
 								<div>갤러리</div>
 							</div>
-							<div id="category_exercise" class="main_category" value="7">
+							<div id="category_exercise" class="main_category">
 								<img src="#">
-								<input type="hidden" value=""/>
 								<div>운동시설</div>
 							</div>
-							<div id="category_study" class="main_category" value="8">
+							<div id="category_study" class="main_category">
 								<img src="#">
-								<input type="hidden" value=""/>
 								<div>스터디룸</div>
 							</div>
-							<div id="category_conference" class="main_category" value="9">
+							<div id="category_conference" class="main_category">
 								<img src="#">
-								<input type="hidden" value=""/>
 								<div>회의실</div>
 							</div>
-							<div id="category_studio" class="main_category" value="10">
+							<div id="category_studio" class="main_category">
 								<img src="#">
-								<input type="hidden" value=""/>
 								<div>스튜디오</div>
 							</div>
 						</div>
 					</div>
 					<div id="nextBtn" class="categoryBtn"><img src="resources/images/main/rightPointer.png"></div>
 				</div>
-				
-				<script>
-					function movePage(e) {
-						console.log(e.hasAttribute("value"));
-					}
-				</script>
-				
-				
-				
 				
 				<!-- 오늘의 추천 공간 / onclick="location.href'링크'"로 페이지 이동 -->
 				<div id="main_recommend">

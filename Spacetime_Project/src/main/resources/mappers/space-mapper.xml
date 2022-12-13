@@ -266,29 +266,15 @@
 	
 	<select id="filterListCountForMap" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
-		  FROM SPACE
-		 WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
-		<foreach collection="list" item="category" index="i" open="AND STYPE = ">
-           	#{category[i]}
-		</foreach>
-		<choose>
-	     	<when test="area.length == 4">
-	     		  AND ADDRESS_DEFAULT IN LIKE '%' || #{area[0]} || '%'
-	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[1]} || '%'
-	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[2]} || '%'
-	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[3]} || '%'
-	     	</when>
-	     	<when test="area.length == 5">
-	     		  AND ADDRESS_DEFAULT IN LIKE '%' || #{area[0]} ||'%'
-	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[1]} ||'%'
-	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[2]} ||'%'
-	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[3]} ||'%'
-	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[4]} ||'%'
-	     	</when>
-		</choose>
+          FROM SPACE
+         WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
+           AND STYPE_NO IN (<foreach collection="condition.category" item="category" index="i" separator=",">
+					           	#{category[i]}
+							</foreach>)
+		   AND (<foreach collection="condition.area" item="area" index="i" separator="OR">
+		   			ADDRESS_DEFAULT LIKE '%' || #{area[i]} || '%'
+		   		</foreach>)
 	</select>
-	
-	
 	
 	<select id="filterListForMap" parameterType="hashmap" resultMap="spaceResultSet">
 		SELECT SPACE_NO, 
@@ -301,11 +287,11 @@
           FROM SPACE
      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
          WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
-           AND STYPE_NO IN (<foreach collection="category" item="category" index="i" separator=",">
+           AND STYPE_NO IN (<foreach collection="condition.category" item="category" index="i" separator=",">
 					           	#{category[i]}
 							</foreach>)
-		   AND (<foreach collection="area" item="area" index="i" separator="OR">
-		   			ADDRESS_DEFAULT LIKE '%' || #{area[0]} || '%'
+		   AND (<foreach collection="condition.area" item="area" index="i" separator="OR">
+		   			ADDRESS_DEFAULT LIKE '%' || #{area[i]} || '%'
 		   		</foreach>)
 	</select>
 	

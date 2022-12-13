@@ -17,3 +17,8 @@ function autoComplete(searchInput) {
 		}
 	});
 }
+
+//카테고리 페이지 이동
+function movePage(categoryNo){
+	console.log(categoryNo);
+}

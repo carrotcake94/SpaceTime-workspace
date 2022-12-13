@@ -341,8 +341,6 @@ public class SpaceController {
         condition.put("min_price", min_price);
         condition.put("max_price", max_price);
         
-        System.out.println(condition);
-        
         int listCount = spaceService.filterListCountForMap(condition);
         int pageLimit = 3;
         int boardLimit = 10;
