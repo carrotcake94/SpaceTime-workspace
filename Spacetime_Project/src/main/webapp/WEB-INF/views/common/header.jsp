@@ -40,6 +40,9 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     
+	<!-- SOCKJS -->
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> 
+    
 	<script src="resources/js/main.js"></script>
    <style>
     
@@ -399,12 +402,89 @@
             color: black;
         }
         /* -------------------- */
+        
+        /* 알람 css */
+        #socketAlarmArea {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        background-color: transparent;
+        z-index: 11;
+        -webkit-transition: right 0.7s;
+        -moz-transition: right 0.7s;
+        -ms-transition: right 0.7s;
+        -o-transition: right 0.7s;
+        transition: right 0.7s;
+      }
+
+      .toast {
+        background-color: #FCF9BE;
+        margin: 25px 20px;
+        overflow:hidden;
+        width : 300px;
+        height: 100px;
+        position: relative;
+      }
+      
+      .toast * {
+      }
+      .toast i {
+        position: absolute;
+        right: 7px;
+        top:7px;
+        font-size: 17px;
+        cursor: pointer;
+        color: #434242;
+        
+      }
+      .toast-body {
+      	padding: 0;
+		height: 100%;
+      }
+      .toast-body>div {
+        float: left;
+        height : 100%;
+      }
+      .toast-left {
+      	width:25%;
+        position: relative;
+      }
+      .toast-right {
+      	width:75%;
+      }
+	  .toast-left img {
+          position: absolute;
+		  margin: auto;
+		  top: 0;
+	  	  bottom: 0;
+		  left: 0;
+	 	  right: 0;
+	 	  width: 50px;
+		  height:50px;     	
+	 	  background-color: white;
+      }  
+
+
+		.toast-right div:nth-child(1) {
+			font-size: 17px;
+			height : 40%;
+			padding-top: 12px;
+			padding-right: 15px;
+		}
+			
+		.toast-right div:nth-child(2) {
+		 height : 60%;
+			padding-right: 15px;
+		}
+		
+      
+       /* -------------------- */  
     </style>
 </head>
 <body>
 </head>
 <body>
-	
+
 	<c:if test="${ not empty alertMsg }">
 		<script>
 			alert("${alertMsg}");
@@ -413,6 +493,7 @@
 	</c:if>
 	<!--헤더-->
     <div class="header">
+    <button id="testBtn4" style="display:none;">토스트</button>
         <div id="logo"><img src="resources/images/logo.png"></div>
 		<script>
 			$(function() {
@@ -455,9 +536,7 @@
     <div id="overlay"></div>
     <div id="main-slidemenu">
         <div id="profile_dv">
-            <table id="profile_tb">
             <c:choose>
-                
                 <c:when test="${empty loginMember}">
                     <table id="profile_tb">
                     <!-- 로그인 전 -->
@@ -491,7 +570,6 @@
                 </table>
                 </c:otherwise>
             </c:choose>
-
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </div>
         <div id="my_menubtn">
@@ -523,7 +601,6 @@
             <ul>
                 <li><a href="logout.me">로그아웃</a></li>
             </ul>
-
         </div>
         <div class="sign-up">
             <a href="#">호스트신청하기<span class="ion-arrow-right-c"></span></a>
@@ -565,8 +642,76 @@
 	     	</script>
 		 </c:otherwise>
      </c:choose>
-	 
 
+<c:if test="${!empty loginMember}">
+<script>	
+		let toastCount = 0;
+   		var sock = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/space.sc");
+  
+   		sock.onmessage = onMessage;
+   		sock.onclose = onClose;
+   		sock.onopen = onOpen;
+   		
+   		function sendMessage(msgType, userId, stitle, message) {
+   			var msg = {
+   					msgType : msgType,
+   					sender : 'filan705', 
+   					receiver : 'filan705', 
+   					stitle : '모스트홈쉐어 경리단길', 
+   					message : '공간을 예약하셨습니다.'
+   			};
+   				
+  			sock.send(JSON.stringify(msg));
+//    		sock.send(msg);
+   		}
+   		//메시지 수신
+   		function onMessage(msg) {
+   			var data = msg.data; // 전달 받은 데이터
+   			
+   			msgData = JSON.parse(data); 
+   			
+   			var cur_session = '${loginUser.memId}'; //현재 세션에 로그인 한 사람
+   		
+   			toastCount++;
+   	        let toast;
+
+   	        toast = "<div class='toast toast-" + toastCount + "' data - autohide='false' > ";
+   	        toast += "<i class='fa fa-times' aria-hidden='true' data-dismiss='toast'></i>";
+   	        toast += "<div class='toast-body'>"
+   	        toast += "<div class='toast-left'>"
+   	        toast += "<img src='resources/images/logo.png' class='rounded-circle'	 >"   
+   	        toast += "</div>"
+   	        toast += "<div class='toast-right'>"
+   	    	toast += "<div>"+msgData.stitle+"</div>"   
+   	    	toast += "<div>"+msgData.sender+"님이 "+msgData.message+"</div>"   
+   	    	toast += "</div></div></div>"
+
+   	        $("#socketAlarmArea").append(toast);
+   	        $(".toast-" + toastCount).toast({ animation: true, delay: 10000 });
+   	        $(".toast-" + toastCount).toast("show");
+   	        $("#socketAlarmArea").addClass("slideon");
+   			
+   			
+   		}
+   		//아웃
+   		function onClose(evt) {
+   			console.log("연결 끊김");
+   		}
+   		//인
+   		function onOpen(evt) {
+   			console.log("연결 인");
+   			
+   		}
+   		//테스트용
+   		$(function() {
+   			$("#testBtn4").click(function () {
+//    				let smsg = "reserve,filan705,올모스트홈쉐어 경리단길";
+   				sendMessage("reserve", "filan705", "올모스트홈쉐어 경리단길");
+   			});
+   		});
+</script>
+</c:if>
+<div id="socketAlarmArea"></div>
 </body>
 </body>
 </html>
