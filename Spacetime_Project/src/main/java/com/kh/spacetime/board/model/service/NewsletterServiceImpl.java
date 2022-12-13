@@ -35,5 +35,33 @@ public class NewsletterServiceImpl implements NewsletterService {
 
 		return newsletterDao.selectNewsletter(sqlSession, newsNo);
 	}
+	
+	/**
+	 * 뉴스레터 작성 서비스 - 경미
+	 */
+	@Override
+	public int insertNewsletter(Newsletter n) {
 
+		return newsletterDao.insertNewsletter(sqlSession, n);
+	}
+	
+	/**
+	 * 뉴스레터 수정 - 경미
+	 */
+	@Override
+	public int updateNewsletter(Newsletter n) {
+
+		return newsletterDao.updateNewsletter(sqlSession, n);
+	}
+	
+	/**
+	 * 뉴스레터 삭제 서비스 - 경미
+	 */
+	@Override
+	public int deleteNewsletter(int newsNo) {
+		// TODO Auto-generated method stub
+		return newsletterDao.deleteNewsletter(sqlSession, newsNo);
+	}
+	
+	
 }

@@ -20,10 +20,35 @@
 		ORDER BY NEWS_NO DESC
 	</select>
 	
+	<!-- 뉴스레터 상세조회용 쿼리문 - 경미 -->
 	<select id="selectNewsletter" parameterType="_int" resultMap="newsletterResultSet">
 		SELECT *
 		  FROM NEWSLETTER
 		 WHERE NEWS_STATUS = 'N'
 		   AND NEWS_NO = #{newsNo}
 	</select>
+	
+	<!-- 뉴스레터 작성용 쿼리문 - 경미 -->
+	<insert id="insertNewsletter" parameterType="newsletter">
+		INSERT INTO NEWSLETTER (NEWS_NO, NEWS_TITLE, NEWS_CONTENT, NEWS_THUMBNAIL, NEWS_KEYWORD)
+		VALUES (SEQ_NLNO.NEXTVAL, #{newsTitle}, #{newsCont}, #{newsThumbnail}, #{newsKeyword})
+	</insert>
+	
+	<!-- 뉴스레터 수정용 쿼리문 - 경미 -->
+	<update id="updateNewsletter" parameterType="Newsletter">
+		UPDATE NEWSLETTER
+		   SET NEWS_TITLE = #{newsTitle}
+		     , NEWS_CONTENT = #{newsCont}
+		     , NEWS_THUMBNAIL = #{newsThumbnail}
+		     , NEWS_KEYWORD = #{newsKeyword}
+		 WHERE NEWS_NO = #{newsNo}
+		   AND NEWS_STATUS = 'N'
+	</update>
+	
+	<!-- 뉴스레터 삭제용 쿼리문 - 경미 -->
+	<update id="deleteNewsletter" parameterType="_int">
+		UPDATE NEWSLETTER
+		   SET NEWS_STATUS = 'Y'
+		 WHERE NEWS_NO = #{newsNo}
+	</update>
 </mapper>

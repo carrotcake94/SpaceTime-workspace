@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>뉴스레터</title>
 <style>
     /* content */
     /* div { border: 1px black solid; } */
@@ -17,7 +17,7 @@
 		display: flex;
 	}
 	
-	#content>div { height: 100%; float: left; padding:40px 0px;}
+	#content>div { height: 100%; float: left; padding:100px 0px;}
 	
 	#content_1, #content_3 { width: 20%; }
 	#content_2 { width: 60%; }
@@ -36,7 +36,8 @@
 
     #imgg>p { 
         width: 100%;
-        padding-top: 150px; 
+        padding-top: 125px; 
+        vertical-align: middle;
         font-size: 35px;
         font-weight: bold;
         color: white;
@@ -62,21 +63,46 @@
             
             <!--컨텐츠작성부분 -->
             <div id="content_2">
-                <div style="height:500px">
+                <div style="height:300px;">
                     <div id="imgg" align="center">
-                        <p style="height:50%;">${n.newsTitle}</p>
-                        <p style="font-size: 20px; padding-top:10px; font-weight:lighter; height:50%;">${n.newsCont}</p>
+                        <p style="height:100%;">${n.newsTitle}</p>
                     </div>
                 </div>
+                <div style="height:auto; margin: 30px 0px;" align="center">
+                    <p style="font-size: 20px; padding-top:10px; font-weight:lighter; height:50%; color:#898989;">${n.newsCont}</p>
+                </div>
                 <div style="height:80px">
+                        <form id="updateForm" method="post" action="" align="right">
+                            <input type="hidden" name="nlno" value="${n.newsNo}">
+                            <c:if test="${ loginMember.memNo eq 1 }">
+                                <button type="button" class="btn btn-secondary" style="margin-top: 25px; border-color: rgb(253, 193, 55); background-color:rgb(253, 193, 55);">수정</button>&nbsp;
+                            </c:if>
+                            <a class="btn btn-secondary" style="margin-top: 25px;" href="list.ne">목록</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </form>
+                    
+                    <script>
+                        $(function() {
+                            $("#updateForm>button").click(function() {
+                                $("#updateForm").attr("action", "updateForm.ne").submit();
+                            })
+                        })
+                    </script>
+                    
                 </div>
                 <div style="height: 100%;">
                     <c:forEach var="s" items="${ list }">
+                    <c:set var="attachments" value="${s.attachments}" />
                     <div id="place" style="padding: 15px 15px">
                         <table width="100%" height="100%">
                             <thead height="50%">
                                 <tr>
-                                    <td colspan="2"><div style="width: 100%; height: 100%;"><img src=""></div></td>
+                                    <td colspan="2">
+                                        <div style="width: 100%; height: 100%;">
+                                            <c:forEach var="attach" items="${attachments}">
+                                                <img src="${attach.attachmentReName}">
+                                            </c:forEach>
+                                        </div>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,7 +110,7 @@
                                     <td colspan="2" height="20%"><span>${s.spaceTitle}</span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i></td>
+                                    <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i></td>                                                                           
                                 </tr>
                                 <tr height="20%">
                                     <td width="60%"><span style="color: #277BC0;">${s.hourPrice}</span> 원/시간</td>

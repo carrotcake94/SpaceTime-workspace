@@ -110,7 +110,7 @@ public class NoticeController {
 	 * @return
 	 */
 	@RequestMapping("update.no")
-	public String updateBoard(Notice n, HttpSession session, Model model) {
+	public String updateNotice(Notice n, HttpSession session, Model model) {
 		
 		int result = noticeService.updateNotice(n);
 		

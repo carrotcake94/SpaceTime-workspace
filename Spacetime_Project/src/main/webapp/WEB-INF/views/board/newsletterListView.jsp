@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>뉴스레터</title>
 <style>
     /* content */
     /* div { border: 1px black solid; } */
@@ -17,7 +17,7 @@
 		display: flex;
 	}
 	
-	#content>div { height: 100%; float: left; padding:40px 0px;}
+	#content>div { height: 100%; float: left; padding:40px 0px 200px 0px;}
 	
 	#content_1, #content_3 { width: 20%; }
 	#content_2 { width: 60%; }
@@ -138,6 +138,12 @@
             <!--컨텐츠작성부분 -->
             <div id="content_2">
                 <div id="text" align="center"><p>뉴스레터</p></div>
+                <div>
+                    <c:if test="${ loginMember.memNo eq 1 }">
+                        <a class="btn btn-secondary" style="float:right; margin:20px; border-color: #ffd014; background-color: #ffd014;" href="insertForm.ne">글쓰기</a>
+                    </c:if>
+                </div>
+                <br clear="both">
                 <div class="theme_list">
                     <c:forEach var="n" items="${ list }">
                         <div class="flex_wrap column3 fluid list_center">
