@@ -37,7 +37,6 @@ public class CommonDao {
 		return sqlSession.selectOne("commonMapper.selectReport", reportNo);
 	}
 	
-	
 	// 신고 처리 (승인, 반려)
 	public int updateReport(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 	
@@ -63,7 +62,27 @@ public class CommonDao {
 	}
 	
 	// 공간 매출 상세조회 
+	public Reserve selectSales(SqlSessionTemplate sqlSession, int spaceNo) {
+
+		return sqlSession.selectOne("commonMapper.selectSales", spaceNo);
+	}
 	
+	// 매출이 있는 공간의 상세 매출 총 개수
+	public int selectSalesDetailCount(SqlSessionTemplate sqlSession, int spaceNo) {
+		
+		return sqlSession.selectOne("commonMapper.selectSalesDetailCount", spaceNo);
+	}
+	
+	// 매출이 있는 공간의 상세 매출 조회
+	public ArrayList<Reserve> selectSalesDetailList(SqlSessionTemplate sqlSession, PageInfo pi, int spaceNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesDetailList", spaceNo, rowBounds);
+	}
 	
 	//검색어 자동완성기능
 	public ArrayList<String> autoComplete(SqlSessionTemplate sqlSession, String keyword) {
@@ -71,8 +90,6 @@ public class CommonDao {
 		ArrayList<String> keywords = (ArrayList)sqlSession.selectList("commonMapper.autoComplete", keyword); 
 		return keywords;
 	}
-	
-	
 	
 	// ---------------------------------------------------------------------------------------- 마이페이지 신고 리스트 신희섭  
 	

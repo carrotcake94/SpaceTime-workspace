@@ -41,6 +41,8 @@ public class Reserve {
 		// 매출관리용 join - 혜민
 		private String memName;
 		private String memId;
+		private String gender;
+		private int income;
 		
 
 }

@@ -339,7 +339,45 @@
 	       </foreach>
 	</select>
 	
-	
+	<!-- 관리자 공간 리스트 카운트 - 혜민 --> 
+	<select id="selectAdminSpaceListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM SPACE
+		<if test="tab == '전체 공간'">
+			WHERE SPACE_STATUS IN ('Y', 'N', 'D')
+		</if>
+		<if test="tab == '미처리 공간'">
+			WHERE SPACE_STATUS = 'N'
+		</if>
+		<if test="tab == '승인된 공간'">
+			WHERE SPACE_STATUS = 'Y'
+		</if>
+	</select>
+
+	<!-- 관리자 공간 리스트 조회 - 혜민 -->
+	<select id="selectAdminSpaceList" parameterType="hashmap" resultMap="spaceResultSet">
+		SELECT SPACE_NO, MEM_ID AS "HOST_NO", SPACE_TITLE, STYPE_NO, SPACE_STATUS, DENY_MESSAGE
+		FROM SPACE
+		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
+		<if test="tab == '전체 공간'">
+			WHERE SPACE_STATUS IN ('Y', 'N', 'D')
+		</if>
+		<if test="tab == '미처리 공간'">
+			WHERE SPACE_STATUS = 'N'
+		</if>
+		<if test="tab == '승인된 공간'">
+			WHERE SPACE_STATUS = 'Y'
+		</if>
+		ORDER BY SPACE_NO DESC
+	</select>
+
+	<!-- 관리자 공간 처리 (승인, 반려) - 혜민 --> 
+	<update id="updateAdminSpace" parameterType="hashmap">
+		UPDATE SPACE
+		SET SPACE_STATUS = #{spaceStatus}
+		  , DENY_MESSAGE = #{denyMessage}
+		WHERE SPACE_NO = #{spaceNo}
+	</update>
 
 	
 </mapper>

@@ -126,13 +126,9 @@
 </head>
 <body>
 
-
-	<div class="wrap">
-	<div id="header_container"><jsp:include page="header.jsp" /></div>
-	
-    
-    <jsp:include page="adminNavi.jsp" />
-	
+    <div class="wrap">
+        <div id="header_container"><jsp:include page="header.jsp" /></div>
+        <jsp:include page="adminNavi.jsp" />
         <div id="content">
 
             <!-- 매출관리 제목 -->
@@ -143,7 +139,7 @@
                 <table align="center" id="searchForm">
                     <tr>
                         <td align="right">
-                        	<input type="month" class="mb-2 form-control" style="width:160px; display: inline-block;">
+                            <input type="month" id="currentMonth" class="mb-2 form-control" style="width:160px; display: inline-block;">
                         </td>
                         <td>
                             <select name="cate" class="select_category form-control mb-2" style="width:100%;">
@@ -162,11 +158,15 @@
                     </tr>
                 </table>
             </div>
+            
+            <!-- 현재 월Month 을 기본값으로 설정하기 -->
+            <script>
+                document.getElementById('currentMonth').value= new Date().toISOString().slice(0, 7);
+            </script>
 
             <!-- 컨텐츠 탭 -->
             <div id="tab">
-
-                <table class="table" style="table-layout:fixed;">
+                <table class="table salesList" style="table-layout:fixed;">
                     <thead>
                         <tr>
                             <th style="width:10%;">호스트명</th>
@@ -177,13 +177,14 @@
                         </tr>
                     </thead>
                     <tbody id="myTable">
-                    	<c:forEach var="r" items="${list}">
-	                        <tr data-toggle="modal" data-target="#salesDetail">
-	                            <td>${r.memName}</td>
-	                            <td>${r.memId}</td>
-	                            <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${r.spaceTitle}</td>
-	                            <td>${r.price}</td>
-	                            <td>
+                        <c:forEach var="r" items="${list}">
+                            <tr class="salesTr">
+                                <input type="hidden" name="sno" value="${r.spaceNo}">
+                                <td>${r.memName}</td>
+                                <td>${r.memId}</td>
+                                <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" align="left">${r.spaceTitle}</td>
+                                <td>${r.price}</td>
+                                <td>
                                     <c:choose>
                                         <c:when test="${r.useDate > 'SYSDATE'}">
                                             정산완료 
@@ -192,188 +193,50 @@
                                             미처리
                                         </c:when>
                                     </c:choose>
-	                            </td>
-	                        </tr>
+                                </td>
+                            </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
             <br>
+            
+            <!-- 매출 상세페이지로 연결 -->
+            <script>
+                $(function() {
+                    
+                    $(".salesList>tbody>tr").click(function() {
+                        
+                        location.href = "sdetail.ad?sno=" + $(this).children().eq(0).val();
+                    });
+                });
+            </script>
 
             <!-- 페이지 버튼 -->
             <div class="btnPage" align="center">
-                 <ul class="pagination">
-                     <c:choose>
-                         <c:when test="${pi.currentPage eq 1}">
-                             <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
-                         </c:when>
-                         <c:otherwise>
-                             <li class="page-item no-page-prev"><a class="page-link" href="slist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-                         </c:otherwise>
-                     </c:choose>
+                <ul class="pagination">
+                    <c:choose>
+                        <c:when test="${pi.currentPage eq 1}">
+                            <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item no-page-prev"><a class="page-link" href="slist.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
 
-                     <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                         <li class="page-item page-btn"><a id="" class="page-link" href="slist.ad?cpage=${p}">${p}</a></li>
-                     </c:forEach>
+                    <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                        <li class="page-item page-btn"><a id="" class="page-link" href="slist.ad?cpage=${p}">${p}</a></li>
+                    </c:forEach>
 
-                     <c:choose>
-                         <c:when test="${pi.currentPage eq pi.maxPage}">
-                             <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                         </c:when>
-                         <c:otherwise>
-                             <li class="page-item no-page-next"><a class="page-link" href="slist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-                         </c:otherwise>
-                     </c:choose>
-                 </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- 매출 상세내역 모달창 -->
-    <div class="modal fade" id="salesDetail">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
-            <div class="modal-content">
-            
-                <!-- Modal Header -->
-                <div class="modal-header">
-                <h4 class="modal-title">매출내역 상세조회</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <!-- 매출 정보 -->
-                    <div class="sales_info">
-                        <table class="sales_detail"> 
-                            <tr>
-                                <th style="width: 150px">호스트명</th>
-                                <td class="sales_detail_content">손흥민 &nbsp;&nbsp;<span id="gender">[성별]</span></td>
-                            </tr>
-                            <tr>
-                                <th>호스트ID</th>
-                                <td class="sales_detail_content">sonny</td>
-                            </tr>
-                            <tr>
-                                <th>공간명</th> 
-                                <td class="sales_detail_content">대충 파티룸이라고 칩시다</td>
-                            </tr> 
-                            <tr>
-                                <th>매출 내역</th>
-                                <td>
-                                    <table class="income_detail">
-                                        <tr>
-                                            <th style="width: 150px">예약일</th>
-                                            <th style="width: 150px">결제금액</th>
-                                            <th style="width: 150px">매출액</th>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-30</td>
-                                            <td>40,000</td>
-                                            <td>4,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-31</td>
-                                            <td>30,000</td>
-                                            <td>3,000</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="income_sum"><h5>2022년 10월 총매출액 : <b>70,000</b></h5></div>
-                </div>
-                    
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-                </div>
-            
+                    <c:choose>
+                        <c:when test="${pi.currentPage eq pi.maxPage}">
+                            <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item no-page-next"><a class="page-link" href="slist.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
             </div>
         </div>
     </div>

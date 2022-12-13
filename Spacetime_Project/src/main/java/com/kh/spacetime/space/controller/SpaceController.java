@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -454,6 +456,107 @@ public class SpaceController {
 	
 	}
 	
+	/**
+	 * 관리자 공간관리 리스트 페이지로 포워딩 - 혜민 
+	 * @return
+	 */
+	@RequestMapping(value="splist.ad")
+	public String selectAdminSpaceList() {
+		
+		return "space/adminSpace";
+	}
 	
+	/**
+	 * 관리자 공간관리 리스트 페이징, 조회 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @param tab
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="ajaxsplist.ad", produces="application/json; charset=UTF-8")
+	public String ajaxSpaceList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, String tab) {
+		
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("tab", tab);
+		
+		int listCount = spaceService.selectAdminSpaceListCount(map);
+		
+		// System.out.println("listCount : " + listCount);
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Space> list = spaceService.selectAdminSpaceList(pi, map);
+		
+		JSONArray jArr = new JSONArray();
+		for(Space s : list) {
+			JSONObject jObj = new JSONObject();
+			jObj.put("spaceNo", s.getSpaceNo());
+			jObj.put("hostNo", s.getHostNo());
+			jObj.put("spaceTitle", s.getSpaceTitle());
+			jObj.put("spaceStatus", s.getSpaceStatus());
+			jObj.put("stypeNo", s.getStypeNo());
+			jObj.put("denyMessage", s.getDenyMessage());
+			jArr.add(jObj);
+		}
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("listCount", pi.getListCount());
+		jObj.put("currentPage", pi.getCurrentPage());
+		jObj.put("pageLimit", pi.getPageLimit());
+		jObj.put("boardLimit", pi.getBoardLimit());
+		jObj.put("maxPage", pi.getMaxPage());
+		jObj.put("startPage", pi.getStartPage());
+		jObj.put("endPage", pi.getEndPage());
+		
+		JSONObject json = new JSONObject();
+		json.put("list", jArr); // 0번 인덱스 
+		json.put("pi", jObj); // 1번 인덱스 
+		
+		System.out.println(json);
+		
+		return json.toJSONString();
+	}
+	
+	/**
+	 * 관리자 공간처리 메소드 - 혜민
+	 * @param s
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("updateAdminSpace.ad")
+	public String updateAdminSpace(Space s, Model model, HttpSession session) {
+	
+		System.out.println("컨트롤러까지 왔나?");
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		String spaceNo = Integer.toString(s.getSpaceNo());
+		
+		map.put("spaceNo", spaceNo);
+		
+		if(s.getSpaceStatus() != null) {
+			map.put("spaceStatus", s.getSpaceStatus());
+			map.put("denyMessage", s.getDenyMessage());
+		}
+		
+		int result = spaceService.updateAdminSpace(map);
+		
+		if(result > 0) { // 신고처리 성공 
+			
+			session.setAttribute("alertMsg", "처리가 완료되었습니다.");
+			return "redirect:/splist.ad";
+			
+		} else { // 신고처리 실패 
+			
+			model.addAttribute("errorMsg", "처리 실패");
+			return "common/errorPage";
+		}
+	}
 	
 }

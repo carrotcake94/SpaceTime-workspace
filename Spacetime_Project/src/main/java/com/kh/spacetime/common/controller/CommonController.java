@@ -175,16 +175,77 @@ public class CommonController {
 		
 		ArrayList<Reserve> list = commonService.selectSalesList(pi);
 		
-		System.out.println(listCount);
-		System.out.println(list);
+		// System.out.println(listCount);
+		// System.out.println(list);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		return "common/adminSales";
 	}
+
+	/**
+	 * 관리자 매출 상세조회 - 혜민
+	 * @param spno
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping("sdetail.ad")
+	public ModelAndView selcetSales(int sno, ModelAndView mv) {
+		
+		Reserve r = commonService.selectSales(sno);
+
+		// System.out.println(sno);
+
+		mv.addObject("r", r).setViewName("common/adminSalesDetail");
+
+		return mv;
+	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="ajaxslist.ad", produces="application/json; charset=UTF-8")
+	public String ajaxSalesList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, int sno) {
+		
+		int listCount = commonService.selectSalesDetailCount(sno);
+		
+		// System.out.println("listCount : " + listCount);
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Reserve> list = commonService.selectSalesDetailList(pi, sno);
+		
+		// System.out.println(list);
+		
+		JSONArray jArr = new JSONArray();
+		for(Reserve r : list) {
+			JSONObject jObj = new JSONObject();
+			jObj.put("useDate", r.getUseDate());
+			jObj.put("startTime", r.getStartTime());
+			jObj.put("price", r.getPrice());
+			jObj.put("income", r.getIncome());
+			jArr.add(jObj);
+		}
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("listCount", pi.getListCount());
+		jObj.put("currentPage", pi.getCurrentPage());
+		jObj.put("pageLimit", pi.getPageLimit());
+		jObj.put("boardLimit", pi.getBoardLimit());
+		jObj.put("maxPage", pi.getMaxPage());
+		jObj.put("startPage", pi.getStartPage());
+		jObj.put("endPage", pi.getEndPage());
+		
+		JSONObject json = new JSONObject();
+		json.put("list", jArr);
+		json.put("pi", jObj); 
+		
+		// System.out.println("컨트롤러에서 찍히는 json : " + json); 
+		
+		return json.toJSONString();
+	}
 	/**
 	 * 헤더에서 서비스정보 페이지 이동 - 하연 
 	 */

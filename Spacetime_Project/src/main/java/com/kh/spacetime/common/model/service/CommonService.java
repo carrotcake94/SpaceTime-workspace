@@ -26,12 +26,18 @@ public interface CommonService {
 	
 	// 매출이 있는 공간 리스트 조회 
 	ArrayList<Reserve> selectSalesList(PageInfo pi);
-	
+
 	// 공간 매출 상세조회 
 	Reserve selectSales(int spaceNo);
 	
-	ArrayList<String> autoComplete(String keyword);
+	// 매출이 있는 공간의 상세 매출 총 개수
+	int selectSalesDetailCount(int spaceNo);
 	
+	// 매출이 있는 공간의 상세 매출 조회
+	ArrayList<Reserve> selectSalesDetailList(PageInfo pi, int spaceNo);
+	
+	// 검색어 자동완성
+	ArrayList<String> autoComplete(String keyword);
 
 	//마이페이지 신고리스트 조회 - 신희섭
 	int selectMypageReportListCount(int reportMemNo);

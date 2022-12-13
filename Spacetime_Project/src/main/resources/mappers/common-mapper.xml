@@ -23,6 +23,7 @@
 		
 		<result column="MEM_NAME" property="memName" />
 		<result column="MEM_ID" property="memId" />
+		<result column="GENDER" property="gender" />
 		
 		<result column="SPACE_TITLE" property="spaceTitle" />
 	</resultMap>
@@ -77,28 +78,26 @@
 	<!-- 신고 처리 (승인, 반려) -->
 	<update id="updateReport" parameterType="hashmap">
 		UPDATE REPORT
-		   SET REPORT_STATUS = #{reportStatus}
-		     , REPORT_ANSWER = #{reportAnswer}
-		     , MODIFY_DATE = SYSDATE
+		SET REPORT_STATUS = #{reportStatus}
+			, REPORT_ANSWER = #{reportAnswer}
+			, MODIFY_DATE = SYSDATE
 		WHERE REPORT_NO = #{reportNo}
 	</update>
 	
-
-	<!-- 관리자페이지 매출 리스트 조회 + 페이징 처리 -->	
 	<!-- 매출이 있는 공간 총 개수 -->
 	<select id="selectSalesListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM (SELECT SPACE_NO
-		      FROM RESERVE
-		      GROUP BY SPACE_NO)
+			FROM RESERVE
+			GROUP BY SPACE_NO)
 		<!-- 날짜 선택 조건 나중에 넣기 -->
 	</select>
 	
 	<!-- 매출이 있는 공간 리스트 조회 -->
 	<select id="selectSalesList" resultMap="reserveResultSet">
-		SELECT MEM_NAME AS "M.MEM_NO", MEM_ID AS "M.MEM_NO", SPACE_TITLE AS "R.SPACE_NO", SUM(PRICE), USE_DATE
+		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", USE_DATE
 		FROM RESERVE R
-		JOIN SPACE USING (SPACE_NO)
+		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		WHERE MEM_STATUS = 'N'
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE, USE_DATE
@@ -107,13 +106,38 @@
 	</select>
 	
 	<!-- 공간별 매출 상세조회 -->
+	<select id="selectSales" parameterType="_int" resultMap="reserveResultSet">
+		SELECT M.MEM_NAME, M.MEM_ID, GENDER, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "INCOME"
+		FROM RESERVE
+		JOIN SPACE S USING (SPACE_NO)
+		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
+		WHERE SPACE_NO = #{SPACE_NO}
+		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, GENDER, SPACE_TITLE
+	</select>
+	
+	<!-- 매출이 있는 공간의 상세 매출 총 개수 -->
+	<select id="selectSalesDetailCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVE
+		WHERE SPACE_NO = #{SPACE_NO}
+		<!-- 날짜 선택 조건 나중에 넣기 -->
+	</select>
+	
+	<!-- 매출이 있는 공간의 상세 매출 조회 -->
+	<select id="selectSalesDetailList" resultMap="reserveResultSet">
+		SELECT TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE", R.START_TIME, PRICE, (PRICE*0.1) AS "INCOME"
+		FROM RESERVE R
+		WHERE SPACE_NO = #{SPACE_NO}
+		ORDER BY USE_DATE ASC
+		<!-- 날짜 선택 조건 나중에 넣기 -->
+	</select>
 
 	<!-- 검색어 자동완성 -->
 	<select id="autoComplete" parameterType="string" resultType="arraylist">
 		SELECT SPACE_TITLE
-		  FROM SPACE
-		 WHERE INSTR(SPACE_TITLE, #{keyword}) > 0
-		   AND SPACE_STATUS = 'Y'
+		FROM SPACE
+		WHERE INSTR(SPACE_TITLE, #{keyword}) > 0
+		AND SPACE_STATUS = 'Y'
 	</select>
 	
 	<!-- 마이페이지 신고리스트 신희섭 -->
@@ -124,10 +148,10 @@
 	
 	<select id="selectMypageReportList" parameterType="_int" resultMap="reportResultSet">
 		SELECT REPORT_NO
-			 , REPORT_TYPE
-			 , TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE"
-			 , REPORT_STATUS
-			 , REPORT_MEM_NO 
+			, REPORT_TYPE
+			, TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE"
+			, REPORT_STATUS
+			, REPORT_MEM_NO 
 		FROM REPORT	 
 		WHERE REPORT_MEM_NO = #{reportMemNo}
 		ORDER BY REPORT_NO DESC

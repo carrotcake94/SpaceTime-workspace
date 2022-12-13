@@ -36,5 +36,6 @@ public class Space {
 		private String hostNo;	//	HOST_NO	NUMBER  id가 들어갈수있따.
 		private String stypeNo;	//	STYPE_NO	NUMBER 공간유형 이름이 들어갈수 있다.
 		private List<SpaceAttachment> attachments; // join용
+		private String memId; // join 용
 }
 

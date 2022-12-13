@@ -150,4 +150,26 @@ public class SpaceDao {
 	
 	
 	// ------------- 하연 끝 ^0^ ---------------
+	
+	// 관리자 공간 리스트 카운트 - 혜민 
+	public int selectAdminSpaceListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("spaceMapper.selectAdminSpaceListCount", map);
+	}
+
+	// 관리자 공간 리스트 조회 - 혜민
+	public ArrayList<Space> selectAdminSpaceList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectAdminSpaceList", map, rowBounds);
+	}
+	
+	// 관리자 공간 처리 (승인, 반려) - 혜민
+	public int updateAdminSpace(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("spaceMapper.updateAdminSpace", map);
+	}
+	
 }

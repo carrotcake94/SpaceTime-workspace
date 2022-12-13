@@ -31,7 +31,7 @@ public class CommonServiceImpl implements CommonService {
 	// 신고 리스트 조회 
 	@Override
 	public ArrayList<Report> selectReportList(PageInfo pi, HashMap<String, String> map) {
-		//System.out.println("서비스 :" + map);
+		
 		return commonDao.selectReportList(sqlSession, pi, map);
 	}
 
@@ -59,7 +59,7 @@ public class CommonServiceImpl implements CommonService {
 	// 매출이 있는 공간 리스트 조회 
 	@Override
 	public ArrayList<Reserve> selectSalesList(PageInfo pi) {
-		// System.out.println("서비스까지오나?");
+		
 		return commonDao.selectSalesList(sqlSession, pi);
 	}
 
@@ -67,7 +67,21 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public Reserve selectSales(int spaceNo) {
 		
-		return null;
+		return commonDao.selectSales(sqlSession, spaceNo);
+	}
+	
+	// 매출이 있는 공간의 상세 매출 총 개수
+	@Override
+	public int selectSalesDetailCount(int spaceNo) {
+		
+		return commonDao.selectSalesDetailCount(sqlSession, spaceNo);
+	}
+	
+	// 매출이 있는 공간의 상세 매출 조회
+	@Override
+	public ArrayList<Reserve> selectSalesDetailList(PageInfo pi, int spaceNo) {
+		
+		return commonDao.selectSalesDetailList(sqlSession, pi, spaceNo);
 	}
 
 	//검색어 자동완성
@@ -89,5 +103,9 @@ public class CommonServiceImpl implements CommonService {
 			
 		return commonDao.selectMypageReportList(sqlSession, reportMemNo, pi);
 	}
+
+
+
+
 
 }
