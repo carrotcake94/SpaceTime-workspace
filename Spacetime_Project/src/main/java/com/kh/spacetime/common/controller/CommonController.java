@@ -3,6 +3,7 @@ package com.kh.spacetime.common.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -306,23 +307,16 @@ public class CommonController {
 		// /WEB-INF/views/board/boardListView.jsp
 		return "common/mypageReport";
 	}
-//	@RequestMapping(value="",)
-//	public String modelPopUp(SearchDTD=O searchDTO,Model model) {
-//		
-//		model.addAttribute("searchData",xxxService.getSearchData())
-//		
-//	}
-//	@RequestMapping("reportdetail.co")
-//
-//	public ModelAndView selectReport(int rde, ModelAndView mv,HttpSession session) {
-//
-//		Review r = commonService.selectMypageReport(rde);
-//		
-//		mv.addObject("r", r).setViewName("space/mypageReviewDetail");
-//
-//		return mv;
-//
-//		
-//	}
+	// ajax
+	@RequestMapping(value="reportdetail.co")
+	@ResponseBody
+	public String mypagereportdetail(Report report) {
+		System.out.println(report);
+		
+		
+		return "";
+		
+		
+	}
 
 }
