@@ -31,14 +31,37 @@ function selectList(map) {
 };
 
 function filterMap() {
+
+	//지역
+	var area = document.querySelector("#mapFilter_area");
+	var selectedArea = area.options[area.selectedIndex].value;
+	var areaArr = selectedArea.split(',');
+	
+	console.log(areaArr);
+	
+	//카테고리
+	var category = document.querySelectorAll("input[type=checkbox]");
+	var checkedCategory = [];
+	
+	for(var i in category){
+		if(category[i].checked == true){
+			checkedCategory.push(category[i].value);
+		}
+	}
+	
+	if(checkedCategory.length == 0){
+		checkedCategory = ['1','2','3','4','5','6','7','8','9','10'];
+	}
+	
+	console.log(checkedCategory);
+	
 	$.ajax({
 		url: "mapFilter.mp",
 		type: "get",
 		async: false,
 		data : {
-			date : document.querySelector("input[name=date]"),
-			area : document.querySelector("select[name=area]"),			
-			category : $("#mapFilter_category_list").serialized(),
+			area : areaArr,
+			category : checkedCategory,
 			min_price : document.querySelector("#min_price").value,
 			max_price : document.querySelector("#max_price").value
 		},
@@ -48,6 +71,7 @@ function filterMap() {
 		}
 	});
 }
+
 
 function loadList(spaceListArr){
 	//기존의 리스트 삭제
@@ -101,6 +125,7 @@ function insertMarkers() {
     	marker = new naver.maps.Marker({
 			position : position,
 			title : i,
+			clickable: true,
 			map: map
 		});
         markers.push(marker);

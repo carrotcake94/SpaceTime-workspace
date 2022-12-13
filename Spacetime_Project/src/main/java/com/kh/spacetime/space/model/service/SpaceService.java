@@ -60,10 +60,10 @@ public interface SpaceService {
 	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
 
 	// 지도 필터링 공간 갯수 조회 -성훈
-	int filterListCountForMap(HashMap<String, String> map);
+	int filterListCountForMap(HashMap<String, Object> map);
 
 	// 지도 필터링 공간 리스트 -성훈
-	ArrayList<Space> filterListForMap(HashMap<String, String> map, PageInfo pi);
+	ArrayList<Space> filterListForMap(HashMap<String, Object> map, PageInfo pi);
 	/*****************************************************/
 	
 	/*

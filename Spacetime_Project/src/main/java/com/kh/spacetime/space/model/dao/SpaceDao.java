@@ -109,12 +109,12 @@ public class SpaceDao {
 	}
 	
 	// 지도 필터링 공간 갯수 조회 -성훈
-	public int filterListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+	public int filterListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 	    return sqlSession.selectOne("spaceMapper.filterListCountForMap", map);
 	}
 
 	// 지도 필터링 공간 리스트 -성훈
-	public ArrayList<Space> filterListForMap(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+	public ArrayList<Space> filterListForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
 		return (ArrayList)sqlSession.selectList("spaceMapper.filterListForMap", map);
 	}
 	/*****************************************************/

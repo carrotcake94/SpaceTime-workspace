@@ -121,12 +121,12 @@ public class SpaceServiceImpl implements SpaceService {
 	}
 
 	@Override
-	public int filterListCountForMap(HashMap<String, String> map) {
+	public int filterListCountForMap(HashMap<String, Object> map) {
 	    return spaceDao.filterListCountForMap(sqlSession, map);
 	}
 
 	@Override
-	public ArrayList<Space> filterListForMap(HashMap<String, String> map, PageInfo pi) {
+	public ArrayList<Space> filterListForMap(HashMap<String, Object> map, PageInfo pi) {
 	    return spaceDao.filterListForMap(sqlSession, map, pi);
 	}
 	/*****************************************************/

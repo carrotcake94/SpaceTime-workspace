@@ -9,8 +9,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +26,6 @@ import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
-import com.kh.spacetime.reserve.model.vo.Reserve;
 import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
@@ -321,12 +322,22 @@ public class SpaceController {
     //지도 필터링 -성훈
     @ResponseBody
     @RequestMapping(value="mapFilter.mp", produces="application/json; charset=UTF-8")
-    public String filterListForMap(@RequestParam(value = "mpage", defaultValue="1") int currentPage, String date, String area, String category, String min_price, String max_price) {
-        System.out.println(category);
-        HashMap<String, String> condition = new HashMap<>();
-        condition.put("date", date);
-        condition.put("area", area);
-        condition.put("category", category);
+    public String filterListForMap(@RequestParam(value = "mpage", defaultValue="1") int currentPage, HttpServletRequest request, String min_price, String max_price) {
+    	String[] category = request.getParameterValues("category[]");
+    	ArrayList<String> categoryArr = new ArrayList<>();
+    	for(int i = 0; i < category.length; i++) {
+    		categoryArr.add(category[i]);
+    	}
+    	
+    	String[] area = request.getParameterValues("area[]");
+    	ArrayList<String> areaArr = new ArrayList<>();
+    	for(int i = 0; i < area.length; i++) {
+    		areaArr.add(area[i]);
+    	}
+    	
+    	HashMap<String, Object> condition = new HashMap<>();
+        condition.put("area", areaArr);
+        condition.put("category", categoryArr);
         condition.put("min_price", min_price);
         condition.put("max_price", max_price);
         

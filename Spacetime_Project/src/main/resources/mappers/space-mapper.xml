@@ -257,38 +257,83 @@
 	           LONGITUDE, 
 	           ATTACHMENT_RENAME
 	      FROM SPACE
-	      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+	 LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
 	     WHERE LATITUDE BETWEEN #{min_lat} AND #{max_lat}
 	       AND LONGITUDE BETWEEN #{min_lng} AND #{max_lng}
 	       AND SPACE_STATUS = 'Y'
 	       AND ATTACHMENT_LEVEL = 1
 	</select>
 	
+	<select id="filterListCountForMap" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		  FROM SPACE
+		 WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
+		<foreach collection="list" item="category" index="i" open="AND STYPE = ">
+           	#{category[i]}
+		</foreach>
+		<choose>
+	     	<when test="area.length == 4">
+	     		  AND ADDRESS_DEFAULT IN LIKE '%' || #{area[0]} || '%'
+	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[1]} || '%'
+	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[2]} || '%'
+	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[3]} || '%'
+	     	</when>
+	     	<when test="area.length == 5">
+	     		  AND ADDRESS_DEFAULT IN LIKE '%' || #{area[0]} ||'%'
+	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[1]} ||'%'
+	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[2]} ||'%'
+	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[3]} ||'%'
+	     		   OR ADDRESS_DEFAULT IN LIKE '%' || #{area[4]} ||'%'
+	     	</when>
+		</choose>
+	</select>
+	
+	
+	
+	<select id="filterListForMap" parameterType="hashmap" resultMap="spaceResultSet">
+		SELECT SPACE_NO, 
+			   SPACE_TITLE, 
+		       HOUR_PRICE, 
+			   HASHTAG, 
+			   LATITUDE, 
+			   LONGITUDE, 
+			   ATTACHMENT_RENAME
+          FROM SPACE
+     LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+         WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
+           AND STYPE_NO IN (<foreach collection="category" item="category" index="i" separator=",">
+					           	#{category[i]}
+							</foreach>)
+		   AND (<foreach collection="area" item="area" index="i" separator="OR">
+		   			ADDRESS_DEFAULT LIKE '%' || #{area[0]} || '%'
+		   		</foreach>)
+	</select>
+	
 	<!-- 하연 -->
-	 <select id="selectSpaceDetail" parameterType="_int" resultMap="spaceResultSet">
+	<select id="selectSpaceDetail" parameterType="_int" resultMap="spaceResultSet">
 		SELECT *
 		FROM SPACE
 		WHERE SPACE_NO = #{spaceNo}
-	 </select>
+	</select>
 	 
-	 <select id="selectSpaceDetailAttachment" parameterType="_int" resultMap="spaceAttachmentResultSet">
+	<select id="selectSpaceDetailAttachment" parameterType="_int" resultMap="spaceAttachmentResultSet">
 		SELECT *
 		FROM SPACE_ATTACHMENT
 		WHERE SPACE_NO = #{spaceNo}
-	 </select>
+	</select>
 	 
-	 <insert  id="insertSpaceReport" parameterType="space">
-			INSERT INTO REPORT
-				VALUES(SEQ_RPNO.NEXTVAL
-				     , #{addressDefault}
-				     , #{addressDetail}
-				     , SYSDATE
-				     , 'N'
-				     , null
-				     , null
-				     , #{maxPeople}
-				     , #{hostNo})
-		</insert>
+	<insert  id="insertSpaceReport" parameterType="space">
+		INSERT INTO REPORT
+			VALUES(SEQ_RPNO.NEXTVAL
+			     , #{addressDefault}
+			     , #{addressDetail}
+			     , SYSDATE
+			     , 'N'
+			     , null
+			     , null
+			     , #{maxPeople}
+			     , #{hostNo})
+	</insert>
 		
 		<!-- 하연 끝  -->
 	 

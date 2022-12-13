@@ -32,52 +32,58 @@
 						</div>
 					</div>
 
-					<form action="" method="get" id="mapFilter" style="display:none;">
+					<div id="mapFilter" style="display:none;">
 						<div id="mapFilter_option_date">
 							<div class="mapFilter_option_title">날짜</div>
 							<div>
-								<input type="date" class="mapFilter_options">
+								<input type="date" class="mapFilter_options" name="date">
 							</div>
 						</div>
 						<div>
 							<div class="mapFilter_option_title">지역</div>
 							<div>
-								<select class="mapFilter_options">
-									<option>강서양천구로영등포</option>
-									<option>금천동작관악서초</option>
-									<option>강남송파광진강동</option>
-									<option>은평마포서대문종로</option>
-									<option>성북강북도봉노원중랑</option>
-									<option>용산중구성동동대문</option>
+								<select class="mapFilter_options" id="mapFilter_area"name="area">
+									<option value="서울">서울 전체</option>
+									<option>강서구,양천구,구로구,영등포구</option>
+									<option>금천구,동작구,관악구,서초구</option>
+									<option>강남구,송파구,광진구,강동구</option>
+									<option>은평구,마포구,서대문구,종로구</option>
+									<option>성북구,강북구,도봉구,노원구,중랑구</option>
+									<option>용산구,중구,성동구,동대문구</option>
 								</select>
 							</div>
 						</div>
+						
 						<div id="mapFilter_option_category">
 							<div class="mapFilter_option_title">시설</div>
 							<div id="mapFilter_category_list" class="mapFilter_options">
-								<input type="checkbox" value="partyRoom">파티룸 <input
-									type="checkbox" value="cafe">카페 <input type="checkbox"
-									value="office">공유오피스 <input type="checkbox"
-									value="hall">공연장 <input type="checkbox" value="studio">연습실<br>
-								<input type="checkbox" value="kitchen">공유주방 <input
-									type="checkbox" value="gallery">갤러리 <input
-									type="checkbox" value="sports">운동시설 <input
-									type="checkbox" value="studyRoom">스터디룸 <input
-									type="checkbox" value="conferenceRoom">회의실
+								<input type="checkbox" name="category" value="1">파티룸 
+								<input type="checkbox" name="category" value="2">카페 
+								<input type="checkbox" name="category" value="3">공연장
+								<input type="checkbox" name="category" value="4">연습실
+								<input type="checkbox" name="category" value="5">공유주방<br>
+								<input type="checkbox" name="category" value="6">갤러리 
+								<input type="checkbox" name="category" value="7">운동시설 
+								<input type="checkbox" name="category" value="8">스터디룸
+								<input type="checkbox" name="category" value="9">회의실 
+								<input type="checkbox" name="category" value="10">촬영스튜디오
 							</div>
 						</div>
 						<div id="mapFilter_option_price">
 							<div class="mapFilter_option_title">가격</div>
 							<div id="mapFilter_priceRange" class="mapFilter_options">
-								최소 <input type="text" id="min_price">원 &nbsp;~&nbsp; 최대
-								<input type="text" id="max_price">원
+								최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="">원 &nbsp;~&nbsp; 최대
+								<input type="text" id="max_price" name="max_price" value="9999999" placeholder="">원
 							</div>
 						</div>
 						<div id="mapFilter_btns">
 							<button type="reset" class="mapFilter_btn">초기화</button>
-							<button type="submit" class="mapFilter_btn">검색</button>
+							<button class="mapFilter_btn" onclick="filterMap()">검색</button>
 						</div>
-					</form>
+					</div>
+					
+					<script>
+					</script>
 					
 					<!-- 사진형 리스트 -->
 					<div id="picList">
@@ -154,19 +160,11 @@
 					}
 					
 					picList.onclick = (e) => {
-/* 						var a = e.target.closest("#");
+						var a = e.target.closest("#");
 						var aValue = a.value;
-						
 						console.log(a);
 						console.log(aValue);
-						console.log(a.value); */
-						
-						// 임시로 걍 해놈 
-						var sno=$(".picList_content").children().val();
-						// console.log(classVal);
-						
-						location.href = "detail.sp?sno=" + sno;
-						
+						console.log(a.value);
 					}
 					
 					lineList.onclick = (e) => {
@@ -176,8 +174,6 @@
 						console.log(aValue);
 						console.log(a.value);
 					}
-					
-					
 					
 					
 				</script>
