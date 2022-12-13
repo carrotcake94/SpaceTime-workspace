@@ -182,7 +182,6 @@
       }
       .rtitle {
         font-size: 12px;
-
         color: rgb(54, 54, 54);
       }
       .rtitle > span {
@@ -283,8 +282,6 @@
         background-color: rgb(39, 123, 192);
         color: white;
       }
-
-
 
 	  .upd-btn, .del-btn {
 	  	float: right;
