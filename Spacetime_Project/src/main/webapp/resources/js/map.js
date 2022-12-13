@@ -1,15 +1,3 @@
-var position, marker;
-
-function loadMap(){
-	HOME_PATH = window.HOME_PATH || '.';
-
-    //최초로 가리키는 곳 (학원)
-    map = new naver.maps.Map('map', {
-        center: new naver.maps.LatLng(37.539861, 126.990815),
-        zoom: 12
-    });
-};
-
 //지도의 정보를 불러와 마커를 추가하는 메소드
 function selectList(map) {
 	$.ajax({
@@ -29,51 +17,6 @@ function selectList(map) {
 		}
 	});
 };
-
-function filterMap() {
-	//지역
-	var area = document.querySelector("#mapFilter_area");
-	var selectedArea = area.options[area.selectedIndex].value;
-	var areaArr = selectedArea.split(',');
-	
-	//카테고리
-	var category = document.querySelectorAll("input[type=checkbox]");
-	var checkedCategory = [];
-	
-	console.log(checkedCategory);
-	
-	for(var i in category){
-		if(category[i].checked == true){
-			checkedCategory.push(category[i].value);
-		}
-	}
-	
-	if(checkedCategory.length == 0){
-		for(var i = 0; i < 10; i++){
-		checkedCategory.push(i);
-		}
-	}
-	
-	console.log(checkedCategory);
-	
-	$.ajax({
-		url: "mapFilter.mp",
-		type: "get",
-		async: false,
-		data : {
-			area : areaArr,
-			category : checkedCategory,
-			min_price : document.querySelector("#min_price").value,
-			max_price : document.querySelector("#max_price").value
-		},
-		success : (listArr) => {
-			console.log(listArr);
-		},
-		error : () => {
-		}
-	});
-}
-
 
 function loadList(spaceListArr){
 	//기존의 리스트 삭제
@@ -153,6 +96,9 @@ function updateMarkers() {
 	}
 };
 
+
+
+
 function filterOpenClose() {
     if(filter.style.display =="none"){
         filter.style.display="block";
@@ -175,6 +121,46 @@ function toLineList() {
 
 function toSpaceDetail() {
 	location.href = "toSpaceDetail?snum=" + snum;
+}
+
+function filterMap() {
+	//지역
+	var area = document.querySelector("#mapFilter_area");
+	var selectedArea = area.options[area.selectedIndex].value;
+	var areaArr = selectedArea.split(',');
+	
+	//카테고리
+	var category = document.querySelectorAll("input[type=checkbox]");
+	var checkedCategory = [];
+	for(var i in category){
+		if(category[i].checked == true){
+			checkedCategory.push(category[i].value);
+		}
+	}
+	
+	if(checkedCategory.length == 0){
+		for(var i = 0; i < 10; i++){
+		checkedCategory.push(i);
+		}
+	}
+	
+	$.ajax({
+		url: "mapFilter.mp",
+		type: "get",
+		async: false,
+		data : {
+			area : areaArr,
+			category : checkedCategory,
+			min_price : document.querySelector("#min_price").value,
+			max_price : document.querySelector("#max_price").value
+		},
+		success : (listArr) => {
+			spaceListArr = listArr;
+			console.log(spaceListArr);
+		},
+		error : () => {
+		}
+	});
 }
 
 function movePage(cno) {

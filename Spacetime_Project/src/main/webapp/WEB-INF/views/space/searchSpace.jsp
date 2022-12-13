@@ -26,7 +26,7 @@
 							class="listOption_listStyle listOption_options">
 							<img src="resources/images/space/picStyle.png">
 						</div>
-						<div id="test">click</div>
+						<div id="changeMap">click</div>
 						<div id="listOption_filter" class="listOption_options">
 							<img src="resources/images/space/filter.png">
 						</div>
@@ -78,7 +78,7 @@
 						</div>
 						<div id="mapFilter_btns">
 							<button type="reset" class="mapFilter_btn">초기화</button>
-							<button class="mapFilter_btn" onclick="filterMap()">검색</button>
+							<button class="mapFilter_btn" id="mapFilter_search">검색</button>
 						</div>
 					</div>
 					
@@ -111,71 +111,66 @@
 				</div>
 				
 				<script>
+					//불러온 데이터를 담아두기 위한 전역변수
 					var spaceListArr = [];
 					var markers = [];
-					var map, HOME_PATH;
-					
+					var marker;
+					var mapOptions = {
+						center: new naver.maps.LatLng(37.539861, 126.990815),
+				        zoom: 12	
+					};
+					var map = new naver.maps.Map('map', mapOptions);
+					var HOME_PATH = window.HOME_PATH || '.';
+
+					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
-						loadMap(map, HOME_PATH);
 						selectList(map);
 						loadList(spaceListArr);
 						insertMarkers();
  					};
- 					
- 					//필터 Open-Close를 위한 전역변수
-					var filterBtn = document.querySelector("#listOption_filter");
-					var filter = document.querySelector("#mapFilter");
- 					
-					//게시판 형태 변환을 위한 전역변수(버튼)
-					var lineListBtn = document.querySelector("#listOption_lineList");
-					var picListBtn = document.querySelector("#listOption_picList");
-					
-					//불러온 데이터를 담아두기 위한 전역변수 (게시판형-사진형 전환에 필요)
-					var picList = document.querySelector("#picList");
-					var lineList = document.querySelector("#lineList");
-					var picContent = picList.innerHTML;
 					
 					
-					var test = document.querySelector("#test");
-					test.onclick = () => {
+					//지도 이동 후 해당 범위의 장소 재검색
+					var changeMap = document.querySelector("#changeMap");
+					changeMap.onclick = () => {
 						selectList(map);
 						loadList(spaceListArr);
 						updateMarkers();
-					}
+					};
+					 
 					
-					//O
+					//게시판 형태 변환 (게시판형-사진형)
+					var picList = document.querySelector("#picList");
+					var lineList = document.querySelector("#lineList");
+					var picListBtn = document.querySelector("#listOption_picList");
+					var lineListBtn = document.querySelector("#listOption_lineList");
 					picListBtn.onclick = () => {
 						toPicList();
-					}
-					
-					//O
+					};			
 					lineListBtn.onclick = () => {
 						toLineList();
-					}
+					};
 					
-					//O
+					//필터
+					var filterBtn = document.querySelector("#listOption_filter");
+					var filter = document.querySelector("#mapFilter");
+					var filterSearch = document.querySelector("#mapFilter_search");
 					filterBtn.onclick = () => {
-						console.log(filter);
 						filterOpenClose();
-					}
-					
-					picList.onclick = (e) => {
-						var a = e.target.closest("#");
-						var aValue = a.value;
-						console.log(a);
-						console.log(aValue);
-						console.log(a.value);
-					}
-					
-					lineList.onclick = (e) => {
-						var a = e.target.closest(".picList_content");
-						var aValue = a.value;
-						console.log(a);
-						console.log(aValue);
-						console.log(a.value);
-					}
-					
-					
+					};
+					filterSearch.onclick = () => {
+						filterMap();
+						loadList(spaceListArr);
+						updateMarkers();
+					};
+					/* 
+					naver.maps.Event.addListener(markers, "click", (e) => {
+						console.log(e.target);
+					});
+					 */
+					picList.onmouseover = (e) => {
+						//console.log(e.target);
+					};
 				</script>
 			</div>
 		</div>
