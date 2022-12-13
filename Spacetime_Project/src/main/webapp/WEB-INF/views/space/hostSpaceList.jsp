@@ -382,7 +382,7 @@
 </head>
 <body>
 	<div class="wrap">		
-	<jsp:include page="../common/header.jsp" />
+	<jsp:include page="../common/hostHeader.jsp" />
 	<div class="main">
 	<div id="spaceList_Host">
       <div class="sheader">

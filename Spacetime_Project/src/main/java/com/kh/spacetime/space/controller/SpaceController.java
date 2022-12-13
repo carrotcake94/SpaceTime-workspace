@@ -243,11 +243,9 @@ public class SpaceController {
 	 */
 	@RequestMapping("spaceUpdateForm.sp")
 	public String spaceUpdateForm(int spaceNo, Model model) {
-		System.out.println(spaceNo);
 		Space s = spaceService.selectSpace(spaceNo);
 		ArrayList<SpaceType> stypeList = spaceService.selectSpaceTypeList();
 		ArrayList<SpaceAttachment> aList = spaceService.selectSpaceAttachmentList(spaceNo);
-		System.out.println(aList);
 
 		model.addAttribute("stypeList", stypeList);
 		model.addAttribute("s", s);

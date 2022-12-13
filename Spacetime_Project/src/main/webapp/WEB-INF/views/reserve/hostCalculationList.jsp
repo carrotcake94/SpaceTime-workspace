@@ -329,7 +329,7 @@
 </head>
 <body>
 <div class="wrap">		
-	<jsp:include page="../common/header.jsp" />
+	<jsp:include page="../common/hostHeader.jsp" />
 <div class="main">
    <div id="CalList_Host">
     <div>정산 내역 리스트</div>

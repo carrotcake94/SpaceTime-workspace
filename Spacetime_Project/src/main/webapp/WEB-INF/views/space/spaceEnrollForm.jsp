@@ -417,7 +417,7 @@
 </head>
 <body>
 	<div class="wrap">		
-	<jsp:include page="../common/header.jsp" />
+	<jsp:include page="../common/hostHeader.jsp" />
 	<div class="main">
     <form id="spInsertForm" method="post" action="insert.sp" enctype="multipart/form-data">
 	    <input type="hidden" name="hostNo" value="${loginMember.memNo }">

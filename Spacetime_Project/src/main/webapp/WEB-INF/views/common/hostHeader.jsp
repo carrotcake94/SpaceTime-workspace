@@ -200,9 +200,8 @@
         }
 
         #profile_dv {
-
+			background-color: rgb(39, 123, 192);
             overflow: hidden;
-            background-color: #FFB200;
             position: relative;
         }
 
@@ -213,7 +212,7 @@
             right: 20px;
             top: 20px;
             cursor: pointer;
-            color: rgb(96, 155, 204);
+            color:  #FFB200;
         }
 
         #profile_tb {
@@ -263,56 +262,34 @@
 
         #my_menubtn {
             height: 150px;
-            background-color: rgb(96, 155, 204);
-            text-align: center;
-            font-size: 40px;
+            background-color: #FFFFD0;
             margin: auto;
             overflow: hidden;
         }
 
         #my_menubtn_tb {
             width: 100%;
-            margin: 30px auto;
-            color: white;
-        }
-
-        #my_menubtn_tb i {
-            font-size: 60px;
+            height: 100%;
         }
 
         #my_menubtn_tb td {
+        	 width: 50%;
+            height: 50%;
             padding: 0;
+             text-align: center;
+             font-size: 18px;
+            font-weight: 600;
+            color: #222222;
+            cursor:pointer;
+        }
+        
+
+        #my_menubtn_tb td:hover {
+            background-color: #FFF9B0;
+             font-size: 20px;
         }
 
-        #my_menubtn_tb tr:nth-child(1)>td {
-            text-align: center;
-        }
-
-        #my_menubtn_tb tr:nth-child(1)>td>a {
-            text-decoration: none;
-            color: white;
-
-        }
-
-        #my_menubtn_tb tr:nth-child(1)>td>a:hover {
-            text-decoration: underline;
-        }
-
-        #my_menubtn_tb tr:nth-child(2)>td {
-            font-size: 15px;
-            font-weight: 500;
-            padding-bottom: 10px;
-        }
-
-        #my_menubtn_tb tr:nth-child(2)>td>a {
-            text-decoration: none;
-            color: white;
-
-        }
-
-        #my_menubtn_tb tr:nth-child(2)>td>a:hover {
-            text-decoration: underline;
-        }
+       /*---------- */
 
         .com_infobox>ul:nth-child(1) {
             border-bottom: 3px solid;
@@ -320,6 +297,7 @@
 
         .com_infobox>ul {
             padding: 20px 0;
+            margin-bottom: 0;
         }
 
         .com_infobox>ul>li {
@@ -336,18 +314,10 @@
         .com_infobox ul a {
             color: black;
         }
-
-        .com_infobox>ul:nth-child(2) li {
-            font-size: 10px;
-        }
-
-        .com_infobox>ul:nth-child(2) li:last-child {
-            border-bottom: 1px solid #EDEDED;
-        }
-  
-        .com_infobox ul li:last-child {
+        .com_infobox>ul>li:last-child {
             border: 0;
         }
+ 
         .service-info-ul {
         	padding-left: 10px;
         	display: none;
@@ -361,9 +331,24 @@
             line-height: 45px;
             text-transform: uppercase;
         }
+        .com_infobox>ul:nth-child(2) {
+        	padding: 0;
+        }
+    	 .com_infobox>ul:nth-child(2) li {
+            border-bottom: 1px solid #EDEDED;
+            font-size: 17px;
+            font-weight: bold;
+            padding:15px 0;
+            text-align: center;
+        }
+        .com_infobox>ul:nth-child(2) li:hover {
+        	background-color: #EEEEEE;
+        	cursor: pointer;
+        	font-size: 18px;
+        }
 
         .sign-up {
-            background: rgb(39, 123, 192);
+            background-color: #FFB200;
             color: #FFF;
             font-family: 'Abel', sans-serif;
             font-size: 16px;
@@ -377,9 +362,9 @@
             position: absolute;
             bottom: 0;
         }
-
+	
         .sign-up:hover {
-            background: #FFB200;
+            background: rgb(39, 123, 192);
         }
 
         .sign-up a {
@@ -392,11 +377,11 @@
 
         .sign-up>a {
             text-decoration: none;
-            color: white;
+            color: black;
         }
 
         .sign-up>a:hover {
-            color: black;
+              color: white;
         }
         /* -------------------- */
         
@@ -572,14 +557,12 @@
         <div id="my_menubtn">
             <table id="my_menubtn_tb">
                 <tr>
-                    <td><a href=""><i class="fa-solid fa-person-walking-luggage"></i></a></td>
-                    <td><a href="list.re"><i class="fa-solid fa-user-pen"></i></a></td>
-                    <td><a href="bookmark.sp"><i class="fa-solid fa-heart"></i></a></td>
+                    <td onclick="location.href='revHostList.re'">예약관리</td>
+                    <td onclick="location.href='hostRevList.sp'">후기관리</td>
                 </tr>
-                <tr style="font-size: 15px;">
-                    <td><a href="myReserve.re">예약내역</a></td>
-                    <td><a href="list.re">리뷰내역</a></td>
-                    <td><a href="bookmark.sp">찜한내역</a></td>
+                <tr>
+                    <td onclick="location.href='hostSpaceList.sp'">공간관리</td>
+                    <td onclick="location.href='hostCalList.re'">정산관리</td>
                 </tr>
             </table>
         </div>
@@ -599,11 +582,11 @@
                 </li>
             </ul>
             <ul>
-                <li><a href="logout.me">로그아웃</a></li>
+                <li onclick="location.href='logout.me'">로그아웃</li>
             </ul>
         </div>
         <div class="sign-up">
-            <a href="#">호스트신청하기<span class="ion-arrow-right-c"></span></a>
+            <a href="/spacetime">게스트 페이지로<span class="ion-arrow-right-c"></span></a>
         </div>
     </div>
 	<script>
@@ -639,22 +622,8 @@
                 $(".service-info-ul").slideUp(500);
             }
         }
-        
      </script>
-     <c:choose>
-	     <c:when test="${loginMember.hostStatus eq 'Y'}">
-	     	<script>
-	     		$(".sign-up>a").text("호스트 페이지로");
-	     		$(".sign-up>a").attr("href","hostCalList.re");
-	     	</script>
-		 </c:when>
-		 <c:otherwise>
- 	     	<script>
-	     		$(".sign-up>a").text("호스트 신청하기");
-// 	     		$(".sign-up>a").attr("href",""); // 호스트 신청하기 연결로 바꿔야함
-	     	</script>
-		 </c:otherwise>
-     </c:choose>
+
 
 <c:if test="${!empty loginMember}">
 <script>	
