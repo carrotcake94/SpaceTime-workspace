@@ -245,4 +245,23 @@ public class CommonController {
 		// /WEB-INF/views/board/boardListView.jsp
 		return "common/mypageReport";
 	}
+//	@RequestMapping(value="",)
+//	public String modelPopUp(SearchDTD=O searchDTO,Model model) {
+//		
+//		model.addAttribute("searchData",xxxService.getSearchData())
+//		
+//	}
+//	@RequestMapping("reportdetail.co")
+//
+//	public ModelAndView selectReport(int rde, ModelAndView mv,HttpSession session) {
+//
+//		Review r = commonService.selectMypageReport(rde);
+//		
+//		mv.addObject("r", r).setViewName("space/mypageReviewDetail");
+//
+//		return mv;
+//
+//		
+//	}
+
 }
