@@ -87,23 +87,11 @@
 					
 					<!-- 사진형 리스트 -->
 					<div id="picList">
-						<div class='picList_content'>
-						   <div class='picList_content_pic'>이미지</div>
-						   <div class='picList_content_spaceName'>상호명</div>
-						   <div class='picList_content_price click_disable'>원 / 시간</div>
-					   </div>
+						
 					</div>
 					<!-- 게시판형 리스트 -->
 					<div id="lineList" style="display: none;">
-						<div class='lineList_content'>
-						    <div class='lineList_content_spaceTitle'>상호명</div>
-						    <div class='lineList_content_hashtag'></div>
-						    <div class='lineList_content_extraInfo'>
-							    <div class='lineList_content_price'>원 / 시간</div>
-							    <div class='lineList_content_reviewCount'>리뷰갯수</div>
-							    <div class='lineList_content_like'></div>
-						    </div>
-					    </div>
+						
 					</div>
 				</div>
 				<!-- 지도 -->

@@ -25,7 +25,7 @@
 					<div id="prevBtn" class="categoryBtn"><img src="resources/images/main/leftPointer.png"></div>
 					<div id="main_category_bundle">
 						<div class="slider">
-							<div id="category_partyRoom" class="main_category" onclick="movePage(1)">
+							<div id="category_partyRoom" class="main_category"><!--onclick="movePage(1)"-->
 								<img src="#">
 								<div>파티룸</div>
 							</div>

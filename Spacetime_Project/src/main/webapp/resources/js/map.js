@@ -36,13 +36,13 @@ function loadList(spaceListArr){
 		lineContent = document.createElement("div");
 		
 		//리스트를 위한 내용물 생성
-		picContent.innerHTML = "<div class='picList_content' onclick='movePage(" + spaceListArr[i].spaceNo + ")'>" +
+		picContent.innerHTML = "<div class='picList_content' onclick='toSpaceDetail(" + spaceListArr[i].spaceNo + ")'>" +
 								   "<div class='picList_content_pic'>이미지</div>" +
 								   "<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
 								   "<div class='picList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
 							   "</div>";
 		
-		lineContent.innerHTML = "<div class='lineList_content' onclick='movePage(" + spaceListArr[i].spaceNo + ")'>" +
+		lineContent.innerHTML = "<div class='lineList_content' onclick='toSpaceDetail(" + spaceListArr[i].spaceNo + ")'>" +
 								    "<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
 								    "<div class='lineList_content_hashTag click_disable'>" + spaceListArr[i].hashtag + "</div>" +
 								    "<div class='lineList_content_extraInfo'>" +
@@ -119,9 +119,6 @@ function toLineList() {
 	picList.style.display = "none";
 }
 
-function toSpaceDetail() {
-	location.href = "toSpaceDetail?snum=" + snum;
-}
 
 function filterMap() {
 	//지역
@@ -163,6 +160,6 @@ function filterMap() {
 	});
 }
 
-function movePage(cno) {
-	location.href =  "detail.sp?sno=" + cno;
+function toSpaceDetail(sno) {
+	location.href = "detail.sp?sno=" + sno;
 }
