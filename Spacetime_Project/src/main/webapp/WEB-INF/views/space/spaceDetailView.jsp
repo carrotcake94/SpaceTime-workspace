@@ -267,7 +267,7 @@
                     <td  style="padding-right: 100px;" align="center">
                         <!-- 공간이미지, 제목 등 -->
                         <div class="space">
-                            <img class="space_img" src="resources/images/space/space/test.jpeg" alt="사진 없음" />
+                            <img class="space_img" src="${ sa.attachmentReName }" alt="사진 없음" />
                                 <div class="img_btn_area">
                                     <button type="button" class="button_img button_img_prev">
                                     <i class="fa fa-angle-left" aria-hidden="true"></i>
