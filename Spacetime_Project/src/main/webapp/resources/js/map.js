@@ -164,5 +164,5 @@ function filterMap() {
 }
 
 function movePage(cno) {
-	location.href = "link" + cno;
+	location.href =  "detail.sp?sno=" + cno;
 }
