@@ -617,13 +617,13 @@
 				</div>
 				
 				<!-- Modal body -->
-				<form action="" method="post">
+				<form action="hostRequest" method="post">
 					<div class="modal-body">
 						<table>
 							<tr>
 								<th style="width:30%;">은행명</th>
 								<td>
-									<select name="" class="bank form-control mb-2">
+									<select name="bankName" class="bank form-control mb-2">
 										<option value="" selected>은행명</option>
 										<option value="">KB국민은행</option>
 										<option value="">신한은행</option>
@@ -647,19 +647,19 @@
 							</tr>
 							<tr>
 								<th>계좌번호</th>
-								<td><input type="text" class="form-control mb-2" placeholder="계좌번호 입력(- 제외)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /></td>
+								<td><input type="text" name="accountNum" class="form-control mb-2" placeholder="계좌번호 입력(- 제외)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /></td>
 							</tr>
 							<tr>
 								<th>예금주명</th>
-								<td><input type="text" class="form-control mb-2" id="test2" placeholder="실명(예금주명)만 입력" onkeyup="chk_han('test2')"></td>
+								<td><input type="text" name="memName" class="form-control mb-2" id="test2" placeholder="실명(예금주명)만 입력" onkeyup="chk_han('test2')"></td>
 							</tr>
 						</table>
 					</div>
 					
 					<!-- Modal footer -->
 					<div class="modal-footer" >
-						<button type="submit" class="btn btn btn-primary" data-dismiss="" >신청</button> 
-						<button type="button" class="btn btn btn-secondary">취소</button> 
+						<button type="submit" class="btn btn btn-primary" onClick="hostCalList.re" >신청</button> 
+						<!-- <button type="submit" class="btn btn btn-secondary">취소</button>  --> 
 						<!-- 신청이 잘 되면 alert 창 띄우기! -->
 					</div>
 				</form>
