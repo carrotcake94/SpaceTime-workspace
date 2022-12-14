@@ -32,7 +32,7 @@ public class ReviewController {
 	private ReviewService reviewService;
 
 	// 마이페이지 리뷰 리스트
-	// 페이징바
+// 페이징바
 	@RequestMapping("list.re")
 	public String selectList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, HttpSession session,
 			Model model) {

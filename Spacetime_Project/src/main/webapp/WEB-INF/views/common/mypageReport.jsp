@@ -85,7 +85,7 @@
 					</thead>
 					<tbody id="content1">
 						<c:forEach var="r" items="${ list }">
-							<tr data-toggle="modal" data-target="#reportDetail">
+							<tr onclick="reportmodalopen(this)">
 								<td>${r.reportType}</td>
 								<td>${r.reportDate}</td>
 								<td>
@@ -100,8 +100,10 @@
                                                 반려
                                             </c:when>
                                         </c:choose>
-                                    </td>
+                                </td>
 								<input type="hidden" value="${r.reportMemNo}">
+								<input type="hidden" value="${r.reportContent}">
+								<input type="hidden" value="${r.reportAnswer}">
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -145,7 +147,7 @@
 						<table id="report_detail"> 
 							<tr>
 								<th style="width: 150px;">신고일</th>
-								<td style="width: 500px;" id="reportContent">2022-10-10</td>
+								<td style="width: 500px;" id="reportDate">2022-10-10</td>
 							</tr> 
 							<tr>
 								<th>신고유형</th> 
@@ -176,36 +178,26 @@
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-primary" data-dismiss="modal">확인</button>
 				</div>
-				<script>
-					$(function(){
-						$("#content1").click(function(){
-							
-							$.ajax({
-								
-								url : "reportdetail.co",
-								data : {
-									reportNo : $("#reportNo").val(),
-									reportType : $("#reportType").val(),
-									reportContent : $("#reportContent").val(),
-									reportDate : $("#reportDate").val(),
-									reportStatus : $("#reportStatus").val(),
-									reportAnswer : $("#reportAnswer").val(),
-								},
-								success : function(data){
-									console.log(data);
-								},
-								error : function(error) {
-                                    console.log("아이디 중복 체크용 ajax 통신 실패!");
-                                }
-							});
-							
-						});
-					})
-				</script>
 			</div>
 		</div>
 	</div>
+	<script>
+	function reportmodalopen(tr){
+		var rtype = $(tr).children("td").eq(0).text();
+		var rdate = $(tr).children("td").eq(1).text();
+		var rstatus = $(tr).children("td").eq(2).text();
+		var rcontent = $(tr).children("input").eq(1).val();
+		var ranswer = $(tr).children("input").eq(2).val();
+		
+		$("#reportType").text(rtype);
+		$("#reportDate").text(rdate);
+		$("#reportContent").text(rcontent);
+		$("#reportStatus").text(rstatus);
+		$("#reportAnswer").text(ranswer);
+		$("#reportDetail").modal("show");
+	}
 	
+	</script>
 </body>
 	
 

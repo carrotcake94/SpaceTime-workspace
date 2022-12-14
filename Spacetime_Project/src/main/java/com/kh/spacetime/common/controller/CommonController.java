@@ -22,6 +22,7 @@ import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Review;
 
 @Controller
 public class CommonController {
@@ -284,6 +285,8 @@ public class CommonController {
 	/**
 	 * 마이페이지 신고리스트 - 신희섭 
 	 */
+	
+	//마이페이지 신고리스트 
 	@RequestMapping("report.co")
 	public String selectmypagereport(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model,HttpSession session) {
 		
@@ -307,16 +310,7 @@ public class CommonController {
 		// /WEB-INF/views/board/boardListView.jsp
 		return "common/mypageReport";
 	}
-	// ajax
-	@RequestMapping(value="reportdetail.co")
-	@ResponseBody
-	public String mypagereportdetail(Report report) {
-		System.out.println(report);
-		
-		
-		return "";
-		
-		
-	}
+	
+	
 
 }
