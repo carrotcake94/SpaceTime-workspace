@@ -572,7 +572,7 @@
         <div id="my_menubtn">
             <table id="my_menubtn_tb">
                 <tr>
-                    <td><a href="myReserve.re"><i class="fa-solid fa-person-walking-luggage"></i></a></td>
+                    <td><a href=""><i class="fa-solid fa-person-walking-luggage"></i></a></td>
                     <td><a href="list.re"><i class="fa-solid fa-user-pen"></i></a></td>
                     <td><a href="bookmark.sp"><i class="fa-solid fa-heart"></i></a></td>
                 </tr>
@@ -603,10 +603,77 @@
             </ul>
         </div>
         <div class="sign-up">
-            <a href="#">호스트신청하기<span class="ion-arrow-right-c"></span></a>
+            <a>호스트신청하기<span class="ion-arrow-right-c"></span></a>
         </div>
     </div>
+    <!-- 정산계좌정보 입력 모달창 -->
+	<div class="modal fade" id="hostRequest">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+			
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">호스트 신청 - 정산계좌 등록</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				
+				<!-- Modal body -->
+				<form action="" method="post">
+					<div class="modal-body">
+						<table>
+							<tr>
+								<th style="width:30%;">은행명</th>
+								<td>
+									<select name="" class="bank form-control mb-2">
+										<option value="" selected>은행명</option>
+										<option value="">KB국민은행</option>
+										<option value="">신한은행</option>
+										<option value="">IBK기업은행</option>
+										<option value="">우리은행</option>
+										<option value="">KEB하나은행</option>
+										<option value="">SC제일은행</option>
+										<option value="">NH농협</option>
+										<option value="">새마을금고</option>
+										<option value="">씨티은행</option>
+										<option value="">한국산업은행</option>
+										<option value="">케이뱅크</option>
+										<option value="">카카오뱅크</option>
+										<option value="">우체국</option>
+										<option value="">수협은행</option>
+										<option value="">KDB산업은행</option>
+										<option value="">광주은행</option>
+										<option value="">부산은행</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th>계좌번호</th>
+								<td><input type="text" class="form-control mb-2" placeholder="계좌번호 입력(- 제외)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /></td>
+							</tr>
+							<tr>
+								<th>예금주명</th>
+								<td><input type="text" class="form-control mb-2" id="test2" placeholder="실명(예금주명)만 입력" onkeyup="chk_han('test2')"></td>
+							</tr>
+						</table>
+					</div>
+					
+					<!-- Modal footer -->
+					<div class="modal-footer" >
+						<button type="submit" class="btn btn btn-primary" data-dismiss="" >신청</button> 
+						<button type="button" class="btn btn btn-secondary">취소</button> 
+						<!-- 신청이 잘 되면 alert 창 띄우기! -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+         
 	<script>
+	//정산 모달 오픈
+		function openBankModal() {
+			$("#hostRequest").modal("show");	
+		}
+
         $(function () {
           $("#logo").click(function() {    			
      			location.href = "/spacetime";
@@ -629,6 +696,15 @@
             $("#overlay").removeClass("slideon");
           });
         });
+    	
+        function chk_han(test2) {
+			var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+			var value = $("#"+test2).val();
+			if (regexp.test(value)) {
+				$("#"+test2).val(value.replace(regexp,''));
+				alert ("한글만 입력이 가능합니다.");
+			}
+		}
         
         openServieInfo = () => {
         	if($(".service-info-ul").css("display") == "none") { 
@@ -651,7 +727,7 @@
 		 <c:otherwise>
  	     	<script>
 	     		$(".sign-up>a").text("호스트 신청하기");
-// 	     		$(".sign-up>a").attr("href",""); // 호스트 신청하기 연결로 바꿔야함
+	     		$(".sign-up>a").attr("onclick","openBankModal()"); 
 	     	</script>
 		 </c:otherwise>
      </c:choose>
@@ -725,6 +801,5 @@
 </script>
 </c:if>
 <div id="socketAlarmArea"></div>
-</body>
 </body>
 </html>
