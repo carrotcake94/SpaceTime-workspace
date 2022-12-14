@@ -454,6 +454,14 @@ public class SpaceController {
 	
 	}
 	
+	@RequestMapping("chat.sp")
+	public String chat() {
+		
+		return "space/chat";
+	}
+	
+	
+	
 	/**
 	 * 관리자 공간관리 리스트 페이지로 포워딩 - 혜민 
 	 * @return

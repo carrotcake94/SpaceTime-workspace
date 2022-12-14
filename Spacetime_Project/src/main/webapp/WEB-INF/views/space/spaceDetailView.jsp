@@ -256,7 +256,17 @@
         <div id="content">
             <div class="sheader" style="padding-top: 100px;">
                 ${ s.spaceTitle }
+                <button class="chatBtn">채팅임시버튼</button>
             </div>
+            
+            <script>
+           		/* 채팅버튼  */
+             	$(function() {
+             		$(".chatBtn").click(function() {
+             			location.href = "chat.sp"; 
+             		});
+             	});
+           	</script>
 
             <div class="sub_title">
                 ${ s.spaceSubTitle }
