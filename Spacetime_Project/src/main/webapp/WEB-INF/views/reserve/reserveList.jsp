@@ -371,7 +371,7 @@
             width: 100%;
         }
 
-        #reviewEnrollModa .file-input {
+        #reviewEnrollModal .file-input {
             display: block;
             margin-bottom: 10px;
             width: 35%;
@@ -421,10 +421,9 @@
 
         #starArea span {
             display: inline-block;
-            width: 13.93px;
-            height: 30px;
+            width: 17.875px;
+            height: 32px;
             cursor: pointer;
-            box-sizing: border-box;
         }
 
         /* -------------------------------------- */
@@ -701,6 +700,7 @@
                     <form id="reviewForm" action="insert.re">
                         <input type="hidden" name="reserveNo" value="">
                         <input type="hidden" name="rating" value="">
+                        <input type="hidden" name="memNo" value="${loginMember.memNo}">
                         <div style="overflow: hidden;">
                             <div class="rev1">
                                 <div class="rtitle">공간명</div>
@@ -711,8 +711,7 @@
                                 <div id="starArea">
                                     <div id="realStarArea"><i class="fa fa-star-o" aria-hidden="true"></i><i
                                             class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o"
-                                            aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i
-                                            class="fa fa-star-o" aria-hidden="true"></i>
+                                            aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
                                     </div>
                                     <div>
                                         <span class="s1"></span><span class="s2"></span><span class="s3"></span><span
@@ -741,14 +740,7 @@
     </div>
       
       <script>
-      	/* 리뷰작성하기  */
-  		openRevEnrollModal = btn => {
-  			var stitle = $(btn).parent().prev().children(".stitle").text();
-  			var reserveNo = $(btn).parent().prev().children("input").val();
-  			$("#reviewEnrollModal input[name=reserveNo]").val(reserveNo);
-  			$("#reviewEnrollModal #sptitle").text(stitle);
-  			$("#reviewEnrollModal").modal("show");
-  		}  	
+      	  	
   		/* 신고버튼  */
 /* 	  	$(function() {
 	  		$(".reportBtn").click(function() {
@@ -763,7 +755,37 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
-
+	<script>
+		/* 리뷰작성하기  */
+		openRevEnrollModal = btn => {
+			var stitle = $(btn).parent().prev().children(".stitle").text();
+			var reserveNo = $(btn).parent().prev().children("input").val();
+			$("#reviewEnrollModal input[name=reserveNo]").val(reserveNo);
+			$("#reviewEnrollModal #sptitle").text(stitle);
+			$("#reviewEnrollModal").modal("show");
+		}
+	
+        $(function () {
+            $("#starArea span").click(function () {
+                var rating = $(this).attr("class").substr(1);
+                $("input[name=rating]").val(rating);
+                var str = "";
+                var i = parseInt(rating / 2);
+                var j = rating % 2;
+                
+                for (let index = 0; index < i; index++) {
+                    str += "<i class='fa-solid fa-star' aria-hidden='true'></i>";
+                }
+                if (j == 1) {
+                    str += "<i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i>";
+                }
+                for (let index = 0; index < 5 - i - j; index++) {
+                    str += "<i class='fa fa-star-o' aria-hidden='true'></i>";
+                }
+                $("#realStarArea").html(str);
+            });
+        });
+    </script>
 	
 </body>
 </html>

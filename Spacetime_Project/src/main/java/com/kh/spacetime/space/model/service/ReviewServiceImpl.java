@@ -56,13 +56,13 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.updateReview(sqlSession, r);
 	}
 
+	// 정현--------------------
+	// 사용자 리뷰 등록 - 정현
 	@Override
 	public int insertReview(Review r) {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewDao.insertReview(sqlSession, r);
 	}
 
-	// 정현--------------------
 	// 호스트 소유 공간 리스트 - 정현
 	@Override
 	public ArrayList<Space> selectMySpaceList(int memNo) {
@@ -86,7 +86,6 @@ public class ReviewServiceImpl implements ReviewService {
 	public int insertReviewAnswer(Review r) {
 		return reviewDao.insertReviewAnswer(sqlSession, r);
 	}
-
 
 	// 호스트 검색 이용후기관리 리스트 개수 - 정현
 	@Override

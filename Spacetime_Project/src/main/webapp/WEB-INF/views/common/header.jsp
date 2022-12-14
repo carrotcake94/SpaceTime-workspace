@@ -10,7 +10,6 @@
    <title>header</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- jquery 온라인 방식 -->
-
 	<!-- jquery datepicker-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
  	 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

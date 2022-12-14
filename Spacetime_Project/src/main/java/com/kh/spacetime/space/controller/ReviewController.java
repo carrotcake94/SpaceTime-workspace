@@ -24,6 +24,7 @@ import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.ReviewService;
 import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
+import com.kh.spacetime.space.model.vo.SpaceAttachment;
 
 @Controller
 public class ReviewController {
@@ -57,20 +58,20 @@ public class ReviewController {
 	}
 
 	@RequestMapping("detail.re")
-	public ModelAndView selectBoard(int rde, ModelAndView mv,HttpSession session) {
+	public ModelAndView selectBoard(int rde, ModelAndView mv, HttpSession session) {
 
 		Review r = reviewService.selectReview(rde);
-		
-		if( r != null ) {
+
+		if (r != null) {
 			String savePath = "resources/uploadFiles/space/review/";
-			
-			if( r.getReviewAttach1() != null ) {
+
+			if (r.getReviewAttach1() != null) {
 				r.setReviewAttach1(savePath + r.getReviewAttach1());
 			}
-			if( r.getReviewAttach2() != null ) {
+			if (r.getReviewAttach2() != null) {
 				r.setReviewAttach2(savePath + r.getReviewAttach2());
 			}
-			if( r.getReviewAttach3() != null ) {
+			if (r.getReviewAttach3() != null) {
 				r.setReviewAttach3(savePath + r.getReviewAttach3());
 			}
 		}
@@ -83,57 +84,53 @@ public class ReviewController {
 		// return "space/mypageReviewDetail";
 	}
 
-
-	//리뷰 삭제
+	// 리뷰 삭제
 	@RequestMapping("delete.re")
 	public String deleteReview(int reviewNo, String filePath, HttpSession session, Model model) {
-	
-	// System.out.println(rno);
-	
-	int result = reviewService.deleteReview(reviewNo);
-	System.out.println("rde : " + reviewNo);
-	
-	if(result > 0) { // 게시글 삭제 성공
-		
-		// 게시판 리스트 페이지 url 재요청
-		session.setAttribute("alertMsg", "성공적으로 리뷰가 삭제되었습니다.");
-		
-		return "redirect:/list.re";
+
+		// System.out.println(rno);
+
+		int result = reviewService.deleteReview(reviewNo);
+		System.out.println("rde : " + reviewNo);
+
+		if (result > 0) { // 게시글 삭제 성공
+
+			// 게시판 리스트 페이지 url 재요청
+			session.setAttribute("alertMsg", "성공적으로 리뷰가 삭제되었습니다.");
+
+			return "redirect:/list.re";
+		} else { // 게시글 삭제 실패
+
+			model.addAttribute("errorMsg", "리뷰 삭제 실패");
+
+			return "common/errorPage";
+		}
 	}
-	else { // 게시글 삭제 실패
-		
-		model.addAttribute("errorMsg", "리뷰 삭제 실패");
-		
-		return "common/errorPage";
-	}
-}
 
 	@RequestMapping("updateForm.re")
 	public String updateFormReview(int reviewNo, Model model) {
 		Review r = reviewService.selectReview(reviewNo); // 기존의 상세보기 서비스를 재활용
-		
+
 		model.addAttribute("r", r);
-	
+
 		return "space/mypageReviewUpdate";
 	}
-	
+
 	@RequestMapping("update.re")
 	public ModelAndView updateReview(Review r, HttpSession session, ModelAndView mv, MultipartFile[] upfile) {
-		System.out.println("123"+r);
-		
+		System.out.println("123" + r);
+
 		for (int i = 0; i < upfile.length; i++) {
 
 			if (!upfile[i].getOriginalFilename().equals("")) {
 
 				String changeName = saveFile(upfile[i], session, "space/review/");
-				
-				if( i == 0 ) { 
+
+				if (i == 0) {
 					r.setReviewAttach1(changeName);
-				}
-				else if ( i == 1 ) {
+				} else if (i == 1) {
 					r.setReviewAttach2(changeName);
-				}
-				else if ( i == 2 ) {
+				} else if (i == 2) {
 					r.setReviewAttach3(changeName);
 				}
 			}
@@ -141,20 +138,18 @@ public class ReviewController {
 		// Service 단으로 r 보내기'
 		int rno = r.getReviewNo();
 		int result = reviewService.updateReview(r);
-	
-		if(result > 0) { // 게시글 수정 성공
-			
+
+		if (result > 0) { // 게시글 수정 성공
+
 			session.setAttribute("alertMsg", "성공적으로 리뷰가 수정되었습니다.");
-			
+
 			// 리뷰 상세보기 페이지로 url 재요청
 			mv.setViewName("redirect:/detail.re?rde=" + rno);
-		}
-		else { // 게시글 수정 실패
-			
+		} else { // 게시글 수정 실패
+
 			mv.addObject("errorMsg", "리뷰 수정 실패");
 			mv.setViewName("redirect:/common/errorPage");
-			
-			
+
 		}
 		return mv;
 	}
@@ -164,7 +159,7 @@ public class ReviewController {
 
 		return "space/mypageBookMark";
 	}
-	
+
 	/**
 	 * @author 희섭 함수 호출시 route에 본인 업파일 경로 넣으면됨
 	 */
@@ -201,6 +196,39 @@ public class ReviewController {
 	}
 
 	// 정현--------------------
+	/**
+	 * @author 정현 이용후기 등록
+	 */
+	@RequestMapping("insert.re")
+	public String insertReview(Review r, MultipartFile[] upfile, HttpSession session, Model model) {
+
+		int j= 0;
+		for (int i = 0; i < upfile.length; i++) {
+			if (!upfile[i].getOriginalFilename().equals("")) {
+				
+				String changeName = saveFile(upfile[i], session, "space/review/");
+				if(j ==0) {
+					r.setReviewAttach1(changeName);
+				}else if (j==1) {
+					r.setReviewAttach2(changeName);
+				} else if(j==2) {
+					r.setReviewAttach3(changeName);
+				}
+				j++;
+			}
+		}
+		
+		int result = reviewService.insertReview(r);
+
+		if (result > 0) {
+			
+		} else {
+			
+		}
+
+		return "redirect:/myReserve.re";
+	}
+
 	/**
 	 * @author 정현 호스트 이용후기관리 리스트
 	 */
@@ -248,7 +276,6 @@ public class ReviewController {
 		map.put("hostAnswer", hostAnswer);
 		map.put("keyword", keyword);
 
-
 		int listCount = reviewService.searchHostReviewListCount(map);
 		int pageLimit = 10;
 		int boardLimit = 3;
@@ -267,16 +294,15 @@ public class ReviewController {
 
 		return "space/hostReviewList";
 	}
-	
-	
+
 	/**
 	 * @author 정현 호스트 이용후기 답글 달기
 	 */
 	@ResponseBody
-	@RequestMapping(value="inHostAns.rv", produces="text/html; charset=UTF-8")
-	public String insertReviewAnswer(Review r ) {
+	@RequestMapping(value = "inHostAns.rv", produces = "text/html; charset=UTF-8")
+	public String insertReviewAnswer(Review r) {
 		int result = reviewService.insertReviewAnswer(r);
-		
+
 		if (result > 0) {
 		} else {
 		}

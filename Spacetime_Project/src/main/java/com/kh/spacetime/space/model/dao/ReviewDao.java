@@ -44,6 +44,11 @@ public class ReviewDao {
 	}
 
 	// 정현--------------------
+	// 호스트 이용후기 답글 달기
+	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("reviewMapper.insertReview", r);
+	}
+
 	// 호스트 소유 공간 리스트 가져오기-정현
 	public ArrayList<Space> selectMySpaceList(SqlSessionTemplate sqlSession, int memNo) {
 		return (ArrayList) sqlSession.selectList("reviewMapper.selectMySpaceList", memNo);

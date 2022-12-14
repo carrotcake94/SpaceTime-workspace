@@ -28,10 +28,10 @@ public interface ReviewService {
 	// 리뷰 수정 서비스
 	int updateReview(Review r);
 
-	// 게시글 작성 서비스
+	// 정현--------------------
+	// 사용자 리뷰 등록 서비스
 	int insertReview(Review r);
 
-	// 정현--------------------
 	ArrayList<Space> selectMySpaceList(int memNo);
 
 	// 호스트 이용후기관리 리스트 개수
