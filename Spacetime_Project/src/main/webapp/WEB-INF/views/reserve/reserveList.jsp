@@ -330,6 +330,105 @@
         color: white;
       }
 
+	/* 리뷰 등록 모달 */
+        #reviewEnrollModal .modal-content {
+            width: 800px;
+            margin: auto;
+            border: 1px solid gray;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 100px;
+        }
+
+        #reviewEnrollModal .modal-body {
+            padding: 30px 30px 10px;
+        }
+
+        #reviewEnrollModal .rev1,
+        #reviewEnrollModal .rev2 {
+            float: left;
+            margin-bottom: 15px;
+        }
+
+        #reviewEnrollModal .rev1 {
+            width: 65%;
+        }
+
+        #reviewEnrollModal .rev2 {
+            width: 35%;
+        }
+
+        #reviewEnrollModal .rtitle {
+            margin-bottom: 15px;
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        #reviewEnrollModal .ftitle {
+            margin-bottom: 25px;
+            font-size: 25px;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        #reviewEnrollModa .file-input {
+            display: block;
+            margin-bottom: 10px;
+            width: 35%;
+            cursor: pointer;
+        }
+
+        #reviewText {
+            width: 100%;
+            height: 100px;
+            border: 1px solid lightgray;
+            outline: none;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 14px;
+            resize: none;
+            color: rgb(54, 54, 54);
+            border-radius: 5px;
+        }
+
+        #reviewEnrollModal .modal-footer {
+            margin: 0 auto 20px;
+            border: none;
+        }
+
+        #reviewEnrollModal button {
+            margin: 0 7px;
+            text-align: center;
+        }
+
+        #starArea {
+            position: relative;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        #starArea>div {
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #starArea i {
+            font-size: 30px;
+            color: rgb(253, 193, 55);
+            padding: 0;
+            margin: 0;
+        }
+
+        #starArea span {
+            display: inline-block;
+            width: 13.93px;
+            height: 30px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        /* -------------------------------------- */
+
 </style>
 </head>
 <body>
@@ -458,7 +557,7 @@
 				              <c:choose>
 				                <c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate)}">
 				                  <div class="space_btn_area">
-				                  <button style="width: 70%" class="btn btn-warning">리뷰 작성하기</button>
+				                  <button style="width: 70%" class="btn btn-warning" onclick="openRevEnrollModal(this)" >리뷰 작성하기</button>
 				                  <button style="width: 30%" class="btn btn-danger" data-toggle="modal" data-target="#report-Modal">신고하기</button>
 				                </div>
 				                </c:when>
@@ -593,10 +692,64 @@
         
       </div>
       
+      <!-- 리뷰 등록 Modal -->
+    <div class="modal" id="reviewEnrollModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="reviewForm" action="insert.re">
+                        <input type="hidden" name="reserveNo" value="">
+                        <input type="hidden" name="rating" value="">
+                        <div style="overflow: hidden;">
+                            <div class="rev1">
+                                <div class="rtitle">공간명</div>
+                                <div id="sptitle"></div>
+                            </div>
+                            <div class="rev2">
+                                <div class="rtitle">평점</div>
+                                <div id="starArea">
+                                    <div id="realStarArea"><i class="fa fa-star-o" aria-hidden="true"></i><i
+                                            class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o"
+                                            aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i
+                                            class="fa fa-star-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <span class="s1"></span><span class="s2"></span><span class="s3"></span><span
+                                            class="s4"></span><span class="s5"></span><span class="s6"></span><span
+                                            class="s7"></span><span class="s8"></span><span class="s9"></span><span
+                                            class="s10"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ftitle">내용</div>
+                        <input class="file-input" type="file" name="upfile">
+                        <input class="file-input" type="file" name="upfile">
+                        <input class="file-input" type="file" name="upfile">
+                        <textarea name="reviewCont" id="reviewText" placeholder="이용후기를 작성해주세요"
+                            maxlength="300"></textarea>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+      
       <script>
-      	/* 리뷰작성하기버튼  */
-  	
-	  	/* 신고버튼  */
+      	/* 리뷰작성하기  */
+  		openRevEnrollModal = btn => {
+  			var stitle = $(btn).parent().prev().children(".stitle").text();
+  			var reserveNo = $(btn).parent().prev().children("input").val();
+  			$("#reviewEnrollModal input[name=reserveNo]").val(reserveNo);
+  			$("#reviewEnrollModal #sptitle").text(stitle);
+  			$("#reviewEnrollModal").modal("show");
+  		}  	
+  		/* 신고버튼  */
 /* 	  	$(function() {
 	  		$(".reportBtn").click(function() {
 	  			location.href = "reportMyReserve.re?rno=" + $(".rnoInput").val() + "&reportType=" + $("#type_select").val() + "&reportContnet=" + $("#reportContnet").val();

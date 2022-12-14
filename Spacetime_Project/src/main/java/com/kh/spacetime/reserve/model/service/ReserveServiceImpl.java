@@ -80,9 +80,9 @@ public class ReserveServiceImpl implements ReserveService {
 	// ----------- 하연 --------------------
 
 	@Override
-	public int selectMyReserveListCount() {
+	public int selectMyReserveListCount(int memNo) {
 
-		return reserveDao.selectMyReserveListCount(sqlSession);
+		return reserveDao.selectMyReserveListCount(sqlSession, memNo);
 	}
 
 	@Override

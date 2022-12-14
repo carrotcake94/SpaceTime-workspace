@@ -17,9 +17,9 @@ import com.kh.spacetime.space.model.vo.Space;
 public class ReserveDao {
 
 	// ============== 하연
-	public int selectMyReserveListCount(SqlSessionTemplate sqlSession) {
+	public int selectMyReserveListCount(SqlSessionTemplate sqlSession, int memNo) {
 
-		return sqlSession.selectOne("reserveMapper.selectMyReserveListCount");
+		return sqlSession.selectOne("reserveMapper.selectMyReserveListCount", memNo);
 	}
 
 	public ArrayList<Reserve> selectMyReservetList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {

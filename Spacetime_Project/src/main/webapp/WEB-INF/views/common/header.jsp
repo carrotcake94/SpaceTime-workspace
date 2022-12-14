@@ -572,7 +572,7 @@
         <div id="my_menubtn">
             <table id="my_menubtn_tb">
                 <tr>
-                    <td><a href=""><i class="fa-solid fa-person-walking-luggage"></i></a></td>
+                    <td><a href="myReserve.re"><i class="fa-solid fa-person-walking-luggage"></i></a></td>
                     <td><a href="list.re"><i class="fa-solid fa-user-pen"></i></a></td>
                     <td><a href="bookmark.sp"><i class="fa-solid fa-heart"></i></a></td>
                 </tr>

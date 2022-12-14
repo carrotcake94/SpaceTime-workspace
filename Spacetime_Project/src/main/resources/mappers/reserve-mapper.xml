@@ -45,9 +45,10 @@
 			<result column="HOST_NO" property="hostNo" />
 		</resultMap>
 
-		<select id="selectMyReserveListCount" resultType="_int">
+		<select id="selectMyReserveListCount" parameterType="_int" resultType="_int">
 			SELECT COUNT(*)
 			FROM RESERVE
+			WHERE MEM_NO = #{memNo}
 		</select>
 
 		<select id="selectMyReservetList" resultMap="joinReserveResultSet">

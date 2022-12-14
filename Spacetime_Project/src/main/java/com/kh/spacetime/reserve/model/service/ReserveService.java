@@ -52,7 +52,7 @@ public interface ReserveService {
 	 *
 	 */
 	// 마이페이지 예약 리스트
-	int selectMyReserveListCount();
+	int selectMyReserveListCount(int memNo);
 
 	ArrayList<Reserve> selectMyReservetList(PageInfo pi, int memNo);
 

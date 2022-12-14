@@ -199,8 +199,8 @@ public class ReserveController {
 
 		int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
 
-		int listCount = reserveService.selectMyReserveListCount();
-
+		int listCount = reserveService.selectMyReserveListCount(memNo);
+		System.out.println(listCount);
 		int pageLimit = 10;
 		int boardLimit = 9;
 
