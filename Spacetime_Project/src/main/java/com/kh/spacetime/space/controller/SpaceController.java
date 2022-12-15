@@ -29,6 +29,7 @@ import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Bookmark;
+import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
@@ -482,11 +483,21 @@ public class SpaceController {
 			Space s = spaceService.selectSpaceDetail(sno);
 			SpaceAttachment sa = spaceService.selectSpaceDetailAttachment(sno);
 			
+			int listCount = spaceService.selectReviewListBySnoCount(sno);
+			int pageLimit = 10;
+			int boardLimit = 3;
+
+			PageInfo pi = Pagination.getPageInfo(listCount, 1, pageLimit, boardLimit);
+
+			ArrayList<Review> reviewList = spaceService.selectReviewListBySno(sno, pi);
+			
 			// 조회된 데이터를 담아서 포워딩
 			mv.addObject("count", count);
 			mv.addObject("s", s);
 			mv.addObject("sa", sa);
 			mv.addObject("bm", bm);
+			mv.addObject("rList", reviewList);
+			mv.addObject("pi", pi);
 			mv.setViewName("space/spaceDetailView");
 		
 		}

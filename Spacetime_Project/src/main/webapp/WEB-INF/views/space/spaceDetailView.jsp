@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,14 +34,191 @@
         color: grey;
     }
 
-    tbody {
-      margin: autos;
-    }
+		/* 후기 css */
+		.nodata {
+		  	text-align: center;
+		  	 font-size: 25px;
+	        font-weight: 600;
+		  
+		  }
 
-        /* 페이지네이션 */
-        .pagination {
-            justify-content: center;
-        }
+		#reviewDiv {
+		 width: 800px;
+		 margin: 0 auto;
+		}
+		.review-row {
+		   border-bottom: 1px solid lightgray;
+		}
+
+      .review-area, .host-area {
+
+        overflow:hidden;
+      }
+      .host-area {
+              margin-bottom: 20px;
+      }
+       .review-area>div, .host-area>div {
+       		float:left;
+       }
+       .rleft {
+       	width : 150px;
+       	text-align: center;
+       	font-size: 17px;
+        font-weight: 700;
+        padding-bottom: 20px;
+       }
+       .rright {
+      	 width: calc(100% - 150px);
+       }
+       .rleft img {
+       	  display: block;
+		  margin: 20px auto 10px;
+	 	  width: 60px;
+		  height:60px;     	
+	 	  background-color: white;
+      }  
+
+      .rtitle {
+        margin-bottom: 10px;
+        overflow: hidden;
+      }
+      .rtitle > span:nth-child(1) {
+        float: left;
+        font-size: 15px;
+        font-weight: 500;
+        color: rgb(253, 193, 55);
+      }
+       .rtitle > span:nth-child(2) {
+        float: right;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .rtitle > span:nth-child(2) i {
+        color: #DD5353;
+      }
+
+      .rcontent-area {
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+      .rcontent {
+        font-size: 15px;
+        font-weight: 600;
+        color: rgb(54, 54, 54);
+        margin-bottom: 15px;
+      }
+      .rcontent-img-area > div {
+        overflow: hidden;
+        float: left;
+        height: 117px;
+        margin-right: 10px;
+      }
+      .rcontent-img-area img {
+        cursor: pointer;
+        height: 100%;
+      }
+
+      .rdate {
+        font-size: 12px;
+        font-weight: 500;
+        color: rgb(127, 127, 127);
+        margin-bottom: 15px;
+      }
+      .hotitle {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .answer-area {
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+	  
+      /* -------------*/
+      
+      #imgOverlay {
+	        background: #495579;
+	        bottom: 0;
+	        height: 100%;
+	        left: 0;
+	        opacity: 0;
+	        overflow: hidden;
+	        position: fixed;
+	        right: 0;
+	        top: 0;
+	        visibility: hidden;
+	        width: 100%;
+	        z-index: 9;
+	        -webkit-transition: all 0.2s ease-in-out;
+	        -moz-transition: all 0.2s ease-in-out;
+	        transition: all 0.2s ease-in-out;
+      	}
+	    #imgOverlay.slideon {
+	        opacity: 1;
+	        visibility: visible;
+	        -webkit-transition: all 0.2s ease-in-out;
+	        -moz-transition: all 0.2s ease-in-out;
+	        transition: all 0.2s ease-in-out;
+	    }
+      
+
+      #imgOverlay .overlay-area {
+        position: relative;
+        height: 100%;
+        overflow: hidden;
+      }
+      .overlay-area>div {
+      	float: left;
+      	position: relative;
+      	height: 100%;
+      	overflow: hidden;
+      }
+       .overlay-area>div:nth-child(1) {
+       	width: 10%;
+       }
+       .overlay-area>div:nth-child(2) {
+       	width: 80%;
+       }
+       .overlay-area>div:nth-child(3) {
+       	width: 10%;
+       }
+      #imgOverlay img {
+   	   position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+      	max-width: 800px;
+      	max-height: 600px;
+      	
+      }
+      #imgOverlay i {
+      	position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+        font-size: 60px;
+        color: white;
+        cursor: pointer;
+      }
+      #imgOverlay .fa-times {
+      	position: absolute;
+		top: 50px;
+		right: 50px;
+        font-size: 50px;
+        color: lightgray;
+        cursor: pointer;
+      }
+      
+    
+
+      /* -------------------------------------- */
+
+       /* 페이지네이션 */
+      .pagination {
+        justify-content: center;
+        margin-top: 15px;
+      }
 
       .pagination a {
         cursor: pointer;
@@ -49,6 +227,9 @@
         padding: 5px 8px;
         background-color: #eeeeee;
         color: black;
+      }
+      .no-page-prev a, .no-page-next a {
+      background-color: #eeeeee !important;
       }
 
       .pagination a:hover {
@@ -65,6 +246,7 @@
       .page-btn {
         margin: 0 5px;
       }
+      /* -------------*/
 
 
     /* 이미지 */
@@ -247,13 +429,9 @@
 </style>
 </head>
 <body>
-
-    
-
+<div class="wrap">		
 	<jsp:include page="../common/header.jsp" />
-	
     <div id="spaceList_Host">
-
         <div id="content">
             <div class="sheader" style="padding-top: 100px;">
                 ${ s.spaceTitle }
@@ -357,11 +535,10 @@
                                 
                                <!--  <button type="button" class="img_btn" id="like_btn"><img src="resources/images/space/like_icon.png" width="35px" height="35px"></button> -->
                             </div>
-
+                            
                             <!-- 달력/시간 -->
                             <table id="tbl-reserve2" class="table">
                                 <tr>
-                                    
                                     <th>
                                         <!-- <input type="date" id="D-day" onchange="selectDay(this.value)"> -->
                                         <jsp:include page="calendar.jsp" />
@@ -570,43 +747,120 @@
                             - 저희 스튜디오는 매일 1회 이상 소독을 진행하고 있습니다 - -->
                             ${ s.spaceInfo }
                         </p>
-
-                        <br><br><br><br><br>
-                        <!-- 리뷰 -->
-                        <h3>리뷰</h3>
-
-                        <div>
-                            <br><br>
-                            <!-- <h1>리뷰가 들어갈 공간!!!</h1> -->
-                            <br><br><br><br><br><br><br><br><br><br><br><br><br>
-                        </div>
-
-                    <!-- 리뷰 페이징바 -->
-                    <ul class="pagination">
-                        <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
-                        <li class="page-item page-btn">
-                        <a id="active-page" class="page-link">1</a>
-                        </li>
-                        <li class="page-item page-btn"><a class="page-link">2</a></li>
-                        <li class="page-item page-btn"><a class="page-link">3</a></li>
-                        <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
-                    </ul>
-
                     </td>
-
                 </tr>
             </table>
-
-            
-            
-
-      
+			<!-- 리뷰 -->
+              <h3>리뷰</h3>
               
-        </div>
-       
-        <jsp:include page="../common/footer.jsp" />
+              <c:choose>
+		      <c:when test="${rList.size() eq 0}">
+		      	<div class="nodata">이용후기가 없습니다.</div>     
+		      </c:when>
+		      <c:otherwise>
+		      <div id="reviewDiv">
+		      <c:forEach var="r" items="${rList }" varStatus="status.index">
+		      <div class="review-row">
+		      <div class="review-area" id="review${r.reviewNo}">
+		      <div class="rleft">
+		       <c:choose>
+                <c:when test="${empty r.member.profilePath}">
+                 <img src='resources/images/logo.png' class='rounded-circle'	 >
+                </c:when>
+                <c:otherwise>
+                <img src='${r.member.profilePath}' class='rounded-circle'	 >
+                </c:otherwise>
+                </c:choose>
+				${r.member.memName }
+		      </div>
+		      <div class="rright">
+			      <div class="rtitle">
+			        	<span>
+			        	<fmt:parseNumber var="i" value="${r.rating/2}" integerOnly="true" />
+			        	<c:set var="j" value="${r.rating%2}" />
+			        	<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class="fa fa-star-half-o" aria-hidden="true"></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if></span>
+			        	<span>신고하기 <i class="fa-solid fa-triangle-exclamation"></i></span>
+			      </div>
 
-         <!-- 예약 확인 Modal -->
+			        <div class="rcontent-area">
+			          <div class="rcontent">${r.reviewCont}</div>
+			          <div class="rcontent-img-area">
+			            	<c:if test="${!empty r.reviewAttach1 }">
+			           		 <div>
+				                <img class="img1" src="resources/uploadFiles/space/review/${r.reviewAttach1}" alt="" />
+				              </div>
+			            	</c:if>
+			            	<c:if test="${!empty r.reviewAttach2 }">
+			           		 <div>
+				                <img class="img2" src="resources/uploadFiles/space/review/${r.reviewAttach2}" alt="" />
+				              </div>
+			            	</c:if>
+			            	<c:if test="${!empty r.reviewAttach3 }">
+			           		 <div>
+				                <img class="img3" src="resources/uploadFiles/space/review/${r.reviewAttach3}" alt="" />
+				              </div>
+			            	</c:if>
+			          </div>
+			        </div>
+			        <div class="rdate">${r.reviewEnrollDate }</div>
+			        <input type="hidden" name="reviewNo" value="${r.reviewNo }">
+			        <c:if test="${!empty r.hostAnswer}">
+			        
+			        </c:if>
+		      </div>
+		      </div>
+		      <c:if test="${!empty r.hostAnswer}">
+		       <div class="host-area">
+		      	 <div class="rleft">
+			       <c:choose>
+	                <c:when test="${empty r.member.hostStatus}">
+	                 <img src='resources/images/logo.png' class='rounded-circle'	 >
+	                </c:when>
+	                <c:otherwise>
+	                <img src='${r.member.hostStatus}' class='rounded-circle'	 >
+	                </c:otherwise>
+	                </c:choose>
+					호스트
+			      </div>
+			      <div class="rright">
+				       <div class="hotitle">호스트 답글</div>
+					   <div class="answer-area">
+					       	 	<div style="white-space:pre;">${r.hostAnswer }</div>
+					    </div>
+				   </div>
+		       </div>
+		       </c:if>
+		      </div>
+		      </c:forEach>
+		    
+		      <ul class="pagination">
+		 		   <c:choose>
+			   		<c:when test="${ pi.currentPage eq 1 }">
+			   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
+			   		</c:when>
+			   		<c:otherwise>
+			   			<li class="page-item no-page-prev"><a class="page-link" >&lt;</a></li>
+			   		</c:otherwise>
+			   	</c:choose>	       
+			       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			       	<li class="page-item page-btn"><a class="page-link" >${ p }</a></li>
+			       </c:forEach>
+			       <c:choose>
+			       	<c:when test="${ pi.currentPage eq pi.maxPage }">
+			       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+			       	</c:when>
+			       	<c:otherwise>
+			      	 	<li class="page-item no-page-next"><a class="page-link" >&gt;</a></li>
+			       	</c:otherwise>
+			       </c:choose>
+		      </ul>
+		      </div>
+		      </c:otherwise>
+		      </c:choose>
+        </div>
+      </div>
+
+    <!-- 예약 확인 Modal -->
          <div class="modal" id="confirm-modal">
           <div class="modal-dialog">
               <div class="modal-content">
@@ -799,7 +1053,108 @@
             </div>
         </form>
       </div>
-
+      
+      
+      <!-- 이미지 뷰 Modal -->
+    <div class="modal" id="reviewImgModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <!-- Modal body -->
+          <div class="modal-body">
+            <img src="" alt="" />
+            <div class="img_btn_area">
+              <button
+                type="button"
+                class="button_img button_img_prev"
+                onclick="imgChange(1)"
+              >
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+              </button>
+              <button
+                type="button"
+                class="button_img button_img_next"
+                onclick="imgChange(2)"
+              >
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+	<div id="imgOverlay">
+	            <div class="overlay-area">
+	            <div><i class="fa fa-angle-left" aria-hidden="true" onclick="imgChange(1)"></i></div>
+	            <div>
+	            	<img src="" alt="" />
+	            </div>
+	            <div><i class="fa fa-angle-right" aria-hidden="true" onclick="imgChange(2)"></i>
+	           	 <i class="fa fa-times" aria-hidden="true" ></i></div>
+	            </div>
+		</div>
 	
+  <jsp:include page="../common/footer.jsp" />
+</div>
+<script>	
+	 $(function () {
+	    	//페이징
+	    	$(".page-link").each(function() {
+	      		if ($(this).text() =="${pi.currentPage}") {
+	      			$(this).attr("id", "active-page");
+	      			$(this).parent().addClass("disabled");
+	      		} else {
+	      			$(this).removeAttr("id", "active-page");
+	      		}
+	      	});
+	    	$(".no-page-prev>a").click(function() {
+// 				location.href ="hostRvwList.rv?rpage="+prevNo;
+			});
+			$(".page-btn>a").click(function() {
+// 				location.href ="hostRvwList.rv?rpage="+$(this).text();
+			});
+			$(".no-page-next>a").click(function() {
+// 				location.href ="hostRvwList.rv?rpage="+nextNo;
+			});
+			
+			 // img 컨트롤
+		      $(".rcontent-img-area img").mouseover(function () {
+		        $(this).css({ transform: "scale(1.1)" });
+		      });
+		      $(".rcontent-img-area img").mouseleave(function () {
+		        $(this).css({ transform: "scale(1.0)" });
+		      });
+		      $(".rcontent-img-area img").click(function () {
+		    	  $("#imgOverlay img").removeAttr("class");
+	 		      $("#imgOverlay img").attr("src", $(this).attr("src")).addClass($(this).parents(".review-area").attr("id") + "-" + $(this).attr("class"));
+		          $("#imgOverlay").addClass("slideon");
+		      });
+		      $("#imgOverlay .fa-times").click(function () {
+		          $("#imgOverlay").removeClass("slideon");
+		      });
+		
+   	});
+	
+	 function imgChange(type) {
+	      var rId = $("#imgOverlay img").attr("class").split("-", 1)[0];
+	      var imgCount = $("#" + rId + " .rcontent-img-area img").length;
+	      var index = $("#imgOverlay img").attr("class").split("-", 2)[1].substr(3, 1);
+
+	      if (type == 1) {
+	        index--;
+	        if (index == 0) {
+	          index = imgCount;
+	        }
+	      } else {
+	        index++;
+	        if (index > imgCount) {
+	          index = 1;
+	        }
+	      }
+	      $("#imgOverlay img").removeAttr("class");
+	      $("#imgOverlay img").addClass(rId + "-img" + index);
+	      $("#imgOverlay img").attr("src", $("#" + rId + " .img" + index).attr("src"));
+	    }
+	</script>
 </body>
 </html>

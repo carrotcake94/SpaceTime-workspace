@@ -32,8 +32,8 @@
 <style type="text/css">
     *{padding: 0px; margin: 0px;}  /* 브라우저별 기본 여백 차이가 있기에 작성한다. */
     body{font-size: 9pt;}
-    td{font-size: 9pt; background-color: white;}
-    a{cusor: pointer; color: #000000; text-decoration: none; font-size: 9pt; line-height: 150%;}
+    #calTb1 td, #calTb2 td{font-size: 9pt; background-color: white;}
+     #calTb1 a{cusor: pointer; color: #000000; text-decoration: none; font-size: 9pt; line-height: 150%;}
     .day-tr td:hover { background-color: lightgrey; cursor: pointer; }
     
 </style>
@@ -42,7 +42,7 @@
     <br/>&nbsp;<br/>
 
     <center>
-        <table width="210" border="0" cellpadding="1" cellspacing="2">
+        <table id="calTb1" width="210" border="0" cellpadding="1" cellspacing="2">
             <tr height="30">
                 <td align="center">
                     <a href="calendar.jsp?year=<%=year%>&month=<%=month-1%>">◀</a>
@@ -52,7 +52,7 @@
             </tr>
         </table>
     
-        <table width="210" border="0" cellpadding="2" cellspacing="1" bgcolor="#cccccc">
+        <table id="calTb2" width="210" border="0" cellpadding="2" cellspacing="1" bgcolor="#cccccc">
             <tr height="25">
                 <td align="center" bgcolor="#e6e4e6"><font color="red">일</font></td>
                 <td align="center" bgcolor="#e6e4e6">월</td>

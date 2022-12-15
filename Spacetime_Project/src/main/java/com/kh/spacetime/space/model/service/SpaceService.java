@@ -6,11 +6,13 @@ import java.util.List;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.space.model.vo.Bookmark;
+import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
 
 public interface SpaceService {
+	/**정현*******************************/
 	// 공간타입 리스트 가져오기 -정현
 	ArrayList<SpaceType> selectSpaceTypeList();
 
@@ -53,7 +55,15 @@ public interface SpaceService {
 	// 공간 재검수 등록 -정현
 	int reInsertSpace(int spaceNo);
 
-	/******성훈*********************************************/
+	// 공간 이용후기 총 개수 - 정현
+	int selectReviewListBySnoCount(int spaceNo);
+
+	// 공간 이용후기 리스트 가져오기
+	ArrayList<Review> selectReviewListBySno(int spaceNo, PageInfo pi);
+
+	/******************************* 정현 **/
+
+	/****** 성훈 *********************************************/
 	// 지도에 표시될 공간 갯수 조회 -성훈
 	int selectListCountForMap(HashMap<String, Double> map);
 
@@ -65,52 +75,52 @@ public interface SpaceService {
 
 	// 지도 필터링 공간 리스트 -성훈
 	ArrayList<Space> filterListForMap(HashMap<String, Object> condition, PageInfo pi);
+
 	/*****************************************************/
-	
+
 	/*
-	 * 하연  -------------------------------------
+	 * 하연 -------------------------------------
 	 */
-	
-	// 공간 상세 조회 
+
+	// 공간 상세 조회
 	Space selectSpaceDetail(int spaceNo);
-	
+
 	// 공간 상세 조회 - Attachment
 	SpaceAttachment selectSpaceDetailAttachment(int spaceNo);
-	
-	// 공간 신고 
+
+	// 공간 신고
 	int insertSpaceReport(Space s);
-	
+
 	// 좋아요 리스트 불러오기
 	int selectSpaceLike(Bookmark bm);
-	
+
 	// 좋아요 취소
 	int deleteSpaceLike(Bookmark bm);
-	
+
 	// 좋아요 하기
 	int insertSpaceLike(Bookmark bm);
-	
-	// 조회수 증가 
+
+	// 조회수 증가
 	int increaseCount(int sno);
-	
+
 	// ------------- 하연 끝 ^0^ ---------------
-	
 
 	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
 	ArrayList<Space> selectListForNewsletter(List<String> list);
-	
-	// 관리자 공간 리스트 카운트 - 혜민 
+
+	// 관리자 공간 리스트 카운트 - 혜민
 	int selectAdminSpaceListCount(HashMap<String, String> map);
-	
+
 	// 관리자 공간 리스트 조회 - 혜민
 	ArrayList<Space> selectAdminSpaceList(PageInfo pi, HashMap<String, String> map);
-	
-	// 관리자 공간 처리 (승인, 반려) - 혜민 
+
+	// 관리자 공간 처리 (승인, 반려) - 혜민
 	int updateAdminSpace(HashMap<String, String> map);
-	
-	// 관리자 공간 검색 개수 - 혜민 
+
+	// 관리자 공간 검색 개수 - 혜민
 	int selectSpaceSearchListCount(HashMap<String, String> map);
-	
-	// 관리자 공간 검색 리스트 조회 - 혜민 
+
+	// 관리자 공간 검색 리스트 조회 - 혜민
 	ArrayList<Space> selectSpaceSearchList(PageInfo pi, HashMap<String, String> map);
 	
 	// 마이페이지 -희섭 

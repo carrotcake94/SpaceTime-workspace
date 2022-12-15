@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.space.model.dao.SpaceDao;
 import com.kh.spacetime.space.model.vo.Bookmark;
+import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
@@ -24,6 +25,7 @@ public class SpaceServiceImpl implements SpaceService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	//정현 --------------------------
 	// 공간타입 가져오기
 	@Override
 	public ArrayList<SpaceType> selectSpaceTypeList() {
@@ -107,6 +109,18 @@ public class SpaceServiceImpl implements SpaceService {
 	public int reInsertSpace(int spaceNo) {
 		return spaceDao.reInsertSpace(sqlSession, spaceNo);
 	}
+	
+	//공간 리뷰 총 개수 
+	@Override
+	public int selectReviewListBySnoCount(int spaceNo) {
+		return spaceDao.selectReviewListBySnoCount(sqlSession, spaceNo);
+	}
+	//공간 리뷰 리스트
+	@Override
+	public ArrayList<Review> selectReviewListBySno(int spaceNo, PageInfo pi) {
+		return spaceDao.selectReviewListBySno(sqlSession, spaceNo, pi);
+	}
+	//--------------------------정현
 	
 	/*******성훈********************************************/
 	// 지도에 표시될 공간 갯수 조회 -성훈

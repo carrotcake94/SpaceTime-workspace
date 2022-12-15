@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.space.model.vo.Bookmark;
+import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
@@ -94,122 +95,142 @@ public class SpaceDao {
 		return sqlSession.update("spaceMapper.reInsertSpace", spaceNo);
 	}
 
+	// 공간 리뷰 총 개수 가져오기-정현
+	public int selectReviewListBySnoCount(SqlSessionTemplate sqlSession, int spaceNo) {
+
+		return sqlSession.selectOne("spaceMapper.selectReviewListBySnoCount", spaceNo);
+	}
+
+	// 공간 리뷰 리스트 가져오기-정현
+	public ArrayList<Review> selectReviewListBySno(SqlSessionTemplate sqlSession, int spaceNo, PageInfo pi) {
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectReviewListBySno", spaceNo, rowBounds);
+	}
+
+	/*****************************************************/
+
+	/******** 성훈 *****************************************/
 	// 지도에 표시될 공간 갯수 조회 -성훈
 	public int selectListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map) {
 		return sqlSession.selectOne("spaceMapper.selectListCountForMap", map);
 	}
 
-	/********성훈*****************************************/
 	// 지도 공간 리스트 -성훈
-	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi){
+	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
 	}
-	
+
 	// 지도 필터링 공간 갯수 조회 -성훈
 	public int filterListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> condition) {
-	    return sqlSession.selectOne("spaceMapper.filterListCountForMap", condition);
+		return sqlSession.selectOne("spaceMapper.filterListCountForMap", condition);
 	}
 
 	// 지도 필터링 공간 리스트 -성훈
-	public ArrayList<Space> filterListForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> condition, PageInfo pi) {
+	public ArrayList<Space> filterListForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> condition,
+			PageInfo pi) {
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("spaceMapper.filterListForMap", condition, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("spaceMapper.filterListForMap", condition, rowBounds);
 	}
+
 	/*****************************************************/
-	
+
 	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
 	public ArrayList<Space> selectListForNewsletter(SqlSessionTemplate sqlSession, List<String> list) {
-		
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectListForNewsletter", list);
+
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectListForNewsletter", list);
 	}
 
 	/*
-	 * 하연  ------------------------------------
+	 * 하연 ------------------------------------
 	 */
-	
-	// 공간 상세 
+
+	// 공간 상세
 	public Space selectSpaceDetail(SqlSessionTemplate sqlSession, int spaceNo) {
 		return sqlSession.selectOne("spaceMapper.selectSpaceDetail", spaceNo);
 	}
-	
+
 	// 공간 상세 - Attachment
 	public SpaceAttachment selectSpaceDetailAttachment(SqlSessionTemplate sqlSession, int spaceNo) {
 		return sqlSession.selectOne("spaceMapper.selectSpaceDetailAttachment", spaceNo);
 	}
-	
-	// 공간 신고 
+
+	// 공간 신고
 	public int insertSpaceReport(SqlSessionTemplate sqlSession, Space s) {
 		return sqlSession.delete("spaceMapper.insertSpaceReport", s);
 	}
-	
-	// 북마크 
+
+	// 북마크
 	public int selectSpaceLike(SqlSessionTemplate sqlSession, Bookmark bm) {
-		
+
 		return sqlSession.selectOne("spaceMapper.selectSpaceLike", bm);
 	}
-	
+
 	public int deleteSpaceLike(SqlSessionTemplate sqlSession, Bookmark bm) {
-		
+
 		return sqlSession.delete("spaceMapper.deleteSpaceLike", bm);
 	}
-	
+
 	public int insertSpaceLike(SqlSessionTemplate sqlSession, Bookmark bm) {
-		
+
 		return sqlSession.insert("spaceMapper.insertSpaceLike", bm);
 	}
-	
-	// 조회수 증가 
+
+	// 조회수 증가
 	public int increaseCount(SqlSessionTemplate sqlSession, int sno) {
-		
-		
+
 		return sqlSession.update("spaceMapper.increaseCount", sno);
 	}
-	
-	
+
 	// ------------- 하연 끝 ^0^ ---------------
-	
-	// 관리자 공간 리스트 카운트 - 혜민 
+
+	// 관리자 공간 리스트 카운트 - 혜민
 	public int selectAdminSpaceListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("spaceMapper.selectAdminSpaceListCount", map);
 	}
 
 	// 관리자 공간 리스트 조회 - 혜민
-	public ArrayList<Space> selectAdminSpaceList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
-		
+	public ArrayList<Space> selectAdminSpaceList(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, String> map) {
+
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
-		
+
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectAdminSpaceList", map, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectAdminSpaceList", map, rowBounds);
 	}
-	
+
 	// 관리자 공간 처리 (승인, 반려) - 혜민
 	public int updateAdminSpace(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("spaceMapper.updateAdminSpace", map);
 	}
-	
-	// 관리자 공간 검색 개수 - 혜민 
+
+	// 관리자 공간 검색 개수 - 혜민
 	public int selectSpaceSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("spaceMapper.selectSpaceSearchListCount", map);
 	}
 
-	// 관리자 공간 검색 리스트 조회 - 혜민 
-	public ArrayList<Space> selectSpaceSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
-		
+	// 관리자 공간 검색 리스트 조회 - 혜민
+	public ArrayList<Space> selectSpaceSearchList(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, String> map) {
+
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
-		
+
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("spaceMapper.selectSpaceSearchList", map, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectSpaceSearchList", map, rowBounds);
 	}
 
 
