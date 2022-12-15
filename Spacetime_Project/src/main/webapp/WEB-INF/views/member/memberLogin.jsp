@@ -294,6 +294,7 @@
                             $("#emailConfirmBtn").click(function() {
                                 // 이메일 인증
                                 let email = $('#email2').val(); // 이메일 주소값 얻어오기!
+                                console.log(email);
                                 const checkInput = $('#emailConfirm'); // 인증번호 입력하는곳 
                                 
                                 $.ajax({
@@ -330,7 +331,7 @@
                                             $('#emailConfirmMsg').show();
                                             $('#emailConfirmMsg').text("인증번호가 일치합니다.");
                                             $('#emailConfirmMsg').css('color', 'green');
-                                            $('#email').attr('readonly', true);
+                                            $('#email2').attr('readonly', true);
 
                                             $("#findPwdBtn").css("background-color", "#FFB200").attr("disabled", false);
                                             $('#emailConfirm').attr('readonly', true);
@@ -338,7 +339,7 @@
                                             $('#emailConfirmMsg').text("인증번호가 일치하지 않습니다. 인증번호 혹은 이메일 주소를 다시 확인해주세요.");
                                             $('#emailConfirmMsg').show();
                                             $('#emailConfirmMsg').css('color', 'red');
-                                            $('#email').attr('readonly', false);
+                                            $('#email2').attr('readonly', false);
                                             // 버튼 비활성화
                                             $("#findPwdBtn").attr("disabled", true);
                                         }
@@ -351,12 +352,7 @@
                             $("#findPwdBtn").click(function() {
                                 $("#findPwd .modal-title").text("비밀번호 변경");
                                 $("#findPwd_form").attr("action", "pChange.me");
-                                $("#findPwd_form>.modal-body").html(
-                                    "<input name='memId' type='text' class='form-control' placeholder='아이디'>"
-                                    +="<input id='memPwd2' name='memPwd' type='password' class='form-control' placeholder='새 비밀번호' required>"
-                                    +="<input id='pwOk' type='password' class='form-control' placeholder='새 비밀번호 확인' required>"
-                                    +="<span class='error_next_box' id='pswd2Msg'>비밀번호가 일치하지 않습니다.</span>"
-                                );
+                                $("#findPwd_form>.modal-body").html("<input name='memId' type='text' class='form-control' placeholder='아이디'><input id='memPwd2' name='memPwd' type='password' class='form-control' placeholder='새 비밀번호' required><input id='pwOk' type='password' class='form-control' placeholder='새 비밀번호 확인' required><span class='error_next_box' id='pswd2Msg'>비밀번호가 일치하지 않습니다.</span>");
                                 $("#findPwd_form .btns").html("<button id='pwdChange' type='submit' class='btn btn-primary'>변경</button>");
                             });
 
