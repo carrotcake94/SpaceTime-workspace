@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.space.model.vo.Bookmark;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
@@ -146,6 +147,29 @@ public class SpaceDao {
 	// 공간 신고 
 	public int insertSpaceReport(SqlSessionTemplate sqlSession, Space s) {
 		return sqlSession.delete("spaceMapper.insertSpaceReport", s);
+	}
+	
+	// 북마크 
+	public int selectSpaceLike(SqlSessionTemplate sqlSession, Bookmark bm) {
+		
+		return sqlSession.selectOne("spaceMapper.selectSpaceLike", bm);
+	}
+	
+	public int deleteSpaceLike(SqlSessionTemplate sqlSession, Bookmark bm) {
+		
+		return sqlSession.delete("spaceMapper.deleteSpaceLike", bm);
+	}
+	
+	public int insertSpaceLike(SqlSessionTemplate sqlSession, Bookmark bm) {
+		
+		return sqlSession.insert("spaceMapper.insertSpaceLike", bm);
+	}
+	
+	// 조회수 증가 
+	public int increaseCount(SqlSessionTemplate sqlSession, int sno) {
+		
+		
+		return sqlSession.update("spaceMapper.increaseCount", sno);
 	}
 	
 	

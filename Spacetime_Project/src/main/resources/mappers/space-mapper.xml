@@ -322,6 +322,33 @@
 			     , #{maxPeople}
 			     , #{hostNo})
 	</insert>
+	
+	<select id="selectSpaceLike" parameterType="bookmark" resultType="_int">
+		SELECT COUNT(*)
+		  FROM BOOKMARK
+		 WHERE BOOKMARK_MEM = #{bookmarkMem}
+		   AND BOOKMARK_SPACE = #{bookmarkSpace}
+	</select>
+	
+	<delete id="deleteSpaceLike" parameterType="bookmark">
+		DELETE
+		  FROM BOOKMARK
+		 WHERE BOOKMARK_MEM = #{bookmarkMem}
+		   AND BOOKMARK_SPACE = #{bookmarkSpace}
+	</delete>
+	
+	<insert id="insertSpaceLike" parameterType="bookmark">
+		INSERT INTO BOOKMARK (BOOKMARK_MEM, BOOKMARK_SPACE)
+						VALUES (#{bookmarkMem}, #{bookmarkSpace})
+		
+	</insert>
+	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE SPACE
+		   SET COUNT = COUNT + 1
+		 WHERE SPACE_NO = #{sno}
+		   AND SPACE_STATUS = 'Y'
+	</update>
 		
 		<!-- 하연 끝  -->
 	 
