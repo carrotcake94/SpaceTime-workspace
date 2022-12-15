@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -295,8 +296,66 @@
                         <div class="reserve">
                             <div id="reserve_title" style="font-size: 25px; font-weight: 800;">
                                 예약하기
+                                <!-- 신고버튼 -->
                                 <button type="button" class="img_btn" id="report_btn" data-toggle="modal" data-target="#report-Modal"><img src="resources/images/space/siren_icon.png" width="40px" height="30px"></button>
-                                <button type="button" class="img_btn" id="like_btn"><img src="resources/images/space/like_icon.png" width="35px" height="35px"></button>
+                                <!-- 북마크 버튼 -->
+                                <span id="bookmark">
+                                	<c:choose>
+                                    <c:when test="${ count eq 0 }">
+                                        <img src="resources/images/heart.png" width="35px" height="35px" class="likeControl" id="eventUnLike" style="cursor: pointer;">
+                                        <img src="resources/images/heart2.png" width="35px" height="35px" class="likeControl" id="eventLike" style="display:none; cursor: pointer;">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="resources/images/heart2.png" width="35px" height="35px"  class="likeControl" id="eventLike" style="cursor: pointer;">
+                                        <img src="resources/images/heart.png" width="35px" height="35px"  class="likeControl" id="eventUnLike" style="display:none; cursor: pointer;">
+                                    </c:otherwise>
+                                </c:choose>
+                                </span>
+                                
+                                
+                                <script>
+                                $(function() {
+                                	$("#bookmark").on("click", ".likeControl", function() {
+                                        if(${ empty loginMember }) {
+                                            alert("로그인 후 이용 가능한 서비스입니다.");
+                                        } else {
+                                            if($("#eventLike").css("display") == "none") {
+                                                $.ajax({
+                                                    url: "like.sp",
+                                                    data: {
+                                                        spaceNo: ${ s.spaceNo },
+                                                        memNo: ${ loginMember.memNo }
+                                                    },
+                                                    success: function(result) {
+                                                        $("#eventLike").show();
+                                                        $("#eventUnLike").hide();
+                                                    },
+                                                    error: function() {
+                                                        console.log("ajax failure");
+                                                    }
+                                                });
+                                            } else {
+                                                $.ajax({
+                                                    url: "deletelike.sp",
+                                                    data: {
+                                                        spaceNo: ${ s.spaceNo },
+                                                        memNo: ${ loginMember.memNo }
+                                                    },
+                                                    success: function(result) {
+                                                        $("#eventLike").hide();
+                                                        $("#eventUnLike").show();
+                                                    },
+                                                    error: function() {
+                                                        console.log("ajax failure");
+                                                    }
+                                                });
+                                            }
+                                        }
+                                	});
+                                });
+                                </script>
+                                
+                               <!--  <button type="button" class="img_btn" id="like_btn"><img src="resources/images/space/like_icon.png" width="35px" height="35px"></button> -->
                             </div>
 
                             <!-- 달력/시간 -->

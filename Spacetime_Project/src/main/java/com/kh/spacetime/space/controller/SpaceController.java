@@ -28,6 +28,7 @@ import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.SpaceService;
+import com.kh.spacetime.space.model.vo.Bookmark;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
@@ -408,21 +409,7 @@ public class SpaceController {
 	 * @author 하연 
 	 * 공간 상세페이지 ^___^
 	 */
-	@RequestMapping("detail.sp")
-	public ModelAndView selectSpaceDetailAttachment(int sno, ModelAndView mv) {
 
-		
-		Space s = spaceService.selectSpaceDetail(sno);
-		
-		SpaceAttachment sa = spaceService.selectSpaceDetailAttachment(sno);
-		
-		mv.addObject("s", s);
-		mv.addObject("sa", sa);
-		mv.setViewName("space/spaceDetailView");
-		
-		return mv;
-	}
-	
 	@RequestMapping("reportSpace.sp")
 	public ModelAndView insertSpaceReport(int sno, String reportType, String reportContent, HttpSession session, ModelAndView mv) {
 		
@@ -458,6 +445,89 @@ public class SpaceController {
 		
 		return "space/chat";
 	}
+	
+	
+	// 공간 상세조회 - 북마크 기능 
+	@RequestMapping("detail.sp")
+	public ModelAndView selectProduct(int sno, ModelAndView mv, HttpSession session) {
+	     
+		// 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
+		int result = spaceService.increaseCount(sno);
+		
+		Bookmark bm = new Bookmark();
+		
+		int count = 0;
+		
+		if(session.getAttribute("loginMember") != null) {
+			
+			int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+//			System.out.println(sno);
+//			System.out.println(memNo);
+			
+			
+			bm.setBookmarkMem(memNo);
+			bm.setBookmarkSpace(sno);
+			
+			// System.out.println(bm);
+			
+			count = spaceService.selectSpaceLike(bm);
+			// System.out.println("selectSpaceLike" + bm);
+		}
+		
+		
+		if(result > 0) { // 성공적으로 조회수 증가가 일어났다면
+		
+			// 상세조회 요청
+			// DetailView.jsp 상에 필요한 데이터 조회
+			Space s = spaceService.selectSpaceDetail(sno);
+			SpaceAttachment sa = spaceService.selectSpaceDetailAttachment(sno);
+			
+			// 조회된 데이터를 담아서 포워딩
+			mv.addObject("count", count);
+			mv.addObject("s", s);
+			mv.addObject("sa", sa);
+			mv.addObject("bm", bm);
+			mv.setViewName("space/spaceDetailView");
+		
+		}
+		else { // 실패
+			
+			mv.addObject("alertMsg", "공간 조회 실패").setViewName("common/errorPage");
+			
+		}
+		
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("like.sp")
+	public int spaceLike (int spaceNo, int memNo) {
+        
+		Bookmark bm = new Bookmark();
+		bm.setBookmarkMem(memNo);
+		bm.setBookmarkSpace(spaceNo);
+		
+		//System.out.println("insert : " + bm);
+		
+		int	 result = spaceService.insertSpaceLike(bm);
+		
+		return result;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("deletelike.sp")
+	public int spaceUnLike (int spaceNo, int memNo) {
+		
+		Bookmark bm = new Bookmark();
+		bm.setBookmarkMem(memNo);
+		bm.setBookmarkSpace(spaceNo);
+		
+		int result = spaceService.deleteSpaceLike(bm);
+			
+		return result;
+	}
+	
 	
 	
 	

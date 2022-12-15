@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.space.model.dao.SpaceDao;
+import com.kh.spacetime.space.model.vo.Bookmark;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
@@ -152,6 +153,28 @@ public class SpaceServiceImpl implements SpaceService {
 	public int insertSpaceReport(Space s) {
 		return spaceDao.insertSpaceReport(sqlSession, s);
 	}
+	
+	
+	@Override
+	public int increaseCount(int sno) {
+		
+		return spaceDao.increaseCount(sqlSession, sno);
+	}
+	// 북마크 
+	@Override
+	public int selectSpaceLike(Bookmark bm) {
+		return spaceDao.selectSpaceLike(sqlSession, bm);
+	}
+	
+	@Override
+	public int deleteSpaceLike(Bookmark bm) {
+		return spaceDao.deleteSpaceLike(sqlSession, bm);
+	}
+	@Override
+	public int insertSpaceLike(Bookmark bm) {
+		return spaceDao.insertSpaceLike(sqlSession, bm);
+	}
+	
 	
 	// ------------- 하연 끝 ^0^ ---------------
 	

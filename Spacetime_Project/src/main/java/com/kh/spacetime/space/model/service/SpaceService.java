@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.space.model.vo.Bookmark;
 import com.kh.spacetime.space.model.vo.Space;
 import com.kh.spacetime.space.model.vo.SpaceAttachment;
 import com.kh.spacetime.space.model.vo.SpaceType;
@@ -78,6 +79,18 @@ public interface SpaceService {
 	
 	// 공간 신고 
 	int insertSpaceReport(Space s);
+	
+	// 좋아요 리스트 불러오기
+	int selectSpaceLike(Bookmark bm);
+	
+	// 좋아요 취소
+	int deleteSpaceLike(Bookmark bm);
+	
+	// 좋아요 하기
+	int insertSpaceLike(Bookmark bm);
+	
+	// 조회수 증가 
+	int increaseCount(int sno);
 	
 	// ------------- 하연 끝 ^0^ ---------------
 	
