@@ -179,4 +179,23 @@
 		WHERE MEM_NO = #{memNo}
 	</select>
 	
+	<!-- 호스트 신청 쿼리문 - 희섭 -->
+	
+	<!-- 
+		기존에 있던 회원이 로그인 후에 호스트 신청을 하는거기때문에
+		시간의 흐름상 로그인 후라는 것은 이미 회원 정보가 insert 되어있는 상태
+		기존의 회원 정보에 호스트 등록시 필요한 계좌번호 정보를 덧씌울것 => update 구문*******
+		
+		MEMBER 테이블로
+		memNo 이 xx 인 회원의 정보를 찾아서
+		bankName, accountNum, hostStatus = 'Y' 로 변경하기
+	 -->
+	 <update id="inserthostRequest" parameterType="member">
+		UPDATE MEMBER
+		   SET 	 BANK_NAME = #{bankName}
+		 		,ACCOUNT_NUM = #{accountNum}
+		 		,HOST_STATUS = 'Y'
+		WHERE MEM_ID = #{memId}
+	</update>
+	
 </mapper>

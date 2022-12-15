@@ -46,5 +46,4 @@ public interface CommonService {
 	
 	ArrayList<Report> selectMypageReportList(int reportMemNo, PageInfo pi);
 	
-	
 }

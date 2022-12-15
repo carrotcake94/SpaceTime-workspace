@@ -146,4 +146,17 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectMember", memNo);
 	}
 	
+	/**
+	 * 호스트 신청 - 희섭 
+	 * @param sqlSession
+	 * @param 
+	 * @return
+	 */
+	public int inserthostRequest(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.inserthostRequest", m);
+	}
+	
+
+	
+	
 }

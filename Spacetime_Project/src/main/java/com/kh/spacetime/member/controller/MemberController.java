@@ -514,4 +514,30 @@ public class MemberController {
 		return mv;
 	}
 	
+	/**
+	 * 호스트 신청하기 - 희섭 
+	 */
+	@RequestMapping("hostRequest.me")
+	public String inserthostRequest(String bankName, String accountNum, Model model, HttpSession session) {
+			
+	Member m = (Member)session.getAttribute("loginMember");
+	m.setBankName(bankName);
+	m.setAccountNum(accountNum);
+		
+	int result = memberService.inserthostRequest(m);
+	if(result > 0) { // 성공 => 메인페이지 url 재요청
+		
+		// 일회성 알람 문구
+		session.setAttribute("alertMsg", "호스트 가입에 성공하였습니다.");
+		return "redirect:/hostCalList.re";
+	}
+	else { // 실패 => 에러문구를 담아서 에러페이지 포워딩
+		
+		model.addAttribute("errorMsg", "호스트 가입 실패");
+		
+		// /WEB-INF/views/common/errorPage.jsp
+		return "common/errorPage";
+	}
+	
+	}
 }

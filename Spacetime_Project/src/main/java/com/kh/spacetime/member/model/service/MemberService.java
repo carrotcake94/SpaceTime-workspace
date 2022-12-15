@@ -36,6 +36,11 @@ public interface MemberService {
 	// 비밀번호 변경 서비스 (update)
 	int changePwd(Member m);
 	
+	//----------------------------희섭
+	// 호스트 신청하기 서비스(insert)
+	int inserthostRequest(Member m);
+	
+	
 	//	-------------------------------------- 관리자 페이지
 	// 회원수 조회  
 	int selectMemberListCount(HashMap<String, String> map);
@@ -45,4 +50,8 @@ public interface MemberService {
 	
 	// 회원정보 상세조회 
 	Member selectMember(int memNo);
+
+	
+	
+	
 }

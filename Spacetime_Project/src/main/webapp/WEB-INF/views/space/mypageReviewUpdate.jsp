@@ -90,7 +90,7 @@
 				<div id="reviewDetail">
 					<table id="reviewTable" style="border:1px red;">
 						<tr>
-							<th class="review sapeceTitle"><h3><b>공간명321313</b></h3></th>
+							<th class="review sapeceTitle"><h3><b>공간명</b></h3></th>
 							<th class="review rate"><h3><b>평점</b></h3></th>
 							<th class="review date"><h3><b>등록일</b></h3></th>
 						</tr>

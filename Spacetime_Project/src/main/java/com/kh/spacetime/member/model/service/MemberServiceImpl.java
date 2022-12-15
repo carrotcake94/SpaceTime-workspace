@@ -125,7 +125,17 @@ public class MemberServiceImpl implements MemberService{
 		
 		return memberDao.selectMember(sqlSession, memNo);
 	}
+	
+	/**
+	 * 호스트 신청하기 - 희섭 
+	 */
+	@Override
+	public int inserthostRequest(Member m) {
+		return memberDao.inserthostRequest(sqlSession, m);
+	}
 
+	
 
+		
 
 }

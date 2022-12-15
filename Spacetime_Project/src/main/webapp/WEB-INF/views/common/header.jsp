@@ -617,50 +617,49 @@
 				</div>
 				
 				<!-- Modal body -->
-				<form action="hostRequest" method="post">
+				<form action="hostRequest.me" method="post" name="insertForm" onsubmit="return check_submit();">
 					<div class="modal-body">
 						<table>
 							<tr>
-								<th style="width:30%;">은행명</th>
+								<th style="width:30%;" required>은행명</th>
 								<td>
-									<select name="bankName" class="bank form-control mb-2">
-										<option value="" selected>은행명</option>
-										<option value="">KB국민은행</option>
-										<option value="">신한은행</option>
-										<option value="">IBK기업은행</option>
-										<option value="">우리은행</option>
-										<option value="">KEB하나은행</option>
-										<option value="">SC제일은행</option>
-										<option value="">NH농협</option>
-										<option value="">새마을금고</option>
-										<option value="">씨티은행</option>
-										<option value="">한국산업은행</option>
-										<option value="">케이뱅크</option>
-										<option value="">카카오뱅크</option>
-										<option value="">우체국</option>
-										<option value="">수협은행</option>
-										<option value="">KDB산업은행</option>
-										<option value="">광주은행</option>
-										<option value="">부산은행</option>
+									<select id=bankid name="bankName" class="bank form-control mb-2" >
+										<option value="" selected>은행명</option> <!-- 은행명이 선택된경우 안넘어가게 자바스크립트로 -->
+										<option value="KB국민은행">KB국민은행</option>
+										<option value="신한은행">신한은행</option>
+										<option value="IBK기업은행">IBK기업은행</option>
+										<option value="우리은행">우리은행</option>
+										<option value="KEB하나은행">KEB하나은행</option>
+										<option value="SC제일은행">SC제일은행</option>
+										<option value="NH농협">NH농협</option>
+										<option value="새마을금고">새마을금고</option>
+										<option value="씨티은행">씨티은행</option>
+										<option value="한국산업은행">한국산업은행</option>
+										<option value="케이뱅크">케이뱅크</option>
+										<option value="카카오뱅크">카카오뱅크</option>
+										<option value="우체국">우체국</option>
+										<option value="수협은행">수협은행</option>
+										<option value="KDB산업은행">KDB산업은행</option>
+										<option value="광주은행">광주은행</option>
+										<option value="부산은행">부산은행</option>
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<th>계좌번호</th>
-								<td><input type="text" name="accountNum" class="form-control mb-2" placeholder="계좌번호 입력(- 제외)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /></td>
+								<td><input type="text" name="accountNum" class="form-control mb-2" placeholder="계좌번호 입력(- 제외)" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"></td>
 							</tr>
 							<tr>
 								<th>예금주명</th>
-								<td><input type="text" name="memName" class="form-control mb-2" id="test2" placeholder="실명(예금주명)만 입력" onkeyup="chk_han('test2')"></td>
+								<td><input type="text" name="memName" class="form-control mb-2" id="test2" placeholder="실명(예금주명)만 입력" required onkeyup="chk_han('test2')"></td> <!-- 현재로그인한회원의 이름 == 실명이 일치할경우만 넘어가게 자바스크립트로 -->
 							</tr>
 						</table>
 					</div>
 					
 					<!-- Modal footer -->
 					<div class="modal-footer" >
-						<button type="submit" class="btn btn btn-primary" onClick="hostCalList.re" >신청</button> 
-						<!-- <button type="submit" class="btn btn btn-secondary">취소</button>  --> 
-						<!-- 신청이 잘 되면 alert 창 띄우기! -->
+						<button type="submit" class="btn btn btn-primary" onClick="hostCalList.re">신청</button> 
+						<!-- <button type="reset" class="btn btn btn-secondary">취소</button>   -->
 					</div>
 				</form>
 			</div>
@@ -695,7 +694,20 @@
             $("#overlay").removeClass("slideon");
           });
         });
-    	
+         
+        function check_submit() 
+         { 
+          if($("#bankid").val() ==""){ 
+          alert("은행명을 선택해주세요."); 
+          
+          return false; }
+        
+        if($("input[name=memName]").val() != "${loginMember.memName}"){ 
+              alert("본인이름을 입력해주세요."); 
+              
+              return false; }	
+        } 
+        
         function chk_han(test2) {
 			var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
 			var value = $("#"+test2).val();
@@ -715,6 +727,10 @@
             }
         }
         
+        $('.modal').on('hidden.bs.modal', function (e) {
+            console.log('modal close');
+          $(this).find('form')[0].reset()
+        });
      </script>
      <c:choose>
 	     <c:when test="${loginMember.hostStatus eq 'Y'}">
