@@ -12,7 +12,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -564,6 +563,7 @@ public class SpaceController {
 			return "common/errorPage";
 		}
 	}
+
 	
 	/**
 	 * 관리자 공간 검색 - 혜민 
@@ -602,4 +602,11 @@ public class SpaceController {
 		return "space/adminSpaceSearch";
 	}
 	
+
+	@RequestMapping("bookmark.sp")
+	public String bookMark() {
+
+		return "space/mypageBookMark";
+	}
+
 }

@@ -153,11 +153,7 @@ public class ReviewController {
 		return mv;
 	}
 
-	@RequestMapping("bookmark.sp")
-	public String bookMark() {
-
-		return "space/mypageBookMark";
-	}
+	
 
 	/**
 	 * @author 희섭 함수 호출시 route에 본인 업파일 경로 넣으면됨
