@@ -558,7 +558,7 @@
             <table id="my_menubtn_tb">
                 <tr>
                     <td onclick="location.href='revHostList.re'">예약관리</td>
-                    <td onclick="location.href='hostRevList.sp'">후기관리</td>
+                    <td onclick="location.href='hostRvwList.rv'">후기관리</td>
                 </tr>
                 <tr>
                     <td onclick="location.href='hostSpaceList.sp'">공간관리</td>
