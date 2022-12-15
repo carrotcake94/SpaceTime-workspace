@@ -673,9 +673,30 @@ public class SpaceController {
 	}
 	
 
-	@RequestMapping("bookmark.sp")
-	public String bookMark() {
-
+	/**
+	 * @author 희섭 
+	 * 마이페이지 북마크
+	 */
+	@RequestMapping("mypagebookmark.sp")
+	public String selectmypagebookmark(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		
+		// System.out.println("cpage : " + currentPage);
+		//int reportMemNo= ((Member)Session.getAttribute("loginMember")).getMemNo() ;
+		Member m = (Member) session.getAttribute("loginMember");
+		int MemNo = m.getMemNo();
+		
+		int listCount = spaceService.selectmypagebookmarkListCount(MemNo);
+		
+		int pageLimit = 10;
+		int boardLimit = 5;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Space> list = spaceService.selectmypagebookmarkList(MemNo, pi);
+		System.out.println(list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
 		return "space/mypageBookMark";
 	}
 

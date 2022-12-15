@@ -303,6 +303,10 @@
       /* -------------------------------------- */
     </style>
   </head>
+  
+  <jsp:include page="../common/header.jsp" />
+  	<div id="content">
+	<div id="content_1">왼쪽여백</div>
 
   <body>
     <div id="spaceList_Host">
@@ -399,5 +403,11 @@
         <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
       </ul>
     </div>
+    <br><br><br>
+	
+	<div id="content_3"></div>
+	</div>
+	
+	<jsp:include page="../common/footer.jsp" />
   </body>
 </html>

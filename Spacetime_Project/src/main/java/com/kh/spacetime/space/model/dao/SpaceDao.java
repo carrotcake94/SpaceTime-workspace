@@ -211,6 +211,21 @@ public class SpaceDao {
 		
 		return (ArrayList)sqlSession.selectList("spaceMapper.selectSpaceSearchList", map, rowBounds);
 	}
+
+
+	// 마이페이지 북마크 -희섭
+	public int selectmypagebookmarkListCount(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return sqlSession.selectOne("commonMapper.selectMypageReportListCount", memNo);
+	}
 	
-	
+	public ArrayList<Space> selectmypagebookmarkList(SqlSessionTemplate sqlSession, int memNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectmypagebookmarkList", memNo, rowBounds);
+		
+	}
 }

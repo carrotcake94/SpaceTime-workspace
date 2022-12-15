@@ -113,6 +113,9 @@ public interface SpaceService {
 	// 관리자 공간 검색 리스트 조회 - 혜민 
 	ArrayList<Space> selectSpaceSearchList(PageInfo pi, HashMap<String, String> map);
 	
+	// 마이페이지 -희섭 
+	int selectmypagebookmarkListCount(int memNo);
 	
+	ArrayList<Space> selectmypagebookmarkList(int MemNo, PageInfo pi);
 
 }

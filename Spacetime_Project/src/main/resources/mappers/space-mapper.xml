@@ -437,4 +437,25 @@
 		ORDER By SPACE_NO DESC
 	</select>
 	
+	<!-- 마이페이지 북마크 희섭 -->
+	<select id="selectMypageReportListCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOOKMARK
+	</select>
+	
+	<select id="selectmypagebookmarkList" parameterType="_int" resultMap="spaceResultSet">
+		SELECT
+		    B.SPACE_TITLE
+		    ,B.ADDRESS_DEFAULT
+		    ,B.HOUR_PRICE
+		    ,C.ATTACHMENT_RENAME
+		FROM BOOKMARK A
+		INNER JOIN SPACE B
+		ON A.BOOKMARK_SPACE = B.SPACE_NO
+		INNER JOIN SPACE_ATTACHMENT C
+		ON B.SPACE_NO = C.SPACE_NO
+		WHERE
+		    A.BOOKMARK_MEM = ${memNo}
+	</select>
+	
 </mapper>

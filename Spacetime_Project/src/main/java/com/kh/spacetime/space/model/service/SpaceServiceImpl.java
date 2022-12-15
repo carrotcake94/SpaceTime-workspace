@@ -216,4 +216,17 @@ public class SpaceServiceImpl implements SpaceService {
 	}
 
 
+	// 마이페이지 북마크 - 희섭
+	@Override
+	public int selectmypagebookmarkListCount(int memNo) {
+		
+		return spaceDao.selectmypagebookmarkListCount(sqlSession, memNo);
+	}
+	
+	@Override
+	public ArrayList<Space> selectmypagebookmarkList(int MemNo, PageInfo pi) {
+		
+		return spaceDao.selectmypagebookmarkList(sqlSession, MemNo, pi);
+	
+	}
 }
