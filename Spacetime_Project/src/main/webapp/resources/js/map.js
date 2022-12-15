@@ -18,7 +18,7 @@ function selectList(map) {
 	});
 };
 
-function loadList(spaceListArr){
+function loadList(spaceListArr, picListArr, lineListArr){
 	//기존의 리스트 삭제
 	while(picList.hasChildNodes()){
 		picList.removeChild(picList.firstChild);
@@ -33,7 +33,9 @@ function loadList(spaceListArr){
 	for(var i in spaceListArr){
 		//리스트를 위한 div요소 생성
 		picContent = document.createElement("div");
+		picContent.setAttribute("id", "picList_" + i);
 		lineContent = document.createElement("div");
+		lineContent.setAttribute("id", "lineList_" + i);
 		
 		//리스트를 위한 내용물 생성
 		picContent.innerHTML = "<div class='picList_content' onclick='toSpaceDetail(" + spaceListArr[i].spaceNo + ")'>" +
@@ -51,6 +53,10 @@ function loadList(spaceListArr){
 									    "<div class='lineList_content_like'>" + spaceListArr[i].likeCount + "</div>" +
 								    "</div>" +
 							    "</div>";
+							    
+		picListArr.push(picContent);
+		lineListArr.push(lineContent);
+		
 		//생성된 내용물 리스트 칸 안에 넣기
 		picList.append(picContent);
 		lineList.append(lineContent);
@@ -67,7 +73,7 @@ function insertMarkers() {
         position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
     	marker = new naver.maps.Marker({
 			position : position,
-			title : i,
+			title : spaceListArr[i].spaceNo,
 			clickable: true,
 			map: map
 		});
@@ -89,14 +95,26 @@ function updateMarkers() {
 		position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
     	marker = new naver.maps.Marker({
 			position : position,
-			title : i,
+			title : spaceListArr[i].spaceNo,
+			clickable : true,
 			map: map
 		});
+		
+		naver.maps.Event.addListener(markers[i], "click", () => {
+			console.log(picListArr[i]);
+		});
+		
         markers[i] = marker;
 	}
 };
 
-
+function linkMarkerAndList(markers, picListArr, lineListArr){
+	for(var i = 0; i < markers.length; i++){
+		naver.maps.Event.addListener(markers[i], "click", () => {
+			console.log(picListArr[i]);
+		});
+	}
+}
 
 
 function filterOpenClose() {

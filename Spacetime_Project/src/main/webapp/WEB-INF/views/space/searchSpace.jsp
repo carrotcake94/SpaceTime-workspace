@@ -33,12 +33,6 @@
 					</div>
 
 					<div id="mapFilter" style="display:none;">
-						<div id="mapFilter_option_date">
-							<div class="mapFilter_option_title">날짜</div>
-							<div>
-								<input type="date" class="mapFilter_options" name="date">
-							</div>
-						</div>
 						<div>
 							<div class="mapFilter_option_title">지역</div>
 							<div>
@@ -102,28 +96,41 @@
 					//불러온 데이터를 담아두기 위한 전역변수
 					var spaceListArr = [];
 					var markers = [];
-					var marker;
 					var mapOptions = {
 						center: new naver.maps.LatLng(37.539861, 126.990815),
 				        zoom: 12	
 					};
 					var map = new naver.maps.Map('map', mapOptions);
 					var HOME_PATH = window.HOME_PATH || '.';
-
+					var picListArr = [];
+					var lineListArr = [];
+/* 					var pointer = document.querySelectorAll("#div[title]");
+					
+					pointer.addEventListener("click", (e) => {
+						console.log(e);
+					}) */
+					/* 
+					for(var i = 0; i < markers.length; i++){
+						naver.maps.Event.addListener(markers[i], "click", (i) => {
+							console.log(i);
+						});
+					} */
+					
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
 						selectList(map);
-						loadList(spaceListArr);
-						insertMarkers();
+						loadList(spaceListArr, picListArr, lineListArr);
+						updateMarkers();
+						//linkMarkerAndList(markers, picListArr, lineListArr);
  					};
-					
-					
+ 					
 					//지도 이동 후 해당 범위의 장소 재검색
 					var changeMap = document.querySelector("#changeMap");
 					changeMap.onclick = () => {
 						selectList(map);
-						loadList(spaceListArr);
+						loadList(spaceListArr, picListArr, lineListArr);
 						updateMarkers();
+						linkMarkerAndList(markers, picListArr, lineListArr);
 					};
 					 
 					
@@ -151,11 +158,7 @@
 						loadList(spaceListArr);
 						updateMarkers();
 					};
-					/* 
-					naver.maps.Event.addListener(markers, "click", (e) => {
-						console.log(e.target);
-					});
-					 */
+
 					picList.onmouseover = (e) => {
 						//console.log(e.target);
 					};
