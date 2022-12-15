@@ -362,10 +362,10 @@
 		FROM SPACE
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		<if test="tab == '전체 공간'">
-			WHERE SPACE_STATUS IN ('Y', 'N', 'D')
+			WHERE SPACE_STATUS IN ('Y', 'N', 'W')
 		</if>
 		<if test="tab == '미처리 공간'">
-			WHERE SPACE_STATUS = 'N'
+			WHERE SPACE_STATUS = 'W'
 		</if>
 		<if test="tab == '승인된 공간'">
 			WHERE SPACE_STATUS = 'Y'
@@ -380,6 +380,34 @@
 		  , DENY_MESSAGE = #{denyMessage}
 		WHERE SPACE_NO = #{spaceNo}
 	</update>
-
+	
+	<!-- 관리자 공간 검색 개수 조회 - 혜민 -->
+	<select id="selectSpaceSearchListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM SPACE
+		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
+		<if test="condition == 'hostId'">
+			WHERE MEM_ID
+		</if>
+		<if test="condition == 'spaceTitle'">
+			WHERE SPACE_TITLE
+		</if>
+		LIKE '%' || #{keyword} || '%'	
+	</select>
+	
+	<!-- 관리자 공간 검색 리스트 조회 - 혜민 -->
+	<select id="selectSpaceSearchList" parameterType="hashmap" resultMap="spaceResultSet">
+		SELECT SPACE_NO, M.MEM_ID AS "HOST_NO", SPACE_TITLE, STYPE_NO, SPACE_STATUS, DENY_MESSAGE
+		FROM SPACE
+		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
+		<if test="condition == 'hostId'">
+			WHERE M.MEM_ID
+		</if>
+		<if test="condition == 'spaceTitle'">
+			WHERE SPACE_TITLE
+		</if>
+		LIKE '%' || #{keyword} || '%'	
+		ORDER By SPACE_NO DESC
+	</select>
 	
 </mapper>

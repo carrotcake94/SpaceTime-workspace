@@ -122,26 +122,36 @@
         
         <!-- 검색창 -->
         <div id="search">
-            <table align="center" id="searchForm">
-                <tr>
-                    <td align="right">
-                        <select name="cate" class="select_category form-control mb-2" style="width:70%;">
-                            <option value="All" selected>전체</option>
-                            <option value="name`">이름</option>
-                            <option value="id">아이디</option>
-                            <option value="nickName">닉네임</option>
-                            <option value="email">이메일</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
-                    </td>
-                    <td align="left">
-                        <button type="submit" class="btn btn-secondary mb-2">검색</button>
-                    </td>
-                </tr>
-            </table>
+            <form action="searchM.ad" method="get">
+                <table align="center" id="searchForm">
+                    <tr>
+                        <td align="right">
+                            <input type="hidden" name="currentPage" value="1">
+                            <select name="condition" class="select_category form-control mb-2" style="width:70%;">
+		                          <option value="name">이름</option>
+		                          <option value="id">아이디</option>
+		                          <option value="nickName">닉네임</option>
+		                          <option value="email">이메일</option>
+		                      </select>
+                        </td>
+                        <td>
+                            <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}">
+                        </td>
+                        <td align="left">
+                            <button type="submit" class="btn btn-secondary mb-2">검색</button>
+                        </td> 
+                    </tr>
+                </table>
+            </form>
         </div>
+        
+        <c:if test="${ not empty condition }">
+                <script>
+                    $(function() {
+                        $("#searchForm option[value=${ condition }]").attr("selected", true);
+                    });
+                </script>
+            </c:if>
 
         <!-- 컨텐츠 탭 -->
         <div id="tab">
@@ -166,14 +176,6 @@
             
                 <!--============================ 전체 조회 ============================-->            
                 <div class="tab-pane container active" id="all" align="right" >
-<!--                     <div class="gradeCate" style="width:15%;">
-                        <select name="cate" class="select_category form-control mb-2">
-                            <option value="grade" selected width="15%;">등급</option>
-                            <option value="sun">태양</option>
-                            <option value="moon">지구</option>
-                            <option value="earth">달</option>
-                        </select>
-                    </div> -->
                     <table class="table memberList">
                         <thead>
                             <tr>

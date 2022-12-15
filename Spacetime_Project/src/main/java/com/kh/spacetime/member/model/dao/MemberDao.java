@@ -141,6 +141,12 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", map, rowBounds);
 	}
 	
+	/**
+	 * 회원정보 상세조회 - 혜민 
+	 * @param sqlSession
+	 * @param memNo
+	 * @return
+	 */
 	public Member selectMember(SqlSessionTemplate sqlSession, int memNo) {
 		
 		return sqlSession.selectOne("memberMapper.selectMember", memNo);
@@ -158,5 +164,31 @@ public class MemberDao {
 	
 
 	
+	/**
+	 * 회원 검색 개수 조회 - 혜민 
+	 * @param sqlSession
+	 * @param map
+	 * @return
+	 */
+	public int selectMemberSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		
+		return sqlSession.selectOne("memberMapper.selectMemberSearchListCount", map);
+	}
 	
+	/**
+	 * 회원 검색 리스트 조회 - 혜민 
+	 * @param sqlSession
+	 * @param pi
+	 * @param map
+	 * @return
+	 */
+	public ArrayList<Member> selectMemberSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberSearchList", map, rowBounds);
+	}
 }

@@ -145,7 +145,6 @@
 			WHERE MEM_STATUS = 'N'
 			  AND BLACKLIST_YN = 'Y'
 		</if>
-		AND MEM_STATUS = 'N'
 	</select>
 	
 	<!-- 회원 리스트 조회용 쿼리문 - 혜민 -->
@@ -197,5 +196,47 @@
 		 		,HOST_STATUS = 'Y'
 		WHERE MEM_ID = #{memId}
 	</update>
+	
+	<!-- 회원 검색 개수 조회용 쿼리문 - 혜민 -->
+	<select id="selectMemberSearchListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEM_STATUS = 'N'
+		<if test="condition == 'name'">
+		    AND MEM_NAME
+		</if>
+		<if test="condition == 'id'">
+		    AND MEM_ID
+		</if>
+		<if test="condition == 'nickName'">
+		    AND NICKNAME
+		</if>
+		<if test="condition == 'email'">
+			AND EMAIL
+		</if>
+		LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 회원 검색 조회용 쿼리문 - 혜민 -->
+	<select id="selectMemberSearchList" parameterType="hashmap" resultMap="memberResultSet">
+		SELECT MEM_NO, MEM_NAME, MEM_ID, NICKNAME, GR_NAME AS "GR_CODE", ENROLL_DATE, MEM_STATUS, BLACKLIST_YN
+		FROM MEMBER
+		JOIN MEMBER_GRADE USING (GR_CODE)
+		WHERE MEM_STATUS = 'N'
+		<if test="condition == 'name'">
+		    AND MEM_NAME
+		</if>
+		<if test="condition == 'id'">
+		    AND MEM_ID
+		</if>
+		<if test="condition == 'nickName'">
+		    AND NICKNAME
+		</if>
+		<if test="condition == 'email'">
+		    AND EMAIL
+		</if>
+		LIKE '%' || #{keyword} || '%'
+		ORDER BY MEM_NO DESC
+	</select>
 	
 </mapper>

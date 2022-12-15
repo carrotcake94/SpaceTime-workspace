@@ -34,4 +34,6 @@ public class Member {
     private String blacklistReason;// BLACKLIST_REASON VARCHAR2(4000),
     private String memStatus; // MEM_STATUS CHAR(1) DEFAULT 'N' NOT NULL CONSTRAINT MEM_STATUS_CK CHECK(MEM_STATUS IN ('Y', 'N')),
     private String grCode; // GR_CODE CHAR(3) NOT NULL,
+    
+    private String grName; // join 용 
 }

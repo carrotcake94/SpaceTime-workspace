@@ -540,4 +540,46 @@ public class MemberController {
 	}
 	
 	}
+	
+	/**
+	 * 회원 검색 메소드 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @param condition
+	 * @param keyword
+	 * @return
+	 */
+	@RequestMapping("searchM.ad")
+	public String selectMemberSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		System.out.println(map);
+		
+		int listCount = memberService.selectMemberSearchListCount(map);
+		
+		System.out.println(listCount);
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Member> list = memberService.selectMemberSearchList(pi, map);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		System.out.println(pi);
+		System.out.println(list);
+		System.out.println(condition);
+		System.out.println(keyword);
+		
+		return "member/adminMemberSearch";
+	}
+	
 }

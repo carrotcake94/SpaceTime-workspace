@@ -115,25 +115,27 @@
         <div align="left" id="title"><h3>공간 관리</h3></div>
         
         <!-- 검색창 -->
-        <div id="search">
-            <table align="center" id="searchForm">
-                <tr>
-                    <td align="right">
-                        <select name="cate" class="select_category form-control mb-2" style="width:70%;">
-                            <option value="All" selected>전체</option>
-                            <option value="reportedMemId">호스트ID</option>
-                            <option value="reportMemId">공간이름</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
-                    </td>
-                    <td align="left">
-                        <button type="submit" class="btn btn-secondary mb-2">검색</button>
-                    </td> 
-                </tr>
-            </table>
-        </div>
+            <div id="search">
+                <form action="searchSp.ad" method="get">
+                    <table align="center" id="searchForm">
+                        <tr>
+                            <td align="right">
+                                <input type="hidden" name="currentPage" value="1">
+                                <select name="condition" class="select_category form-control mb-2" style="width:70%;">
+                                    <option value="hostId">호스트ID</option>
+                                    <option value="spaceTitle">공간명</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}">
+                            </td>
+                            <td align="left">
+                                <button type="submit" class="btn btn-secondary mb-2">검색</button>
+                            </td> 
+                        </tr>
+                    </table>
+                </form>
+            </div>
 
         <!-- 컨텐츠 탭 -->
         <div id="tab">

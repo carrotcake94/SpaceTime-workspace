@@ -48,7 +48,7 @@
     /* 탭 메뉴 */
     #tab {
         margin: auto;
-        margin-top: 40px;;
+        margin-top: 40px;
         width: 100%;
         min-width: 600px;
     }

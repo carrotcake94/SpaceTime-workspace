@@ -565,4 +565,41 @@ public class SpaceController {
 		}
 	}
 	
+	/**
+	 * 관리자 공간 검색 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @param condition
+	 * @param keyword
+	 * @return
+	 */
+	@RequestMapping("searchSp.ad")
+	public String selectSpaceSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		System.out.println(map);
+		
+		int listCount = spaceService.selectSpaceSearchListCount(map);
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Space> list = spaceService.selectSpaceSearchList(pi, map);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		// System.out.println(pi);
+		// System.out.println(list);
+		
+		return "space/adminSpaceSearch";
+	}
+	
 }

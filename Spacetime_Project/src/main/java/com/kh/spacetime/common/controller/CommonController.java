@@ -160,6 +160,41 @@ public class CommonController {
 	}
 	
 	/**
+	 * 관리자 신고검색 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @param condition
+	 * @param keyword
+	 * @return
+	 */
+	@RequestMapping("searchR.ad")
+	public String selectReportSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int listCount = commonService.selectReportSearchListCount(map);
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Report> list = commonService.selectReportSearchList(pi, map);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		System.out.println(pi);
+		System.out.println(list);
+		
+		return "common/adminReportSearch";
+	}
+	
+	/**
 	 * 관리자 매출관리 리스트 조회 메소드 - 혜민 
 	 * @param currentPage
 	 * @param model

@@ -84,6 +84,45 @@
 		WHERE REPORT_NO = #{reportNo}
 	</update>
 	
+	<!-- 신고 검색 글 개수 -->
+	<select id="selectReportSearchListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		JOIN MEMBER M ON (REPORT_MEM_NO = M.MEM_NO)
+		JOIN MEMBER M2 ON (REPORTED_MEM_NO = M2.MEM_NO)
+		WHERE REPORT_STATUS IN ('Y', 'N', 'D')
+		<if test="condition == 'reportedMem'">
+		    AND M2.MEM_ID
+		</if>
+		<if test="condition == 'reportMem'">
+		    AND M.MEM_ID
+		</if>
+		<if test="condition == 'reportContent'">
+		    AND REPORT_CONTENT
+		</if>
+		LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 신고 검색 리스트 조회 -->
+	<select id="selectReportSearchList" parameterType="hashmap" resultMap="reportResultSet">
+		SELECT REPORT_NO, M2.MEM_ID AS "REPORTED_MEM_NO", REPORT_TYPE, REPORT_CONTENT, TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS "REPORT_DATE", REPORT_STATUS
+		FROM REPORT 
+		JOIN MEMBER M ON (REPORT_MEM_NO = M.MEM_NO)
+		JOIN MEMBER M2 ON (REPORTED_MEM_NO = M2.MEM_NO)
+		WHERE REPORT_STATUS IN ('Y', 'N', 'D')
+		<if test="condition == 'reportedMem'">
+		    AND M2.MEM_ID
+		</if>
+		<if test="condition == 'reportMem'">
+		    AND M.MEM_ID
+		</if>
+		<if test="condition == 'reportContent'">
+		    AND REPORT_CONTENT
+		</if>
+		LIKE '%' || #{keyword} || '%'
+		ORDER BY REPORT_NO DESC
+	</select>
+	
 	<!-- 매출이 있는 공간 총 개수 -->
 	<select id="selectSalesListCount" resultType="_int">
 		SELECT COUNT(*)

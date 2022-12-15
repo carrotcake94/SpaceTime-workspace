@@ -134,7 +134,23 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.inserthostRequest(sqlSession, m);
 	}
 
-	
+	/**
+	 * 회원 검색 개수 조회 - 혜민 
+	 */
+	@Override
+	public int selectMemberSearchListCount(HashMap<String, String> map) {
+		
+		return memberDao.selectMemberSearchListCount(sqlSession, map);
+	}
+
+	/**
+	 * 회원 검색 리스트 조회 - 혜민 
+	 */
+	@Override
+	public ArrayList<Member> selectMemberSearchList(PageInfo pi, HashMap<String, String> map) {
+
+		return memberDao.selectMemberSearchList(sqlSession, pi, map);
+	}
 
 		
 

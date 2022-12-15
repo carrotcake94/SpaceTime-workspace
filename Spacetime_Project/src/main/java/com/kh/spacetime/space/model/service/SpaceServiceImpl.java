@@ -178,5 +178,19 @@ public class SpaceServiceImpl implements SpaceService {
 		return spaceDao.updateAdminSpace(sqlSession, map);
 	}
 
+	// 관리자 공간 검색 개수 - 혜민 
+	@Override
+	public int selectSpaceSearchListCount(HashMap<String, String> map) {
+
+		return spaceDao.selectSpaceSearchListCount(sqlSession, map);
+	}
+
+	// 관리자 공간 검색 리스트 조회 - 혜민 
+	@Override
+	public ArrayList<Space> selectSpaceSearchList(PageInfo pi, HashMap<String, String> map) {
+
+		return spaceDao.selectSpaceSearchList(sqlSession, pi, map);
+	}
+
 
 }

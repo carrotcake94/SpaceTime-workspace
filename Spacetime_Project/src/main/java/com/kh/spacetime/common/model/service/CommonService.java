@@ -20,6 +20,12 @@ public interface CommonService {
 	
 	// 신고 처리 (승인, 반려)
 	int updateReport(HashMap<String, String> map);
+
+	// 신고 검색 글 개수
+	int selectReportSearchListCount(HashMap<String, String> map);
+
+	// 신고 검색 리스트 조회 
+	ArrayList<Report> selectReportSearchList(PageInfo pi, HashMap<String, String> map);
 	
 	// 매출이 있는 공간 총 개수 
 	int selectSalesListCount();

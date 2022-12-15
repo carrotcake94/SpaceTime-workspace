@@ -190,7 +190,6 @@
                             <img src="resources/images/profile_default.png" class="mem_img photo">
                         </c:otherwise>
                     </c:choose>
-                    <span class="memEdit"><a class="mamEdit" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pencil"></i></a></span>
                     <br>
                     <div style="height:30px;">
                         <b>${ loginMember.nickname }</b>&nbsp;&nbsp;

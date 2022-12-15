@@ -48,6 +48,21 @@ public class CommonServiceImpl implements CommonService {
 		
 		return commonDao.updateReport(sqlSession, map);
 	}
+	
+	// 신고 검색 글 개수
+	@Override
+	public int selectReportSearchListCount(HashMap<String, String> map) {
+		
+		return commonDao.selectReportSearchListCount(sqlSession, map);
+	}
+
+	// 신고 검색 리스트 조회 
+	@Override
+	public ArrayList<Report> selectReportSearchList(PageInfo pi, HashMap<String, String> map) {
+		
+		return commonDao.selectReportSearchList(sqlSession, pi, map);
+	}
+
 
 	// 매출이 있는 공간 총 개수 
 	@Override
@@ -103,6 +118,7 @@ public class CommonServiceImpl implements CommonService {
 			
 		return commonDao.selectMypageReportList(sqlSession, reportMemNo, pi);
 	}
+
 
 
 

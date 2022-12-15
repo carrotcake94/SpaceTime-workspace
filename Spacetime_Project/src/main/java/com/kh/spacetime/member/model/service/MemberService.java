@@ -50,8 +50,12 @@ public interface MemberService {
 	
 	// 회원정보 상세조회 
 	Member selectMember(int memNo);
-
 	
+	// 회원 검색 개수 조회 
+	int selectMemberSearchListCount(HashMap<String, String> map);
+	
+	// 회원 검색 리스트 조회 
+	ArrayList<Member> selectMemberSearchList(PageInfo pi, HashMap<String, String> map);
 	
 	
 }

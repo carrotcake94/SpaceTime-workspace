@@ -70,33 +70,6 @@
         text-align: center;
     }
 
-    /* 신고 상세정보 모달창 */
-    /* 신고 정보 영역 */
-    .report_info {
-        margin: auto;
-        width: 90%;
-    }
-
-    /* 신고 상세 정보 테이블 */
-    #report_detail {
-        border-bottom: 2px solid lightgray;
-    }
-    #report_detail th, #report_detail td { height: 60px; }
-    #report_detail th { width: 150px;}
-
-    /* 신고 내용 only 내용 */
-    .reportContent {
-        border-top: 2px solid lightgray; 
-        height:150px;
-    }
-    .reportContent td { padding: 20px 0px;}
-
-    /* 승인, 반려 선택 */
-    #reportStatus { width: 30%;}
-
-    /* 관리자 답변 영역 */
-    .report_answer { margin-top: 20px;}
-
     /* 페이지 버튼 */
     .pagination {
         margin: auto;
@@ -141,25 +114,35 @@
         
         <!-- 검색창 -->
         <div id="search">
-            <table align="center" id="searchForm">
-                <tr>
-                    <td align="right">
-                        <select name="cate" class="select_category form-control mb-2" style="width:70%;">
-                            <option value="All" selected>전체</option>
-                            <option value="reportedMemId">신고대상ID</option>
-                            <option value="reportMemId">신고자ID</option>
-                            <option value="reportContent">내용</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요.">
-                    </td>
-                    <td>
-                        <button type="submit" class="btn btn-secondary mb-2">검색</button>
-                    </td> 
-                </tr>
-            </table>
+            <form action="searchR.ad" method="get">
+                <table align="center" id="searchForm">
+                    <tr>
+                        <td align="right">
+                            <input type="hidden" name="currentPage" value="1">
+                            <select name="condition" class="select_category form-control mb-2" style="width:70%;">
+                                <option value="reportedMem">신고대상ID</option>
+                                <option value="reportMem">신고자ID</option>
+                                <option value="reportContent">신고내용</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}">
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-secondary mb-2">검색</button>
+                        </td> 
+                    </tr>
+                </table>
+            </form>
         </div>
+        
+        <c:if test="${ not empty condition }">
+			<script>
+				$(function() {
+					$("#searchForm option[value=${ condition }]").attr("selected", true);
+				});
+			</script>
+		</c:if>
 
         <!-- 컨텐츠 탭 -->
         <div id="tab" >
@@ -380,11 +363,8 @@
                 console.log("탭 선택 ajax 통신 실패ㅠㅠ");
             }
         });
-    
     }
-
     </script>
-
     
 </body>
 </html>

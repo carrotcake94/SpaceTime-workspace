@@ -43,6 +43,23 @@ public class CommonDao {
 		return sqlSession.update("commonMapper.updateReport", map);
 	}
 	
+	// 신고 검색 글 개수
+	public int selectReportSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		
+		return sqlSession.selectOne("commonMapper.selectReportSearchListCount", map);
+	}
+	
+	// 신고 검색 리스트 조회 
+	public ArrayList<Report> selectReportSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("commonMapper.selectReportSearchList", map, rowBounds);
+	}
+	
 	// 매출이 있는 공간 리스트 페이징  
 	public int selectSalesListCount(SqlSessionTemplate sqlSession) {
 		
