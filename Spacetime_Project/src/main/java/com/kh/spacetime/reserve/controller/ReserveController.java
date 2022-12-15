@@ -200,17 +200,14 @@ public class ReserveController {
 		int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
 
 		int listCount = reserveService.selectMyReserveListCount(memNo);
-		System.out.println(listCount);
 		int pageLimit = 10;
 		int boardLimit = 9;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Reserve> list = reserveService.selectMyReservetList(pi, memNo);
-
+		
 		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-
 		model.addAttribute("list", list);
 
 //		System.out.println(list);

@@ -24,7 +24,6 @@ import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.ReviewService;
 import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
-import com.kh.spacetime.space.model.vo.SpaceAttachment;
 
 @Controller
 public class ReviewController {
@@ -202,6 +201,7 @@ public class ReviewController {
 	@RequestMapping("insert.re")
 	public String insertReview(Review r, MultipartFile[] upfile, HttpSession session, Model model) {
 
+
 		int j= 0;
 		for (int i = 0; i < upfile.length; i++) {
 			if (!upfile[i].getOriginalFilename().equals("")) {
@@ -221,12 +221,13 @@ public class ReviewController {
 		int result = reviewService.insertReview(r);
 
 		if (result > 0) {
-			
+			session.setAttribute("alertMsg", "리뷰를 등록했습니다.");
+			return "redirect:/myReserve.re";
 		} else {
-			
+			session.setAttribute("alertMsg", "리뷰를 등록하지 못했습니다.");
+			return "common:/errorPage";
 		}
 
-		return "redirect:/myReserve.re";
 	}
 
 	/**

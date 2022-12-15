@@ -552,9 +552,9 @@
 				
 				              <c:set var="today" value="<%= today %>" /> 
 							
-								      <!-- ststus 가 'Y' 이고 사용일이 현재날짜를 지난 경우 -->
+								      <!-- ststus 가 'Y' 이고 사용일이 현재날짜를 지난 경우 그리고 작성한 리뷰가 없을경우 -->
 				              <c:choose>
-				                <c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate)}">
+				                <c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate) and (r.spaceNo eq 0) }">
 				                  <div class="space_btn_area">
 				                  <button style="width: 70%" class="btn btn-warning" onclick="openRevEnrollModal(this)" >리뷰 작성하기</button>
 				                  <button style="width: 30%" class="btn btn-danger" data-toggle="modal" data-target="#report-Modal">신고하기</button>
@@ -568,7 +568,7 @@
 						                	$(function() {
 						                		$(".detailBtn").click(function() {
 						                			/* console.log($(".rnoInput").val()); */
-						                			location.href = "reserveDetail.re?rno=" + $(".rnoInput").val();
+						                			location.href = "reserveDetail.re?rno=" + $(this).parent().prev().children(".rnoInput").val();
 						                		});
 						                	});
 				                	</script>
@@ -697,7 +697,7 @@
             <div class="modal-content">
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form id="reviewForm" action="insert.re">
+                    <form id="reviewForm" action="insert.re" method="post" enctype="multipart/form-data" >
                         <input type="hidden" name="reserveNo" value="">
                         <input type="hidden" name="rating" value="">
                         <input type="hidden" name="memNo" value="${loginMember.memNo}">
@@ -733,7 +733,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                    <button type="submit" class="btn btn-primary">등록</button>
+                    <button type="button" class="btn btn-primary" onclick="reviewSub()">등록</button>
                 </div>
             </div>
         </div>
@@ -764,7 +764,20 @@
 			$("#reviewEnrollModal #sptitle").text(stitle);
 			$("#reviewEnrollModal").modal("show");
 		}
-	
+		reviewSub = () => {
+			
+			if($("input[name=rating]").val() == "") {
+			      alert("평점을 등록해주세요.");
+			      return false;
+			}
+			if($("textarea[name=reviewCont]").val().trim() == "") {
+			      alert("리뷰 내용을 입력해주세요.");
+			      return false;
+			}
+			$("#reviewForm").submit();
+		}
+		
+		
         $(function () {
             $("#starArea span").click(function () {
                 var rating = $(this).attr("class").substr(1);
