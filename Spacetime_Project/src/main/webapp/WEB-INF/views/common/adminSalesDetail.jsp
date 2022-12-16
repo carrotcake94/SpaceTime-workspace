@@ -58,7 +58,13 @@
     }
     #sales_detail th, #sales_detail td { height: 60px; }
 
-    /* 신고 내용 only 내용 */
+    /* 공간명 */
+    .spTitle:hover {
+        color : green;
+        cursor: pointer;
+    }
+
+    /* 매출 내용 only 내용 */
     .salesContent {
         border-top: 2px solid lightgray; 
         height:150px;
@@ -133,6 +139,7 @@
                 <div class="sales_info" align="center">
                     <table id="sales_detail"> 
                         <tr>
+                        	<input type="hidden" name="month" value="${month}">
                             <input type="hidden" name="sno" value="${r.spaceNo}">
                             <th style="width: 110px;">호스트명</th>
                             <td class="sales_detail_content">${r.memName} &nbsp;&nbsp;
@@ -154,7 +161,7 @@
                         </tr> 
                         <tr>
                             <th>공간명</th> 
-                            <td class="sales_detail_content" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" onclick="">${r.spaceTitle}</td>
+                            <td class="sales_detail_content spTitle" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" onclick="window.open('detail.sp?sno=' + ${r.spaceNo}, '', 'width=1400, height=1000, location=no, status=no, scrollbars=yes');">${r.spaceTitle}</td>
                         </tr> 
                         <tr style="border-top: 2px solid lightgray;">
                             <th>매출 내역</th>
@@ -178,8 +185,8 @@
                             </td>
                         </tr>             
                     </table>
-                    <div align="center" style="margin-top: 30px; margin-bottom: 20px">
-                        <h4>10월 총 매출액 : <b>${r.income} 원</b></h4>
+                    <div align="center" style="margin-top: 30px; margin-bottom: 20px" id="resultIncome">
+                    	<h4>${month} 월 총 매출액 : <b>${r.income} 원</b></h4>
                     </div>
                 </div>
                 
@@ -192,13 +199,6 @@
     
     <!-- 매출내역 리스트 조회, 페이징 처리 -->
     <script>
-    /* 	<c:forEach var="r" items="${list}">
-            <tr>
-                <td>${r.useDate}</td>
-                <td>${r.price}</td>
-                <td>(${r.price}*0.1)</td>
-            </tr>
-        </c:forEach> */
         
         $(function() {
             showSalesList();
@@ -206,16 +206,18 @@
         
         function showSalesList(sno, currentPage) {
             
-            var sno = ${r.spaceNo}
+            var sno = ${r.spaceNo};
+            var month = $("#sales_detail tr").children().eq(0).val();
             
             $.ajax({
-                url : "ajaxslist.ad",
-                data : { sno : sno, cpage : currentPage },
+                url : "ajaxsdlist.ad",
+                data : { sno : sno, month : month, cpage : currentPage },
                 success : function(result) {
                     
                     console.log(result);
                     console.log(sno);
                     
+                    /* 매출 내역 리스트 뽑기 */
                     var resultStr = "";
                     
                     for(var i = 0; i < result.list.length; i++) {
@@ -227,6 +229,14 @@
 
                     $(".myTable").html(resultStr); 
                     
+                    /* 매출 총합 뽑기 */
+                    /* var resultIncome = "";
+                  
+	                resultIncome += "<h4>월 총 매출액 : <b>원</b></h4>"
+	                
+	                $("#resultIncome").html(resultIncome); */
+                    
+	                /* 매출 내역 리스트 페이징처리 */
                     var resultPi = "";
                     
                         if(result.pi.currentPage == 1) {
@@ -248,7 +258,7 @@
                         if(result.pi.currentPage == result.pi.maxPage) {
                             resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
                         } else {
-                            resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showSalesList(" + sno + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
+                            resultPi += "<li class='page-it1em no-page-next'><a class='page-link' href='#' onclick='showSalesList(" + sno + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
                         }
 
                     $(".pagination").html(resultPi);

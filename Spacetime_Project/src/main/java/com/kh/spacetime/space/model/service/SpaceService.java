@@ -115,7 +115,7 @@ public interface SpaceService {
 	ArrayList<Space> selectAdminSpaceList(PageInfo pi, HashMap<String, String> map);
 
 	// 관리자 공간 처리 (승인, 반려) - 혜민 
-	int updateAdminSpace(HashMap<String, Object> map);
+	int updateAdminSpace(HashMap<String, String> map);
 	
 	// 관리자 공간 검색 개수 - 혜민 
 	int selectSpaceSearchListCount(HashMap<String, String> map);

@@ -432,7 +432,7 @@
 			WHERE SPACE_STATUS IN ('Y', 'N', 'W')
 		</if>
 		<if test="tab == '미처리 공간'">
-			WHERE SPACE_STATUS = 'N'
+			WHERE SPACE_STATUS = 'W'
 		</if>
 		<if test="tab == '승인된 공간'">
 			WHERE SPACE_STATUS = 'Y'

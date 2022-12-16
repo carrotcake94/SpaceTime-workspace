@@ -28,19 +28,19 @@ public interface CommonService {
 	ArrayList<Report> selectReportSearchList(PageInfo pi, HashMap<String, String> map);
 	
 	// 매출이 있는 공간 총 개수 
-	int selectSalesListCount();
+	int selectSalesListCount(String month);
 	
 	// 매출이 있는 공간 리스트 조회 
-	ArrayList<Reserve> selectSalesList(PageInfo pi);
+	ArrayList<Reserve> selectSalesList(PageInfo pi, String month);
 
 	// 공간 매출 상세조회 
 	Reserve selectSales(int spaceNo);
 	
 	// 매출이 있는 공간의 상세 매출 총 개수
-	int selectSalesDetailCount(int spaceNo);
+	int selectSalesDetailCount(HashMap<String, String> map);
 	
 	// 매출이 있는 공간의 상세 매출 조회
-	ArrayList<Reserve> selectSalesDetailList(PageInfo pi, int spaceNo);
+	ArrayList<Reserve> selectSalesDetailList(PageInfo pi, HashMap<String, String> map);
 	
 	// 검색어 자동완성
 	ArrayList<String> autoComplete(String keyword);

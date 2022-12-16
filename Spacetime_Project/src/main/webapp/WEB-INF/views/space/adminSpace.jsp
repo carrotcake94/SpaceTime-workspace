@@ -135,8 +135,8 @@
                             <td align="right">
                                 <input type="hidden" name="currentPage" value="1">
                                 <select name="condition" class="select_category form-control mb-2" style="width:70%;">
-                                    <option value="hostId">호스트ID</option>
                                     <option value="spaceTitle">공간명</option>
+                                    <option value="hostId">호스트ID</option>
                                 </select>
                             </td>
                             <td>
@@ -315,10 +315,6 @@
         </div>
     </div>
     
-    <!-- 검수 모달창 보여지는 테이블 다르게하기 -->
-    <script>
-	</script>
-    
     <!-- 검수 모달창으로 공간 번호 보내기 -->
     <script>
         $(".spaceList>tbody").on("click", "#changeStatus", function() {
@@ -335,31 +331,36 @@
             var denyMessage = $(this).children().eq(5).val();
             $(".modal-body .DM").text(denyMessage);
             
-            /* 공간검수 모달창에서 공간명 클릭시 새탭으로 상세정보 확인하기 */
-            $("#spStatus").on("click",".spTitle", function() {
-                window.open("detail.sp?sno=" + spaceNo); 
-            });
-            
-            console.log(spaceStatus);
+            console.log(spaceStatus);                                                
             
             if (spaceStatus == '승인대기') {
-            	$('#spaceStatusW').show();
-	            $('#spaceStatusY').hide();
-	            $('#spaceStatusN').hide();
-	            
-	        } else if(spaceStatus == '승인') {
-	        	$('#spaceStatusY').show();
-	        	$('#spaceStatusW').hide();
-	            $('#spaceStatusN').hide();
-	            
-	        } else if(spaceStatus == '반려') {
-	        	$('#spaceStatusN').show();
-	        	$('#spaceStatusW').hide();
-	            $('#spaceStatusY').hide();
-	            
-	        } 
+                $('#spaceStatusW').show();
+                $('#spaceStatusY').hide();
+                $('#spaceStatusN').hide();
+                
+            } else if(spaceStatus == '승인') {
+                $('#spaceStatusY').show();
+                $('#spaceStatusW').hide();
+                $('#spaceStatusN').hide();
+                
+            } else if(spaceStatus == '반려') {
+                $('#spaceStatusN').show();
+                $('#spaceStatusW').hide();
+                $('#spaceStatusY').hide();
+                
+            } 
 
         });
+        
+        /* 공간검수 모달창에서 공간명 클릭시 새탭으로 상세정보 확인하기 */
+        $("#spStatus").on("click",".spTitle", function() {
+            
+            var spaceNo = $(".spno").val();
+                
+            console.log(spaceNo);
+            window.open('detail.sp?sno=' + spaceNo,'', 'width=1400, height=1000, location=no, status=no, scrollbars=yes');
+        });
+        
     </script>
     
     <!-- 탭 리스트 불러오기... -->

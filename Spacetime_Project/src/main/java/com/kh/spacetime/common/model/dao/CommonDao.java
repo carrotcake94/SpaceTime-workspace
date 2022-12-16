@@ -61,21 +61,20 @@ public class CommonDao {
 	}
 	
 	// 매출이 있는 공간 리스트 페이징  
-	public int selectSalesListCount(SqlSessionTemplate sqlSession) {
+	public int selectSalesListCount(SqlSessionTemplate sqlSession, String month) {
 		
-		return sqlSession.selectOne("commonMapper.selectSalesListCount");
+		return sqlSession.selectOne("commonMapper.selectSalesListCount", month);
 	}
 	
 	// 매출이 있는 공간 리스트 조회
-	public ArrayList<Reserve> selectSalesList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		// System.out.println("dao까지 오나?");
+	public ArrayList<Reserve> selectSalesList(SqlSessionTemplate sqlSession, PageInfo pi, String month) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesList", month, rowBounds);
 	}
 	
 	// 공간 매출 상세조회 
@@ -85,20 +84,20 @@ public class CommonDao {
 	}
 	
 	// 매출이 있는 공간의 상세 매출 총 개수
-	public int selectSalesDetailCount(SqlSessionTemplate sqlSession, int spaceNo) {
+	public int selectSalesDetailCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		
-		return sqlSession.selectOne("commonMapper.selectSalesDetailCount", spaceNo);
+		return sqlSession.selectOne("commonMapper.selectSalesDetailCount", map);
 	}
 	
 	// 매출이 있는 공간의 상세 매출 조회
-	public ArrayList<Reserve> selectSalesDetailList(SqlSessionTemplate sqlSession, PageInfo pi, int spaceNo) {
+	public ArrayList<Reserve> selectSalesDetailList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesDetailList", spaceNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesDetailList", map, rowBounds);
 	}
 	
 	//검색어 자동완성기능 - 성훈

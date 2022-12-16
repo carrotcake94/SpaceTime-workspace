@@ -212,8 +212,8 @@ public class SpaceDao {
 	}
 
 	// 관리자 공간 처리 (승인, 반려) - 혜민
-	public int updateAdminSpace(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
-		return sqlSession.selectOne("spaceMapper.updateAdminSpace", map);
+	public int updateAdminSpace(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("spaceMapper.updateAdminSpace", map);
 	}
 
 	// 관리자 공간 검색 개수 - 혜민

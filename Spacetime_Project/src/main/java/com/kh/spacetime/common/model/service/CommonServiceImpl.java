@@ -66,16 +66,16 @@ public class CommonServiceImpl implements CommonService {
 
 	// 매출이 있는 공간 총 개수 
 	@Override
-	public int selectSalesListCount() {
+	public int selectSalesListCount(String month) {
 		
-		return commonDao.selectSalesListCount(sqlSession);
+		return commonDao.selectSalesListCount(sqlSession, month);
 	}
 
 	// 매출이 있는 공간 리스트 조회 
 	@Override
-	public ArrayList<Reserve> selectSalesList(PageInfo pi) {
+	public ArrayList<Reserve> selectSalesList(PageInfo pi, String month) {
 		
-		return commonDao.selectSalesList(sqlSession, pi);
+		return commonDao.selectSalesList(sqlSession, pi, month);
 	}
 
 	// 공간 매출 상세조회 
@@ -87,16 +87,16 @@ public class CommonServiceImpl implements CommonService {
 	
 	// 매출이 있는 공간의 상세 매출 총 개수
 	@Override
-	public int selectSalesDetailCount(int spaceNo) {
+	public int selectSalesDetailCount(HashMap<String, String> map) {
 		
-		return commonDao.selectSalesDetailCount(sqlSession, spaceNo);
+		return commonDao.selectSalesDetailCount(sqlSession, map);
 	}
 	
 	// 매출이 있는 공간의 상세 매출 조회
 	@Override
-	public ArrayList<Reserve> selectSalesDetailList(PageInfo pi, int spaceNo) {
+	public ArrayList<Reserve> selectSalesDetailList(PageInfo pi, HashMap<String, String> map) {
 		
-		return commonDao.selectSalesDetailList(sqlSession, pi, spaceNo);
+		return commonDao.selectSalesDetailList(sqlSession, pi, map);
 	}
 
 	//검색어 자동완성 -성훈 

@@ -71,26 +71,18 @@
         text-align: center;
     }
 
-    /* 모달창 매출 정보 영역 */
-    .sales_info {
-        margin: auto;
-        width: 80%;
+    
+    /* 모달창에서 공간명 */
+    .spTitle:hover {
+        cursor: pointer;
+        color: green;
     }
-
-    .sales_detail th {height: 50px;}
-
-    .sales_detail_content { text-align: left;}
-
-    .income_detail {text-align: center;}
-    .income_detail th, .income_detail td { height: 40px;}
-
-    .income_sum {
-        border-top: 2px solid lightgray;
-        margin: auto;
-        margin-top: 20px;
-        padding-top: 30px;
-        width: 80%;
-        text-align: center;
+    
+    /* 모달창에서 반려 메세지 */
+    .DM {
+        padding-top: 20px;
+        padding-bottom: 5px;
+        text-align: left;
     }
 
     /* 페이지 버튼 */
@@ -143,8 +135,8 @@
                             <td align="right">
                                 <input type="hidden" name="currentPage" value="1">
                                 <select name="condition" class="select_category form-control mb-2" style="width:70%;">
-                                    <option value="hostId">호스트ID</option>
                                     <option value="spaceTitle">공간명</option>
+                                    <option value="hostId">호스트ID</option>
                                 </select>
                             </td>
                             <td>
@@ -165,23 +157,23 @@
                     });
                 </script>
             </c:if>
-			
-			<br><br>
+            
+            <br><br>
             <!-- 컨텐츠 탭 -->
             <div class="tab-pane container active" id="all" align="right" value="all">
                 <table class="table spaceList" style="table-layout:fixed;">
-                     <thead>
-                         <tr>
-                             <th style="width:10%;">공간번호</th>
-                             <th style="width:15%;">호스트ID</th>
-                             <th style="width:45%;">공간명</th>
-                             <th style="width:15%;">공간유형</th>
-                             <th style="width:15%;">처리여부</th>
-                         </tr>
-                     </thead>
+                    <thead>
+                        <tr>
+                            <th style="width:10%;">공간번호</th>
+                            <th style="width:15%;">호스트ID</th>
+                            <th style="width:45%;">공간명</th>
+                            <th style="width:15%;">공간유형</th>
+                            <th style="width:15%;">처리여부</th>
+                        </tr>
+                    </thead>
                     <tbody class="myTable">
                         <c:forEach var="s" items="${list}">
-                            <tr class='spaceTr'>
+                            <tr data-toggle='modal' data-target='#checkSpace' id='changeStatus' class="staceTr">
                                 <td class='sno'>${s.spaceNo}</td>
                                 <td>${s.hostNo}</td>
                                 <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${s.spaceTitle}</td>
@@ -197,25 +189,25 @@
                                             공연장
                                         </c:when>
                                         <c:when test="${s.stypeNo eq '4'}">
-                                        	연습실 
+                                            연습실 
                                         </c:when>
                                         <c:when test="${s.stypeNo eq '5'}">
-                                        	연습주방 
+                                            연습주방 
                                         </c:when>
                                         <c:when test="${s.stypeNo eq '6'}">
-                                        	갤러리 
+                                            갤러리 
                                         </c:when>
                                         <c:when test="${s.stypeNo eq '7'}">
-                                        	운동시설 
+                                            운동시설 
                                         </c:when>
                                         <c:when test="${s.stypeNo eq '8'}">
-                                        	스터디룸 	
+                                            스터디룸 	
                                         </c:when>
                                         <c:when test="${s.stypeNo eq '9'}">
-                                        	회의실 
+                                            회의실 
                                         </c:when>
                                         <c:when test="${s.stypeNo eq '10'}">
-                                        	촬영스튜디오
+                                            촬영스튜디오
                                         </c:when>
                                     </c:choose>
                                 </td> 
@@ -232,6 +224,7 @@
                                         </c:when>
                                     </c:choose>
                                 </td>
+                                <input type="hidden" name="denyMessage" value="${s.denyMessage}">
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -264,6 +257,129 @@
                         </c:choose>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+                
+    <!-- 검수 모달창으로 공간 번호 보내기 -->
+    <script>
+        $(".spaceList>tbody").on("click", "#changeStatus", function() {
+            
+            var spaceNo = $(this).children().eq(0).text();
+            $(".modal-body .spno").val(spaceNo); 
+            
+            var spaceTitle = $(this).children().eq(2).text();
+            $(".modal-body .spTitle").text(spaceTitle); 
+            
+            var spaceStatus = $(this).children().eq(4).text().trim();
+            /* $(".modal-body .spStatus").text(spaceStatus); */
+            
+            var denyMessage = $(this).children().eq(5).val();
+            $(".modal-body .DM").text(denyMessage);
+            
+            console.log(spaceStatus);
+            
+            if (spaceStatus == '승인대기') {
+                $('#spaceStatusW').show();
+                $('#spaceStatusY').hide();
+                $('#spaceStatusN').hide();
+                
+            } else if(spaceStatus == '승인') {
+                $('#spaceStatusY').show();
+                $('#spaceStatusW').hide();
+                $('#spaceStatusN').hide();
+                
+            } else if(spaceStatus == '반려') {
+                $('#spaceStatusN').show();
+                $('#spaceStatusW').hide();
+                $('#spaceStatusY').hide();
+                
+            } 
+        });
+
+        /* 공간검수 모달창에서 공간명 클릭시 새탭으로 상세정보 확인하기 */
+        $(function() {
+            $("#spStatus").on("click",".spTitle", function() {
+                
+                var spaceNo = $(".spno").val();
+                    
+                console.log(spaceNo);
+                window.open('detail.sp?sno=' + spaceNo,'', 'width=1400, height=1000, location=no, status=no, scrollbars=yes');
+            });
+        });
+        
+    </script>
+                
+
+    <!-- 공간검수 처리 모달창 -->
+    <div class="modal fade" id="checkSpace">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">공간검수</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <form id="spaceStatusForm" action="updateAdminSpace.ad" method="post">
+                    <div class="modal-body">
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr id="spStatus">
+                                    <input type="hidden" class="spno" name="spaceNo">
+                                    <th style="width:50px; height: 50px;" align="left">공간명</th>
+                                    <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" align="left" class="spTitle"></td>
+                                </tr>
+                            </thead>   
+                            <!-- 승인대기일 때  -->
+                            <tbody id="spaceStatusW">
+                                <tr>
+                                    <th rowspan="2" style="width:100px;">처리</th>
+                                    <td class="form-group" align="left">
+                                        <select name="spaceStatus" class="select_category form-control mb-2" style="width:50%;">
+                                            <option value="W">승인대기</option>
+                                            <option value="Y">승인</option>
+                                            <option value="N">반려</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><textarea name="denyMessage" class="form-control mb-2" cols="20" rows="5" placeholder="반려 사유를 작성해주세요."></textarea></td>
+                                    <td rowspan="2" align="right"><button type="submit" class="btn btn-sm btn-light">처리하기</button></td>
+                                </tr>
+                            </tbody>
+
+                            <!-- 승인일 때 -->
+                            <tbody id="spaceStatusY" style="display:none;">
+                                <tr>
+                                    <th style="width:100px;">처리</th>
+                                    <td class="form-group spStatus" align="left" style="color: blue;">승인</td>
+                                </tr>
+                            </tbody>
+
+                            <!-- 반려일 때 -->
+                            <tbody id="spaceStatusN" style="display:none;">
+                                <tr>
+                                    <th rowspan="2" style="width:100px;">처리</th>
+                                    <td class="form-group spStatus" align="left" style="color: red;">반려</td>
+                                </tr>
+                                <tr>
+                                    <td class="DM"></td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </form> 
+                    
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary spaceStatusBtn" data-dismiss="modal">확인</button>
+                    <!-- 검수처리가 잘 되면 alert 창 띄우기! -->
+                </div>
+                
             </div>
         </div>
     </div>

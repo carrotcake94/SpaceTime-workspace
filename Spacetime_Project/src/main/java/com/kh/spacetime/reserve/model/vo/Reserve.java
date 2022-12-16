@@ -43,6 +43,7 @@ public class Reserve {
 		private String memId;
 		private String gender;
 		private int income;
+		private String month;
 		
 
 }

@@ -625,24 +625,22 @@ public class SpaceController {
 	
 		// System.out.println("컨트롤러까지 왔나?");
 		
-		HashMap<String, Object> map = new HashMap<>();
+		HashMap<String, String> map = new HashMap<>();
 		
 		String spaceNo = Integer.toString(s.getSpaceNo());
 		
 		map.put("spaceNo", spaceNo);
 		
 		// System.out.println(spaceNo);
-		System.out.println(s.getSpaceStatus());
-		System.out.println(s.getDenyMessage());
+		// System.out.println(s.getSpaceStatus());
+		// System.out.println(s.getDenyMessage());
 		
 		if(s.getSpaceStatus() != null) {
 			map.put("spaceStatus", s.getSpaceStatus());
-		}
-		if(s.getDenyMessage() != null) {
 			map.put("denyMessage", s.getDenyMessage());
 		}
 		
-		System.out.println(map);
+		// System.out.println(map);
 		
 		int result = spaceService.updateAdminSpace(map);
 		
