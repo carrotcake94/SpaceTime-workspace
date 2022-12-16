@@ -409,10 +409,14 @@
 	    SELECT SPACE_NO, 
 	           SPACE_TITLE, 
 	           HOUR_PRICE, 
-	           HASHTAG, 
-	           ATTACHMENT_RENAME
+	           HASHTAG,
+	           SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT, 
+	           MAX_PEOPLE,
+	           ATTACHMENT_RENAME,
+	           NVL2(BOOKMARK_SPACE, 1, 0) "OPEN_TIME"
 	      FROM SPACE
 	      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+	      LEFT JOIN BOOKMARK ON (BOOKMARK_SPACE  = SPACE_NO)
 	     WHERE SPACE_STATUS = 'Y'
 	       AND ATTACHMENT_LEVEL = 1
 	       <foreach collection="list" item="item" index="index" open="AND (HASHTAG LIKE '%'||" separator="||'%' OR HASHTAG LIKE '%'||" close="||'%')">
