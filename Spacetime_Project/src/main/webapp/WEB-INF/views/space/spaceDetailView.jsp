@@ -428,7 +428,18 @@
        /* 슬라이드 */
       .mySlides {display:none;}
       
-
+      /* 해쉬태그 */
+	   .tag {
+	    margin: 6px 6px 6px 0;
+	    padding: 0 15px;
+	    height: 29px;
+	    font-size: 14px;
+	    line-height: 29px;
+	    border-radius: 29px;
+	        background-color: #fff;
+	    border: 1px solid #e0e0e0;
+	}
+	
 </style>
 </head>
 <body>
@@ -452,6 +463,23 @@
 
             <div class="sub_title">
                 ${ s.spaceSubTitle }
+            </div>
+            
+            <!-- 해쉬태그 스플릿 -->
+<!--             <script>
+	            const tagStr = ${ s.hashtag};
+	
+	            const arr = tagStr.split(",");
+	            
+            </script> -->
+            
+            <!-- 해쉬태그 -->
+            <div class="tags">
+                <c:forTokens var="hashtag" items="${ s.hashtag }" delims=",">
+	               	 <span class="tag">
+				       # ${ hashtag }
+	             		</span>
+			   </c:forTokens>
             </div>
 
             <table>

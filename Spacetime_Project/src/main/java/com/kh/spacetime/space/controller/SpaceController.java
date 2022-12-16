@@ -490,6 +490,8 @@ public class SpaceController {
 			mv.addObject("sa", sa);
 			mv.addObject("bm", bm);
 			mv.setViewName("space/spaceDetailView");
+
+			System.out.println(s);
 		
 		}
 		else { // 실패
@@ -497,6 +499,7 @@ public class SpaceController {
 			mv.addObject("alertMsg", "공간 조회 실패").setViewName("common/errorPage");
 			
 		}
+		
 		
 		return mv;
 	}
