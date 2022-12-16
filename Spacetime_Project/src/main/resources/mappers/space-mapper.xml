@@ -426,7 +426,7 @@
 		SELECT COUNT(*)
 		FROM SPACE
 		<if test="tab == '전체 공간'">
-			WHERE SPACE_STATUS IN ('Y', 'N', 'D')
+			WHERE SPACE_STATUS IN ('Y', 'N', 'W')
 		</if>
 		<if test="tab == '미처리 공간'">
 			WHERE SPACE_STATUS = 'N'

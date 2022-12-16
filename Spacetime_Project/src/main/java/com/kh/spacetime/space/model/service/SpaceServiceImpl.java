@@ -211,7 +211,7 @@ public class SpaceServiceImpl implements SpaceService {
 
 	// 관리자 공간 처리 (승인, 반려) - 혜민 
 	@Override
-	public int updateAdminSpace(HashMap<String, String> map) {
+	public int updateAdminSpace(HashMap<String, Object> map) {
 		return spaceDao.updateAdminSpace(sqlSession, map);
 	}
 

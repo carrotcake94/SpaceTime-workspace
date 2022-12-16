@@ -129,6 +129,7 @@
 		FROM (SELECT SPACE_NO
 			FROM RESERVE
 			GROUP BY SPACE_NO)
+		
 		<!-- 날짜 선택 조건 나중에 넣기 -->
 	</select>
 	

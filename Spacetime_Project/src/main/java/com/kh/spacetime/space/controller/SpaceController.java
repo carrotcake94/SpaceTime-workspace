@@ -603,7 +603,7 @@ public class SpaceController {
 		json.put("list", jArr); // 0번 인덱스 
 		json.put("pi", jObj); // 1번 인덱스 
 		
-		System.out.println(json);
+		// System.out.println(json);
 		
 		return json.toJSONString();
 	}
@@ -618,27 +618,35 @@ public class SpaceController {
 	@RequestMapping("updateAdminSpace.ad")
 	public String updateAdminSpace(Space s, Model model, HttpSession session) {
 	
-		System.out.println("컨트롤러까지 왔나?");
+		// System.out.println("컨트롤러까지 왔나?");
 		
-		HashMap<String, String> map = new HashMap<>();
+		HashMap<String, Object> map = new HashMap<>();
 		
 		String spaceNo = Integer.toString(s.getSpaceNo());
 		
 		map.put("spaceNo", spaceNo);
 		
+		// System.out.println(spaceNo);
+		System.out.println(s.getSpaceStatus());
+		System.out.println(s.getDenyMessage());
+		
 		if(s.getSpaceStatus() != null) {
 			map.put("spaceStatus", s.getSpaceStatus());
+		}
+		if(s.getDenyMessage() != null) {
 			map.put("denyMessage", s.getDenyMessage());
 		}
 		
+		System.out.println(map);
+		
 		int result = spaceService.updateAdminSpace(map);
 		
-		if(result > 0) { // 신고처리 성공 
+		if(result > 0) { // 공간 처리 성공 
 			
 			session.setAttribute("alertMsg", "처리가 완료되었습니다.");
 			return "redirect:/splist.ad";
 			
-		} else { // 신고처리 실패 
+		} else { // 공간 처리 실패 
 			
 			model.addAttribute("errorMsg", "처리 실패");
 			return "common/errorPage";
@@ -660,8 +668,6 @@ public class SpaceController {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-		
-		System.out.println(map);
 		
 		int listCount = spaceService.selectSpaceSearchListCount(map);
 		

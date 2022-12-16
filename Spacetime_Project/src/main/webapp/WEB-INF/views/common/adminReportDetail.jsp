@@ -164,34 +164,34 @@
                 <!-- Modal body -->
                 <form action="updateReport.ad" method="post">
                 <input type="hidden" name="reportNo" value="${r.reportNo}">
-	                <div class="modal-body">
-	                    <!-- 신고 정보 -->
-	                    <div class="report_info">
-	                        <table class="report_answer" align="center">
-	                            <tr>
-	                                <th style="width: 200px;" rowspan="2" align="left">관리자 답변</th>
-	                                <td style="width: 500px;">
-	                                    <!-- 승인, 반려 선택 -->
-	                                    <div id="reportStatus" align="left">
-	                                        <div class="form-group">
-	                                            <select class="form-control" name="reportStatus" style="width: 70%;">
-	                                                <option value="N">미처리</option>
-	                                                <option value="Y">승인</option>
-	                                                <option value="D">반려</option>
-	                                            </select>
-	                                        </div>
-	                                    </div>
-	                                    <input type="text" class="form-control mb-2" style="width:100%;" name="reportAnswer" placeholder="ex) 양식에 맞춰 신고해주세요." value="${r.reportAnswer}">
-	                                </td>
-	                            </tr>
-	                        </table>
-	                    </div>
-	                </div>
-	                
-	                <!-- Modal footer -->
-	                <div class="modal-footer">
-	                    <button type="submit" class="btn btn-primary">확인</button>
-	                </div>
+                    <div class="modal-body">
+                        <!-- 신고 정보 -->
+                        <div class="report_info">
+                            <table class="report_answer" align="center">
+                                <tr>
+                                    <th style="width: 200px;" rowspan="2" align="left">관리자 답변</th>
+                                    <td style="width: 500px;">
+                                        <!-- 승인, 반려 선택 -->
+                                        <div id="reportStatus" align="left">
+                                            <div class="form-group">
+                                                <select class="form-control" name="reportStatus" style="width: 70%;">
+                                                    <option value="N">미처리</option>
+                                                    <option value="Y">승인</option>
+                                                    <option value="D">반려</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control mb-2" style="width:100%;" name="reportAnswer" placeholder="ex) 양식에 맞춰 신고해주세요." value="${r.reportAnswer}">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">확인</button>
+                    </div>
                 </form>
             </div>
         </div>
