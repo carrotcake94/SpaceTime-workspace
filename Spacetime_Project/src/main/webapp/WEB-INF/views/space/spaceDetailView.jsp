@@ -465,15 +465,6 @@
                 ${ s.spaceSubTitle }
             </div>
             
-            <!-- 해쉬태그 스플릿 -->
-<!--             <script>
-	            const tagStr = ${ s.hashtag};
-	
-	            const arr = tagStr.split(",");
-	            
-            </script> -->
-            
-            <!-- 해쉬태그 -->
             <div class="tags">
                 <c:forTokens var="hashtag" items="${ s.hashtag }" delims=",">
 	               	 <span class="tag">
@@ -484,9 +475,9 @@
 
             <table>
                 <tr><!-- 왼쪽 화면 -->
-                    <td  style="padding-right: 100px;" align="center">
+                    <td  style="padding-right: 100px; width:1200px; heigt:600px;" align="center">
                         <!-- 공간이미지, 제목 등 -->
-                        <div class="space">
+                        <div class="space" style="width: 700px;">
                             <div class="w3-content w3-section" style="max-width:500px">
                             <c:forEach var="sa" items="${ sa }">
                               <img src="${ sa.attachmentReName }" class="mySlides w3-animate-right" style="width:100%" alt="사진 없음" />
