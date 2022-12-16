@@ -340,7 +340,7 @@
 //                     console.log(eventLike);
 //                     console.log(eventUnLike);
                     var spaceNo = $(this).parent().parent().parent().prev().prev().val();
-
+					console.log(spaceNo);
                     if("${ loginMember }" == "") {
                         alert("로그인 후 이용 가능한 서비스입니다.");
                     } else {
@@ -363,7 +363,7 @@
                             $.ajax({
                                 url: "deletelike.sp",
                                 data: {
-                                    spaceNo: $("#spaceNo").val(),
+                                    spaceNo: spaceNo,
                                     memNo: ${loginMember.memNo}
                                 },
                                 success: function(result) {
