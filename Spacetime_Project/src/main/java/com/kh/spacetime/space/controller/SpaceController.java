@@ -519,10 +519,12 @@ public class SpaceController {
 		Bookmark bm = new Bookmark();
 		bm.setBookmarkMem(memNo);
 		bm.setBookmarkSpace(spaceNo);
+		System.out.println(bm);
 
 		// System.out.println("insert : " + bm);
 
 		int result = spaceService.insertSpaceLike(bm);
+		System.out.println(result);
 
 		return result;
 	}

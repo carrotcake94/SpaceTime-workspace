@@ -110,7 +110,7 @@
       }
       */
       
-      .img_area #bookmark {
+      .img_area .bookmark {
         position: absolute;
         right: 0;
         top: 0;
@@ -222,8 +222,8 @@
                     <c:forEach var="s" items="${ list }">
                     <c:set var="attachments" value="${s.attachments}" />
                     <form id="spaceDetailForm" style="width:33%;" method="post" action="">
-                        <input type="hidden" name="sno" value="${s.spaceNo}" id="spaceNo">
-                        <input type="hidden" name="memNo" value="${loginMember.memNo}" id="memNo">
+                        <input type="hidden" name="sno" value="${s.spaceNo}" >
+                        <input type="hidden" name="memNo" value="${loginMember.memNo}">
                         <div class="space">
                             <div class="img_area">
                                 <c:forEach var="attach" items="${attachments}">
@@ -240,15 +240,15 @@
                                     </button>
                                 </div>
                             -->
-                                <span id="bookmark">
+                                <span class="bookmark">
                                     <c:choose>
                                     <c:when test="${ s.openTime eq 0 }">
-                                        <img src="resources/images/heart.png" width="35px" height="35px" class="likeControl" id="eventUnLike" style="cursor: pointer;">
-                                        <img src="resources/images/heart2.png" width="35px" height="35px" class="likeControl" id="eventLike" style="display:none; cursor: pointer;">
+                                        <img src="resources/images/heart.png" width="35px" height="35px" class="likeControl eventUnLike" style="cursor: pointer;">
+                                        <img src="resources/images/heart2.png" width="35px" height="35px" class="likeControl eventLike"  style="display:none; cursor: pointer;">
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="resources/images/heart.png" width="35px" height="35px"  class="likeControl" id="eventUnLike" style="display:none; cursor: pointer;">
-                                        <img src="resources/images/heart2.png" width="35px" height="35px"  class="likeControl" id="eventLike" style="cursor: pointer;">
+                                        <img src="resources/images/heart.png" width="35px" height="35px"  class="likeControl eventUnLike" style="display:none; cursor: pointer;">
+                                        <img src="resources/images/heart2.png" width="35px" height="35px"  class="likeControl eventLike" style="cursor: pointer;">
                                     </c:otherwise>
                                     </c:choose>
                                 </span>
@@ -272,66 +272,6 @@
                         </div>
 
                     </form>
-                    <script>
-
-                        $(function() {
-                            $(".img-0").on({click:function() {
-                                let form = $(this).parent().parent().parent("form");
-                                console.log(form.text());
-                                form.attr("action", "detail.sp").submit();
-                            }});
-
-                            
-                            // 정현오빠.... 여기야..................( ; ω ; )..........
-                            $("#bookmark").on("click", ".likeControl", function() {
-                                console.log(121212);
-                                let bookmark = $(this);
-                                console.log(bookmark);
-                                let eventLike = bookmark.child("#eventLike");
-                                let eventUnLike = bookmark.child("#eventUnLike");
-                                console.log(eventLike.text())
-
-                                if("${ loginMember }" == "") {
-                                    alert("로그인 후 이용 가능한 서비스입니다.");
-                                } else {
-                                    if(eventLike.css("display") == "none") {
-                                        $.ajax({
-                                            url: "like.sp",
-                                            data: {
-                                                spaceNo: $("#spaceNo").val(),
-                                                memNo: $("#memNo").val()
-                                            },
-                                            success: function(result) {
-                                                eventLike.show();
-                                                eventUnLike.hide();
-                                            },
-                                            error: function() {
-                                                console.log("ajax failure");
-                                            }
-                                        });
-                                    } else {
-                                        $.ajax({
-                                            url: "deletelike.sp",
-                                            data: {
-                                                spaceNo: $("#spaceNo").val(),
-                                                memNo: $("#memNo").val()
-                                            },
-                                            success: function(result) {
-                                                eventLike.hide();
-                                                eventUnLike.show();
-                                            },
-                                            error: function() {
-                                                console.log("ajax failure");
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                            // ----------------------------------------------------
-
-                        });
-                        
-                    </script>
                     <!--
                     <div id="place" style="padding: 15px 15px">
                         <table width="100%" height="100%">
@@ -373,5 +313,121 @@
         </div>
         <jsp:include page="../common/footer.jsp" />
     </div>
+    <script>
+           $(function() {
+                $(".img-0").on({click:function() {
+                    let form = $(this).parent().parent().parent("form");
+                    console.log(form.text());
+                    form.attr("action", "detail.sp").submit();
+                }});
+
+                
+				// 정현오빠.... 여기야..................( ; ω ; )..........
+                
+                //  
+                // list foreach 문에서 id="bookmark"가 반복되서 문제 발생하는 부분이야
+                // 리스트 첫번쨰 bookmark만 클릭했을때 이벤트가 발생해
+                //  space_area div에서  접근하는게 맞구
+                // bookmark id값으로 지정한것도 해재하구  class로 가는게 맞아
+                // bookmark class로 바꾸고 스크립트가 반복문 내부에 있어서 하단으로 뻈어
+                // hidden으로 지정한 input도 id로 설정하면 안되서 id 삭제했어
+
+                $("#space_area").on("click", ".likeControl", function() {
+                    let bookmark = $(this).parent(".bookmark");
+                    let eventLike = bookmark.children(".eventLike");
+                    let eventUnLike = bookmark.children(".eventUnLike");
+//                     console.log(bookmark);
+//                     console.log(eventLike);
+//                     console.log(eventUnLike);
+                    var spaceNo = $(this).parent().parent().parent().prev().prev().val();
+
+                    if("${ loginMember }" == "") {
+                        alert("로그인 후 이용 가능한 서비스입니다.");
+                    } else {
+                        if(eventLike.css("display") == "none") {
+                            $.ajax({
+                                url: "like.sp",
+                                data: {
+                                    spaceNo: spaceNo,
+                                    memNo: ${loginMember.memNo}
+                                },
+                                success: function(result) {
+                                    eventLike.show();
+                                    eventUnLike.hide();
+                                },
+                                error: function() {
+                                    console.log("ajax failure");
+                                }
+                            });
+                        } else {
+                            $.ajax({
+                                url: "deletelike.sp",
+                                data: {
+                                    spaceNo: $("#spaceNo").val(),
+                                    memNo: ${loginMember.memNo}
+                                },
+                                success: function(result) {
+                                    eventLike.hide();
+                                    eventUnLike.show();
+                                },
+                                error: function() {
+                                    console.log("ajax failure");
+                                }
+                            });
+                        }
+                    }
+                });
+                            
+                            
+//              $("#bookmark").on("click", ".likeControl", function() {
+//                  console.log(121212);
+//                  let bookmark = $(this);
+//                  console.log(bookmark);
+//                  let eventLike = bookmark.child("#eventLike");
+//                  let eventUnLike = bookmark.child("#eventUnLike");
+//                  console.log(eventLike.text())
+
+//                  if("${ loginMember }" == "") {
+//                      alert("로그인 후 이용 가능한 서비스입니다.");
+//                  } else {
+//                      if(eventLike.css("display") == "none") {
+//                          $.ajax({
+//                              url: "like.sp",
+//                              data: {
+//                                  spaceNo: $("#spaceNo").val(),
+//                                  memNo: $("#memNo").val()
+//                              },
+//                              success: function(result) {
+//                                  eventLike.show();
+//                                  eventUnLike.hide();
+//                              },
+//                              error: function() {
+//                                  console.log("ajax failure");
+//                              }
+//                          });
+//                      } else {
+//                          $.ajax({
+//                              url: "deletelike.sp",
+//                              data: {
+//                                  spaceNo: $("#spaceNo").val(),
+//                                  memNo: $("#memNo").val()
+//                              },
+//                              success: function(result) {
+//                                  eventLike.hide();
+//                                  eventUnLike.show();
+//                              },
+//                              error: function() {
+//                                  console.log("ajax failure");
+//                              }
+//                          });
+//                      }
+//                  }
+//              });
+             // ----------------------------------------------------
+
+     });
+                        
+    </script>
+    
 </body>
 </html>
