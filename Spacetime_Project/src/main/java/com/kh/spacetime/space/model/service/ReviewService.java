@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.space.model.vo.Review;
+import com.kh.spacetime.space.model.vo.ReviewLike;
 import com.kh.spacetime.space.model.vo.Space;
 
 public interface ReviewService {
@@ -48,6 +49,12 @@ public interface ReviewService {
 
 	// 호스트 이용후기관리 검색 리스트
 	ArrayList<Review> searchHostReviewList(HashMap<String, String> map, PageInfo pi);
+
+	// 리뷰 좋아요 추가
+	int insertReviewLike(ReviewLike r);
+
+	// 리뷰 좋아요 삭제
+	int deleteReviewLike(ReviewLike r);
 
 	// ---------------------정현
 

@@ -88,6 +88,7 @@
       }  
 
       .rtitle {
+      margin-top: 10px;
         margin-bottom: 10px;
         overflow: hidden;
       }
@@ -99,11 +100,23 @@
       }
        .rtitle > span:nth-child(2) {
         float: right;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 500;
         cursor: pointer;
+        margin-left: 13px;
       }
-      .rtitle > span:nth-child(2) i {
+       .rtitle > span:nth-child(3) {
+        float: right;
+        font-size: 16px;
+        font-weight: 500;
+
+      }
+      .rtitle .fa-thumbs-o-up, .rtitle .fa-thumbs-up {
+      	cursor: pointer;
+        color: #4B56D2;
+      }
+      
+      .rtitle .fa-triangle-exclamation {
         color: #DD5353;
       }
 
@@ -743,20 +756,20 @@
             </table>
 			<!-- 리뷰 -->
               <h3>리뷰</h3>
-              
+              <div id="reviewDiv">
               <c:choose>
 		      <c:when test="${rList.size() eq 0}">
 		      	<div class="nodata">이용후기가 없습니다.</div>     
 		      </c:when>
 		      <c:otherwise>
-		      <div id="reviewDiv">
+		      
 		      <c:forEach var="r" items="${rList }" varStatus="status.index">
 		      <div class="review-row">
 		      <div class="review-area" id="review${r.reviewNo}">
 		      <div class="rleft">
 		       <c:choose>
                 <c:when test="${empty r.member.profilePath}">
-                 <img src='resources/images/logo.png' class='rounded-circle'	 >
+                 <img src='resources/images/logo.png'  >
                 </c:when>
                 <c:otherwise>
                 <img src='${r.member.profilePath}' class='rounded-circle'	 >
@@ -771,8 +784,25 @@
 			        	<c:set var="j" value="${r.rating%2}" />
 			        	<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class="fa fa-star-half-o" aria-hidden="true"></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if></span>
 			        	<span>신고하기 <i class="fa-solid fa-triangle-exclamation"></i></span>
+			        	<span>
+			        	<c:choose>
+			        	<c:when test="${(empty loginMember) or (r.memNo eq loginMember.memNo)}">
+			        		좋아요 ${r.reviewLike.reviewNo}
+			        	</c:when>
+			        	<c:otherwise>
+				        	<c:choose>
+				        	<c:when test="${r.reviewLike.memNo eq 0}">
+				        		<i class="fa fa-thumbs-o-up" aria-hidden="true" onclick="reviewLike(this, ${r.reviewNo},${loginMember.memNo}, ${r.reviewLike.memNo}, ${r.reviewLike.reviewNo})"></i>  ${r.reviewLike.reviewNo}
+				        	</c:when>
+				        	<c:otherwise>
+								<i class="fa fa-thumbs-up" aria-hidden="true" onclick="reviewLike(this, ${r.reviewNo},${loginMember.memNo}, ${r.reviewLike.memNo}, ${r.reviewLike.reviewNo})"></i>  ${r.reviewLike.reviewNo}	
+				        	</c:otherwise>
+				        	</c:choose>
+			        	</c:otherwise>
+			        	</c:choose></span>
+			        	
 			      </div>
-
+			      
 			        <div class="rcontent-area">
 			          <div class="rcontent">${r.reviewCont}</div>
 			          <div class="rcontent-img-area">
@@ -805,7 +835,7 @@
 		      	 <div class="rleft">
 			       <c:choose>
 	                <c:when test="${empty r.member.hostStatus}">
-	                 <img src='resources/images/logo.png' class='rounded-circle'	 >
+	                 <img src='resources/images/logo.png'  >
 	                </c:when>
 	                <c:otherwise>
 	                <img src='${r.member.hostStatus}' class='rounded-circle'	 >
@@ -830,24 +860,24 @@
 			   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
 			   		</c:when>
 			   		<c:otherwise>
-			   			<li class="page-item no-page-prev"><a class="page-link" >&lt;</a></li>
+			   			<li class="page-item no-page-prev"><a class="page-link" onclick="reviewPaging(${ pi.currentPage-1 })">&lt;</a></li>
 			   		</c:otherwise>
 			   	</c:choose>	       
 			       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-			       	<li class="page-item page-btn"><a class="page-link" >${ p }</a></li>
+			       	<li class="page-item page-btn"><a class="page-link" onclick="reviewPaging(${ p })">${ p }</a></li>
 			       </c:forEach>
 			       <c:choose>
 			       	<c:when test="${ pi.currentPage eq pi.maxPage }">
 			       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
 			       	</c:when>
 			       	<c:otherwise>
-			      	 	<li class="page-item no-page-next"><a class="page-link" >&gt;</a></li>
+			      	 	<li class="page-item no-page-next"><a class="page-link" onclick="reviewPaging(${ pi.currentPage+1 })">&gt;</a></li>
 			       	</c:otherwise>
 			       </c:choose>
 		      </ul>
-		      </div>
 		      </c:otherwise>
 		      </c:choose>
+		      </div>
         </div>
       </div>
 
@@ -1089,40 +1119,22 @@
 </div>
 <script>	
 	 $(function () {
-	    	//페이징
-	    	$(".page-link").each(function() {
-	      		if ($(this).text() =="${pi.currentPage}") {
-	      			$(this).attr("id", "active-page");
-	      			$(this).parent().addClass("disabled");
-	      		} else {
-	      			$(this).removeAttr("id", "active-page");
-	      		}
-	      	});
-	    	$(".no-page-prev>a").click(function() {
-// 				location.href ="hostRvwList.rv?rpage="+prevNo;
-			});
-			$(".page-btn>a").click(function() {
-// 				location.href ="hostRvwList.rv?rpage="+$(this).text();
-			});
-			$(".no-page-next>a").click(function() {
-// 				location.href ="hostRvwList.rv?rpage="+nextNo;
-			});
 			
-			 // img 컨트롤
-		      $(".rcontent-img-area img").mouseover(function () {
-		        $(this).css({ transform: "scale(1.1)" });
-		      });
-		      $(".rcontent-img-area img").mouseleave(function () {
-		        $(this).css({ transform: "scale(1.0)" });
-		      });
-		      $(".rcontent-img-area img").click(function () {
-		    	  $("#imgOverlay img").removeAttr("class");
-	 		      $("#imgOverlay img").attr("src", $(this).attr("src")).addClass($(this).parents(".review-area").attr("id") + "-" + $(this).attr("class"));
-		          $("#imgOverlay").addClass("slideon");
-		      });
-		      $("#imgOverlay .fa-times").click(function () {
-		          $("#imgOverlay").removeClass("slideon");
-		      });
+		// img 컨트롤
+		 $("#reviewDiv ").on("mouseover", ".rcontent-img-area img", function() {
+	        $(this).css({ transform: "scale(1.1)" });
+	      });
+		 $("#reviewDiv ").on("mouseleave", ".rcontent-img-area img", function() {
+	        $(this).css({ transform: "scale(1.0)" });
+	      });
+		 $("#reviewDiv ").on("click", ".rcontent-img-area img", function() {
+	    	  $("#imgOverlay img").removeAttr("class");
+ 		      $("#imgOverlay img").attr("src", $(this).attr("src")).addClass($(this).parents(".review-area").attr("id") + "-" + $(this).attr("class"));
+	          $("#imgOverlay").addClass("slideon");
+	      });
+	      $("#imgOverlay .fa-times").click(function () {
+	          $("#imgOverlay").removeClass("slideon");
+	      });
 		
    	});
 	
@@ -1130,6 +1142,9 @@
 	      var rId = $("#imgOverlay img").attr("class").split("-", 1)[0];
 	      var imgCount = $("#" + rId + " .rcontent-img-area img").length;
 	      var index = $("#imgOverlay img").attr("class").split("-", 2)[1].substr(3, 1);
+	      console.log(rId);
+	      console.log(imgCount);
+	      console.log(index);
 
 	      if (type == 1) {
 	        index--;
@@ -1142,10 +1157,169 @@
 	          index = 1;
 	        }
 	      }
+	      console.log( $("#" + rId + " .img" + index).attr("src"));
+	      
 	      $("#imgOverlay img").removeAttr("class");
 	      $("#imgOverlay img").addClass(rId + "-img" + index);
 	      $("#imgOverlay img").attr("src", $("#" + rId + " .img" + index).attr("src"));
-	    }
+	   }
+	 
+	 reviewLike  = (i, rno, memNo, lcount, tocount) => {
+
+		 var str ="";
+		 if(lcount == 0) {
+			 tocount +=1;
+			 str+= "<i class='fa fa-thumbs-up' aria-hidden='true' onclick='reviewLike(this, "+rno+", "+memNo+", 1, "+tocount+")'></i>  "+tocount;
+		 }else {
+			 tocount -=1;
+			 str+= "<i class='fa fa-thumbs-o-up' aria-hidden='true' onclick='reviewLike(this, "+rno+", "+memNo+", 0, "+tocount+")'></i>  "+tocount;
+		 }
+		 
+		 $.ajax({
+				url : "like.rv",
+				data : {
+					reviewNo : rno,
+					memNo : memNo,
+					lcount : lcount
+				},
+				success : result => {
+					if(result == "success") {
+						$(i).parent().html(str);
+					}
+				},
+				error : () => {
+					console.log("통신 실패");
+				}
+		});
+	 }
+	 
+	 $(function () {
+    	//페이징
+    	$(".page-link").each(function() {
+      		if ($(this).text() =="${pi.currentPage}") {
+      			$(this).attr("id", "active-page");
+      			$(this).parent().addClass("disabled");
+      		} else {
+      			$(this).removeAttr("id", "active-page");
+      		}
+      	});
+	 });
+	//페이징
+	function reviewPaging(page) {
+		var sno = ${s.spaceNo};
+		
+		$.ajax({
+			url : "list.rv",
+			data : {
+				sno : sno,
+				page : page
+			},
+			success : data => {
+				var pi = data.pi;
+				var rList = data.rList;
+				var str ="";
+				
+				for(var i in rList) {
+					
+		      str+= "<div class='review-row'>";
+		      str+= "<div class='review-area' id='review"+rList[i].reviewNo+"'>";
+		      str+= "<div class='rleft'>"
+		      if(typeof rList[i].member.profilePath == "undefined") {
+		    	  str+= "<img src='resources/images/logo.png' 	 >";
+		      }else {
+		    	  str+= "<img src='"+rList[i].member.profilePath+"' class='rounded-circle'	 >";
+		      }
+		      str+= rList[i].member.memName+"</div>";
+		      str+= "<div class='rright'><div class='rtitle'><span>";
+		      
+		      var rating = rList[i].rating;
+              var k = parseInt(rating / 2);
+              var j = rating % 2;
+
+                for (let index = 0; index < k; index++) {
+                    str += "<i class='fa fa-star' aria-hidden='true'></i>";
+                }
+                if (j == 1) {
+                    str += "<i class='fa fa-star-half-o' aria-hidden='true'></i>";
+                }
+                for (let index = 0; index < 5 - k - j; index++) {
+                    str += "<i class='fa fa-star-o' aria-hidden='true'></i>";
+                }
+                str += "</span><span>신고하기 <i class='fa-solid fa-triangle-exclamation'></i></span>";
+                str += "<span>";
+                if(("${loginMember}"=="") || (rList[i].memNo == "${loginMember.memNo}")) {
+                	 str += "좋아요 "+rList[i].reviewLike.reviewNo;
+                }else {
+                	if(rList[i].reviewLike.memNo == 0) {
+                		str += "<i class='fa fa-thumbs-o-up' aria-hidden='true' onclick='reviewLike(this, "+rList[i].reviewNo+", ${loginMember.memNo}, "+rList[i].reviewLike.memNo+", "+rList[i].reviewLike.reviewNo+")'></i> "+rList[i].reviewLike.reviewNo;
+                	}else {
+                		str += "<i class='fa fa-thumbs-up' aria-hidden='true' onclick='reviewLike(this, "+rList[i].reviewNo+", ${loginMember.memNo}, "+rList[i].reviewLike.memNo+", "+rList[i].reviewLike.reviewNo+")'></i> "+rList[i].reviewLike.reviewNo;
+                	}
+                }
+                str += "</span></div>"; // rtitle 끝
+               	str += "<div class='rcontent-area'>";
+	                str += "<div class='rcontent'>"+rList[i].reviewCont+"</div>";
+	                str += "<div class='rcontent-img-area'>";
+	                if(rList[i].reviewAttach1 != null) {
+	                	str +="<div><img class='img1' src='resources/uploadFiles/space/review/"+rList[i].reviewAttach1+"' /></div>";
+	                }
+	                if(rList[i].reviewAttach2 != null) {
+	                	str +="<div><img class='img2' src='resources/uploadFiles/space/review/"+rList[i].reviewAttach2+"' /></div>";
+	                }
+	                if(rList[i].reviewAttach3 != null) {
+	                	str +="<div><img class='img3' src='resources/uploadFiles/space/review/"+rList[i].reviewAttach3+"' /></div>";
+	                }
+              	  str += "</div></div>"; // rcontent- area 끝
+                str += "<div class='rdate'>"+rList[i].reviewEnrollDate+"</div>";
+                str += "<input type='hidden' name='reviewNo' value='"+rList[i].reviewNo+"'>";
+                str += "</div></div>"; // rright 끝 그리고 review-area 끝
+                if(rList[i].hostAnswer != null) {
+	                str += "<div class='host-area'>";
+	                str += "<div class='rleft'>";
+	                if(rList[i].member.hostStatus == null) {
+	                	str += "<img src='resources/images/logo.png'  >";
+	                }else {
+	                	str += "<img src='"+rList[i].member.hostStatus+"' class='rounded-circle' >";
+	                }
+	                 str +="호스트</div>";
+	                 str += "<div class='rright'>";
+	                 str += "<div class='hotitle'>호스트 답글</div>"
+	                 str += "<div class='answer-area'>";
+	                 str += "<div style='white-space:pre;''>"+rList[i].hostAnswer+"</div>";
+	                 str += "</div></div></div>";
+                }
+                str += "</div>"; //review-row 끝
+			}
+			      
+				str += "<ul class='pagination'>";
+				if(pi.currentPage == 1) {
+					str += "<li class='page-item no-page-prev disabled'><a class='page-link'>&lt;</a></li>";
+				}else {
+					str += "<li class='page-item no-page-prev'><a class='page-link' onclick='reviewPaging("+(pi.currentPage-1)+")'>&lt;</a></li>";
+				}
+				for(var p=pi.startPage; p<=pi.endPage; p++) {
+					if(p == pi.currentPage) {
+						str += "<li class='page-item page-btn disabled'><a id='active-page' class='page-link' onclick='reviewPaging("+p+")'>"+p+"</a></li>";
+					}else {
+						str += "<li class='page-item page-btn'><a class='page-link' onclick='reviewPaging("+p+")'>"+p+"</a></li>";
+					}
+					
+				}
+				if(pi.currentPage == pi.maxPage) {
+					str += "<li class='page-item no-page-next disabled'><a class='page-link'>&gt;</a></li>";
+				}else {
+					str += "<li class='page-item no-page-next'><a class='page-link' onclick='reviewPaging("+(pi.currentPage+1)+")'>&gt;</a></li>";
+				}
+				str += "</ul>";
+				$("#reviewDiv").html(str);
+			
+			},
+			error : () => {
+				console.log("통신 실패");
+			}
+		});
+	}
+	 
 	</script>
 </body>
 </html>

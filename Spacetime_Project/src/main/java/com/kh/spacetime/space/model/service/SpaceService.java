@@ -59,7 +59,7 @@ public interface SpaceService {
 	int selectReviewListBySnoCount(int spaceNo);
 
 	// 공간 이용후기 리스트 가져오기
-	ArrayList<Review> selectReviewListBySno(int spaceNo, PageInfo pi);
+	ArrayList<Review> selectReviewListBySno(HashMap<String, Integer> map, PageInfo pi);
 
 	/******************************* 정현 **/
 

@@ -241,6 +241,16 @@
 	    SET HOST_ANSWER = #{hostAnswer}
 		 WHERE REVIEW_NO = #{reviewNo}
 	</update>
+		<insert id="insertReviewLike" parameterType="reviewLike">
+		INSERT INTO REVIEW_LIKE 
+		VALUES (#{reviewNo}, #{memNo})
+	</insert>
+	<delete id="deleteReviewLike" parameterType="reviewLike">
+		DELETE FROM REVIEW_LIKE
+		WHERE REVIEW_NO = #{reviewNo}
+		AND MEM_NO = #{memNo}
+	</delete>
+	
 	
 	<!-- 정현 End -->
 	

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.space.model.vo.Review;
+import com.kh.spacetime.space.model.vo.ReviewLike;
 import com.kh.spacetime.space.model.vo.Space;
 
 @Repository
@@ -90,6 +91,16 @@ public class ReviewDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		return (ArrayList) sqlSession.selectList("reviewMapper.searchHostReviewList", map, rowBounds);
+	}
+
+	// 리뷰 좋아요 추가
+	public int insertReviewLike(SqlSessionTemplate sqlSession, ReviewLike r) {
+		return sqlSession.insert("reviewMapper.insertReviewLike", r);
+	}
+
+	// 리뷰 좋아요 삭제
+	public int deleteReviewLike(SqlSessionTemplate sqlSession, ReviewLike r) {
+		return sqlSession.delete("reviewMapper.deleteReviewLike", r);
 	}
 
 	// ---------------------정현

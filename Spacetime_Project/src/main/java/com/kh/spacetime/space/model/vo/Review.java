@@ -33,4 +33,5 @@ public class Review {
 	// 정현 join용
 	private Space space;
 	private Member member;
+	private ReviewLike reviewLike;
 }

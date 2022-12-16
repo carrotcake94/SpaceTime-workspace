@@ -292,67 +292,67 @@ public class SpaceController {
 		return "space/hostReviewList";
 	}
 
-	//지도화면 이동 -성훈
+	// 지도화면 이동 -성훈
 	@RequestMapping("searchSpaceList.mp")
 	public String selectSpaceList() {
-	    return "space/searchSpace";
+		return "space/searchSpace";
 	}
 
-	//지도 범위에 포함된 장소 조회 -성훈 
-    @ResponseBody
-    @RequestMapping(value="selectSpace.mp", produces="application/json; charset=UTF-8")
-    public String selecListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage, 
-            double max_lat, double max_lng, double min_lat, double min_lng) {
-        
-        HashMap<String, Double> map = new HashMap<>();
-        map.put("max_lat", max_lat);
-        map.put("max_lng", max_lng);
-        map.put("min_lat", min_lat);
-        map.put("min_lng", min_lng);
-        //System.out.println(map);
-        int listCount = spaceService.selectListCountForMap(map);
-        int pageLimit = 3;
-        int boardLimit = 10;
-        
-        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-        
-        ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
-        return new Gson().toJson(listArr);
-    }
-    
-    //지도 필터링 -성훈
-    @ResponseBody
-    @RequestMapping(value="mapFilter.mp", produces="application/json; charset=UTF-8")
-    public String filterListForMap(@RequestParam(value = "mpage", defaultValue="1") int currentPage, HttpServletRequest request, String min_price, String max_price) {
-    	String[] category = request.getParameterValues("category[]");
-    	ArrayList<String> categoryArr = new ArrayList<>();
-    	for(int i = 0; i < category.length; i++) {
-    		categoryArr.add(category[i]);
-    	}
-    	
-    	String[] area = request.getParameterValues("area[]");
-    	ArrayList<String> areaArr = new ArrayList<>();
-    	for(int i = 0; i < area.length; i++) {
-    		areaArr.add(area[i]);
-    	}
-    	
-    	HashMap<String, Object> condition = new HashMap<>();
-        condition.put("area", areaArr);
-        condition.put("category", categoryArr);
-        condition.put("min_price", min_price);
-        condition.put("max_price", max_price);
-        
-        int listCount = spaceService.filterListCountForMap(condition);
-        int pageLimit = 3;
-        int boardLimit = 10;
-        
-        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-        
-        ArrayList<Space> listArr = spaceService.filterListForMap(condition, pi);
-        
-        return new Gson().toJson(listArr);
-    }
+	// 지도 범위에 포함된 장소 조회 -성훈
+	@ResponseBody
+	@RequestMapping(value = "selectSpace.mp", produces = "application/json; charset=UTF-8")
+	public String selecListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage, double max_lat,
+			double max_lng, double min_lat, double min_lng) {
 
+		HashMap<String, Double> map = new HashMap<>();
+		map.put("max_lat", max_lat);
+		map.put("max_lng", max_lng);
+		map.put("min_lat", min_lat);
+		map.put("min_lng", min_lng);
+		// System.out.println(map);
+		int listCount = spaceService.selectListCountForMap(map);
+		int pageLimit = 3;
+		int boardLimit = 10;
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
+		return new Gson().toJson(listArr);
+	}
+
+	// 지도 필터링 -성훈
+	@ResponseBody
+	@RequestMapping(value = "mapFilter.mp", produces = "application/json; charset=UTF-8")
+	public String filterListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage,
+			HttpServletRequest request, String min_price, String max_price) {
+		String[] category = request.getParameterValues("category[]");
+		ArrayList<String> categoryArr = new ArrayList<>();
+		for (int i = 0; i < category.length; i++) {
+			categoryArr.add(category[i]);
+		}
+
+		String[] area = request.getParameterValues("area[]");
+		ArrayList<String> areaArr = new ArrayList<>();
+		for (int i = 0; i < area.length; i++) {
+			areaArr.add(area[i]);
+		}
+
+		HashMap<String, Object> condition = new HashMap<>();
+		condition.put("area", areaArr);
+		condition.put("category", categoryArr);
+		condition.put("min_price", min_price);
+		condition.put("max_price", max_price);
+
+		int listCount = spaceService.filterListCountForMap(condition);
+		int pageLimit = 3;
+		int boardLimit = 10;
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		ArrayList<Space> listArr = spaceService.filterListForMap(condition, pi);
+
+		return new Gson().toJson(listArr);
+	}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
 	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니여도 된다!!
@@ -390,111 +390,110 @@ public class SpaceController {
 
 		return changeName;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
-	 * @author 하연 
-	 * 공간 상세페이지 ^___^
+	 * @author 하연 공간 상세페이지 ^___^
 	 */
 
 	@RequestMapping("reportSpace.sp")
-	public ModelAndView insertSpaceReport(int sno, String reportType, String reportContent, HttpSession session, ModelAndView mv) {
-		
-	
+	public ModelAndView insertSpaceReport(int sno, String reportType, String reportContent, HttpSession session,
+			ModelAndView mv) {
+
 		int mno = ((Member) session.getAttribute("loginMember")).getMemNo();
-		
+
 		Space sHostNo = spaceService.selectSpaceDetail(sno);
-		
+
 		Space s = new Space();
 		s.setSpaceNo(sno);
-		s.setMaxPeople(mno); // 임시 - 신고한 회원번호 
+		s.setMaxPeople(mno); // 임시 - 신고한 회원번호
 		s.setHostNo(sHostNo.getHostNo());
-		s.setAddressDefault(reportType); // 임시 - 리포트 타입 
-		s.setAddressDetail(reportContent); // 임시 - 리포트 내용 
-		
+		s.setAddressDefault(reportType); // 임시 - 리포트 타입
+		s.setAddressDetail(reportContent); // 임시 - 리포트 내용
+
 		int result = spaceService.insertSpaceReport(s);
-		
-		
-		if(result > 0) { // 신고 insert 성공 
-			session.setAttribute("alertMsg", "신고가 접수되었습니다.");;
+
+		if (result > 0) { // 신고 insert 성공
+			session.setAttribute("alertMsg", "신고가 접수되었습니다.");
+			;
 		}
-		
+
 		mv.addObject("s", s);
-		
+
 		mv.setViewName("space/spaceDetailView");
-		
+
 		return mv;
-	
+
 	}
-	
+
 	@RequestMapping("chat.sp")
 	public String chat() {
-		
+
 		return "space/chat";
 	}
-	
+
 	// 캘린더 ajax
-	@RequestMapping(value="calendar.sp")
+	@RequestMapping(value = "calendar.sp")
 	public String ajaxCalenar(int year, int month) {
-		
-		
-		
+
 		return "space/calendar";
-	
+
 	}
-	
-	
-	
-	// 공간 상세조회 - 북마크 기능 
-	@RequestMapping(value="detail.sp", produces="text/html; charset=UTF-8")
+
+	// 공간 상세조회 - 북마크 기능
+	@RequestMapping(value = "detail.sp", produces = "text/html; charset=UTF-8")
 	public ModelAndView selectProduct(int sno, ModelAndView mv, HttpSession session) {
-	     
+
 		// 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
 		int result = spaceService.increaseCount(sno);
-		
+
 		Bookmark bm = new Bookmark();
-		
+
 		int count = 0;
-		
-		if(session.getAttribute("loginMember") != null) {
-			
-			int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+
+		if (session.getAttribute("loginMember") != null) {
+
+			int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
 //			System.out.println(sno);
 //			System.out.println(memNo);
-			
-			
+
 			bm.setBookmarkMem(memNo);
 			bm.setBookmarkSpace(sno);
-			
+
 			// System.out.println(bm);
-			
+
 			count = spaceService.selectSpaceLike(bm);
 			// System.out.println("selectSpaceLike" + bm);
 		}
-		
-		
-		if(result > 0) { // 성공적으로 조회수 증가가 일어났다면
-		
+
+		Member m = (Member) session.getAttribute("loginMember");
+
+		if (result > 0) { // 성공적으로 조회수 증가가 일어났다면
+
 			// 상세조회 요청
 			// DetailView.jsp 상에 필요한 데이터 조회
 			Space s = spaceService.selectSpaceDetail(sno);
 			ArrayList<SpaceAttachment> sa = spaceService.selectSpaceDetailAttachment(sno);
+
+			// 정현
+			int listCount = spaceService.selectReviewListBySnoCount(sno);
+			int pageLimit = 10;
+			int boardLimit = 1;
+
+			PageInfo pi = Pagination.getPageInfo(listCount, 1, pageLimit, boardLimit);
+
+			HashMap<String, Integer> map = new HashMap<>();
+
+			map.put("spaceNo", sno);
+			if (m == null) {
+				map.put("memNo", null);
+			} else {
+				map.put("memNo", m.getMemNo());
+			}
 			
-			
+			ArrayList<Review> reviewList = spaceService.selectReviewListBySno(map, pi);
+			mv.addObject("rList", reviewList);
+			mv.addObject("pi", pi);
+
 			// 조회된 데이터를 담아서 포워딩
 			mv.addObject("count", count);
 			mv.addObject("s", s);
@@ -503,88 +502,84 @@ public class SpaceController {
 			mv.setViewName("space/spaceDetailView");
 
 			// System.out.println(s);
-		
-		}
-		else { // 실패
-			
+
+		} else { // 실패
+
 			mv.addObject("alertMsg", "공간 조회 실패").setViewName("common/errorPage");
-			
+
 		}
-		
-		
+
 		return mv;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("like.sp")
-	public int spaceLike (int spaceNo, int memNo) {
-        
+	public int spaceLike(int spaceNo, int memNo) {
+
 		Bookmark bm = new Bookmark();
 		bm.setBookmarkMem(memNo);
 		bm.setBookmarkSpace(spaceNo);
-		
-		//System.out.println("insert : " + bm);
-		
-		int	 result = spaceService.insertSpaceLike(bm);
-		
+
+		// System.out.println("insert : " + bm);
+
+		int result = spaceService.insertSpaceLike(bm);
+
 		return result;
 	}
-	
-	
+
 	@ResponseBody
 	@RequestMapping("deletelike.sp")
-	public int spaceUnLike (int spaceNo, int memNo) {
-		
+	public int spaceUnLike(int spaceNo, int memNo) {
+
 		Bookmark bm = new Bookmark();
 		bm.setBookmarkMem(memNo);
 		bm.setBookmarkSpace(spaceNo);
-		
+
 		int result = spaceService.deleteSpaceLike(bm);
-			
+
 		return result;
 	}
-	
-	
-	
-	
+
 	/**
-	 * 관리자 공간관리 리스트 페이지로 포워딩 - 혜민 
+	 * 관리자 공간관리 리스트 페이지로 포워딩 - 혜민
+	 * 
 	 * @return
 	 */
-	@RequestMapping(value="splist.ad")
+	@RequestMapping(value = "splist.ad")
 	public String selectAdminSpaceList() {
-		
+
 		return "space/adminSpace";
 	}
-	
+
 	/**
-	 * 관리자 공간관리 리스트 페이징, 조회 - 혜민 
+	 * 관리자 공간관리 리스트 페이징, 조회 - 혜민
+	 * 
 	 * @param currentPage
 	 * @param model
 	 * @param tab
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="ajaxsplist.ad", produces="application/json; charset=UTF-8")
-	public String ajaxSpaceList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, String tab) {
-		
+	@RequestMapping(value = "ajaxsplist.ad", produces = "application/json; charset=UTF-8")
+	public String ajaxSpaceList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, Model model,
+			String tab) {
 
 		HashMap<String, String> map = new HashMap<>();
 		map.put("tab", tab);
-		
+
 		int listCount = spaceService.selectAdminSpaceListCount(map);
-		
+
 		// System.out.println("listCount : " + listCount);
-		
+
 		int pageLimit = 5;
 		int boardLimit = 10;
-		
+
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
+
 		ArrayList<Space> list = spaceService.selectAdminSpaceList(pi, map);
-		
+
 		JSONArray jArr = new JSONArray();
-		for(Space s : list) {
+		for (Space s : list) {
 			JSONObject jObj = new JSONObject();
 			jObj.put("spaceNo", s.getSpaceNo());
 			jObj.put("hostNo", s.getHostNo());
@@ -594,7 +589,7 @@ public class SpaceController {
 			jObj.put("denyMessage", s.getDenyMessage());
 			jArr.add(jObj);
 		}
-		
+
 		JSONObject jObj = new JSONObject();
 		jObj.put("listCount", pi.getListCount());
 		jObj.put("currentPage", pi.getCurrentPage());
@@ -603,18 +598,19 @@ public class SpaceController {
 		jObj.put("maxPage", pi.getMaxPage());
 		jObj.put("startPage", pi.getStartPage());
 		jObj.put("endPage", pi.getEndPage());
-		
+
 		JSONObject json = new JSONObject();
-		json.put("list", jArr); // 0번 인덱스 
-		json.put("pi", jObj); // 1번 인덱스 
-		
+		json.put("list", jArr); // 0번 인덱스
+		json.put("pi", jObj); // 1번 인덱스
+
 		// System.out.println(json);
-		
+
 		return json.toJSONString();
 	}
-	
+
 	/**
 	 * 관리자 공간처리 메소드 - 혜민
+	 * 
 	 * @param s
 	 * @param model
 	 * @param session
@@ -622,43 +618,43 @@ public class SpaceController {
 	 */
 	@RequestMapping("updateAdminSpace.ad")
 	public String updateAdminSpace(Space s, Model model, HttpSession session) {
-	
+
 		// System.out.println("컨트롤러까지 왔나?");
-		
+
 		HashMap<String, String> map = new HashMap<>();
-		
+
 		String spaceNo = Integer.toString(s.getSpaceNo());
-		
+
 		map.put("spaceNo", spaceNo);
-		
+
 		// System.out.println(spaceNo);
 		// System.out.println(s.getSpaceStatus());
 		// System.out.println(s.getDenyMessage());
-		
-		if(s.getSpaceStatus() != null) {
+
+		if (s.getSpaceStatus() != null) {
 			map.put("spaceStatus", s.getSpaceStatus());
 			map.put("denyMessage", s.getDenyMessage());
 		}
-		
+
 		// System.out.println(map);
-		
+
 		int result = spaceService.updateAdminSpace(map);
-		
-		if(result > 0) { // 공간 처리 성공 
-			
+
+		if (result > 0) { // 공간 처리 성공
+
 			session.setAttribute("alertMsg", "처리가 완료되었습니다.");
 			return "redirect:/splist.ad";
-			
-		} else { // 공간 처리 실패 
-			
+
+		} else { // 공간 처리 실패
+
 			model.addAttribute("errorMsg", "처리 실패");
 			return "common/errorPage";
 		}
 	}
 
-	
 	/**
-	 * 관리자 공간 검색 - 혜민 
+	 * 관리자 공간 검색 - 혜민
+	 * 
 	 * @param currentPage
 	 * @param model
 	 * @param condition
@@ -666,57 +662,57 @@ public class SpaceController {
 	 * @return
 	 */
 	@RequestMapping("searchSp.ad")
-	public String selectSpaceSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword) {
-		
+	public String selectSpaceSearchList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+			Model model, String condition, String keyword) {
+
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-		
+
 		int listCount = spaceService.selectSpaceSearchListCount(map);
-		
+
 		int pageLimit = 5;
 		int boardLimit = 10;
-		
+
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		
+
 		ArrayList<Space> list = spaceService.selectSpaceSearchList(pi, map);
-		
+
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
-		
+
 		// System.out.println(pi);
 		// System.out.println(list);
-		
+
 		return "space/adminSpaceSearch";
 	}
-	
 
 	/**
-	 * @author 희섭 
-	 * 마이페이지 북마크
+	 * @author 희섭 마이페이지 북마크
 	 */
 	@RequestMapping("mypagebookmark.sp")
-	public String selectmypagebookmark(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model,HttpSession session) {
-		
+	public String selectmypagebookmark(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, Model model,
+			HttpSession session) {
+
 		// System.out.println("cpage : " + currentPage);
-		//int reportMemNo= ((Member)Session.getAttribute("loginMember")).getMemNo() ;
+		// int reportMemNo= ((Member)Session.getAttribute("loginMember")).getMemNo() ;
 		Member m = (Member) session.getAttribute("loginMember");
 		int MemNo = m.getMemNo();
-		
+
 		int listCount = spaceService.selectmypagebookmarkListCount(MemNo);
-		
+
 		int pageLimit = 10;
 		int boardLimit = 5;
-		
-		PageInfo pi = Pagination.getPageInfo(listCount,currentPage, pageLimit, boardLimit);
-		
+
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
 		ArrayList<Space> list = spaceService.selectmypagebookmarkList(MemNo, pi);
 		System.out.println(list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		
+
 		return "space/mypageBookMark";
 	}
 

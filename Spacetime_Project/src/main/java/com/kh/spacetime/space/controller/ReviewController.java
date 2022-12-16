@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.ReviewService;
+import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Review;
+import com.kh.spacetime.space.model.vo.ReviewLike;
 import com.kh.spacetime.space.model.vo.Space;
 
 @Controller
@@ -30,6 +33,9 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private SpaceService spaceService;
 
 	// 마이페이지 리뷰 리스트
 // 페이징바
@@ -304,6 +310,54 @@ public class ReviewController {
 		} else {
 		}
 		return r.getHostAnswer();
+	}
+	
+	/**
+	 * @author 정현 리뷰 좋아요
+	 */
+	@ResponseBody
+	@RequestMapping(value = "like.rv", produces = "text/html; charset=UTF-8")
+	public String updateReviewLike(ReviewLike r, int lcount) {
+		int result = 1;
+		if (lcount == 0) {
+			result = reviewService.insertReviewLike(r);
+		} else {
+			result = reviewService.deleteReviewLike(r);
+		}
+		return (result > 0) ? "success" : "fail";
+	}
+
+	/**
+	 * @author 정현 리뷰 리스트 페이징
+	 */
+	@ResponseBody
+	@RequestMapping(value = "list.rv", produces = "application/json; charset=UTF-8")
+	public String selctReviewList(int sno,  int page, HttpSession session) {
+		Member m = (Member) session.getAttribute("loginMember");
+		// 정현
+		int listCount = spaceService.selectReviewListBySnoCount(sno);
+		int pageLimit = 10;
+		int boardLimit = 1;
+
+		PageInfo pi = Pagination.getPageInfo(listCount, page, pageLimit, boardLimit);
+
+		HashMap<String, Integer> map = new HashMap<>();
+
+		map.put("spaceNo", sno);
+		
+		if (m == null) {
+			map.put("memNo", null);
+		} else {
+			map.put("memNo", m.getMemNo());
+		}
+
+		ArrayList<Review> reviewList = spaceService.selectReviewListBySno(map, pi);
+		
+		HashMap<String, Object> map2 = new HashMap<>();
+		map2.put("rList", reviewList);
+		map2.put("pi", pi);
+		
+		return new Gson().toJson(map2);
 	}
 
 	// ------------------정현

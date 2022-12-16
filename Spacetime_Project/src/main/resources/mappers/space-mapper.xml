@@ -76,6 +76,10 @@
 			<result column="MPROFILE" property="profilePath" />
 			<result column="HPROFILE" property="hostStatus" />
 		</collection>
+		<collection  property="reviewLike" ofType="reviewLike" >
+			<result column="COUNT" property="reviewNo" />
+			<result column="LCOUNT" property="memNo" />
+		</collection>
 	</resultMap>
 	
 	<!-- 	정현 start -->
@@ -264,7 +268,7 @@
 		WHERE SPACE_NO = #{spaceNo}
 	</select>
 	<!-- 	공간 리뷰 리스트 정현-->
-	<select id="selectReviewListBySno" parameterType="_int" resultMap="reviewResultSet">
+	<select id="selectReviewListBySno" parameterType="hashmap" resultMap="reviewResultSet">       
        SELECT  REVIEW_NO
 	   			, REVIEW_CONT
                 , TO_CHAR(REVIEW_ENROLL_DATE, 'YYYY-MM-DD HH24:MI:SS') AS REVIEW_ENROLL_DATE
@@ -278,6 +282,8 @@
                 , M.MEM_NAME
                 , M.PROFILE_PATH MPROFILE
                 , H.PROFILE_PATH HPROFILE
+                , (SELECT COUNT(*) FROM REVIEW_LIKE L WHERE L.REVIEW_NO = R.REVIEW_NO) AS COUNT
+                , (SELECT COUNT(*) FROM REVIEW_LIKE L WHERE L.MEM_NO = #{memNo} AND L.REVIEW_NO= R.REVIEW_NO) AS LCOUNT
        FROM REVIEW R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
        JOIN RESERVE V ON R.RESERVE_NO = V.RESERVE_NO
