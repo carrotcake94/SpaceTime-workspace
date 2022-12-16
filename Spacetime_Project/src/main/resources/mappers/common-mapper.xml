@@ -172,12 +172,18 @@
 		<!-- 날짜 선택 조건 나중에 넣기 -->
 	</select>
 
-	<!-- 검색어 자동완성 -->
-	<select id="autoComplete" parameterType="string" resultType="arraylist">
+	<!-- 검색어 자동완성 -성훈 -->
+	<select id="autoComplete" parameterType="string" resultType="string">
 		SELECT SPACE_TITLE
 		FROM SPACE
-		WHERE INSTR(SPACE_TITLE, #{keyword}) > 0
+		WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
 		AND SPACE_STATUS = 'Y'
+	</select>
+	
+	<select id="hashtagAutoComplete" parameterType="string" resultType="string">
+		SELECT LISTAGG(HASHTAG, ',') WITHIN GROUP (ORDER BY HASHTAG DESC) AS TAGS
+		  FROM SPACE
+		 WHERE HASHTAG LIKE '%' || #{keyword} || '%'
 	</select>
 	
 	<!-- 마이페이지 신고리스트 신희섭 -->

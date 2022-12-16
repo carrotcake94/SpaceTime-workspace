@@ -104,24 +104,14 @@
 					var HOME_PATH = window.HOME_PATH || '.';
 					var picListArr = [];
 					var lineListArr = [];
-/* 					var pointer = document.querySelectorAll("#div[title]");
 					
-					pointer.addEventListener("click", (e) => {
-						console.log(e);
-					}) */
-					/* 
-					for(var i = 0; i < markers.length; i++){
-						naver.maps.Event.addListener(markers[i], "click", (i) => {
-							console.log(i);
-						});
-					} */
 					
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
 						selectList(map);
 						loadList(spaceListArr, picListArr, lineListArr);
 						updateMarkers();
-						//linkMarkerAndList(markers, picListArr, lineListArr);
+						linkMarkerWithList(markers, picListArr, lineListArr, map);
  					};
  					
 					//지도 이동 후 해당 범위의 장소 재검색
@@ -130,10 +120,9 @@
 						selectList(map);
 						loadList(spaceListArr, picListArr, lineListArr);
 						updateMarkers();
-						linkMarkerAndList(markers, picListArr, lineListArr);
+						linkMarkerWithList(markers, picListArr, lineListArr, map);
 					};
 					 
-					
 					//게시판 형태 변환 (게시판형-사진형)
 					var picList = document.querySelector("#picList");
 					var lineList = document.querySelector("#lineList");
@@ -157,10 +146,6 @@
 						filterMap();
 						loadList(spaceListArr);
 						updateMarkers();
-					};
-
-					picList.onmouseover = (e) => {
-						//console.log(e.target);
 					};
 				</script>
 			</div>

@@ -101,11 +101,15 @@ public class CommonDao {
 		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesDetailList", spaceNo, rowBounds);
 	}
 	
-	//검색어 자동완성기능
+	//검색어 자동완성기능 - 성훈
 	public ArrayList<String> autoComplete(SqlSessionTemplate sqlSession, String keyword) {
-		
 		ArrayList<String> keywords = (ArrayList)sqlSession.selectList("commonMapper.autoComplete", keyword); 
 		return keywords;
+	}
+	
+	//해시태그 자동완성기능 -성훈
+	public String hashtagAutoComplete(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("commonMapper.hashtagAutoComplete", keyword);
 	}
 	
 	// ---------------------------------------------------------------------------------------- 마이페이지 신고 리스트 신희섭  

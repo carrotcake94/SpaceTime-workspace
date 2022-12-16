@@ -99,11 +99,17 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.selectSalesDetailList(sqlSession, pi, spaceNo);
 	}
 
-	//검색어 자동완성
+	//검색어 자동완성 -성훈 
 	@Override
 	public ArrayList<String> autoComplete(String keyword) {
 		
 		return commonDao.autoComplete(sqlSession, keyword);
+	}
+	
+	//해시태그 자동완성 -성훈
+	@Override
+	public String hashtagAutoComplete(String keyword) {
+		return commonDao.hashtagAutoComplete(sqlSession, keyword);
 	}
 	
 	// 마이페이지 신고리스트 -신희섭

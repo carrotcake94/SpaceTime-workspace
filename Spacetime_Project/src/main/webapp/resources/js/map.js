@@ -31,20 +31,27 @@ function loadList(spaceListArr, picListArr, lineListArr){
 	var picContent, lineCotent;
 	
 	for(var i in spaceListArr){
-		//리스트를 위한 div요소 생성
+		//리스트를 위한 div요소 생성 (id속성, onclick속성, onmouseover속성 추가)
 		picContent = document.createElement("div");
-		picContent.setAttribute("id", "picList_" + i);
+		picContent.setAttribute("id", "picList_" + spaceListArr[i].spaceNo);
+		picContent.setAttribute("onclick", "toSpaceDetail(" + spaceListArr[i].spaceNo + ")");
+		picContent.setAttribute("onmouseover", "linkListWithMarker(" + spaceListArr[i].spaceNo + ")");
+		picContent.setAttribute("onmouseout", "unlinkListWithMarker(" + spaceListArr[i].spaceNo + ")");
+		
 		lineContent = document.createElement("div");
-		lineContent.setAttribute("id", "lineList_" + i);
+		lineContent.setAttribute("id", "lineList_" + spaceListArr[i].spaceNo);
+		picContent.setAttribute("onclick", "toSpaceDetail(" + spaceListArr[i].spaceNo + ")");
+		picContent.setAttribute("onmouseover", "linkListWithMarker(" + spaceListArr[i].spaceNo + ")");
+		picContent.setAttribute("onmouseout", "unlinkListWithMarker(" + spaceListArr[i].spaceNo + ")");
 		
 		//리스트를 위한 내용물 생성
-		picContent.innerHTML = "<div class='picList_content' onclick='toSpaceDetail(" + spaceListArr[i].spaceNo + ")'>" +
+		picContent.innerHTML = "<div class='picList_content'>" +
 								   "<div class='picList_content_pic'>이미지</div>" +
 								   "<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
 								   "<div class='picList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
 							   "</div>";
 		
-		lineContent.innerHTML = "<div class='lineList_content' onclick='toSpaceDetail(" + spaceListArr[i].spaceNo + ")'>" +
+		lineContent.innerHTML = "<div class='lineList_content'>" +
 								    "<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
 								    "<div class='lineList_content_hashTag click_disable'>" + spaceListArr[i].hashtag + "</div>" +
 								    "<div class='lineList_content_extraInfo'>" +
@@ -63,24 +70,6 @@ function loadList(spaceListArr, picListArr, lineListArr){
 	}	
 };
 
-function insertMarkers() {
-	var bounds = map.getBounds();
-	
-	if(spaceListArr.length == 0) return;
-	
-    for(var i = 0; i < spaceListArr.length; i++) {
-    
-        position = new naver.maps.LatLng(spaceListArr[i].latitude, spaceListArr[i].longitude);
-    	marker = new naver.maps.Marker({
-			position : position,
-			title : spaceListArr[i].spaceNo,
-			clickable: true,
-			map: map
-		});
-        markers.push(marker);
-	}
-};
-
 function updateMarkers() {
 	//기존의 마커 삭제
 	for(var i in markers){
@@ -97,25 +86,42 @@ function updateMarkers() {
 			position : position,
 			title : spaceListArr[i].spaceNo,
 			clickable : true,
-			map: map
-		});
-		
-		naver.maps.Event.addListener(markers[i], "click", () => {
-			console.log(picListArr[i]);
+			map: map,
+			animation: null
 		});
 		
         markers[i] = marker;
 	}
 };
 
-function linkMarkerAndList(markers, picListArr, lineListArr){
+function linkMarkerWithList(markers, picListArr, lineListArr, map){
 	for(var i = 0; i < markers.length; i++){
-		naver.maps.Event.addListener(markers[i], "click", () => {
-			console.log(picListArr[i]);
+		naver.maps.Event.addListener(markers[i], "click", (e) => {
+			var list = document.getElementById("picList_" + e.overlay.title);
+			$("#picList").animate({
+				scrollTop : list.offsetTop - 100
+			}, 500);
+			list.style.cssText = "background-color: black; color: white;";
+			setTimeout( () => list.style.cssText = "", 1000);
 		});
 	}
 }
 
+function linkListWithMarker(sno){
+	for(var i = 0; i < markers.length; i++){
+		if(markers[i].title == sno){
+			markers[i].setAnimation(1);
+		}
+	}
+}
+
+function unlinkListWithMarker(sno){
+	for(var i = 0; i < markers.length; i++){
+		if(markers[i].title == sno){
+			markers[i].setAnimation(null);
+		}
+	}
+}
 
 function filterOpenClose() {
     if(filter.style.display =="none"){
@@ -136,7 +142,6 @@ function toLineList() {
 	lineList.style.display = "block";
 	picList.style.display = "none";
 }
-
 
 function filterMap() {
 	//지역
@@ -171,13 +176,12 @@ function filterMap() {
 		},
 		success : (listArr) => {
 			spaceListArr = listArr;
-			console.log(spaceListArr);
 		},
 		error : () => {
 		}
 	});
 }
 
-function toSpaceDetail(sno) {
+function toSpaceDetail(sno){
 	location.href = "detail.sp?sno=" + sno;
 }

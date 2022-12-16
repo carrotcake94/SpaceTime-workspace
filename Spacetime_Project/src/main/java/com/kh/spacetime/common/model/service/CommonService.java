@@ -44,6 +44,9 @@ public interface CommonService {
 	
 	// 검색어 자동완성
 	ArrayList<String> autoComplete(String keyword);
+	
+	// 해시태그 자동완성
+	String hashtagAutoComplete(String keyword);
 
 	//==============================================================================================
 	

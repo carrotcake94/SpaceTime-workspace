@@ -518,15 +518,21 @@
 		document.querySelector("#m_search_btn").onclick = () => {
 			location.href="searchSpaceList.mp";
 		}
+		
 		//검색어 자동완성기능
-		//### Cause: java.lang.UnsupportedOperationException
-		/* $(function(){
-			var searchInput = document.querySelector("#searchInput");
+		var searchInput = document.querySelector("#searchInput");
 			
 			window.addEventListener("keyup", () => {
-				autoComplete(searchInput);
+				if(searchInput.value.startsWith("#") == true){
+					window.addEventListener("keyup", () => {
+						if(searchInput.value.startsWith("#") == true) {
+							hashtagAutoComplete(searchInput.value);
+						} else { return; }
+					});
+				} else {
+					autoComplete(searchInput.value);
+				}
 			})
-		}); */
 	</script>
     <!-- 슬라이드 메뉴 -->
     <div id="overlay"></div>

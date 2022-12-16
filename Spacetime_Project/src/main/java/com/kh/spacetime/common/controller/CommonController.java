@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.spacetime.common.model.service.CommonService;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
@@ -302,12 +303,28 @@ public class CommonController {
 	//검색어 자동완성
 	@ResponseBody
 	@RequestMapping(value="autoComplete.co", produces="text/html; charset=UTF-8")
-	public ModelAndView autoComplete(String keyword, ModelAndView mv) {
+	public String autoComplete(String keyword) {
 		ArrayList<String> keywords = commonService.autoComplete(keyword);
 		
-		mv.addObject(keywords);
-		mv.setViewName("common/main");
-		return mv;
+		return new Gson().toJson(keywords);
+	}
+	
+	/**
+	 * 
+	 * @param keyword
+	 * @param mv
+	 * @return
+	 * @author 성훈
+	 */
+	//해시태그 자동완성
+	@ResponseBody
+	@RequestMapping(value="hashtagAutoComplete.co", produces="text/html; charset=UTF-8")
+	public String hashtagAutoComplete(String keyword) {
+		String keywords = commonService.hashtagAutoComplete(keyword);
+		String[] keywordArr = keywords.split(",");
+		System.out.println(keywordArr);
+		
+		return keywords;
 	}
 	
 	//카테고리 페이지 이동
