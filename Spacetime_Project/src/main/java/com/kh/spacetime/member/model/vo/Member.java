@@ -36,4 +36,5 @@ public class Member {
     private String grCode; // GR_CODE CHAR(3) NOT NULL,
     
     private String grName; // join 용 
+   
 }

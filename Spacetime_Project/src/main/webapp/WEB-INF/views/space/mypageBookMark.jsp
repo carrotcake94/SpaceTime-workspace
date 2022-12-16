@@ -328,10 +328,10 @@
            
           </div>
           <div>
-            <span class="stitle">공간명</span>
+            <span class="stitle" name="spaceTitle">공간명</span>
             <hr />
              당산동
-            <span class="sprice">50,000원</span>
+            <span class="sprice" name="hourPrice">50,000원</span>
           </div>
           
         </div>
