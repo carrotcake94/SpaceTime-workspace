@@ -356,11 +356,10 @@
 		WHERE SPACE_NO = #{spaceNo}
 	</select>
 	 
-	<select id="selectSpaceDetailAttachment" parameterType="_int" resultMap="spaceAttachmentResultSet">
+	<select id="selectSpaceDetailAttachment" parameterType="java.util.List" resultMap="spaceAttachmentResultSet">
 		SELECT *
 		FROM SPACE_ATTACHMENT
 		WHERE SPACE_NO = #{spaceNo}
-		AND ATTACHMENT_LEVEL = 1 
 	</select>
 	 
 	<insert  id="insertSpaceReport" parameterType="space">

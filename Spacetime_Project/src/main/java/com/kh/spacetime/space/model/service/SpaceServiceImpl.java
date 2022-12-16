@@ -158,7 +158,7 @@ public class SpaceServiceImpl implements SpaceService {
 	
 	// 공간 상세 - Attachment
 	@Override
-	public SpaceAttachment selectSpaceDetailAttachment(int spaceNo) {
+	public ArrayList<SpaceAttachment> selectSpaceDetailAttachment(int spaceNo) {
 		return spaceDao.selectSpaceDetailAttachment(sqlSession, spaceNo);
 	}
 	

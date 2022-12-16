@@ -86,7 +86,7 @@ public interface SpaceService {
 	Space selectSpaceDetail(int spaceNo);
 
 	// 공간 상세 조회 - Attachment
-	SpaceAttachment selectSpaceDetailAttachment(int spaceNo);
+	ArrayList<SpaceAttachment> selectSpaceDetailAttachment(int spaceNo);
 
 	// 공간 신고
 	int insertSpaceReport(Space s);

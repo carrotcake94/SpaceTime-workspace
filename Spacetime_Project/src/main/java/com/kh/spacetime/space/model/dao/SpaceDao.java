@@ -161,8 +161,8 @@ public class SpaceDao {
 	}
 
 	// 공간 상세 - Attachment
-	public SpaceAttachment selectSpaceDetailAttachment(SqlSessionTemplate sqlSession, int spaceNo) {
-		return sqlSession.selectOne("spaceMapper.selectSpaceDetailAttachment", spaceNo);
+	public ArrayList<SpaceAttachment> selectSpaceDetailAttachment(SqlSessionTemplate sqlSession, int spaceNo) {
+		return (ArrayList)sqlSession.selectList("spaceMapper.selectSpaceDetailAttachment", spaceNo);
 	}
 
 	// 공간 신고

@@ -449,7 +449,7 @@ public class SpaceController {
 	
 	
 	// 공간 상세조회 - 북마크 기능 
-	@RequestMapping("detail.sp")
+	@RequestMapping(value="detail.sp", produces="text/html; charset=UTF-8")
 	public ModelAndView selectProduct(int sno, ModelAndView mv, HttpSession session) {
 	     
 		// 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
@@ -481,23 +481,14 @@ public class SpaceController {
 			// 상세조회 요청
 			// DetailView.jsp 상에 필요한 데이터 조회
 			Space s = spaceService.selectSpaceDetail(sno);
-			SpaceAttachment sa = spaceService.selectSpaceDetailAttachment(sno);
+			ArrayList<SpaceAttachment> sa = spaceService.selectSpaceDetailAttachment(sno);
 			
-			int listCount = spaceService.selectReviewListBySnoCount(sno);
-			int pageLimit = 10;
-			int boardLimit = 3;
-
-			PageInfo pi = Pagination.getPageInfo(listCount, 1, pageLimit, boardLimit);
-
-			ArrayList<Review> reviewList = spaceService.selectReviewListBySno(sno, pi);
 			
 			// 조회된 데이터를 담아서 포워딩
 			mv.addObject("count", count);
 			mv.addObject("s", s);
 			mv.addObject("sa", sa);
 			mv.addObject("bm", bm);
-			mv.addObject("rList", reviewList);
-			mv.addObject("pi", pi);
 			mv.setViewName("space/spaceDetailView");
 		
 		}

@@ -9,7 +9,9 @@
 <title>공간 상세 페이지</title>
 <!-- 부트페이 -->
 <script src="https://js.bootpay.co.kr/bootpay-4.2.6.min.js" type="application/javascript"></script>
-
+<!-- W3.CSS(슬라이드) -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
     #content {
@@ -423,7 +425,8 @@
         border: 1px solid black;
       }
 
-      
+       /* 슬라이드 */
+      .mySlides {display:none;}
       
 
 </style>
@@ -456,17 +459,29 @@
                     <td  style="padding-right: 100px;" align="center">
                         <!-- 공간이미지, 제목 등 -->
                         <div class="space">
-                            <img class="space_img" src="${ sa.attachmentReName }" alt="사진 없음" />
-                                <div class="img_btn_area">
-                                    <button type="button" class="button_img button_img_prev">
-                                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="button_img button_img_next">
-                                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                    </button>
-                                </div>
+                            <div class="w3-content w3-section" style="max-width:500px">
+                            <c:forEach var="sa" items="${ sa }">
+                              <img src="${ sa.attachmentReName }" class="mySlides w3-animate-right" style="width:100%" alt="사진 없음" />
+                            </c:forEach>
+                          </div>
                         </div>
-
+						  <!-- 슬라이드 -->
+                          <script>
+	                            var myIndex = 0;
+	                            carousel();
+	                            
+	                            function carousel() {
+	                              var i;
+	                              var x = document.getElementsByClassName("mySlides");
+	                              for (i = 0; i < x.length; i++) {
+	                                x[i].style.display = "none";  
+	                              }
+	                              myIndex++;
+	                              if (myIndex > x.length) {myIndex = 1}    
+	                              x[myIndex-1].style.display = "block";  
+	                              setTimeout(carousel, 2500);    
+	                            }
+                            </script>
                     </td>
                     <td> <!-- 오른쪽 화면 -->
 
