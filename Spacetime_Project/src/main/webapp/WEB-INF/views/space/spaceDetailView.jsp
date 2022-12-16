@@ -12,6 +12,13 @@
 <!-- W3.CSS(슬라이드) -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--  fullCalendar -->
+  <!-- fullcalendar CDN -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+  <!-- fullcalendar 언어 CDN -->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+
 <style>
 
     #content {
@@ -529,6 +536,7 @@
                                 $(function() {
                                 	$("#bookmark").on("click", ".likeControl", function() {
                                         if(${ empty loginMember }) {
+                                        	console.log("호출");
                                             alert("로그인 후 이용 가능한 서비스입니다.");
                                         } else {
                                             if($("#eventLike").css("display") == "none") {
@@ -567,28 +575,33 @@
                                 });
                                 </script>
                                 
-                               <!--  <button type="button" class="img_btn" id="like_btn"><img src="resources/images/space/like_icon.png" width="35px" height="35px"></button> -->
                             </div>
                             
                             <!-- 달력/시간 -->
-                            <table id="tbl-reserve2" class="table">
+                            <table id="tbl-reserve2" class="table table-borderless">
                                 <tr>
                                     <th>
-                                        <!-- <input type="date" id="D-day" onchange="selectDay(this.value)"> -->
-                                        <jsp:include page="calendar.jsp" />
-
-                                        <!-- 클릭한 td(날짜 값) 가져오기-->
                                         <script>
-
-                                          // 클릭한 날짜값 가져오기 
-                                          $('.day-tr td').click(function() {
-
-                                            // console.log($(this).text());
-                                            var day = $(this).text(); 
-
-                                          });
-                                          
+	                                        document.addEventListener('DOMContentLoaded', function() {
+	                                            var calendarEl = document.getElementById('calendar');
+	                                            var calendar = new FullCalendar.Calendar(calendarEl, {
+	                                              initialView: 'dayGridMonth'
+	                                            });
+	                                            calendar.render();
+	                                          });
+	                                        
+	                                        $(function() {
+	                                        	$(".fc-datgrid-day").click(function() {
+	                                        		console.log($(this).find(".fc-daygrid-day-number").text());
+	                                        		//location.href ="hostRvwList.rv?rpage="+$(this).text();
+	                                			});
+	                                        });
+	                                        
                                         </script>
+                                        
+                                        <div id="calendar">
+                                        	
+                                        </div>
 	
                                     </th>
                                 </tr>
@@ -708,44 +721,6 @@
                                             $('.test').scrollLeft(_scrollX + 100);
                                           };
                                         </script>
-
-
-                                        <!-- 
-                                          <table class="table" style="cursor: pointer; font-size: 12px;" id="availableTime">
-                                            <tr>
-                                                <th id="0" style="width:16.6%;">00:00 - 01:00</th>	                                
-                                                <th id="1" style="width:16.6%;">01:00 - 02:00</th>	                                
-                                                <th id="2" style="width:16.6%;">02:00 - 03:00</th>	                                
-                                                <th id="3" style="width:16.6%;">03:00 - 04:00</th>	                                
-                                                <th id="4" style="width:16.6%;">04:00 - 05:00</th>	                                
-                                                <th id="5" style="width:16.6%;">05:00 - 06:00</th>	                                
-                                            </tr>      
-                                            <tr>       
-                                                <th id="6">06:00 - 07:00</th>	                                
-                                                <th id="7">07:00 - 08:00</th>	                                
-                                                <th id="8">08:00 - 09:00</th>	                                
-                                                <th id="9">09:00 - 10:00</th>	                                
-                                                <th id="10">10:00 - 11:00</th>	                                
-                                                <th id="11">11:00 - 12:00</th>	                                
-                                            </tr>      
-                                            <tr>       
-                                                <th id="12">12:00 - 13:00</th>	                                
-                                                <th id="13">13:00 - 14:00</th>	                                
-                                                <th id="14">14:00 - 15:00</th>	                                
-                                                <th id="15">15:00 - 16:00</th>	                                
-                                                <th id="16">16:00 - 17:00</th>	                                
-                                                <th id="17">17:00 - 18:00</th>	                                
-                                            </tr>      
-                                            <tr>       
-                                                <th id="18">18:00 - 19:00</th>	                                
-                                                <th id="19">19:00 - 20:00</th>	                                
-                                                <th id="20">20:00 - 21:00</th>	                                
-                                                <th id="21">21:00 - 22:00</th>	                                
-                                                <th id="22">22:00 - 23:00</th>	                                
-                                                <th id="23">23:00 - 24:00</th>	                                
-                                            </tr> 
-                                        </table>
-                                        -->
                                         <input type="button" class="" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
                                     </th>
                                 </tr>
@@ -761,24 +736,6 @@
 
                         <!-- 공간소개 -->
                         <h3>공간소개</h3>
-                        <p>
-                        	<!-- 이런 분들이 많이 찾으십니다.
-                            <br> 
-                            비대면 강의 스트리밍을 원하시는 분
-                            <br> 
-                            큰 전광판 화면을 원하시는 분 
-                            <br><br>
-                            200인치 전광판이 있는 스튜디오에서 촬영해보세요.
-                            <br><br>
-                            * 전광판 사용 유무에 따라 금액에 차이가 있으니 확인 바랍니다 *
-                            <br><br><br>
-                            *스튜디오를 방문해주시는 모든 분들은 건강한 스튜디오 환경을 위해
-                            <br>
-                            스튜디오에 구비된 손소독제를 사용하고, 발열 체크 후 입장이 가능하시고
-                            <br>
-                            모든 방문자의 성함 및 연락처를 적어주셔야합니다.*
-                            <br><br>
-                            - 저희 스튜디오는 매일 1회 이상 소독을 진행하고 있습니다 - -->
                             ${ s.spaceInfo }
                         </p>
                     </td>

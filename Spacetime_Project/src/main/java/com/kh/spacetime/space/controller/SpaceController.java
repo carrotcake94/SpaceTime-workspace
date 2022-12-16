@@ -447,6 +447,17 @@ public class SpaceController {
 		return "space/chat";
 	}
 	
+	// 캘린더 ajax
+	@RequestMapping(value="calendar.sp")
+	public String ajaxCalenar(int year, int month) {
+		
+		
+		
+		return "space/calendar";
+	
+	}
+	
+	
 	
 	// 공간 상세조회 - 북마크 기능 
 	@RequestMapping(value="detail.sp", produces="text/html; charset=UTF-8")
@@ -491,7 +502,7 @@ public class SpaceController {
 			mv.addObject("bm", bm);
 			mv.setViewName("space/spaceDetailView");
 
-			System.out.println(s);
+			// System.out.println(s);
 		
 		}
 		else { // 실패
