@@ -63,6 +63,31 @@
         margin: 0 5px;
     }
 
+	#starArea {
+            position: relative;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        #starArea>div {
+            overflow: hidden;
+            /* position: absolute; */
+        }
+
+        #starArea i {
+            font-size: 15px;
+            color: rgb(253, 193, 55);
+            padding: 0;
+            margin: 0;
+        }
+
+        #starArea span {
+            display: inline-block;
+            width: 17.875px;
+            height: 32px;
+            cursor: pointer;
+        }
+	
 
 </style>
 </head>
@@ -94,7 +119,29 @@
 							<td>${r.reserveNo}</td>
 							<td>${r.spaceTitle}</td>
 							<td>${r.reviewCont}</td>
-							<td>${r.rating}</td>
+							<td>
+								<div id="starArea">
+                                    <div id="realStarArea">
+                                    <!-- fa-solid fa-star -->
+                                    	<i class="<c:if test="${1 gt r.rating}"> fa fa-star-o </c:if>
+                                    			  <c:if test="${1 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
+                                    	<i class="<c:if test="${2 gt r.rating}"> fa fa-star-o </c:if>
+                                    			  <c:if test="${2 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
+                                    	<i class="<c:if test="${3 gt r.rating}"> fa fa-star-o </c:if>
+                                    			  <c:if test="${3 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
+                                    	<i class="<c:if test="${4 gt r.rating}"> fa fa-star-o </c:if>
+                                    			  <c:if test="${4 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
+                                    	<i class="<c:if test="${5 gt r.rating}"> fa fa-star-o </c:if>
+                                    			  <c:if test="${5 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <span class="s1"></span><span class="s2"></span><span class="s3"></span><span
+                                            class="s4"></span><span class="s5"></span><span class="s6"></span><span
+                                            class="s7"></span><span class="s8"></span><span class="s9"></span><span
+                                            class="s10"></span>
+                                    </div>
+                                </div>
+							</td>
 							<td>${r.reviewEnrollDate}</td>
 							<input type="hidden" value="${r.reviewNo}">
 						</tr>
@@ -112,32 +159,31 @@
 		</div>
 		<br>
 		<!-- 페이지 버튼 -->
-		<div class="btnPage" align="center" id="btn">
-			<ul class="pagination" align="center">
-				<c:choose>
-					<c:when test="${pi.currentPage eq 1}">
-						<li class="page-item no-page-prev disabled"><a class="page-link" href="">&lt;</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item no-page-prev"><a class="page-link" href="reList.ad?cpage=${pi.currentPage - 1}">&lt;</a></li>
-					</c:otherwise>
-				</c:choose>
-
-				<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-					<li class="page-item page-btn"><a id="active-page" class="page-link">1</a></li>
-				</c:forEach>
-				
-				<c:choose>
-					<c:when test="${pi.currentPage eq pi.maxPage}">
-						<li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-					</c:when>
-					<c:otherwise>
-						<li class="page-item no-page-next"><a class="page-link" href="reList.ad?cpage=${pi.currentPage + 1}">&gt;</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
+			<!-- 페이지 버튼 -->
+			<div id="pagingArea" align="center" id="btn">
+                <ul class="pagination">
+			      	<c:choose>
+				   		<c:when test="${ pi.currentPage eq 1 }">
+				   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
+				   		</c:when>
+				   		<c:otherwise>
+				   			<li class="page-item"><a class="page-link" href="list.re?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+				   		</c:otherwise>
+				   	</c:choose>	       
+				       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				       	<li class="page-item page-btn"><a class="page-link" href="list.re?cpage=${ p }">${ p }</a></li>
+				       </c:forEach>
+				       <c:choose>
+				       	<c:when test="${ pi.currentPage eq pi.maxPage }">
+				       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+				       	</c:when>
+				       	<c:otherwise>
+				      	 	<li class="page-item no-page-next"><a class="page-link" href="list.re?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+				       	</c:otherwise>
+				       </c:choose>	       
+     			 </ul>
+            </div>
 		</div>
-	</div>
 	<br><br><br>
 	
 	<div id="content_3">오른쪽여백</div>

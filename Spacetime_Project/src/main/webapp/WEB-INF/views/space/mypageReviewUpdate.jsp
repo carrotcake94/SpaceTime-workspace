@@ -67,6 +67,31 @@
 
 	.reviewImg { padding-top: 20px; }
 	.reviewDetail{padding :10px;}
+	
+	 #starArea {
+            position: relative;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        #starArea>div {
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #starArea i {
+            font-size: 30px;
+            color: rgb(253, 193, 55);
+            padding: 0;
+            margin: 0;
+        }
+
+        #starArea span {
+            display: inline-block;
+            width: 17.875px;
+            height: 32px;
+            cursor: pointer;
+        }
 </style>
 
 </head>
@@ -98,7 +123,7 @@
 							<td class="review spaceTitle" required>${r.spaceTitle }</td>
 							<!-- 리뷰를 작성하는 공간명을 그대로 가져와서 보여주는 것이므로 공간명을 내가 쓰진 않음 -->
 							<td class="review rate">
-								<div class="form-group"  >
+								<%-- <div class="form-group"  >
 									<!-- <select name="" class="form-control mb-2">
 										<option value="5">⭐⭐⭐⭐⭐</option>
 										<option value="4">⭐⭐⭐⭐</option>
@@ -112,9 +137,22 @@
 										<option value="3">3</option>
 										<option value="2">2</option>
 										<option value="1">1</option>
-										<%-- <option value="${r.rating }"></option> --%>
+										<option value="${r.rating }"></option>
 									</select>
-								</div>
+								</div> --%>
+								
+                                <div id="starArea">
+                                    <div id="realStarArea"><i class="fa fa-star-o" aria-hidden="true"></i><i
+                                            class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o"
+                                            aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <span class="s1"></span><span class="s2"></span><span class="s3"></span><span
+                                            class="s4"></span><span class="s5"></span><span class="s6"></span><span
+                                            class="s7"></span><span class="s8"></span><span class="s9"></span><span
+                                            class="s10"></span>
+                                    </div>
+                                </div>
 								<td class="review date">${r.reviewEnrollDate }</td>
 							</td>
 						</tr>
@@ -157,7 +195,29 @@
 
 		<jsp:include page="../common/footer.jsp" />
 	</div>
-
+	<script>
+	$(function () {
+        $("#starArea span").click(function () {
+        	console.log("!!");
+            var rating = $(this).attr("class").substr(1);
+            $("input[name=rating]").val(rating);
+            var str = "";
+            var i = parseInt(rating / 2);
+            var j = rating % 2;
+            
+            for (let index = 0; index < i; index++) {
+                str += "<i class='fa-solid fa-star' aria-hidden='true'></i>";
+            }
+            if (j == 1) {
+                str += "<i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i>";
+            }
+            for (let index = 0; index < 5 - i - j; index++) {
+                str += "<i class='fa fa-star-o' aria-hidden='true'></i>";
+            }
+            $("#realStarArea").html(str);
+        });
+    });
+	</script>
 
 </body>
 </html>

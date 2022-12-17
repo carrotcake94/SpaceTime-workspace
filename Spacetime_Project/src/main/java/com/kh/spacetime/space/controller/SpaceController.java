@@ -706,9 +706,9 @@ public class SpaceController {
 
 		int listCount = spaceService.selectmypagebookmarkListCount(MemNo);
 
-		int pageLimit = 10;
-		int boardLimit = 5;
-
+		int pageLimit = 10;		// 페이지바 버튼갯수
+		int boardLimit = 9;		// 한 페이지 게시글 갯수
+		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Space> list = spaceService.selectmypagebookmarkList(MemNo, pi);

@@ -394,7 +394,7 @@ public class CommonController {
 	@RequestMapping("report.co")
 	public String selectmypagereport(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model,HttpSession session) {
 		
-		// System.out.println("cpage : " + currentPage);
+		System.out.println("cpage : " + currentPage);
 		//int reportMemNo= ((Member)Session.getAttribute("loginMember")).getMemNo() ;
 		Member m = (Member) session.getAttribute("loginMember");
 		int reportMemNo = m.getMemNo();

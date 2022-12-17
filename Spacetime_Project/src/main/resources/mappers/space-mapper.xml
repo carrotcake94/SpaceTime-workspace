@@ -27,6 +27,8 @@
 		<result column="DENY_MESSAGE" property="denyMessage" />
 		<result column="HOST_NO" property="hostNo" />
 		<result column="STYPE_NO" property="stypeNo" />
+		<result column="BOOKMARK_MEM" property="bookmarkMem" />
+		<result column="RATING" property="rating" />
 		<collection resultMap="spaceAttachmentResultSet" property="attachments" />
 	</resultMap>
 	

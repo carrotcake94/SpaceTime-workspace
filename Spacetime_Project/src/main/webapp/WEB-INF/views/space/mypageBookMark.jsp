@@ -105,7 +105,7 @@
 
       #space_area > div:nth-child(2) {
         float: left;
-        margin-left: 3.5%;
+        /* margin-left: 3.5%; */
       }
 
       #space_area > div:nth-child(3) {
@@ -313,71 +313,68 @@
       <div class="sheader"id="bookmark">
         찜한공간
       </div>
-      <div id="space_area">
-        <div class="space">
-          <div class="img_area">
-            <img src="166028706_.jpg" alt="사진 없음" />
-            <div class="img_btn_area">
-              <button type="button" class="button_img button_img_prev">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="button_img button_img_next">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </button>
+      <div id="space_area" style="margin-left: 80px;">
+        <!-- <div style="height: 100%;"> -->
+          <c:forEach var="s" items="${ list }">
+          <c:set var="attachments" value="${s.attachments}" />
+          <div id="${s.spaceNo}" style="padding: 15px 15px; float: left; height: 500px; width: 350px" >
+              <table>
+                  <thead>
+                      <tr>
+                          <td colspan="2">
+                              <div style="width: 25%; height: 25%;">
+                                  <%-- <c:forEach var="attach" items="${attachments}">
+                                      <img src="${attach.attachmentReName}">
+                                  </c:forEach> --%>
+                                  <img style="width: 300px; height: 300px;" src="${attachments[0].attachmentReName}" onclick="detailSpace(${s.spaceNo})">
+                              </div>
+                          </td>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td colspan="2" height="20%"><span>${s.spaceTitle}</span></td>
+                      </tr>
+                      <tr>
+                          <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i></td>                                                                           
+                      </tr>
+                      <tr height="20%">
+                          <td width="60%"><span style="color: #277BC0;">${s.hourPrice}</span> 원/시간</td>
+                          <td width="40%" style="text-align: right;">
+                              <i class="fa-solid fa-user"></i> 4
+                              <i class="fa-solid fa-comment"></i> 3
+                              <i class="fa-solid fa-heart" onclick="deleteLike('${s.spaceNo}', '${s.bookmarkMem}')"></i> 23
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
             </div>
-           
-          </div>
-          <div>
-            <span class="stitle" name="spaceTitle">공간명</span>
-            <hr />
-             당산동
-            <span class="sprice" name="hourPrice">50,000원</span>
-          </div>
-          
-        </div>
-        <div class="space">
-          <div class="img_area">
-            <img src="166916214.jpg" alt="사진없음" />
-            <div class="img_btn_area">
-              <button type="button" class="button_img button_img_prev">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="button_img button_img_next">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </button>
-            </div>
-            
-          </div>
-          <div>
-            <span class="stitle">공간명</span>
-            <hr />
-            당산
-            <span class="sprice">50,000</span>
-          </div>
-          
-        </div>
-        <div class="space">
-          <div class="img_area">
-            <img src="1667747.jpg" alt="사진없음" />
-            <div class="img_btn_area">
-              <button type="button" class="button_img button_img_prev">
-                <i class="fa fa-angle-left" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="button_img button_img_next">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </button>
-            </div>
-            
-          </div>
-          <div>
-            <span class="stitle">공간명3</span>
-            <hr />
-           당산
-            <span class="sprice">30,000원</span>
-          </div>
-          
-        </div>
+          </c:forEach>
+        <!-- </div> -->
       </div>
+      <div id="pagingArea">
+                <ul class="pagination">
+			      	<c:choose>
+				   		<c:when test="${ pi.currentPage eq 1 }">
+				   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
+				   		</c:when>
+				   		<c:otherwise>
+				   			<li class="page-item"><a class="page-link" href="mypagebookmark.sp?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+				   		</c:otherwise>
+				   	</c:choose>	       
+				       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				       	<li class="page-item page-btn"><a class="page-link" href="mypagebookmark.sp?cpage=${ p }">${ p }</a></li>
+				       </c:forEach>
+				       <c:choose>
+				       	<c:when test="${ pi.currentPage eq pi.maxPage }">
+				       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+				       	</c:when>
+				       	<c:otherwise>
+				      	 	<li class="page-item no-page-next"><a class="page-link" href="mypagebookmark.sp?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+				       	</c:otherwise>
+				       </c:choose>	       
+     			 </ul>
+            </div>
       <script>
         $(function () {
           $(".img_area").mouseover(function () {
@@ -389,19 +386,28 @@
             $(this).children("img").css({ transform: "scale(1.0)" });
           });
         });
-      </script>
+        
+        function detailSpace(spaceNo) {
+        	location.href="/spacetime/detail.sp?sno="+spaceNo;
+        }
+        
+        function deleteLike(spaceNo, memNo) {
+        	$.ajax({
+                url: "deletelike.sp",
+                data: {
+                    spaceNo: spaceNo,
+                    memNo: memNo
+                },
+                success: function(result) {
+                	document.location.href = document.location.href;
+                },
+                error: function() {
+                    console.log("ajax failure");
+                }
+            });
+        }
 
-      <ul class="pagination">
-        <li class="page-item no-page-prev"><a class="page-link">&lt;</a></li>
-        <li class="page-item page-btn">
-          <a id="active-page" class="page-link">1</a>
-        </li>
-        <li class="page-item page-btn"><a class="page-link">2</a></li>
-        <li class="page-item page-btn"><a class="page-link">3</a></li>
-        <li class="page-item page-btn"><a class="page-link">4</a></li>
-        <li class="page-item page-btn"><a class="page-link">5</a></li>
-        <li class="page-item no-page-next"><a class="page-link">&gt;</a></li>
-      </ul>
+      </script>
     </div>
     <br><br><br>
 	
