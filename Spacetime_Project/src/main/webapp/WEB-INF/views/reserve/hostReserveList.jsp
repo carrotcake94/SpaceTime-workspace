@@ -344,45 +344,54 @@
           </tr>
         </thead>
         <tbody>
-         <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd HH:MM:ss" />
-         <c:forEach var="r" items="${rList}" varStatus="status">
-         <tr onclick="revInfoModalOpen(this)">
-            <td>${r.reserveNo}</td>
-            <td>${r.space.spaceTitle}</td>
-            <td>${r.member.memName}</td>
-            <td>${r.useDate }</td>
-            <td><fmt:formatNumber value="${r.price}" />원</td>
-            <td>
-	            <c:choose>
-	            <c:when test="${today >= r.useDate }">
-	            	 <c:choose>
-		             <c:when test="${r.reserveStatus eq 'W'}">승인불가</c:when>
-		             <c:when test="${r.reserveStatus eq 'Y'}">이용완료</c:when>
-		             <c:when test="${r.reserveStatus eq 'N'}">예약거절</c:when>
-		             <c:when test="${r.reserveStatus eq 'C'}">고객취소</c:when>
-		             </c:choose>
-	            </c:when>
-	            <c:otherwise>
-	            	<c:choose>
-		             <c:when test="${r.reserveStatus eq 'W'}">승인대기</c:when>
-		             <c:when test="${r.reserveStatus eq 'Y'}">예약확정</c:when>
-		             <c:when test="${r.reserveStatus eq 'N'}">예약거절</c:when>
-		             <c:when test="${r.reserveStatus eq 'C'}">고객취소</c:when>
-		             </c:choose>
-	            </c:otherwise>
-	            </c:choose>
-            </td>
-            <input type="hidden"  value="${r.reserveCount }">
-            <input type="hidden"  value="${r.startTime }">
-         	<input type="hidden"  value="${r.endTime }">
-         	<input type="hidden"  value="${r.denyMessage }">
-         	<input type="hidden"  value="${r.member.phone }">
-         	<input type="hidden"  value="${r.reserveStatus}">
-          </tr>
-         </c:forEach>
-        </tbody>
+	        <c:choose>
+		      <c:when test="${rList.size() eq 0}">
+		      	<tr>
+		      	<td colspan="6">예약 내역이 없습니다.</td>
+		      	</tr>
+		      </c:when>
+		      <c:otherwise>
+		      <fmt:formatDate var="today" value="${now}" pattern="yyyy-MM-dd HH:MM:ss" />
+		         <c:forEach var="r" items="${rList}" varStatus="status">
+		         <tr onclick="revInfoModalOpen(this)">
+		            <td>${r.reserveNo}</td>
+		            <td>${r.space.spaceTitle}</td>
+		            <td>${r.member.memName}</td>
+		            <td>${r.useDate }</td>
+		            <td><fmt:formatNumber value="${r.price}" />원</td>
+		            <td>
+			            <c:choose>
+			            <c:when test="${today >= r.useDate }">
+			            	 <c:choose>
+				             <c:when test="${r.reserveStatus eq 'W'}">승인불가</c:when>
+				             <c:when test="${r.reserveStatus eq 'Y'}">이용완료</c:when>
+				             <c:when test="${r.reserveStatus eq 'N'}">예약거절</c:when>
+				             <c:when test="${r.reserveStatus eq 'C'}">고객취소</c:when>
+				             </c:choose>
+			            </c:when>
+			            <c:otherwise>
+			            	<c:choose>
+				             <c:when test="${r.reserveStatus eq 'W'}">승인대기</c:when>
+				             <c:when test="${r.reserveStatus eq 'Y'}">예약확정</c:when>
+				             <c:when test="${r.reserveStatus eq 'N'}">예약거절</c:when>
+				             <c:when test="${r.reserveStatus eq 'C'}">고객취소</c:when>
+				             </c:choose>
+			            </c:otherwise>
+			            </c:choose>
+		            </td>
+		            <input type="hidden"  value="${r.reserveCount }">
+		            <input type="hidden"  value="${r.startTime }">
+		         	<input type="hidden"  value="${r.endTime }">
+		         	<input type="hidden"  value="${r.denyMessage }">
+		         	<input type="hidden"  value="${r.member.phone }">
+		         	<input type="hidden"  value="${r.reserveStatus}">
+		          </tr>
+		         </c:forEach>
+		       </c:otherwise>
+		       </c:choose>
+	        </tbody>
       </table>
-      
+      <c:if test="${rList.size() ne 0}">
       <ul class="pagination">
         <c:choose>
 	   		<c:when test="${ pi.currentPage eq 1 }">
@@ -404,6 +413,7 @@
 	       	</c:otherwise>
 	       </c:choose>
       </ul>
+      </c:if>
     </div>
 
     <!-- 예약정보 Modal -->

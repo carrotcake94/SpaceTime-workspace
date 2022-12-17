@@ -618,6 +618,9 @@
 		$('#spInsertForm textarea').keyup(function () {		
 			 $(this).parent().prev().children().children().first().text($(this).val().length);  
 		});
+		$('input[name=spaceTitle]').parent().prev().children().children().first().text($('input[name=spaceTitle]').val().length);  		
+		$('textarea[name=spaceSubTitle]').parent().prev().children().children().first().text($('textarea[name=spaceSubTitle]').val().length);  		
+		$('textarea[name=spaceInfo]').parent().prev().children().children().first().text($('textarea[name=spaceInfo]').val().length);  		
 	});
 
     $(function () {
