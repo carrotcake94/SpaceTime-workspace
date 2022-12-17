@@ -1105,15 +1105,58 @@
     </div>
     
 	<div id="imgOverlay">
-	            <div class="overlay-area">
-	            <div><i class="fa fa-angle-left" aria-hidden="true" onclick="imgChange(1)"></i></div>
-	            <div>
-	            	<img src="" alt="" />
-	            </div>
-	            <div><i class="fa fa-angle-right" aria-hidden="true" onclick="imgChange(2)"></i>
-	           	 <i class="fa fa-times" aria-hidden="true" ></i></div>
-	            </div>
-		</div>
+            <div class="overlay-area">
+            <div><i class="fa fa-angle-left" aria-hidden="true" onclick="imgChange(1)"></i></div>
+            <div>
+            	<img src="" alt="" />
+            </div>
+            <div><i class="fa fa-angle-right" aria-hidden="true" onclick="imgChange(2)"></i>
+           	 <i class="fa fa-times" aria-hidden="true" ></i></div>
+            </div>
+	</div>
+	
+	<!-- 리뷰 사용자 신고 Modal -->
+      <div class="modal" id="reviewReportModal">
+        <input type="hidden" name="reportMemNo" value="${ loginMember.memNo }"> 
+        <input type="hidden" name="reportedMemNo" value=""> 
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">사용자 신고</div>
+              <!-- Modal body -->
+              <div class="modal-body">
+              <!--  신고유형 선택 드롭박스  -->
+              <div>
+                <b>신고유형</b> <br>
+                <div class="selectType">
+                  <label for="type_select">신고유형선택</label>
+                    <select id="type_select" name="reportType">
+                        <option>욕설</option>
+                        <option>인신공격</option>
+                        <option>음란</option>
+                        <option>비매너</option>
+                        <option>혐오컨텐츠</option> 
+                        <option>시설물관련</option> 
+                        <option>기타</option> 
+                    </select>
+                </div>
+                </div>
+                <br>
+                <!-- 신고내용 -->
+                <b>신고내용</b>  <br>
+                <div>
+                  <textarea id="reportContent" name="reportContent" cols="50" rows="3" placeholder="신고 내용을 입력해주세요."></textarea>
+                </div>              
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
+                  <button type="submit" class="reportBtn btn btn-danger">신고하기</button>
+                </div>
+              </div>
+            </div>
+      </div>
+	
 	
   <jsp:include page="../common/footer.jsp" />
 </div>
@@ -1192,6 +1235,28 @@
 				}
 		});
 	 }
+	 
+	 reviewReport = (btn) => {
+
+
+		 $.ajax({
+				url : "reportReview.rv",
+				data : {
+					reviewNo : rno,
+					memNo : memNo,
+					lcount : lcount
+				},
+				success : result => {
+					if(result == "success") {
+						$(i).parent().html(str);
+					}
+				},
+				error : () => {
+					console.log("통신 실패");
+				}
+		});
+	 }
+	 
 	 
 	 $(function () {
     	//페이징
