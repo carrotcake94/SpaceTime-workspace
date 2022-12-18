@@ -117,6 +117,13 @@ public class ReserveDao {
 
 		return sqlSession.update("reserveMapper.insertReportMyReserve", s);
 	}
+	
+	// 예약 현황 가져오기 
+	public ArrayList<Reserve> selectReserveTime(SqlSessionTemplate sqlSession, int spaceNo) {
+		
+		return (ArrayList) sqlSession.selectList("reserveMapper.selectReserveTime", spaceNo);
+	}
+	
 
 	// 정현-------------------------------------------
 	// 호스트 공간 예약 리스트 개수 가져오기-정현

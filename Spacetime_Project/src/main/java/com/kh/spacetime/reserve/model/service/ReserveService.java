@@ -79,5 +79,8 @@ public interface ReserveService {
 	Space reportMemberInfo(int rno);
 
 	int insertReportMyReserve(Space s);
+	
+	// 예약 현황 가져오기 
+	ArrayList<Reserve> selectReserveTime(int spaceNo);
 
 }

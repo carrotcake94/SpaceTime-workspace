@@ -157,6 +157,13 @@ public class ReserveServiceImpl implements ReserveService {
 		return reserveDao.insertReportMyReserve(sqlSession, s);
 	}
 
+
+	// 예약 현황 가져오기 
+	@Override
+	public ArrayList<Reserve> selectReserveTime(int spaceNo) {
+		
+		return reserveDao.selectReserveTime(sqlSession, spaceNo);
+	}
 	
 
 }

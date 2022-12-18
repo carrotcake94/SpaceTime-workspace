@@ -221,7 +221,11 @@
 				     , #{hostNo})
 		</insert>
 		
-		
+		<select id="selectReserveTime" resultMap="joinReserveDetailResultSet">
+			SELECT RESERVE_NO,USE_DATE, START_TIME, END_TIME
+			FROM RESERVE
+			WHERE SPACE_NO = #{spaceNo}
+		</select>
 			
 	<!-- 	정현 -->
 	<!-- 	정현 start -->

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
@@ -331,6 +332,18 @@ public class ReserveController {
 			;
 		}
 		return "redirect:/myReserve.re";
+	}
+	
+	// 예약 현황 가져오기 
+	@ResponseBody
+	@RequestMapping("getReserveTime.re")
+	public ArrayList<Reserve> selectReserveTime(int spaceNo) {
+
+		ArrayList<Reserve> r = reserveService.selectReserveTime(spaceNo);
+		
+		System.out.println(r);
+
+		return r;
 	}
 
 }

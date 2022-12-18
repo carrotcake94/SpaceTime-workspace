@@ -620,12 +620,70 @@
 		                                        		  // set background color clicked Element
 		                                        		  dateClickInfo.dayEl.style.backgroundColor = "lightgrey";
 		                                        		  
-		                                        		  //console.log(dateClickInfo.dateStr); 
+		                                        		  // console.log(dateClickInfo.dateStr); 
+		                                        		  // console.log(${s.spaceNo});
+		                                        		  
+		                                        		// 시간예약 현황 불러오기 
+			                                        	$.ajax({
+		                                                    url: "getReserveTime.re",
+		                                                    data: {
+		                                                        spaceNo: ${ s.spaceNo }
+		                                                    },
+		                                                    success: function(result) {
+		                                                    	
+		                                                    	var resultStr="";
+		                                                    	
+		                                                    	for(var i=0; i<result.length; i++) {
+		                                							
+		                                                    		for(var j=result[i].startTime; j<=result[i].endTime; j++){
+		                                                    			
+		                                                    			
+		                                    							/* resultStr += "<tr>"
+		                        											+ "<td>" + result[i].replyWriter + "</td>"
+		                        											+ "<td>" + result[i].replyContent + "</td>"
+		                        											+ "<td>" + result[i].createDate + "</td>"									  + "</tr>"; */
+		                                                    			
+		                        											
+		                        											resultStr += "<li class='swiper-slide able'>"
+		                        														    + "<a class='time_box'>"
+		                        														    + "<span class='time'>" + j + "</span>"
+		                        														    + "<br>"
+		                        														    + "<span class='price'>" + ${s.hourPrice } + "</span>"
+		                        														    + "</a>"
+		                        														    + "</li>";
+		                        											
+		                        											
+		                                                    		/* 	<li class="swiper-slide able">
+		                                                                <a class="time_box">
+		                                                                  <span class="time">13</span> 
+		                                                                  <span class="price">${s.hourPrice }</span>
+		                                                                </a>
+		                                                              </li>  */
+		                                                    			
+		                                                    			
+		                                                    			/* console.log(j); */
+		                                                    		}
+		                                                    		
+		                                							
+		                                						}
+
+	                                                    		$("#reserveTimeArea>ul").html(resultStr);
+		                                                    	
+		                                                    	/* $("#replyArea>tbody").html(resultStr); */
+		                                                    },
+		                                                    error: function() {
+		                                                        console.log("getting reserve time ajax failure");
+		                                                    }
+		                                                });
+		                                        		  
+		                                        		  
 		                                        		}
 	                                        		  });
 
 	                                        		  calendar.render();
 	                                        		});
+	                                        	
+	                                        		
 	                                        
                                         </script>
                                         
@@ -640,9 +698,21 @@
                                         <b>예약시간</b> <br>
 
                                         <div class="reserve_time_wrap scroll" style="width: 400px; overflow-x: scroll;" align="center">
-                                          <div class="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode" style="padding: 10px;">
+                                          <div id="reserveTimeArea" class="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode" style="padding: 10px;">
                                             <ul class="swiper-wrapper time_list" style="transition-duration: 0ms;transform: translate3d(0px, 0px, 0px);">
-                                              <li class="swiper-slide able swiper-slide-active">
+                                            
+                                            </ul>
+                                                <!-- <span class="time time_half">오전</span> -->
+                                  <%--          <li class="swiper-slide able">
+                                              <a class="time_box">
+                                                <span class="time">13</span> 
+                                                <span class="price">${s.hourPrice }</span>
+                                              </a>
+                                            </li>  --%>
+                                            
+                                            
+                                            
+                                              <%-- <li class="swiper-slide able swiper-slide-active">
                                                 <!-- <span class="time time_half">오전</span> -->
                                                 <a class="time_box">
                                                   <span class="time">0</span> 
@@ -739,7 +809,7 @@
                                                 <span class="time">13</span> 
                                                 <span class="price">${s.hourPrice }</span>
                                               </a>
-                                            </li>
+                                            </li> --%>
                                             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
                                           </div>
                                         </div>
