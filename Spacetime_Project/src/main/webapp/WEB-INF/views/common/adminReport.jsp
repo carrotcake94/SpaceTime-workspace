@@ -308,24 +308,30 @@
                 
                 var resultStr = "";
 
-                for(var i = 0; i < result.list.length; i++) {
-                    
-                    resultStr += "<tr class='reportTr'>"
-                                    + "<td class='rpno'>" + result.list[i].reportNo + "</td>"
-                                    + "<td>" + result.list[i].reportedMemNo + "</td>"
-                                    + "<td>" + result.list[i].reportType + "</td>"
-                                    + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>"
-                                    + "<td>" + result.list[i].reportDate + "</td>"
-                                    + "<td>";
-                                            if(result.list[i].reportStatus == 'Y') {
-                                                resultStr += "승인";
-                                            } else if (result.list[i].reportStatus == 'N') {
-                                                resultStr += "미처리";
-                                            } else if (result.list[i].reportStatus == 'D') {
-                                                resultStr += "반려";
-                                            }
-                        resultStr += "</td> </tr>";
-                } 
+                if(result.list.length != 0) {
+
+                    for(var i = 0; i < result.list.length; i++) {
+                        
+                        resultStr += "<tr class='reportTr'>"
+                                        + "<td class='rpno'>" + result.list[i].reportNo + "</td>"
+                                        + "<td>" + result.list[i].reportedMemNo + "</td>"
+                                        + "<td>" + result.list[i].reportType + "</td>"
+                                        + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>"
+                                        + "<td>" + result.list[i].reportDate + "</td>"
+                                        + "<td>";
+                                                if(result.list[i].reportStatus == 'Y') {
+                                                    resultStr += "승인";
+                                                } else if (result.list[i].reportStatus == 'N') {
+                                                    resultStr += "미처리";
+                                                } else if (result.list[i].reportStatus == 'D') {
+                                                    resultStr += "반려";
+                                                }
+                            resultStr += "</td> </tr>";
+                    } 
+
+                } else if(result.list.length == 0) {
+                    resultStr += "<tr class='salesTr'><td colspan='5' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
+                }
                 
                 $(".myTable").html(resultStr); 
                 
@@ -334,6 +340,8 @@
                 console.log(result.pi.currentPage);
                 
                 var resultPi = "";
+
+                if(result.list.length != 0) {
                 
                     if(result.pi.currentPage == 1) {
                         resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
@@ -356,6 +364,7 @@
                     } else {
                         resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
                     }
+                }
 
                 $(".pagination").html(resultPi);
                 

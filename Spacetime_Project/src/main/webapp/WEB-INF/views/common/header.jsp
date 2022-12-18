@@ -43,6 +43,32 @@
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> 
     
 	<script src="resources/js/main.js"></script>
+	
+	<!-- 해피톡 관리자-고객 1대1 채팅 -->
+	<script>
+	    var ht = null;
+	    (function(id, scriptSrc, callback) {
+	        var d = document,
+	            tagName = 'script',
+	            $script = d.createElement(tagName),
+	            $element = d.getElementsByTagName(tagName)[0];
+	
+	        $script.id = id;
+	        $script.async = true;
+	        $script.src = scriptSrc;
+	
+	        if (callback) { $script.addEventListener('load', function (e) { callback(null, e); }, false); }
+	        $element.parentNode.insertBefore($script, $element);
+	    })('happytalkSDK', 'https://design.happytalkio.com/sdk/happytalk.chat.v2.min.js', function() {
+	        ht = new Happytalk({
+	          siteId: '5000100385',
+	          siteName: 'SpaceTime',
+	          categoryId: '154917',
+	          divisionId: '154918'
+	      });
+	    });
+	</script>
+	
    <style>
     
    		/*

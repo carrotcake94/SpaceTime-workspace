@@ -393,48 +393,55 @@
                     
                     var resultStr = "";
     
-                    for(var i = 0; i < result.list.length; i++) {
-                        
-                        resultStr += "<tr data-toggle='modal' data-target='#checkSpace' id='changeStatus'>"
-                                        + "<td>" + result.list[i].spaceNo + "</td>"
-                                        + "<td>" + result.list[i].hostNo + "</td>"
-                                        + "<td style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;' align='left'>" + result.list[i].spaceTitle + "</td>"
-                                        + "<td>"; 
-                                            if(result.list[i].stypeNo == '1') {
-                                                resultStr += "파티룸";
-                                            } else if (result.list[i].stypeNo == '2') {
-                                                resultStr += "카페";
-                                            } else if (result.list[i].stypeNo == '3') {
-                                                resultStr += "공연장";
-                                            } else if (result.list[i].stypeNo == '4') {
-                                                resultStr += "연습실";
-                                            } else if (result.list[i].stypeNo == '5') {
-                                                resultStr += "공유주방";
-                                            } else if (result.list[i].stypeNo == '6') {
-                                                resultStr += "갤러리";
-                                            } else if (result.list[i].stypeNo == '7') {
-                                                resultStr += "운동시설";
-                                            } else if (result.list[i].stypeNo == '8') {
-                                                resultStr += "스터디룸";
-                                            } else if (result.list[i].stypeNo == '9') {
-                                                resultStr += "회의실";
-                                            } else if (result.list[i].stypeNo == '10') {
-                                                resultStr += "촬영스튜디오";
-                                            } 
-                            resultStr += "</td><td>";
-                                            if(result.list[i].spaceStatus == 'Y') {
-                                                resultStr += "승인";
-                                            } else if (result.list[i].spaceStatus == 'N') {
-                                                resultStr += "반려";
-                                            } else if (result.list[i].spaceStatus == 'W') {
-                                                resultStr += "승인대기";
-                                            }
-                            resultStr += "</td><input type='hidden' name='denyMessage' value='" + result.list[i].denyMessage + "'></tr>";
-                    } 
+                    if(result.list.length != 0) {
+
+                        for(var i = 0; i < result.list.length; i++) {
+                            
+                            resultStr += "<tr data-toggle='modal' data-target='#checkSpace' id='changeStatus'>"
+                                            + "<td>" + result.list[i].spaceNo + "</td>"
+                                            + "<td>" + result.list[i].hostNo + "</td>"
+                                            + "<td style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;' align='left'>" + result.list[i].spaceTitle + "</td>"
+                                            + "<td>"; 
+                                                if(result.list[i].stypeNo == '1') {
+                                                    resultStr += "파티룸";
+                                                } else if (result.list[i].stypeNo == '2') {
+                                                    resultStr += "카페";
+                                                } else if (result.list[i].stypeNo == '3') {
+                                                    resultStr += "공연장";
+                                                } else if (result.list[i].stypeNo == '4') {
+                                                    resultStr += "연습실";
+                                                } else if (result.list[i].stypeNo == '5') {
+                                                    resultStr += "공유주방";
+                                                } else if (result.list[i].stypeNo == '6') {
+                                                    resultStr += "갤러리";
+                                                } else if (result.list[i].stypeNo == '7') {
+                                                    resultStr += "운동시설";
+                                                } else if (result.list[i].stypeNo == '8') {
+                                                    resultStr += "스터디룸";
+                                                } else if (result.list[i].stypeNo == '9') {
+                                                    resultStr += "회의실";
+                                                } else if (result.list[i].stypeNo == '10') {
+                                                    resultStr += "촬영스튜디오";
+                                                } 
+                                resultStr += "</td><td>";
+                                                if(result.list[i].spaceStatus == 'Y') {
+                                                    resultStr += "승인";
+                                                } else if (result.list[i].spaceStatus == 'N') {
+                                                    resultStr += "반려";
+                                                } else if (result.list[i].spaceStatus == 'W') {
+                                                    resultStr += "승인대기";
+                                                }
+                                resultStr += "</td><input type='hidden' name='denyMessage' value='" + result.list[i].denyMessage + "'></tr>";
+                        } 
+                    } else if(result.list.length == 0) {
+                        resultStr += "<tr class='salesTr'><td colspan='5' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
+                    }
                     
                     $(".myTable").html(resultStr); 
                     
                     var resultPi = "";
+
+                    if(result.list.length != 0) {
                     
                         if(result.pi.currentPage == 1) {
                             resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
@@ -457,6 +464,7 @@
                         } else {
                             resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showSpaceList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
                         }
+                    }
     
                     $(".pagination").html(resultPi);
                     

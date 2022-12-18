@@ -290,65 +290,6 @@
         }
     
     </script>
-    
-    <!-- 매출 상세내역 모달창 -->
-    <div class="modal fade" id="salesDetai">
-        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
-            <div class="modal-content">
-            
-                <!-- Modal Header -->
-                <div class="modal-header">
-                <h4 class="modal-title">매출내역 상세조회</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <!-- 매출 정보 -->
-                    <div class="sales_info" align="center">
-                        <table class="sales_detail"> 
-                            <tr>
-                                <th style="width: 150px">호스트명</th>
-                                <td class="sales_detail_content">손흥민 &nbsp;&nbsp;<span id="gender">[성별]</span></td>
-                            </tr>
-                            <tr>
-                                <th>호스트ID</th>
-                                <td class="sales_detail_content">sonny</td>
-                            </tr>
-                            <tr>
-                                <th>공간명</th> 
-                                <td class="sales_detail_content">대충 파티룸이라고 칩시다</td>
-                            </tr> 
-                            <tr>
-                                <th>매출 내역</th>
-                                <td>
-                                    <table class="income_detail">
-                                        <tr>
-                                            <th style="width: 150px">예약일</th>
-                                            <th style="width: 150px">결제금액</th>
-                                            <th style="width: 150px">매출액</th>
-                                        </tr>
-                                        <tr>
-                                            <td>2022-10-30</td>
-                                            <td>40,000</td>
-                                            <td>4,000</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="income_sum"><h5>2022년 10월 총매출액 : <b>70,000</b></h5></div>
-                </div>
-                    
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-                </div>
-            
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>

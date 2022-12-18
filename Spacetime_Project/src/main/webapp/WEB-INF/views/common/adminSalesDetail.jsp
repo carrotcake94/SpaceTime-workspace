@@ -222,19 +222,12 @@
                     
                     for(var i = 0; i < result.list.length; i++) {
                         
-                        resultStr += "<tr><td>" + result.list[i].useDate + "&nbsp;&nbsp;" + result.list[i].startTime + "</td>"
+                        resultStr += "<tr><td>" + result.list[i].useDate + "&nbsp;&nbsp;" + result.list[i].startTime + ":00</td>"
                                        + "<td>" + result.list[i].price + "</td>"
                                        + "<td>" + result.list[i].income + "</td></tr>";
                     } 
 
                     $(".myTable").html(resultStr); 
-                    
-                    /* 매출 총합 뽑기 */
-                    /* var resultIncome = "";
-                  
-	                resultIncome += "<h4>월 총 매출액 : <b>원</b></h4>"
-	                
-	                $("#resultIncome").html(resultIncome); */
                     
 	                /* 매출 내역 리스트 페이징처리 */
                     var resultPi = "";

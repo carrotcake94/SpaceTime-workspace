@@ -318,24 +318,29 @@
                     
                     var resultStr = "";
                     
-                    for(var i = 0; i < result.list.length; i++) {
-                        
-                        resultStr += "<tr class='memberTr'>"
-                                        + "<td class='mno'>" + result.list[i].memNo + "</td>"
-                                        + "<td>" + result.list[i].memName + "</td>"
-                                        + "<td>" + result.list[i].memId + "</td>"
-                                        + "<td>" + result.list[i].nickname + "</td>"
-                                        + "<td>" + result.list[i].grCode + "</td>"
-                                        + "<td>" + result.list[i].enrollDate + "</td>"
-                                        + "<td>";
-                                            if(result.list[i].memStatus == 'N') {
-                                                resultStr += "가입";
-                                            } else if (result.list[i].memStatus == 'Y') {
-                                                resultStr += "탈퇴";
-                                            } else if (result.list[i].memStatus == 'N' && result.list[i].blacklist == 'Y') {
-                                                resultStr += "블랙리스트";
-                                            }                              
-                            resultStr += "</td> </tr>";
+                    if(result.list.length != 0) {
+
+                        for(var i = 0; i < result.list.length; i++) {
+                            
+                            resultStr += "<tr class='memberTr'>"
+                                            + "<td class='mno'>" + result.list[i].memNo + "</td>"
+                                            + "<td>" + result.list[i].memName + "</td>"
+                                            + "<td>" + result.list[i].memId + "</td>"
+                                            + "<td>" + result.list[i].nickname + "</td>"
+                                            + "<td>" + result.list[i].grCode + "</td>"
+                                            + "<td>" + result.list[i].enrollDate + "</td>"
+                                            + "<td>";
+                                                if(result.list[i].memStatus == 'N') {
+                                                    resultStr += "가입";
+                                                } else if (result.list[i].memStatus == 'Y') {
+                                                    resultStr += "탈퇴";
+                                                } else if (result.list[i].memStatus == 'N' && result.list[i].blacklist == 'Y') {
+                                                    resultStr += "블랙리스트";
+                                                }                              
+                                resultStr += "</td> </tr>";
+                        }
+                    } else if(result.list.length == 0) {
+                        resultStr += "<tr class='salesTr'><td colspan='7' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
                     }
                     
                     $(".myTable").html(resultStr);
@@ -344,6 +349,8 @@
                     /* console.log("마지막페이지 : " + result.pi.endPage); */
                     
                     var resultPi = "";
+
+                    if(result.list.length != 0) {
                     
                         if(result.pi.currentPage == 1) {
                             resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
@@ -365,6 +372,7 @@
                         } else {
                             resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showMemberList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
                         }
+                    }
 
                     $(".pagination").html(resultPi);
                     

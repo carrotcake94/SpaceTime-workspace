@@ -157,17 +157,17 @@
 	<!-- 매출이 있는 공간의 상세 매출 총 개수 -->
 	<select id="selectSalesDetailCount" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
-		FROM RESERVE
-		WHERE SPACE_NO = #{SPACE_NO}
-		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{MONTH}
+		FROM RESERVE R
+		WHERE SPACE_NO = #{spaceNo}
+		  AND EXTRACT(YEAR FROM R.USE_DATE)|| '-' || EXTRACT(MONTH FROM R.USE_DATE) = #{month}
 	</select>
 	
 	<!-- 매출이 있는 공간의 상세 매출 조회 -->
 	<select id="selectSalesDetailList" parameterType="hashmap" resultMap="reserveResultSet">
-		SELECT TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE", R.START_TIME, PRICE, (PRICE*0.1) AS "INCOME"
+		SELECT TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE", R.START_TIME, R.PRICE, (R.PRICE*0.1) AS "INCOME"
 		FROM RESERVE R
-		WHERE SPACE_NO = #{SPACE_NO}
-		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{MONTH}
+		WHERE SPACE_NO = #{spaceNo}
+		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
 		ORDER BY USE_DATE ASC
 	</select>
 
