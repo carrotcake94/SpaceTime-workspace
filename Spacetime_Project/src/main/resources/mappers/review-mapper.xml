@@ -100,6 +100,7 @@
 		<result column="REVIEW_ATTACH3" property="reviewAttach3" />
 		<result column="HOST_ANSWER" property="hostAnswer" />
 		<result column="RESERVE_NO" property="reserveNo" />
+		<result column="MEM_NO" property="memNo" />
 		<collection property="space" ofType="space" >
 			<result column="SPACE_TITLE" property="spaceTitle" />
 		</collection>
@@ -161,6 +162,7 @@
                 , M.MEM_NAME
                 , S.SPACE_TITLE
                 , V.RESERVE_NO
+                , R.MEM_NO
        FROM REVIEW R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
        JOIN RESERVE V ON R.RESERVE_NO = V.RESERVE_NO

@@ -1048,7 +1048,7 @@
               <div>
                 <b>신고유형</b> <br>
                 <div class="selectType">
-                  <label for="type_select">신고유형선택</label>
+                  <label for="type_select">신고유형선택</label>&nbsp;&nbsp;&nbsp;
                     <select id="type_select" name="reportType">
                         <option>욕설</option>
                         <option>인신공격</option>
@@ -1131,7 +1131,7 @@
               <div>
                 <b>신고유형</b> <br>
                 <div class="selectType">
-                  <label for="type_select">신고유형선택</label>
+                  <label for="type_select">신고유형선택</label>&nbsp;&nbsp;&nbsp;
                     <select id="type_select" name="reportType">
                         <option>욕설</option>
                         <option>인신공격</option>
@@ -1152,7 +1152,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-light" onclick="repModalClose()" >취소</button>
+                  <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
                   <button type="submit" class="reportBtn btn btn-danger" onclick="reviewReport()" >신고하기</button>
                 </div>
               </div>
@@ -1242,12 +1242,8 @@
             return false;
          } 
 		$("#reviewReportModal input[name=reportedMemNo]").val(reportedMemNo);
+		$("#reviewReportModal textarea[name=reportContent]").val("");
 		$("#reviewReportModal").modal("show");
-	 }
-	 
-	 repModalClose = () => {
-		 $("#reviewReportModal textarea[name=reportContent]").val("");
-	 	$("#reviewReportModal").modal("hide");
 	 }
 	 
 	 reviewReport = () => {

@@ -201,9 +201,8 @@ public class SpaceController {
 	public String selectHostSpaceList(@RequestParam(value = "spage", defaultValue = "1") int currentPage,
 			HttpSession session, Model model) {
 
-//		Member loginMember = (Member)session.getAttribute("loginMember");
-//		int memNo = loginMember.getMemNo();
-		int memNo = 5;
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		int memNo = loginMember.getMemNo();
 
 		int listCount = spaceService.selectHostSpaceListCount(memNo);
 		int pageLimit = 5;
@@ -284,12 +283,6 @@ public class SpaceController {
 			model.addAttribute("errorMsg", "게시글 삭제 실패");
 			return "common/errorPage";
 		}
-	}
-
-	/* 호스트 이용후기 관리 */
-	@RequestMapping("hostRevList.sp")
-	public String selectHostReviewList() {
-		return "space/hostReviewList";
 	}
 
 	// 지도화면 이동 -성훈

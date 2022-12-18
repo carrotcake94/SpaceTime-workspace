@@ -31,10 +31,20 @@
 			<mapping path="/myPage.me" />
 			<mapping path="/enrollForm.bo" />
 			<mapping path="/update.me" />
-			<beans:bean class="com.kh.spring.common.interceptor.LoginInterceptor" id="loginInterceptor" />
+			<mapping path="/hostRvwList.rv" />
+			<mapping path="/revHostList.re" />
+			<mapping path="/schRevHostList.re" />
+			<mapping path="/hostCalList.re" />
+			<mapping path="/schhostCalList.re" />
+			<mapping path="/hostSpaceList.sp" />
+			<mapping path="/enrollForm.sp" />
+			<mapping path="/spaceUpdateForm.sp" />
+			<mapping path="/spaceDel.sp" />
+			<beans:bean class="com.kh.spacetime.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
 	</interceptors>
 	-->
+	
 	<!-- 	소켓 핸들러 -->
 	<websocket:handlers>
 		<websocket:mapping handler="spaceHandler" path="/space.sc"/>

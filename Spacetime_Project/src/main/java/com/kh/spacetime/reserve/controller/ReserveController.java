@@ -39,11 +39,10 @@ public class ReserveController {
 	 */
 	@RequestMapping("revHostList.re")
 	public String selectHostReserveList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
-			Model model) {
+			Model model, HttpSession session) {
 
-//		Member loginMember = (Member)session.getAttribute("loginMember");
-//		int memNo = loginMember.getMemNo();
-		int memNo = 5;
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		int memNo = loginMember.getMemNo();
 
 		int listCount = reserveService.selectHostReserveListCount(memNo);
 
@@ -67,11 +66,10 @@ public class ReserveController {
 	 */
 	@RequestMapping("schRevHostList.re")
 	public String searchHostReserveList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
-			@RequestParam(value = "keyword", defaultValue = "") String keyword, Model model) {
+			@RequestParam(value = "keyword", defaultValue = "") String keyword, Model model, HttpSession session) {
 
-//		Member loginMember = (Member)session.getAttribute("loginMember");
-//		int memNo = Integer.parseInt(loginMember.getMemNo());
-		String memNo = "5";
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		String memNo = String.valueOf(loginMember.getMemNo());
 
 		HashMap<String, String> map = new HashMap<String, String>();
 
@@ -99,11 +97,10 @@ public class ReserveController {
 	 */
 	@RequestMapping("hostCalList.re")
 	public String selectHostReviewList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
-			Model model) {
+			Model model, HttpSession session) {
 
-//		Member loginMember = (Member)session.getAttribute("loginMember");
-//		int memNo = loginMember.getMemNo();
-		int memNo = 5;
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		int memNo = loginMember.getMemNo();
 
 		int listCount = reserveService.selectHostCalculListCount(memNo);
 		int pageLimit = 10;
