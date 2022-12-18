@@ -22,6 +22,11 @@
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/index.global.min.js'></script>
 <style>
 
+	.disabled{
+		pointer-events: none; 
+		cursor: default; 
+	}
+
     #content {
         width: 1200px;
         margin: 0 auto;
@@ -633,41 +638,47 @@
 		                                                    	
 		                                                    	var resultStr="";
 		                                                    	
-		                                                    	for(var i=0; i<result.length; i++) {
-		                                							
-		                                                    		for(var j=result[i].startTime; j<=result[i].endTime; j++){
-		                                                    			
-		                                                    			
-		                                    							/* resultStr += "<tr>"
-		                        											+ "<td>" + result[i].replyWriter + "</td>"
-		                        											+ "<td>" + result[i].replyContent + "</td>"
-		                        											+ "<td>" + result[i].createDate + "</td>"									  + "</tr>"; */
-		                                                    			
-		                        											
-		                        											resultStr += "<li class='swiper-slide able'>"
-		                        														    + "<a class='time_box'>"
-		                        														    + "<span class='time'>" + j + "</span>"
-		                        														    + "<br>"
-		                        														    + "<span class='price'>" + ${s.hourPrice } + "</span>"
-		                        														    + "</a>"
-		                        														    + "</li>";
-		                        											
-		                        											
-		                                                    		/* 	<li class="swiper-slide able">
-		                                                                <a class="time_box">
-		                                                                  <span class="time">13</span> 
-		                                                                  <span class="price">${s.hourPrice }</span>
-		                                                                </a>
-		                                                              </li>  */
-		                                                    			
-		                                                    			
-		                                                    			/* console.log(j); */
-		                                                    		}
+		                                                    	
+		                                                    	for(var k=0; k<24;k++){
 		                                                    		
-		                                							
-		                                						}
+		                                                    		resultStr += "<li class='swiper-slide able'' id='time" + k + "'>"
+            														    + "<a class='time_box' href='confirm-modal' data-toggle='modal' data-target='#confirm-modal'>"
+            														    + "<span class='time'>" + k + "</span>"
+            														    + "<br>"
+            														    + "<span class='price'>" + ${s.hourPrice } + "</span>"
+            														    + "</a>"
+            														    + "</li>";
+            														    
+		                                                    	}
+		                                                    	
 
 	                                                    		$("#reserveTimeArea>ul").html(resultStr);
+		                                                    	
+		                                                    	 for(var i=0; i<result.length; i++) {
+ 		                                							
+ 		                                                    		for(var j=result[i].startTime; j<=result[i].endTime; j++){
+ 		                                                    			
+ 		                                                    			
+ 		                                                    	 		
+ 		                        											
+ 		                                                    			 	/* $("#time"+ j + ">a").attr('href','#'); // disable
+ 		                                                    			 	$("#time"+ j + ">a").attr('data-toggle',''); // disable */
+ 		                                                    			 	$("#time"+ j + ">a").attr('class','disabled'); // disable
+ 		                                                    			 	
+ 		                                                    			 	
+ 		                                                    			 	$("#time"+ j + "").css("background-color","lightgrey"); 
+ 		                                                    			 	$("#time"+ j + "").css("color","lightgrey"); 
+ 		                                                    			 	
+
+
+ 		  		                                                    	 /* console.log($(".time").text()); */
+ 		                                                    			
+ 		                                                    		}
+ 		                                                    		
+ 		                                							
+ 		                                						} 
+
+	                                                    		
 		                                                    	
 		                                                    	/* $("#replyArea>tbody").html(resultStr); */
 		                                                    },
@@ -700,116 +711,9 @@
                                         <div class="reserve_time_wrap scroll" style="width: 400px; overflow-x: scroll;" align="center">
                                           <div id="reserveTimeArea" class="swiper-container swiper-container-initialized swiper-container-horizontal swiper-container-free-mode" style="padding: 10px;">
                                             <ul class="swiper-wrapper time_list" style="transition-duration: 0ms;transform: translate3d(0px, 0px, 0px);">
-                                            
+                                            	<!-- 동적으로 생성될 자리 -->
                                             </ul>
-                                                <!-- <span class="time time_half">오전</span> -->
-                                  <%--          <li class="swiper-slide able">
-                                              <a class="time_box">
-                                                <span class="time">13</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>  --%>
-                                            
-                                            
-                                            
-                                              <%-- <li class="swiper-slide able swiper-slide-active">
-                                                <!-- <span class="time time_half">오전</span> -->
-                                                <a class="time_box">
-                                                  <span class="time">0</span> 
-                                                  <span class="price">${ s.hourPrice }</span>
-                                                </a>
-                                              </li>
-                                              <li class="swiper-slide able swiper-slide-next">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">1</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">2</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">3</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">4</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">5</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">6</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">7</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">8</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                                <!----> 
-                                                <a class="time_box">
-                                                  <span class="time">9</span> 
-                                                  <span class="price">${s.hourPrice }</span>
-                                                </a>
-                                              </li>
-                                              <li class="swiper-slide able">
-                                                <!----> 
-                                                <a class="time_box">
-                                                  <span class="time">10</span> 
-                                                  <span class="price">${s.hourPrice }</span>
-                                                </a>
-                                              </li>
-                                              <li class="swiper-slide able">
-                                                <!----> 
-                                                <a class="time_box">
-                                                  <span class="time">11</span> 
-                                                  <span class="price">${s.hourPrice }</span>
-                                                </a>
-                                              </li>
-                                              <li class="swiper-slide able">
-                                                <!-- <span class="time time_half">오후</span>  -->
-                                                <a class="time_box">
-                                                <span class="time">12</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li>
-                                            <li class="swiper-slide able">
-                                              <!----> 
-                                              <a class="time_box">
-                                                <span class="time">13</span> 
-                                                <span class="price">${s.hourPrice }</span>
-                                              </a>
-                                            </li> --%>
+                                                
                                             <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
                                           </div>
                                         </div>
@@ -821,7 +725,7 @@
                                             $('.test').scrollLeft(_scrollX + 100);
                                           };
                                         </script>
-                                        <input type="button" class="" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
+                                        <!-- <input type="button" class="" value="예약하기" data-toggle="modal" data-target="#confirm-modal"> -->
                                     </th>
                                 </tr>
                             </table>
