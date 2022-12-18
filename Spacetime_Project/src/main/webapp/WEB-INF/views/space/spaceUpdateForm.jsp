@@ -517,7 +517,7 @@
       </div>
       <div class="space-img-area main-img-area">
         <div>
-          <div><img src="resources/uploadFiles/space/space/${aList[0].getAttachmentReName()}" /><i class='fa fa-times' aria-hidden='true' onclick='mainImgFileDel(this)'></i></div>
+          <div><img src="${aList[0].getAttachmentReName()}" /><i class='fa fa-times' aria-hidden='true' onclick='mainImgFileDel(this)'></i></div>
         </div>
         <button type="button" class="main-img-btn">파일첨부</button>
         <input id="mainImgFile" type='file' name='upfile' style="display: none;">
@@ -535,7 +535,7 @@
         <c:otherwise>
         <c:forEach var="a" begin="1" end="${aList.size()-1 }" items="${aList}" varStatus="status">
         <c:set var="i" value="${status.index}" />
-        <div><img class="thum${i}" src="resources/uploadFiles/space/space/${aList[i].getAttachmentReName()}"/><i class='fa fa-times' aria-hidden='true' ></i></div>
+        <div><img class="thum${i}" src="${aList[i].getAttachmentReName()}"/><i class='fa fa-times' aria-hidden='true' ></i></div>
         </c:forEach>
         </c:otherwise>
         </c:choose>

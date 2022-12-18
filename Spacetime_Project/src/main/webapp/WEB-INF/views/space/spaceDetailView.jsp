@@ -810,17 +810,17 @@
 			          <div class="rcontent-img-area">
 			            	<c:if test="${!empty r.reviewAttach1 }">
 			           		 <div>
-				                <img class="img1" src="resources/uploadFiles/space/review/${r.reviewAttach1}" alt="" />
+				                <img class="img1" src="${r.reviewAttach1}" alt="" />
 				              </div>
 			            	</c:if>
 			            	<c:if test="${!empty r.reviewAttach2 }">
 			           		 <div>
-				                <img class="img2" src="resources/uploadFiles/space/review/${r.reviewAttach2}" alt="" />
+				                <img class="img2" src="${r.reviewAttach2}" alt="" />
 				              </div>
 			            	</c:if>
 			            	<c:if test="${!empty r.reviewAttach3 }">
 			           		 <div>
-				                <img class="img3" src="resources/uploadFiles/space/review/${r.reviewAttach3}" alt="" />
+				                <img class="img3" src="${r.reviewAttach3}" alt="" />
 				              </div>
 			            	</c:if>
 			          </div>
@@ -1357,13 +1357,13 @@
 	                str += "<div class='rcontent'>"+rList[i].reviewCont+"</div>";
 	                str += "<div class='rcontent-img-area'>";
 	                if(rList[i].reviewAttach1 != null) {
-	                	str +="<div><img class='img1' src='resources/uploadFiles/space/review/"+rList[i].reviewAttach1+"' /></div>";
+	                	str +="<div><img class='img1' src='"+rList[i].reviewAttach1+"' /></div>";
 	                }
 	                if(rList[i].reviewAttach2 != null) {
-	                	str +="<div><img class='img2' src='resources/uploadFiles/space/review/"+rList[i].reviewAttach2+"' /></div>";
+	                	str +="<div><img class='img2' src='"+rList[i].reviewAttach2+"' /></div>";
 	                }
 	                if(rList[i].reviewAttach3 != null) {
-	                	str +="<div><img class='img3' src='resources/uploadFiles/space/review/"+rList[i].reviewAttach3+"' /></div>";
+	                	str +="<div><img class='img3' src='"+rList[i].reviewAttach3+"' /></div>";
 	                }
               	  str += "</div></div>"; // rcontent- area 끝
                 str += "<div class='rdate'>"+rList[i].reviewEnrollDate+"</div>";

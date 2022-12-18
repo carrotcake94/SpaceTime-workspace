@@ -211,11 +211,11 @@ public class ReviewController {
 				
 				String changeName = saveFile(upfile[i], session, "space/review/");
 				if(j ==0) {
-					r.setReviewAttach1(changeName);
+					r.setReviewAttach1("resources/uploadFiles/space/review/"+changeName);
 				}else if (j==1) {
-					r.setReviewAttach2(changeName);
+					r.setReviewAttach2("resources/uploadFiles/space/review/"+changeName);
 				} else if(j==2) {
-					r.setReviewAttach3(changeName);
+					r.setReviewAttach3("resources/uploadFiles/space/review/"+changeName);
 				}
 				j++;
 			}
@@ -307,10 +307,7 @@ public class ReviewController {
 	public String insertReviewAnswer(Review r) {
 		int result = reviewService.insertReviewAnswer(r);
 
-		if (result > 0) {
-		} else {
-		}
-		return r.getHostAnswer();
+		return (result > 0) ? r.getHostAnswer() : "fail";
 	}
 	
 	/**

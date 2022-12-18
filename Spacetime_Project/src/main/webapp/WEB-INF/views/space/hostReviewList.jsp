@@ -452,21 +452,21 @@ body * {
 											<c:if test="${!empty r.reviewAttach1 }">
 												<div>
 													<img class="img1"
-														src="resources/uploadFiles/space/review/${r.reviewAttach1}"
+														src="${r.reviewAttach1}"
 														alt="" />
 												</div>
 											</c:if>
 											<c:if test="${!empty r.reviewAttach2 }">
 												<div>
 													<img class="img2"
-														src="resources/uploadFiles/space/review/${r.reviewAttach2}"
+														src="${r.reviewAttach2}"
 														alt="" />
 												</div>
 											</c:if>
 											<c:if test="${!empty r.reviewAttach3 }">
 												<div>
 													<img class="img3"
-														src="resources/uploadFiles/space/review/${r.reviewAttach3}"
+														src="${r.reviewAttach3}"
 														alt="" />
 												</div>
 											</c:if>

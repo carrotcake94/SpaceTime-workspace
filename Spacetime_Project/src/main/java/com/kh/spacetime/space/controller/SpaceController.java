@@ -75,7 +75,7 @@ public class SpaceController {
 				String changeName = saveFile(upfile[i], session, "space/space/");
 
 				SpaceAttachment at = new SpaceAttachment();
-				at.setAttachmentReName(changeName);
+				at.setAttachmentReName("resources/uploadFiles/space/space/"+changeName);
 				if (i == 0) {
 					at.setAttachmentLevel(1);
 				} else {
@@ -124,11 +124,11 @@ public class SpaceController {
 		if (mainChg == 1) {
 			mainAttach = aList.get(0);
 			String realPath = session.getServletContext()
-					.getRealPath("resources/uploadFiles/space/space/" + aList.get(0).getAttachmentReName());
+					.getRealPath(aList.get(0).getAttachmentReName());
 			new File(realPath).delete();
 
 			String changeName = saveFile(upfile[0], session, "space/space/");
-			mainAttach.setAttachmentReName(changeName);
+			mainAttach.setAttachmentReName("resources/uploadFiles/space/space/"+changeName);
 			result2 = spaceService.updateMainImg(mainAttach);
 		}
 		// 수정 이미지 내역 확인
@@ -140,7 +140,7 @@ public class SpaceController {
 			// 기존 추가이미지 삭제
 			if (Integer.parseInt(thum[i - 1]) != 0) {
 				String realPath = session.getServletContext()
-						.getRealPath("resources/uploadFiles/space/space/" + aList.get(i).getAttachmentReName());
+						.getRealPath(aList.get(i).getAttachmentReName());
 				new File(realPath).delete();
 
 				result3 *= spaceService.deleteThumImg(aList.get(i).getAttachmentNo());
@@ -156,7 +156,7 @@ public class SpaceController {
 				String changeName = saveFile(upfile[i], session, "space/space/");
 
 				SpaceAttachment at = new SpaceAttachment();
-				at.setAttachmentReName(changeName);
+				at.setAttachmentReName("resources/uploadFiles/space/space/"+changeName);
 				at.setAttachmentLevel(2);
 				at.setSpaceNo(s.getSpaceNo());
 				attachList.add(at);
@@ -262,12 +262,11 @@ public class SpaceController {
 
 		if (result > 0) {
 			ArrayList<SpaceAttachment> aList = spaceService.selectSpaceAttachmentList(spaceNo);
-			System.out.println(aList);
 
 			// 공간에대한 모든 첨부파일 삭제
 			for (SpaceAttachment a : aList) {
 				String realPath = session.getServletContext()
-						.getRealPath("resources/uploadFiles/space/space/" + a.getAttachmentReName());
+						.getRealPath(a.getAttachmentReName());
 				System.out.println(realPath);
 				new File(realPath).delete();
 			}
