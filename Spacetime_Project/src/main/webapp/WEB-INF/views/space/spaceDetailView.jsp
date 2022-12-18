@@ -19,6 +19,7 @@
   <!-- fullcalendar 언어 CDN -->
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/index.global.min.js'></script>
 <style>
 
     #content {
@@ -595,20 +596,36 @@
                                 <tr>
                                     <th>
                                         <script>
-	                                        document.addEventListener('DOMContentLoaded', function() {
-	                                            var calendarEl = document.getElementById('calendar');
-	                                            var calendar = new FullCalendar.Calendar(calendarEl, {
-	                                              initialView: 'dayGridMonth'
-	                                            });
-	                                            calendar.render();
-	                                          });
-	                                        
-	                                        $(function() {
-	                                        	$(".fc-datgrid-day").click(function() {
-	                                        		console.log($(this).find(".fc-daygrid-day-number").text());
-	                                        		//location.href ="hostRvwList.rv?rpage="+$(this).text();
-	                                			});
-	                                        });
+	                                        	
+	                                        	document.addEventListener('DOMContentLoaded', function() {
+	                                        		  var calendarEl = document.getElementById('calendar');
+
+	                                        		  var calendar = new FullCalendar.Calendar(calendarEl, {
+	                                        		    /* dateClick: function(info) {
+	                                        		     alert('clicked '+ info.dateStr);
+	                                        		      console.log(info.dateStr); 
+	                                        		      
+	                                        		    	  info.dayEl.style.backgroundColor = 'lightgrey';
+	                                        		    }
+	                                        		   */
+	                                        		  dateClick: function (dateClickInfo) {
+		                                        		  // get all fc-day element
+		                                        		  const fcDayElements = document.querySelectorAll(
+		                                        		    ".fc-daygrid-day.fc-day"
+		                                        		  );
+		                                        		  // init background color found element
+		                                        		  fcDayElements.forEach((element, key, parent) => {
+		                                        		    element.style.backgroundColor = "";
+		                                        		  });
+		                                        		  // set background color clicked Element
+		                                        		  dateClickInfo.dayEl.style.backgroundColor = "lightgrey";
+		                                        		  
+		                                        		  //console.log(dateClickInfo.dateStr); 
+		                                        		}
+	                                        		  });
+
+	                                        		  calendar.render();
+	                                        		});
 	                                        
                                         </script>
                                         
