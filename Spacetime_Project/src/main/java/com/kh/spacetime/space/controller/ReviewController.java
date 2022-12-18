@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.ReviewService;
@@ -358,6 +359,16 @@ public class ReviewController {
 		map2.put("pi", pi);
 		
 		return new Gson().toJson(map2);
+	}
+	
+	/**
+	 * @author 정현 사용자 리뷰 신고
+	 */
+	@ResponseBody
+	@RequestMapping(value = "reportReview.rv", produces = "text/html; charset=UTF-8")
+	public String insertReportReview(Report r, HttpSession session) {
+		int result =  reviewService.insertReport(r);
+		return (result > 0) ? "success" : "fail";
 	}
 
 	// ------------------정현

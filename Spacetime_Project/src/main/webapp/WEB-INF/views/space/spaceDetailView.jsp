@@ -783,7 +783,9 @@
 			        	<fmt:parseNumber var="i" value="${r.rating/2}" integerOnly="true" />
 			        	<c:set var="j" value="${r.rating%2}" />
 			        	<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class="fa fa-star-half-o" aria-hidden="true"></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if></span>
-			        	<span>신고하기 <i class="fa-solid fa-triangle-exclamation"></i></span>
+			        	<c:if test="${r.memNo ne loginMember.memNo}" >
+			        	<span onclick="reviewReportModalOpen(this,${r.memNo})">신고하기 <i class="fa-solid fa-triangle-exclamation"></i></span>
+			        	</c:if>
 			        	<span>
 			        	<c:choose>
 			        	<c:when test="${(empty loginMember) or (r.memNo eq loginMember.memNo)}">
@@ -1145,24 +1147,22 @@
                 <!-- 신고내용 -->
                 <b>신고내용</b>  <br>
                 <div>
-                  <textarea id="reportContent" name="reportContent" cols="50" rows="3" placeholder="신고 내용을 입력해주세요."></textarea>
+                  <textarea id="reportContent" name="reportContent" cols="50" rows="3" placeholder="신고 내용을 입력해주세요." maxlength="200"></textarea>
                 </div>              
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
-                  <button type="submit" class="reportBtn btn btn-danger">신고하기</button>
+                  <button type="button" class="btn btn-light" onclick="repModalClose()" >취소</button>
+                  <button type="submit" class="reportBtn btn btn-danger" onclick="reviewReport()" >신고하기</button>
                 </div>
               </div>
             </div>
       </div>
 	
-	
   <jsp:include page="../common/footer.jsp" />
 </div>
 <script>	
 	 $(function () {
-			
 		// img 컨트롤
 		 $("#reviewDiv ").on("mouseover", ".rcontent-img-area img", function() {
 	        $(this).css({ transform: "scale(1.1)" });
@@ -1235,20 +1235,50 @@
 				}
 		});
 	 }
+	 // 사용자 리뷰 신고
+	 reviewReportModalOpen = (btn, reportedMemNo) => {
+		 if(${empty loginMember}) {
+             alert("로그인 후 이용 가능한 서비스입니다.");
+            return false;
+         } 
+		$("#reviewReportModal input[name=reportedMemNo]").val(reportedMemNo);
+		$("#reviewReportModal").modal("show");
+	 }
 	 
-	 reviewReport = (btn) => {
-
-
+	 repModalClose = () => {
+		 $("#reviewReportModal textarea[name=reportContent]").val("");
+	 	$("#reviewReportModal").modal("hide");
+	 }
+	 
+	 reviewReport = () => {
+		 
+		 if($("#reviewReportModal textarea[name=reportContent]").val().trim()=="") {
+			 alert("신고내용은 필수 입력사항입니다.");
+			 return false;
+		 }
+		 if($("#reviewReportModal textarea[name=reportContent]").val().length<10) {
+			 alert("신고내용은 10자 이상 입력해주시기 바랍니다.");
+			 return false;
+		 }
+		 
+		 var reportType = $("#reviewReportModal select[name=reportType]").val();
+		 var reportContent = $("#reviewReportModal textarea[name=reportContent]").val();
+		 var reportMemNo = $("#reviewReportModal input[name=reportMemNo]").val();
+		 var reportedMemNo = $("#reviewReportModal input[name=reportedMemNo]").val();
+		 
 		 $.ajax({
 				url : "reportReview.rv",
 				data : {
-					reviewNo : rno,
-					memNo : memNo,
-					lcount : lcount
+					reportType : reportType,
+					reportContent : reportContent,
+					reportMemNo : reportMemNo,
+					reportedMemNo : reportedMemNo
 				},
 				success : result => {
 					if(result == "success") {
-						$(i).parent().html(str);
+						$("#reviewReportModal textarea[name=reportContent]").val("");
+						$("#reviewReportModal").modal("hide");
+						alert("신고가 접수되었습니다.");
 					}
 				},
 				error : () => {
@@ -1256,6 +1286,8 @@
 				}
 		});
 	 }
+	 
+	 
 	 
 	 
 	 $(function () {
@@ -1310,7 +1342,10 @@
                 for (let index = 0; index < 5 - k - j; index++) {
                     str += "<i class='fa fa-star-o' aria-hidden='true'></i>";
                 }
-                str += "</span><span>신고하기 <i class='fa-solid fa-triangle-exclamation'></i></span>";
+                str += "</span>"
+	        	if(rList[i].memNo != "${loginMember.memNo}") {
+	        		str+= "<span onclick='reviewReportModalOpen(this,"+rList[i].memNo+")'>신고하기 <i class='fa-solid fa-triangle-exclamation'></i></span>";
+	        	}
                 str += "<span>";
                 if(("${loginMember}"=="") || (rList[i].memNo == "${loginMember.memNo}")) {
                 	 str += "좋아요 "+rList[i].reviewLike.reviewNo;

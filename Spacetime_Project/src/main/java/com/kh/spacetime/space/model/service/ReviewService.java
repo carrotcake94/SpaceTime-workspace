@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.ReviewLike;
 import com.kh.spacetime.space.model.vo.Space;
@@ -55,6 +56,9 @@ public interface ReviewService {
 
 	// 리뷰 좋아요 삭제
 	int deleteReviewLike(ReviewLike r);
+	
+	// 사용자 신고
+	int insertReport(Report r);
 
 	// ---------------------정현
 

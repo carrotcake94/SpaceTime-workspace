@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
+import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.ReviewLike;
 import com.kh.spacetime.space.model.vo.Space;
@@ -101,6 +102,11 @@ public class ReviewDao {
 	// 리뷰 좋아요 삭제
 	public int deleteReviewLike(SqlSessionTemplate sqlSession, ReviewLike r) {
 		return sqlSession.delete("reviewMapper.deleteReviewLike", r);
+	}
+
+	// 사용자 신고
+	public int insertReport(SqlSessionTemplate sqlSession, Report r) {
+		return sqlSession.insert("reviewMapper.insertReport", r);
 	}
 
 	// ---------------------정현

@@ -241,7 +241,7 @@
 	    SET HOST_ANSWER = #{hostAnswer}
 		 WHERE REVIEW_NO = #{reviewNo}
 	</update>
-		<insert id="insertReviewLike" parameterType="reviewLike">
+	<insert id="insertReviewLike" parameterType="reviewLike">
 		INSERT INTO REVIEW_LIKE 
 		VALUES (#{reviewNo}, #{memNo})
 	</insert>
@@ -250,6 +250,19 @@
 		WHERE REVIEW_NO = #{reviewNo}
 		AND MEM_NO = #{memNo}
 	</delete>
+	
+	<insert id="insertReport" parameterType="report">
+		INSERT INTO REPORT
+		VALUES(SEQ_RPNO.NEXTVAL
+			     , #{reportType}
+			     , #{reportContent}
+			     , SYSDATE
+			     , 'N'
+			     , null
+			     , null
+			     , #{reportMemNo}
+			     , #{reportedMemNo})
+	</insert>
 	
 	
 	<!-- 정현 End -->
