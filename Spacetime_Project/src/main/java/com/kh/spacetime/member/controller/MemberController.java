@@ -515,33 +515,6 @@ public class MemberController {
 	}
 	
 	/**
-	 * 호스트 신청하기 - 희섭 
-	 */
-	@RequestMapping("hostRequest.me")
-	public String inserthostRequest(String bankName, String accountNum, Model model, HttpSession session) {
-			
-	Member m = (Member)session.getAttribute("loginMember");
-	m.setBankName(bankName);
-	m.setAccountNum(accountNum);
-		
-	int result = memberService.inserthostRequest(m);
-	if(result > 0) { // 성공 => 메인페이지 url 재요청
-		
-		// 일회성 알람 문구
-		session.setAttribute("alertMsg", "호스트 가입에 성공하였습니다.");
-		return "redirect:/hostCalList.re";
-	}
-	else { // 실패 => 에러문구를 담아서 에러페이지 포워딩
-		
-		model.addAttribute("errorMsg", "호스트 가입 실패");
-		
-		// /WEB-INF/views/common/errorPage.jsp
-		return "common/errorPage";
-	}
-	
-	}
-	
-	/**
 	 * 회원 검색 메소드 - 혜민 
 	 * @param currentPage
 	 * @param model
@@ -580,6 +553,120 @@ public class MemberController {
 		System.out.println(keyword);
 		
 		return "member/adminMemberSearch";
+	}
+
+	/**
+	 * 관리자 회원 탈퇴용 메소드 - 혜민 
+	 * @param memPwd
+	 * @param memNo
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("deleteMem.ad")
+	public String deleteAdminMember(String memPwd, int memNo, HttpSession session, Model model) {
+		
+		// memPwd 는 관리자 비밀번호, memNo 는 회원의 회원번호 
+		String encPwd = ((Member)session.getAttribute("loginMember")).getMemPwd();
+		
+		// 비밀번호 대조작업
+		if(bcryptPasswordEncoder.matches(memPwd, encPwd)) {
+			
+			// 비밀번호가 맞을 경우 => 탈퇴처리
+			int result = memberService.deleteMember(memNo);
+			
+			if(result > 0) { // 탈퇴처리 성공
+				
+				// 로그아웃 처리 후 일회성 알람 메세지 담기, 메인페이지로 url 재요청
+				// session.invalidate(); // 사용 불가능 구문
+				session.setAttribute("alertMsg", "성공적으로 탈퇴되었습니다.");
+				
+				return "member/adminMember";
+			}
+			else { // 탈퇴처리 실패 => 에러문구를 담아서 에러페이지로 포워딩
+				
+				model.addAttribute("errorMsg", "회원 탈퇴 실패");
+				
+				// /WEB-INF/views/common/errorPage.jsp
+				return "common/errorPage";
+			}
+		}
+		else {
+			
+			// 비밀번호가 틀릴 경우 => 비밀번호가 틀렸다고 알려주고 마이페이지로 url 재요청
+			session.setAttribute("alertMsg", "비밀번호를 잘못 입력하였습니다. 확인해주세요.");
+			
+			return "redirect:/";
+		}
+	}
+	
+	/**
+	 * 관리자 회원 정보 변경 (연락처, 정산계좌) - 혜민
+	 * @param m
+	 * @param memNo
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("updateMem.ad")
+	public String updateAdminMember(Member m, String memId,int memNo, Model model, HttpSession session) {
+		
+		System.out.println(m);
+		
+		HashMap<String, String> map = new HashMap<>();
+
+		map.put("memId", memId);
+		
+		if(m.getPhone() != null) {
+			map.put("phone", m.getPhone());
+		} else if(m.getBankName() != null) {
+			map.put("bankName", m.getBankName());
+			map.put("accountNum", m.getAccountNum());
+		}
+		
+		System.out.println(map);
+		
+		int result = memberService.updateMember(map);
+		
+		if(result > 0) { // 성공
+			
+			session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
+			
+			return "redirect:/mdetail.ad?mno=" + m.getMemNo();
+		}
+		else { // 실패 => 에러문구를 담아서 에러페이지로 포워딩
+			
+			model.addAttribute("errorMsg", "회원정보 변경 실패");
+			
+			return "common/errorPage";
+		}
+	}
+	
+	/**
+	 * 호스트 신청하기 - 희섭 
+	 */
+	@RequestMapping("hostRequest.me")
+	public String inserthostRequest(String bankName, String accountNum, Model model, HttpSession session) {
+			
+	Member m = (Member)session.getAttribute("loginMember");
+	m.setBankName(bankName);
+	m.setAccountNum(accountNum);
+		
+	int result = memberService.inserthostRequest(m);
+	if(result > 0) { // 성공 => 메인페이지 url 재요청
+		
+		// 일회성 알람 문구
+		session.setAttribute("alertMsg", "호스트 가입에 성공하였습니다.");
+		return "redirect:/hostCalList.re";
+	}
+	else { // 실패 => 에러문구를 담아서 에러페이지 포워딩
+		
+		model.addAttribute("errorMsg", "호스트 가입 실패");
+		
+		// /WEB-INF/views/common/errorPage.jsp
+		return "common/errorPage";
+	}
+	
 	}
 	
 }

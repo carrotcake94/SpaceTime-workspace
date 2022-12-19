@@ -170,6 +170,48 @@
 		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
 		ORDER BY USE_DATE ASC
 	</select>
+	
+	<!-- 매출 검색 글 개수 -->
+	<select id="selectSalesSearchListCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESERVE
+		JOIN SPACE USING (SPACE_NO)
+		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
+		WHERE MEM_STATUS = 'N'
+		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
+		  	<if test="condition == 'spaceTitle'">
+		    	AND SPACE_TITLE
+			</if>
+			<if test="condition == 'hostName'">
+			    AND M.MEM_NAME
+			</if>
+			<if test="condition == 'hostId'">
+			    AND M.MEM_ID
+			</if>
+			LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- 매출 검색 리스트 조회 -->
+	<select id="selectSalesSearchList" parameterType="hashmap" resultMap="reserveResultSet">
+		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE"
+		FROM RESERVE R
+		JOIN SPACE S USING (SPACE_NO)
+		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
+		WHERE MEM_STATUS = 'N'
+		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
+			<if test="condition == 'spaceTitle'">
+		    	AND SPACE_TITLE
+			</if>
+			<if test="condition == 'hostName'">
+			    AND M.MEM_NAME
+			</if>
+			<if test="condition == 'hostId'">
+			    AND M.MEM_ID
+			</if>
+			LIKE '%' || #{keyword} || '%'
+		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE, USE_DATE
+		ORDER BY SPACE_NO DESC
+	</select>
 
 	<!-- 검색어 자동완성 -성훈 -->
 	<select id="autoComplete" parameterType="string" resultType="string">

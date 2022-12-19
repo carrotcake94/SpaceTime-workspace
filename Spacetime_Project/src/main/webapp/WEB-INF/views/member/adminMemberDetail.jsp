@@ -181,10 +181,10 @@
                     
                 <!-- 프로필 사진, 닉네임 -->
                 <div class="mem_info" align="center">
-                    <input type="hidden" name="mno" value="${loginMember.memNo}">
+                    <input type="hidden" name="mno" value="${m.memNo}">
                     <c:choose>
-                        <c:when test="${!empty loginMember.profilePath }">
-                            <img src="${loginMember.profilePath}" class="mem_img photo">
+                        <c:when test="${!empty m.profilePath }">
+                            <img src="${m.profilePath}" class="mem_img photo">
                         </c:when>
                         <c:otherwise>
                             <img src="resources/images/profile_default.png" class="mem_img photo">
@@ -192,8 +192,8 @@
                     </c:choose>
                     <br>
                     <div style="height:30px;">
-                        <b>${ loginMember.nickname }</b>&nbsp;&nbsp;
-                        <span id="memGrade">${loginMember.grCode }</span>
+                        <b>${ m.nickname }</b>&nbsp;&nbsp;
+                        <span id="memGrade">${m.grCode }</span>
                     </div>
                 </div>
 
@@ -202,14 +202,14 @@
                     <table id="mem_detail"> 
                         <tr>
                             <th>아이디</th>
-                            <td colspan="2">${ loginMember.memId }</td>
+                            <td colspan="2">${ m.memId }</td>
                         </tr>
                         <tr>
                             <th>이름</th>
-                            <td colspan="2">${ loginMember.memName } &nbsp;&nbsp;
+                            <td colspan="2">${ m.memName } &nbsp;&nbsp;
                                 <span id="gender">
                                     <c:choose>
-                                        <c:when test="${ loginMember.gender eq 'M' }">
+                                        <c:when test="${ m.gender eq 'M' }">
                                             [남]
                                         </c:when>
                                         <c:otherwise>
@@ -221,27 +221,27 @@
                         </tr>
                         <tr>
                             <th>이메일</th> 
-                            <td colspan="2">${ loginMember.email }</td>
+                            <td colspan="2">${ m.email }</td>
                         </tr> 
                         <tr>
                             <th>연락처</th>
-                            <td>${ loginMember.phone }</td>
+                            <td>${ m.phone }</td>
                             <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editPhone">변경하기</button></td>
                         </tr>
                         <tr>
                             <th>가입일</th>
-                            <td colspan="2">${ loginMember.enrollDate }</td>
+                            <td colspan="2">${ m.enrollDate }</td>
                         </tr> 
                         <tr>
                             <th>비밀번호</th> 
                             <td colspan="2"><a class="changePwd" data-toggle="modal" data-target="#editPwd">변경하기</a></td>
                         </tr> 
                         <c:choose>
-                            <c:when test="${ loginMember.hostStatus eq 'Y' }">
+                            <c:when test="${ m.hostStatus eq 'Y' }">
                                 <!-- ===================================== 호스트만 보이기 ===================================== -->
                                 <tr>
                                     <th>정산 계좌</th>
-                                    <td>${ loginMember.bankName } ${ loginMember.accountNum } ${ loginMember.memName }</td>
+                                    <td>${ m.bankName } ${ m.accountNum } ${ m.memName }</td>
                                     <td align="right"><button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editAccount">변경하기</button></td>
                                 </tr>
                                 <tr>
@@ -264,113 +264,6 @@
         </div>
     </div>
 
-    <!-- 프사, 닉네임 수정 모달창 -->
-    <div class="modal fade" id="editModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-            
-                <!-- Modal Header -->
-                <div class="modal-header">
-                <h4 class="modal-title">프로필 변경</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                
-                <!-- Modal body -->
-                <form action="update.me" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <table>
-                            <tr>
-                                <th style="width:25%;">프로필 사진</th>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${!empty loginMember.profilePath }">
-                                            <img src="${loginMember.profilePath}" class="mem_img photo">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src="resources/images/profile_default.png" class="mem_img photo">
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <td style="height:70px;"><input type="file" name="upfile" class="form-control-file border"></td>
-                            </tr>
-                            <tr>
-                                <th>닉네임</th>
-                                <td>
-                                    <input type="text" id="nickname" name="nickname" class="form-control mb-2" value="${loginMember.nickname}" required>
-                                    <span class="error_next_box" id="nickMsg">.</span>
-                                </td>
-                                <!-- 닉네임 중복확인은 ajax 로!!!! -->
-                            </tr>
-                        </table>
-                    </div>
-                    <script>
-                        $(function() {
-                            $("#nickname").on({blur:function() {
-                                // 닉네임 정규식
-                                // 영문자, 숫자, 한글 2~10글자
-                                let regExp = /^[a-z\d\가-힣]{2,10}$/;
-                                if(!regExp.test($("#nickname").val())) {
-                                    $("#nickMsg").text("닉네임은 영문자, 숫자, 한글을 포함하여 총 2~10글자를 입력할 수 있습니다.");
-                                    $("#nickMsg").css("display", "block");
-                                    $("#nickname").select(); // 재입력 유도
-                                    return false;
-                                } else {
-                                    $("#nickMsg").css("display", "none");
-                                    return true;
-                                }
-                            }, keyup:function() {
-                                // 닉네임 중복체크
-                                // 최소 2글자 이상으로 닉네임값이 입력되어 있을 때만 ajax 요청
-                                if($("#nickname").val().length >= 2) {
-
-                                    $.ajax({
-                                        url : "nickCheck.me",
-                                        data : {checkNick : $("#nickname").val()},
-                                        success : function(result) {
-                                            
-                                            // console.log(result);
-                                            
-                                            if(result == "NNNNN") { // 사용 불가능
-                                                
-                                                // 빨간색 메세지 출력
-                                                $("#nickCheckMsg").show();
-                                                $("#nickCheckMsg").css("color", "red").text("이미 사용중인 닉네임입니다.");
-                                                
-                                                // 버튼 비활성화
-                                                $("#nickChange").attr("disabled", true);
-                                                
-                                            } else { // 사용 가능
-                                                // 버튼 활성화
-                                                $("#nickCheckMsg").hide();
-                                                $("#nickChange").attr("disabled", false);
-                                            }
-                                        },
-                                        error : function() {
-                                            console.log("아이디 중복 체크용 ajax 통신 실패!");
-                                        }
-                                    });
-                                    } else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
-
-                                    $("#nickCheckMsg").hide();
-                                    $("#nickChange").attr("disabled", true);
-                                    }
-                                }
-                            })
-                        })
-                    </script>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" id="nickChange" class="btn btn-primary">변경</button>
-                        <!-- 수정이 잘 되면 alert 창 띄우기! -->
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- 연락처 수정 모달창 -->
     <div class="modal fade" id="editPhone">
         <div class="modal-dialog modal-dialog-centered">
@@ -383,13 +276,15 @@
                 </div>
                 
                 <!-- Modal body -->
-                <form action="update.me" method="post">
+                <form action="updateMem.ad" method="post">
                     <div class="modal-body">
                         <table>
                             <tr>
                                 <th style="width:20%;">연락처</th>
                                 <td>
-                                    <input type="text" id="phone" name="phone" value="${loginMember.phone}" class="form-control phone" required>
+                                	<input type="hidden" name="memId" value="${m.memId}">
+                            		<input type="hidden" name="memNo" value="${m.memNo}">
+                                    <input type="text" id="phone" name="phone" value="${m.phone}" class="form-control phone" required>
                                     <div class="error_next_box" id="phoneMsg">
                                         &nbsp;- 을 제외한 유효한 전화번호(010으로 시작)를 <br>
                                         &nbsp;입력해주세요.
@@ -437,10 +332,12 @@
                 </div>
                 
                 <!-- Modal body -->
-                <form action="update.me" method="post">
+                <form action="updateMem.ad" method="post">
                     <div class="modal-body">
                         <table>
                             <tr>
+                            	<input type="hidden" name="memId" value="${m.memId}">
+                            	<input type="hidden" name="memNo" value="${m.memNo}">
                                 <th style="width:40%;">현재 비밀번호</th>
                                 <td>
                                     <input type="password" id="checkPwd" name="checkPwd" class="form-control mb-2" required>
@@ -538,23 +435,23 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <form action="delete.me" method="post">
+                <form action="deleteMem.ad" method="post">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="center">
                             <h3 class="tit">서비스 탈퇴 전에 꼭 <span class="br_section">확인하세요.</span></h3> 
                             <p class="error_guide">
-                            서비스 탈퇴 시 내 프로필, 예약내역 등<br> 모든 정보가 삭제되며 이후 복구가 불가능합니다.
+                            서비스 탈퇴 시 회원의 프로필, 예약내역 등<br> 모든 정보가 삭제되며 이후 복구가 불가능합니다.
                             </p>
                             <div align="center" style="margin-top: 30px;">
                                 <table>
                                     <tr>
-                                        <th style="width:40%;">현재 비밀번호</th>
+                                        <th style="width:40%;">관리자 비밀번호</th>
                                         <td>
                                             <input type="password" name="memPwd" class="form-control" style="height:100%;">
                                             <span class="error_next_box" id="pwdMsg">비밀번호가 일치하지 않습니다. 다시 확인해주세요.</span>
                                         </td>
-                                        <input type="hidden" name="memNo" value="${ loginMember.memNo} ">
+                                        <input type="hidden" name="memNo" value="${ m.memNo} ">
                                     </tr>
                                 </table>
                             </div>
@@ -630,10 +527,12 @@
                 </div>
                 
                 <!-- Modal body -->
-                <form action="update.me" method="post">
+                <form action="updateMem.ad" method="post">
                     <div class="modal-body">
                         <table>
                             <tr>
+                            	<input type="hidden" name="memId" value="${m.memId}">
+                            	<input type="hidden" name="memNo" value="${m.memNo}">
                                 <th style="width:30%;">은행명</th>
                                 <td>
                                     <select name="bankName" class="select_category form-control mb-2" required>
@@ -667,7 +566,7 @@
                             </tr>
                             <tr>
                                 <th>예금주명</th>
-                                <td><input type="text" class="form-control mb-2" value="${ loginMember.memName }" readonly></td>
+                                <td><input type="text" class="form-control mb-2" value="${ m.memName }" readonly></td>
                             </tr>
                         </table>
                     </div>

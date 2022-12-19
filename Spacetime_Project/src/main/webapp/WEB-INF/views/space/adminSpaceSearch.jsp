@@ -140,7 +140,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}">
+                                <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}" required>
                             </td>
                             <td align="left">
                                 <button type="submit" class="btn btn-secondary mb-2">검색</button>
@@ -173,59 +173,66 @@
                     </thead>
                     <tbody class="myTable">
                         <c:forEach var="s" items="${list}">
-                            <tr data-toggle='modal' data-target='#checkSpace' id='changeStatus' class="staceTr">
-                                <td class='sno'>${s.spaceNo}</td>
-                                <td>${s.hostNo}</td>
-                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${s.spaceTitle}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${s.stypeNo eq '1'}">
-                                            파티룸
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '2'}">
-                                            카페 
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '3'}">
-                                            공연장
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '4'}">
-                                            연습실 
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '5'}">
-                                            연습주방 
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '6'}">
-                                            갤러리 
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '7'}">
-                                            운동시설 
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '8'}">
-                                            스터디룸 	
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '9'}">
-                                            회의실 
-                                        </c:when>
-                                        <c:when test="${s.stypeNo eq '10'}">
-                                            촬영스튜디오
-                                        </c:when>
-                                    </c:choose>
-                                </td> 
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${s.spaceStatus eq 'Y'}">
-                                            승인 
-                                        </c:when>
-                                        <c:when test="${s.spaceStatus eq 'N'}">
-                                            반려 
-                                        </c:when>
-                                        <c:when test="${s.spaceStatus eq 'W'}">
-                                            승인대기
-                                        </c:when>
-                                    </c:choose>
-                                </td>
-                                <input type="hidden" name="denyMessage" value="${s.denyMessage}">
-                            </tr>
+	                        <c:if test="${!empty list}">
+	                            <tr data-toggle='modal' data-target='#checkSpace' id='changeStatus' class="staceTr">
+	                                <td class='sno'>${s.spaceNo}</td>
+	                                <td>${s.hostNo}</td>
+	                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${s.spaceTitle}</td>
+	                                <td>
+	                                    <c:choose>
+	                                        <c:when test="${s.stypeNo eq '1'}">
+	                                            파티룸
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '2'}">
+	                                            카페 
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '3'}">
+	                                            공연장
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '4'}">
+	                                            연습실 
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '5'}">
+	                                            연습주방 
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '6'}">
+	                                            갤러리 
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '7'}">
+	                                            운동시설 
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '8'}">
+	                                            스터디룸 	
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '9'}">
+	                                            회의실 
+	                                        </c:when>
+	                                        <c:when test="${s.stypeNo eq '10'}">
+	                                            촬영스튜디오
+	                                        </c:when>
+	                                    </c:choose>
+	                                </td> 
+	                                <td>
+	                                    <c:choose>
+	                                        <c:when test="${s.spaceStatus eq 'Y'}">
+	                                            승인 
+	                                        </c:when>
+	                                        <c:when test="${s.spaceStatus eq 'N'}">
+	                                            반려 
+	                                        </c:when>
+	                                        <c:when test="${s.spaceStatus eq 'W'}">
+	                                            승인대기
+	                                        </c:when>
+	                                    </c:choose>
+	                                </td>
+	                                <input type="hidden" name="denyMessage" value="${s.denyMessage}">
+	                            </tr>
+	                        </c:if>
+	                        <c:if test="${empty list}">
+	                        	<tr class='spaceTr'>
+	                                <td colspan="5" onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td>
+	                            </tr>
+	                        </c:if>
                         </c:forEach>
                     </tbody>
                 </table>

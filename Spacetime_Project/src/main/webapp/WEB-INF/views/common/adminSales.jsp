@@ -63,8 +63,8 @@
     
     /* 월 선택 */
     #monthBtn {
-    	border : none;
-    	background-color: white;
+        border : none;
+        background-color: white;
     }
 
     /* 테이블 행 */
@@ -123,7 +123,7 @@
         width: 80%;
         text-align: center;
     }
-
+    
 </style>
 </head>
 <body>
@@ -141,18 +141,21 @@
                 <form action="searchS.ad" method="get">
                     <table align="center" id="searchForm">
                         <tr>
-                            <td align="right">
+                            <td style="width: 20%;">
+                                <input type="month" id="searchMonth" name="month" class="mb-2 form-control" style="width:150px; display: inline-block;" required>
+                            </td>
+                            <td align="right" style="width: 20%;">
                                 <input type="hidden" name="currentPage" value="1">
-                                <select name="cate" class="select_category form-control mb-2" style="width:70%;">
-                                    <option value="reportContent">공간명</option>
-                                    <option value="reportedMemId">호스트명</option>
-                                    <option value="reportMemId">호스트ID</option>
+                                <select name="condition" class="select_category form-control mb-2" style="width:100%;">
+                                    <option value="spaceTitle">공간명</option>
+                                    <option value="hostName">호스트명</option>
+                                    <option value="hostId">호스트ID</option>
                                 </select>
                             </td>
-                            <td>
+                            <td style="width: 50%;">
                                 <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}">
                             </td>
-                            <td align="left">
+                            <td align="left" style="width: 10%;">
                                 <button type="submit" class="btn btn-secondary mb-2">검색</button>
                             </td> 
                         </tr>
@@ -160,11 +163,19 @@
                 </form>
             </div>
             
+            <c:if test="${ not empty condition }">
+                <script>
+                    $(function() {
+                        $("#searchForm option[value=${ condition }]").attr("selected", true);
+                    });
+                </script>
+            </c:if>
+            
             <!-- 컨텐츠 탭 -->
             <div id="tab">
                 <div align="right">
                     <input type="month" id="searchDate" name="searchDate" class="mb-2 form-control" style="width:160px; display: inline-block;">&nbsp;
-           			<button id="monthBtn"><i class="fa-solid fa-magnifying-glass"></i></button>  
+                    <button id="monthBtn"><i class="fa-solid fa-magnifying-glass"></i></button>  
                 </div>
                 <table class="table salesList" style="table-layout:fixed;">
                     <thead>
@@ -217,7 +228,7 @@
             // console.log(month);
             
             $("#monthBtn").click(function() {
-            	showSalesList();
+                showSalesList();
             });
             
             $.ajax({
@@ -228,29 +239,29 @@
                     var resultStr = "";
                     var today = new Date().toISOString().slice(0, 7);
                     // console.log(today);
-					
+                    
                     if(result.list.length != 0) {
-                    	
-                    	for(var i = 0; i < result.list.length; i++) {
-	                    	
-	                        resultStr += "<tr class='salesTr' data-toggle='modal' data-target='#salesDetail'>"
-	                                        + "<input type='hidden' class='sno' name='sno' value='" + result.list[i].spaceNo + "'>"
-	                                        + "<td>" + result.list[i].memName + "</td>"
-	                                        + "<td>" + result.list[i].memId + "</td>"
-	                                        + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].spaceTitle + "</td>"
-	                                        + "<td>" + result.list[i].price + "</td>"
-	                                        + "<td>";
-	                                                if(result.list[i].useDate < today) {
-	                                                    resultStr += "정산완료";
-	                                                } else if (result.list[i].useDate > today) {
-	                                                    resultStr += "미처리";
-	                                                }
-	                            resultStr += "</td> </tr>";
-                    	} 
-                    	
+                        
+                        for(var i = 0; i < result.list.length; i++) {
+                            
+                            resultStr += "<tr class='salesTr' data-toggle='modal' data-target='#salesDetail'>"
+                                            + "<input type='hidden' class='sno' name='sno' value='" + result.list[i].spaceNo + "'>"
+                                            + "<td>" + result.list[i].memName + "</td>"
+                                            + "<td>" + result.list[i].memId + "</td>"
+                                            + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].spaceTitle + "</td>"
+                                            + "<td>" + result.list[i].price + "</td>"
+                                            + "<td>";
+                                                    if(result.list[i].useDate < today) {
+                                                        resultStr += "정산완료";
+                                                    } else if (result.list[i].useDate > today) {
+                                                        resultStr += "미처리";
+                                                    }
+                                resultStr += "</td> </tr>";
+                        } 
+                        
                     } else if(result.list.length == 0) {
-                		resultStr += "<tr class='salesTr'><td colspan='5' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
-                	}
+                        resultStr += "<tr class='salesTr'><td colspan='5' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
+                    }
                     
                     $(".myTable").html(resultStr); 
                     
@@ -258,7 +269,7 @@
                     
                     if(result.list.length != 0) {
                         
-                    	if(result.pi.currentPage == 1) {
+                        if(result.pi.currentPage == 1) {
                             resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
                         } else {
                             resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showSalesList(" + month + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"

@@ -149,7 +149,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}">
+                                <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}" required>
                             </td>
                             <td align="left">
                                 <button type="submit" class="btn btn-secondary mb-2">검색</button>
@@ -183,26 +183,33 @@
                     </thead>
                     <tbody class="myTable">
                         <c:forEach var="r" items="${list}">
-                            <tr class='reportTr'>
-                                <td class='rpno'>${r.reportNo}</td>
-                                <td>${r.reportedMemNo}</td>
-                                <td>${r.reportType}</td>
-                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.reportContent}</td>
-                                <td>${r.reportDate}</td>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${r.reportStatus eq 'Y'}">
-                                            승인
-                                        </c:when>
-                                        <c:when test="${r.reportStatus eq 'N'}">
-                                            미처리
-                                        </c:when>
-                                        <c:when test="${r.reportStatus eq 'D'}">
-                                            반려
-                                        </c:when>
-                                    </c:choose>
-                                </td> 
-                            </tr>
+	                        <c:if test="${!empty list}">
+	                            <tr class='reportTr'>
+	                                <td class='rpno' name='rpno'>${r.reportNo}</td>
+	                                <td>${r.reportedMemNo}</td>
+	                                <td>${r.reportType}</td>
+	                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.reportContent}</td>
+	                                <td>${r.reportDate}</td>
+	                                <td>
+	                                    <c:choose>
+	                                        <c:when test="${r.reportStatus eq 'Y'}">
+	                                            승인
+	                                        </c:when>
+	                                        <c:when test="${r.reportStatus eq 'N'}">
+	                                            미처리
+	                                        </c:when>
+	                                        <c:when test="${r.reportStatus eq 'D'}">
+	                                            반려
+	                                        </c:when>
+	                                    </c:choose>
+	                                </td> 
+	                            </tr>
+	                        </c:if>
+	                        <c:if test="${empty list}">
+	                        	<tr class='reportTr'>
+	                                <td colspan="6" onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td>
+	                            </tr>
+	                        </c:if>
                         </c:forEach>
                     </tbody>
                 </table>
@@ -237,6 +244,17 @@
             </div>
         </div>
     </div>
+    
+    <!-- 신고 상세페이지로 연결 -->
+    <script>
+        $(function() {
+            
+            $(".reportList tbody").on("click", ".reportTr", function() {
+            	
+            	location.href = "rdetail.ad?rpno=" + $(this).children(".rpno").eq(0).text();
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -60,19 +60,7 @@
         text-decoration: none;
     }
     
-    /* 매출관리 화살표 */
-    li span::after {
-        content:'>';
-        float:right;
-        margin-right:2em;
-        transition:0.5s;
-        font-weight:bold;
-    } 
-    li.open>span::after {
-        transform:Rotate(90deg);
-        transition:0.5s;
-    }
-
+    
     /* 매출 하위 리스트 */
     .naviSub {
         list-style: none;
@@ -82,13 +70,13 @@
 </style>
 </head>
 <body>
-	<div class="wrap">
+    <div class="wrap">
         <div class="adminMenu">
             <div id="adminPage">관리자페이지</div>
             <ul class="accordion">
                 <li>
-                    <span class="naviMenu navi">매출 관리</span>
-                    <ul>
+                    <span class="naviMenu navi" onclick="openSalesInfo();">매출 관리</span>
+                    <ul class="salesInfo_ul" style="display: none;">
                         <li class="naviSub"><a href="schart.ad" class="navi">매출 통계</a></li>
                         <li class="naviSub"><a href="slist.ad" class="navi">매출 관리</a></li>
                     </ul>
@@ -101,36 +89,17 @@
     </div>
 
     <script>
-        var acc=$(".accordion");
-        acc.find("li").not(".open").find("ul").slideUp();
-        acc.find("li").each(function (i) {
-            var li=$(this);
-            if (li.children().length) return;
-            var txt=li.text();
-            var spn=$("<span class='title'></span>");
-            spn.text(txt);
-            li.html(spn);
-        });
-
-        $(".accordion").on("click",function (e) {
-            var acc=$(this);
-            var targ=$(e.target).closest("li");
-            if (targ.children("ul, div").length){
-                
-                if (targ.is(".open")) {
-                    targ.removeClass("open");
-                    targ.children("div, ul").slideUp();
-                    return;
-                }
-                
-                targ.addClass("open").children("ul, div").slideDown();
-                targ.siblings(".open").removeClass("open").children ("ul, div").slideUp();
-                return;
-            }
-        })
-
-        $(".accordion, ul").sortable({containment:'parent'} );
+        $(function () {
+            openSalesInfo = () => {
+                if($(".salesInfo_ul").css("display") == "none") { 
+                    
+                    $(".salesInfo_ul").slideDown(300);
         
+                } else {
+                    $(".salesInfo_ul").slideUp(300);
+                }
+            }
+        });
     </script>
 
 </body>

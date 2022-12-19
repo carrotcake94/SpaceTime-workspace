@@ -126,7 +126,7 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}">
+                            <input type="text" name="keyword" class="form-control mb-2 title" id="myInput" placeholder="검색어를 입력해주세요." value="${keyword}" required>
                         </td>
                         <td>
                             <button type="submit" class="btn btn-secondary mb-2">검색</button>
