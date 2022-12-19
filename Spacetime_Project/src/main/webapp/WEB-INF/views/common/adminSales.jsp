@@ -171,12 +171,9 @@
                 </script>
             </c:if>
             
+                    
             <!-- 컨텐츠 탭 -->
             <div id="tab">
-                <div align="right">
-                    <input type="month" id="searchDate" name="searchDate" class="mb-2 form-control" style="width:160px; display: inline-block;">&nbsp;
-                    <button id="monthBtn"><i class="fa-solid fa-magnifying-glass"></i></button>  
-                </div>
                 <table class="table salesList" style="table-layout:fixed;">
                     <thead>
                         <tr>
@@ -188,12 +185,51 @@
                         </tr>
                     </thead>
                     <tbody class="myTable">
+                        <c:forEach var="r" items="${list}">
+                            <tr class='salesTr'>
+                                <input type="hidden" class='sno' name='sno' value="${r.spaceNo}">
+                                <input type="hidden" class='detailMonth' value="${month}">
+                                <td>${r.memName}</td>
+                                <td>${r.memId}</td>
+                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.spaceTitle}</td>
+                                <td>${r.price}</td>
+                                <td>
+                                    <c:if test="${r.useDate} lt ${today}">
+                                        정산완료
+                                    </c:if>
+                                    <c:if test="${r.useDate} gt ${today}">
+                                        미처리
+                                    </c:if>
+                                </td> 
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
                 <br>
                 <!-- 페이지 버튼 -->
                 <div class="btnPage" align="center">
                     <ul class="pagination">
+                        <c:choose>
+                            <c:when test="${pi.currentPage eq 1}">
+                                <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item no-page-prev"><a class="page-link" href="searchS.ad?month=${month}&currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&lt;</a></li>
+                            </c:otherwise>
+                        </c:choose>
+    
+                        <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                            <li class="page-item page-btn"><a id="" class="page-link" href="searchS.ad?month=${month}&currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+                        </c:forEach>
+    
+                        <c:choose>
+                            <c:when test="${pi.currentPage eq pi.maxPage}">
+                                <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-item no-page-next"><a class="page-link" href="searchS.ad?month=${month}&currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&gt;</a></li>
+                            </c:otherwise>
+                        </c:choose>
                     </ul>
                 </div>
             </div>
@@ -202,7 +238,7 @@
 
     <!-- 현재 월Month 을 기본값으로 설정하기 -->
     <script>
-        document.getElementById('searchDate').value= new Date().toISOString().slice(0, 7);
+        document.getElementById('searchMonth').value= new Date().toISOString().slice(0, 7);
         // console.log($('#searchDate').val());
     </script>        
 
@@ -213,93 +249,6 @@
                 location.href = "sdetail.ad?sno=" + $(this).children(".sno").eq(0).val() + "&month=" + $('#searchDate').val();
             });
         });
-    </script>
-    
-    <!-- 월 별 매출 리스트 조회 ajax -->
-    <script>
-    
-        $(function() {
-            showSalesList();
-        });
-        
-        function showSalesList(month, currentPage) {
-            
-            var month = $('#searchDate').val();
-            // console.log(month);
-            
-            $("#monthBtn").click(function() {
-                showSalesList();
-            });
-            
-            $.ajax({
-                url : "ajaxslist.ad",
-                data : {month : month, cpage : currentPage},
-                success : function(result) {
-                    
-                    var resultStr = "";
-                    var today = new Date().toISOString().slice(0, 7);
-                    // console.log(today);
-                    
-                    if(result.list.length != 0) {
-                        
-                        for(var i = 0; i < result.list.length; i++) {
-                            
-                            resultStr += "<tr class='salesTr' data-toggle='modal' data-target='#salesDetail'>"
-                                            + "<input type='hidden' class='sno' name='sno' value='" + result.list[i].spaceNo + "'>"
-                                            + "<td>" + result.list[i].memName + "</td>"
-                                            + "<td>" + result.list[i].memId + "</td>"
-                                            + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].spaceTitle + "</td>"
-                                            + "<td>" + result.list[i].price + "</td>"
-                                            + "<td>";
-                                                    if(result.list[i].useDate < today) {
-                                                        resultStr += "정산완료";
-                                                    } else if (result.list[i].useDate > today) {
-                                                        resultStr += "미처리";
-                                                    }
-                                resultStr += "</td> </tr>";
-                        } 
-                        
-                    } else if(result.list.length == 0) {
-                        resultStr += "<tr class='salesTr'><td colspan='5' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
-                    }
-                    
-                    $(".myTable").html(resultStr); 
-                    
-                    var resultPi = "";
-                    
-                    if(result.list.length != 0) {
-                        
-                        if(result.pi.currentPage == 1) {
-                            resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
-                        } else {
-                            resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showSalesList(" + month + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"
-                        }
-                    
-                        for(var p = result.pi.startPage; p <= result.pi.endPage; p++) {
-                            
-                            if(p != result.pi.currentPage) {
-                                resultPi += "<li class='page-item page-btn'><a id='' class='page-link' href='#' onclick='showSalesList(" + month + ", " + p + ");'>" + p +"</a></li>"
-                            } 
-                            if(p == result.pi.currentPage) {
-                                resultPi += "<li class='page-item page-btn' disbled>" + p + "</li>"
-                            }
-                        }
-                        
-                        if(result.pi.currentPage == result.pi.maxPage) {
-                            resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
-                        } else {
-                            resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showSalesList(" + month + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
-                        }
-                    }
-
-                    $(".pagination").html(resultPi);
-                    
-                }, error : function() {
-                    console.log("매출 내역 ajax 통신 실패ㅠㅠ");
-                }
-            });
-        }
-    
     </script>
 
 </body>
