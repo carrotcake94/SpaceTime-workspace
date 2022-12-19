@@ -314,6 +314,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function() {
+            $(".page-link").each(function() {
+                if ($(this).text() ==${ pi.currentPage}) {
+                    $(this).attr("id", "active-page");
+                    $(this).parent().addClass("disabled");
+                } else {
+                    $(this).removeAttr("id", "active-page");
+                }
+            });
+        });
+    </script>
     
     <!-- 검수 모달창으로 공간 번호 보내기 -->
     <script>

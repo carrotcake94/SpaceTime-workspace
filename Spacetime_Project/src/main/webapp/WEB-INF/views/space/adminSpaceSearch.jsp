@@ -172,68 +172,72 @@
                         </tr>
                     </thead>
                     <tbody class="myTable">
-                        <c:forEach var="s" items="${list}">
-	                        <c:if test="${!empty list}">
-	                            <tr data-toggle='modal' data-target='#checkSpace' id='changeStatus' class="staceTr">
-	                                <td class='sno'>${s.spaceNo}</td>
-	                                <td>${s.hostNo}</td>
-	                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${s.spaceTitle}</td>
-	                                <td>
-	                                    <c:choose>
-	                                        <c:when test="${s.stypeNo eq '1'}">
-	                                            파티룸
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '2'}">
-	                                            카페 
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '3'}">
-	                                            공연장
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '4'}">
-	                                            연습실 
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '5'}">
-	                                            연습주방 
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '6'}">
-	                                            갤러리 
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '7'}">
-	                                            운동시설 
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '8'}">
-	                                            스터디룸 	
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '9'}">
-	                                            회의실 
-	                                        </c:when>
-	                                        <c:when test="${s.stypeNo eq '10'}">
-	                                            촬영스튜디오
-	                                        </c:when>
-	                                    </c:choose>
-	                                </td> 
-	                                <td>
-	                                    <c:choose>
-	                                        <c:when test="${s.spaceStatus eq 'Y'}">
-	                                            승인 
-	                                        </c:when>
-	                                        <c:when test="${s.spaceStatus eq 'N'}">
-	                                            반려 
-	                                        </c:when>
-	                                        <c:when test="${s.spaceStatus eq 'W'}">
-	                                            승인대기
-	                                        </c:when>
-	                                    </c:choose>
-	                                </td>
-	                                <input type="hidden" name="denyMessage" value="${s.denyMessage}">
-	                            </tr>
-	                        </c:if>
-	                        <c:if test="${empty list}">
-	                        	<tr class='spaceTr'>
-	                                <td colspan="5" onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td>
-	                            </tr>
-	                        </c:if>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${list.size() eq 0}">
+                                <tr class='reportTr'>
+                                    <td colspan="6" onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="s" items="${list}">
+                                    <c:if test="${!empty list}">
+                                        <tr data-toggle='modal' data-target='#checkSpace' id='changeStatus' class="staceTr">
+                                            <td class='sno'>${s.spaceNo}</td>
+                                            <td>${s.hostNo}</td>
+                                            <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${s.spaceTitle}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${s.stypeNo eq '1'}">
+                                                        파티룸
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '2'}">
+                                                        카페 
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '3'}">
+                                                        공연장
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '4'}">
+                                                        연습실 
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '5'}">
+                                                        연습주방 
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '6'}">
+                                                        갤러리 
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '7'}">
+                                                        운동시설 
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '8'}">
+                                                        스터디룸 	
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '9'}">
+                                                        회의실 
+                                                    </c:when>
+                                                    <c:when test="${s.stypeNo eq '10'}">
+                                                        촬영스튜디오
+                                                    </c:when>
+                                                </c:choose>
+                                            </td> 
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${s.spaceStatus eq 'Y'}">
+                                                        승인 
+                                                    </c:when>
+                                                    <c:when test="${s.spaceStatus eq 'N'}">
+                                                        반려 
+                                                    </c:when>
+                                                    <c:when test="${s.spaceStatus eq 'W'}">
+                                                        승인대기
+                                                    </c:when>
+                                                </c:choose>
+                                            </td>
+                                            <input type="hidden" name="denyMessage" value="${s.denyMessage}">
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
                 <br>
@@ -242,24 +246,30 @@
                 <div class="btnPage" align="center">
                     <ul class="pagination">
                         <c:choose>
-                            <c:when test="${pi.currentPage eq 1}">
-                                <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                            <c:when test="${list.size() eq 0}">
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item no-page-prev"><a class="page-link" href="searchSp.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&lt;</a></li>
-                            </c:otherwise>
-                        </c:choose>
-    
-                        <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                            <li class="page-item page-btn"><a id="" class="page-link" href="searchSp.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
-                        </c:forEach>
-    
-                        <c:choose>
-                            <c:when test="${pi.currentPage eq pi.maxPage}">
-                                <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                            </c:when>
-                            <c:otherwise>
-                                <li class="page-item no-page-next"><a class="page-link" href="searchSp.ad?currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&gt;</a></li>
+                                <c:choose>
+                                    <c:when test="${pi.currentPage eq 1}">
+                                        <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item no-page-prev"><a class="page-link" href="searchSp.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&lt;</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+            
+                                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                                    <li class="page-item page-btn"><a id="" class="page-link" href="searchSp.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+                                </c:forEach>
+            
+                                <c:choose>
+                                    <c:when test="${pi.currentPage eq pi.maxPage}">
+                                        <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item no-page-next"><a class="page-link" href="searchSp.ad?currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&gt;</a></li>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:otherwise>
                         </c:choose>
                     </ul>
@@ -267,6 +277,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function() {
+            $(".page-link").each(function() {
+                if ($(this).text() ==${ pi.currentPage}) {
+                    $(this).attr("id", "active-page");
+                    $(this).parent().addClass("disabled");
+                } else {
+                    $(this).removeAttr("id", "active-page");
+                }
+            });
+        });
+    </script>
                 
     <!-- 검수 모달창으로 공간 번호 보내기 -->
     <script>

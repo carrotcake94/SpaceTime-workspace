@@ -166,8 +166,8 @@
                     });
                 </script>
             </c:if>
-			
-			<br><br>
+            
+            <br><br>
             <!-- 컨텐츠 탭 -->
             <div class="tab-pane container active" id="all" align="right" value="all">
                 <table class="table reportList" style="table-layout:fixed;">
@@ -182,35 +182,37 @@
                         </tr>
                     </thead>
                     <tbody class="myTable">
-                        <c:forEach var="r" items="${list}">
-	                        <c:if test="${!empty list}">
-	                            <tr class='reportTr'>
-	                                <td class='rpno' name='rpno'>${r.reportNo}</td>
-	                                <td>${r.reportedMemNo}</td>
-	                                <td>${r.reportType}</td>
-	                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.reportContent}</td>
-	                                <td>${r.reportDate}</td>
-	                                <td>
-	                                    <c:choose>
-	                                        <c:when test="${r.reportStatus eq 'Y'}">
-	                                            승인
-	                                        </c:when>
-	                                        <c:when test="${r.reportStatus eq 'N'}">
-	                                            미처리
-	                                        </c:when>
-	                                        <c:when test="${r.reportStatus eq 'D'}">
-	                                            반려
-	                                        </c:when>
-	                                    </c:choose>
-	                                </td> 
-	                            </tr>
-	                        </c:if>
-	                        <c:if test="${empty list}">
-	                        	<tr class='reportTr'>
-	                                <td colspan="6" onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td>
-	                            </tr>
-	                        </c:if>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${list.size() eq 0}">
+                                <tr class='reportTr'>
+                                    <td colspan="6" onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="r" items="${list}">
+                                    <tr class='reportTr'>
+                                        <td class='rpno' name='rpno'>${r.reportNo}</td>
+                                        <td>${r.reportedMemNo}</td>
+                                        <td>${r.reportType}</td>
+                                        <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.reportContent}</td>
+                                        <td>${r.reportDate}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${r.reportStatus eq 'Y'}">
+                                                    승인
+                                                </c:when>
+                                                <c:when test="${r.reportStatus eq 'N'}">
+                                                    미처리
+                                                </c:when>
+                                                <c:when test="${r.reportStatus eq 'D'}">
+                                                    반려
+                                                </c:when>
+                                            </c:choose>
+                                        </td> 
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
                 <br>
@@ -219,24 +221,30 @@
                 <div class="btnPage" align="center">
                     <ul class="pagination">
                         <c:choose>
-                            <c:when test="${pi.currentPage eq 1}">
-                                <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                            <c:when test="${list.size() eq 0}">
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item no-page-prev"><a class="page-link" href="searchR.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&lt;</a></li>
-                            </c:otherwise>
-                        </c:choose>
-    
-                        <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                            <li class="page-item page-btn"><a id="" class="page-link" href="searchR.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
-                        </c:forEach>
-    
-                        <c:choose>
-                            <c:when test="${pi.currentPage eq pi.maxPage}">
-                                <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                            </c:when>
-                            <c:otherwise>
-                                <li class="page-item no-page-next"><a class="page-link" href="searchR.ad?currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&gt;</a></li>
+                                <c:choose>
+                                    <c:when test="${pi.currentPage eq 1}">
+                                        <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item no-page-prev"><a class="page-link" href="searchR.ad?currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&lt;</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+            
+                                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                                    <li class="page-item page-btn"><a id="" class="page-link" href="searchR.ad?currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
+                                </c:forEach>
+            
+                                <c:choose>
+                                    <c:when test="${pi.currentPage eq pi.maxPage}">
+                                        <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item no-page-next"><a class="page-link" href="searchR.ad?currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&gt;</a></li>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:otherwise>
                         </c:choose>
                     </ul>
@@ -250,11 +258,25 @@
         $(function() {
             
             $(".reportList tbody").on("click", ".reportTr", function() {
-            	
-            	location.href = "rdetail.ad?rpno=" + $(this).children(".rpno").eq(0).text();
+                
+                location.href = "rdetail.ad?rpno=" + $(this).children(".rpno").eq(0).text();
             });
         });
     </script>
+
+    <script>
+        $(function() {
+            $(".page-link").each(function() {
+                if ($(this).text() ==${ pi.currentPage}) {
+                    $(this).attr("id", "active-page");
+                    $(this).parent().addClass("disabled");
+                } else {
+                    $(this).removeAttr("id", "active-page");
+                }
+            });
+        });
+    </script>
+
 
 </body>
 </html>

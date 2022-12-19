@@ -218,7 +218,7 @@
                     <table id="mem_detail"> 
                         <tr>
                             <th>아이디</th>
-                            <td colspan="2">${ m.memId }</td>
+                            <td colspan="2" id="hostId">${ m.memId }</td>
                         </tr>
                         <tr>
                             <th>이름</th>
@@ -262,11 +262,11 @@
                                 </tr>
                                 <tr>
                                     <th>운영공간</th> 
-                                    <td class="space">
+                                    <!-- <td class="space">
                                         <div class="space"><a href="#" class="space">운영공간이름 1</a></div> 
-                                        <div class="space"><a href="#" class="space">운영공간이름 2</a></div>
-                                    </td>
-                                    <td align="right"><a href="" class="showmore">더보기</a></td>
+                                        <div class="space"><a href="#" class="space">운영공간이름 2</a></div> 
+                                    </td>-->
+                                    <td align="left" colspan="2"><a href="#" onclick="memSpaceList();" class="showmore">더보기</a></td>
                                 </tr>
                                 <!-- ===================================== 호스트만 보이기 ===================================== -->
                             </c:when>
@@ -279,6 +279,16 @@
             </div>
         </div>
     </div>
+    
+    <!-- 호스트멤버 등록한 공간 검색 결과 리스트 페이지로 이동 -->
+    <script>
+    	function memSpaceList() {
+    		
+    		var memId = $("#hostId").text();
+        	// console.log(memId);
+    		location.href = "searchSp.ad?currentPage=1&condition=hostId&keyword=" + memId;
+    	}
+    </script>
 
     <!-- 연락처 수정 모달창 -->
     <div class="modal fade" id="editPhone">

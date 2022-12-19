@@ -275,6 +275,19 @@
             });
         });
     </script>
+
+    <script>
+        $(function() {
+            $(".page-link").each(function() {
+                if ($(this).text() ==${ pi.currentPage}) {
+                    $(this).attr("id", "active-page");
+                    $(this).parent().addClass("disabled");
+                } else {
+                    $(this).removeAttr("id", "active-page");
+                }
+            });
+        });
+    </script>
     
     <!-- 리스트 불러오기... -->
     <script>
