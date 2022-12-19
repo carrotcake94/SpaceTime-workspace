@@ -292,30 +292,22 @@ public class SpaceController {
 	// 지도 범위에 포함된 장소 조회 -성훈
 	@ResponseBody
 	@RequestMapping(value = "selectSpace.mp", produces = "application/json; charset=UTF-8")
-	public String selecListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage, double max_lat,
-			double max_lng, double min_lat, double min_lng) {
+	public String selecListForMap(double max_lat, double max_lng, double min_lat, double min_lng) {
 
 		HashMap<String, Double> map = new HashMap<>();
 		map.put("max_lat", max_lat);
 		map.put("max_lng", max_lng);
 		map.put("min_lat", min_lat);
 		map.put("min_lng", min_lng);
-		// System.out.println(map);
-		int listCount = spaceService.selectListCountForMap(map);
-		int pageLimit = 3;
-		int boardLimit = 10;
 
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-
-		ArrayList<Space> listArr = spaceService.selectListForMap(map, pi);
+		ArrayList<Space> listArr = spaceService.selectListForMap(map);
 		return new Gson().toJson(listArr);
 	}
 
-	// 지도 필터링 -성훈
+	// 지도 필터링(지역설정O) -성훈
 	@ResponseBody
 	@RequestMapping(value = "mapFilter.mp", produces = "application/json; charset=UTF-8")
-	public String filterListForMap(@RequestParam(value = "mpage", defaultValue = "1") int currentPage,
-			HttpServletRequest request, String min_price, String max_price) {
+	public String filterListForMap(HttpServletRequest request, String min_price, String max_price) {
 		String[] category = request.getParameterValues("category[]");
 		ArrayList<String> categoryArr = new ArrayList<>();
 		for (int i = 0; i < category.length; i++) {
@@ -333,17 +325,38 @@ public class SpaceController {
 		condition.put("category", categoryArr);
 		condition.put("min_price", min_price);
 		condition.put("max_price", max_price);
-
-		int listCount = spaceService.filterListCountForMap(condition);
-		int pageLimit = 3;
-		int boardLimit = 10;
-
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-
-		ArrayList<Space> listArr = spaceService.filterListForMap(condition, pi);
+		ArrayList<Space> listArr = spaceService.filterListForMap(condition);
 
 		return new Gson().toJson(listArr);
 	}
+	
+	// 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈
+		@ResponseBody
+		@RequestMapping(value = "mapFilterOnCurrentMap.mp", produces = "application/json; charset=UTF-8")
+		public String mapFilterOnCurrentMap(double max_lat, double max_lng, double min_lat, double min_lng,
+				HttpServletRequest request, String min_price, String max_price) {
+			String[] category = request.getParameterValues("category[]");
+			ArrayList<String> categoryArr = new ArrayList<>();
+			for (int i = 0; i < category.length; i++) {
+				categoryArr.add(category[i]);
+			}
+
+			HashMap<String, Double> bound = new HashMap<>();
+			bound.put("max_lat", max_lat);
+			bound.put("max_lng", max_lng);
+			bound.put("min_lat", min_lat);
+			bound.put("min_lng", min_lng);
+
+			HashMap<String, Object> condition = new HashMap<>();
+			condition.put("bound", bound);
+			condition.put("category", categoryArr);
+			condition.put("min_price", min_price);
+			condition.put("max_price", max_price);
+
+			ArrayList<Space> listArr = spaceService.mapFilterOnCurrentMap(condition);
+
+			return new Gson().toJson(listArr);
+		}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
 	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니여도 된다!!

@@ -2,21 +2,23 @@
  *
  */
 var words = [];
+var pureWords = [];
  
 //검색어 자동완성기능
 function autoComplete(input) {
-	console.log("그냥");
 	$.ajax({
 		url: "autoComplete.co",
 		type : "get",
 		data : { keyword : input },
 		async : false,
 		success : (keywords) => {
-			words = keywords.split(",");
-			console.log("ajax성공");
+			pureWords = keywords.split(",");
+			
+			//중복제거
+			var set = new Set(pureWords);
+			words = [...set];
 		},
 		error : () => {
-			console.log("ajax실패");
 		}
 	});
 }
@@ -24,7 +26,6 @@ function autoComplete(input) {
 //해시태그 자동완성기능
 function hashtagAutoComplete(input){
 	var keyword = input.replace('#', '');
-	console.log(keyword);
 		$.ajax({
 		url: "hashtagAutoComplete.co",
 		type : "get",
@@ -35,16 +36,20 @@ function hashtagAutoComplete(input){
 			//가능하다면 DB에서 포함 여부까지 선별 후 호출하는 것이 최선
 			
 			//하나의 String으로 이루어진 해시태그 자르기
-			words = keywords.split(",");
+			pureWords = keywords.split(",");
 			
 			//콜백함수를 이용하여 검색어가 포함되지 않은 항목 제거
-			words.forEach(() => {
-				for(var i in words){
-					if(!words[i].includes(keyword)){
-						words.splice(i, 1);
+			pureWords.forEach(() => {
+				for(var i in pureWords){
+					if(!pureWords[i].includes(keyword)){
+						pureWords.splice(i, 1);
 					}
 				}
 			});
+			
+			// 중복제거
+			var set = new Set(pureWords);
+			words = [...set];
 		},
 		error : () => {
 		}
@@ -72,4 +77,6 @@ function autoCompleteListShowUp(words, input){
 		//생성된 각 div를 #autoCompleteList의 자식으로 추가
 		autoCompleteList.append(autoCompleteContent);
 	}
+	
+	
 }

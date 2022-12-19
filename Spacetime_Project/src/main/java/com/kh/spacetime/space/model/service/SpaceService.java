@@ -64,17 +64,14 @@ public interface SpaceService {
 	/******************************* 정현 **/
 
 	/****** 성훈 *********************************************/
-	// 지도에 표시될 공간 갯수 조회 -성훈
-	int selectListCountForMap(HashMap<String, Double> map);
-
 	// 지도 공간 리스트 -성훈
-	ArrayList<Space> selectListForMap(HashMap<String, Double> map, PageInfo pi);
-
-	// 지도 필터링 공간 갯수 조회 -성훈
-	int filterListCountForMap(HashMap<String, Object> condition);
+	ArrayList<Space> selectListForMap(HashMap<String, Double> map);
 
 	// 지도 필터링 공간 리스트 -성훈
-	ArrayList<Space> filterListForMap(HashMap<String, Object> condition, PageInfo pi);
+	ArrayList<Space> filterListForMap(HashMap<String, Object> condition);
+	
+	// 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈
+	ArrayList<Space> mapFilterOnCurrentMap(HashMap<String, Object> condition);
 
 	/*****************************************************/
 

@@ -115,33 +115,19 @@ public class SpaceDao {
 	/*****************************************************/
 
 	/******** 성훈 *****************************************/
-	// 지도에 표시될 공간 갯수 조회 -성훈
-	public int selectListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map) {
-		return sqlSession.selectOne("spaceMapper.selectListCountForMap", map);
-	}
-
 	// 지도 공간 리스트 -성훈
-	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map, PageInfo pi) {
-		int limit = pi.getBoardLimit();
-		int offset = (pi.getCurrentPage() - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-
-		return (ArrayList) sqlSession.selectList("spaceMapper.selectListForMap", map, rowBounds);
+	public ArrayList<Space> selectListForMap(SqlSessionTemplate sqlSession, HashMap<String, Double> map) {
+		return (ArrayList) sqlSession.selectList("spaceMapper.selectListForMap", map);
 	}
 
-	// 지도 필터링 공간 갯수 조회 -성훈
-	public int filterListCountForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> condition) {
-		return sqlSession.selectOne("spaceMapper.filterListCountForMap", condition);
+	// 지도 필터링 공간 리스트(지역설정O) -성훈
+	public ArrayList<Space> filterListForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> condition) {
+		return (ArrayList) sqlSession.selectList("spaceMapper.filterListForMap", condition);
 	}
-
-	// 지도 필터링 공간 리스트 -성훈
-	public ArrayList<Space> filterListForMap(SqlSessionTemplate sqlSession, HashMap<String, Object> condition,
-			PageInfo pi) {
-		int limit = pi.getBoardLimit();
-		int offset = (pi.getCurrentPage() - 1) * limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-
-		return (ArrayList) sqlSession.selectList("spaceMapper.filterListForMap", condition, rowBounds);
+	
+	// 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈
+	public ArrayList<Space> mapFilterOnCurrentMap(SqlSessionTemplate sqlSession, HashMap<String, Object> condition){
+		return (ArrayList)sqlSession.selectList("spaceMapper.mapFilterOnCurrentMap", condition);
 	}
 
 	/*****************************************************/

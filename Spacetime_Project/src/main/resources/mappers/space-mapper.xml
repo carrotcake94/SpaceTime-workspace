@@ -337,7 +337,7 @@
 		   		</foreach>)
 	</select>
 	
-	<!-- 지도 필터링된 공간 리스트 -성훈 -->
+	<!-- 지도 필터링된 공간 리스트(지역설정O) -성훈 -->
 	<select id="filterListForMap" parameterType="hashmap" resultMap="spaceResultSet">
 		SELECT SPACE_NO, 
 			   SPACE_TITLE, 
@@ -355,6 +355,25 @@
 		   AND (<foreach collection="area" item="area" separator="OR">
 		   			ADDRESS_DEFAULT LIKE '%' || #{area} || '%'
 		   		</foreach>)
+	</select>
+	
+	<!-- 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈 -->
+	<select id="mapFilterOnCurrentMap" parameterType="hashmap" resultMap="spaceResultSet">
+		SELECT SPACE_NO, 
+			   SPACE_TITLE, 
+		       HOUR_PRICE, 
+			   HASHTAG, 
+			   LATITUDE, 
+			   LONGITUDE, 
+			   ATTACHMENT_RENAME
+          FROM SPACE 
+     LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+         WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
+           AND LATITUDE BETWEEN #{bound.min_lat} AND #{bound.max_lat}
+	       AND LONGITUDE BETWEEN #{bound.min_lng} AND #{bound.max_lng}
+           AND STYPE_NO IN (<foreach collection="category" item="category" separator=",">
+					           	#{category}
+							</foreach>)
 	</select>
 	
 	<!-- 하연 -->

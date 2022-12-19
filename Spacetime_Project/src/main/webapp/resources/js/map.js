@@ -12,6 +12,7 @@ function selectList(map) {
 		},
 		success : (listArr) => {
 			spaceListArr = listArr;
+			console.log(listArr);
 		},
 		error : () => {
 		}
@@ -182,6 +183,45 @@ function filterMap() {
 			max_price : document.querySelector("#max_price").value
 		},
 		success : (listArr) => {
+		
+			spaceListArr = listArr;
+		},
+		error : () => {
+		}
+	});
+}
+
+function mapFilterOnCurrentMap(map){
+	//카테고리
+	var category = document.querySelectorAll("input[type=checkbox]");
+	var checkedCategory = [];
+	for(var i in category){
+		if(category[i].checked == true){
+			checkedCategory.push(category[i].value);
+		}
+	}
+	
+	if(checkedCategory.length == 0){
+		for(var i = 0; i < 10; i++){
+		checkedCategory.push(i);
+		}
+	}
+	
+	$.ajax({
+		url: "mapFilterOnCurrentMap.mp",
+		type: "get",
+		async: false,
+		data : {
+			max_lat : map.getBounds()._max._lat,
+			max_lng : map.getBounds()._max._lng,
+			min_lat : map.getBounds()._min._lat,
+			min_lng : map.getBounds()._min._lng,
+			category : checkedCategory,
+			min_price : document.querySelector("#min_price").value,
+			max_price : document.querySelector("#max_price").value
+		},
+		success : (listArr) => {
+			console.log(listArr);
 			spaceListArr = listArr;
 		},
 		error : () => {

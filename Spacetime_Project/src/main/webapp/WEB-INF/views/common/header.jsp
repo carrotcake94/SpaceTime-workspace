@@ -520,7 +520,7 @@
 			padding-right: 15px;
 		}
 		
-		#autoComplete {
+    		#autoComplete {
 			display: none;
 			border : 1px solid lightgrey;
 			border-radius : 15px;
@@ -606,15 +606,18 @@
 				autoCompleteBox.style.display = "block";
 			}
 			
+			var inputValue = searchInput.value;
+			
 			//"#"입력여부 확인하여 해시태그자동완성-일반자동완성 변환
-			if(searchInput.value.startsWith("#") == true){
+			if(inputValue.startsWith("#") == true){
 				hashtagAutoComplete(searchInput.value);
-				autoCompleteListShowUp(words, searchInput.value);
+				autoCompleteListShowUp(words, inputValue);
 			} else {
 				autoComplete(searchInput.value);
-				autoCompleteListShowUp(words, searchInput.value);
+				autoCompleteListShowUp(words, inputValue);
 			}
 			
+			//외부클릭시 자동완성창 소멸
 			window.addEventListener("click", (e) => {
 				if(e.target != autoCompleteBox){
 					autoCompleteBox.style.display = "none";

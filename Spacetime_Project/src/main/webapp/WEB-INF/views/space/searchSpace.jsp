@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
-	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script>
+	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nrd3zj6gm7"></script>
 	<script src="resources/js/map.js"></script>
 </head>
 <body>
@@ -37,7 +37,7 @@
 							<div class="mapFilter_option_title">지역</div>
 							<div>
 								<select class="mapFilter_options" id="mapFilter_area"name="area">
-									<option value="서울">서울 전체</option>
+									<option value="now">현재 지도 위치</option>
 									<option>강서구,양천구,구로구,영등포구</option>
 									<option>금천구,동작구,관악구,서초구</option>
 									<option>강남구,송파구,광진구,강동구</option>
@@ -97,8 +97,9 @@
 					var spaceListArr = [];
 					var markers = [];
 					var mapOptions = {
-						center: new naver.maps.LatLng(37.539861, 126.990815),
-				        zoom: 12	
+						//center: new naver.maps.LatLng(37.539861, 126.990815),
+						center: new naver.maps.LatLng(37.533937, 126.897133),
+				        zoom: 14
 					};
 					var map = new naver.maps.Map('map', mapOptions);
 					var HOME_PATH = window.HOME_PATH || '.';
@@ -144,11 +145,30 @@
 					};
 					
 					filterSearch.onclick = () => {
-						filterMap();
+						filter.style.display = "none";
+						if(document.querySelector("#mapFilter_area").value == "now"){
+							mapFilterOnCurrentMap(map);
+						} else {
+							filterMap();
+						}
 						loadList(spaceListArr, picListArr, lineListArr);
 						updateMarkers();
 						linkMarkerWithList(markers, picListArr, lineListArr, map);
 					};
+					
+/* 					//지역
+					var area = document.querySelector("#mapFilter_area");
+					var selectedArea = area.options[area.selectedIndex].value;
+					var areaArr = selectedArea.split(',');
+					
+					//카테고리
+					var category = document.querySelectorAll("input[type=checkbox]");
+					var checkedCategory = [];
+					for(var i in category){
+						if(category[i].checked == true){
+							checkedCategory.push(category[i].value);
+						}
+					} */
 				</script>
 			</div>
 		</div>
