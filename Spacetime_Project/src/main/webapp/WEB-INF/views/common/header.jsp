@@ -671,10 +671,10 @@
                 <c:choose>
                     <c:when test="${loginMember.memNo == 1}">
                         <tr>
-                            <td><a href="slist.ad"><i class="fa-sharp fa-solid fa-list-check"></i></a></td>
+                            <td><a href="schart.ad"><i class="fa-sharp fa-solid fa-list-check"></i></a></td>
                         </tr>
                         <tr>
-                            <td><a href="slist.ad">관리자 페이지로</a></td>
+                            <td><a href="schart.ad">관리자 페이지로</a></td>
                         </tr>
 
                     </c:when>

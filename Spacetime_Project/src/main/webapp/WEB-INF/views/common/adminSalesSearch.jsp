@@ -192,15 +192,13 @@
                                 <td>${r.memId}</td>
                                 <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.spaceTitle}</td>
                                 <td>${r.price}</td>
-                                <td>??????????
-                                    <%-- <c:choose>
-                                        <c:when test="${r.useDate < today">
-                                            정산완료
-                                        </c:when>
-                                        <c:when test="${r.useDate > today">
-                                            미처리
-                                        </c:when>
-                                    </c:choose> --%>
+                                <td>
+                                    <c:if test="${r.useDate} lt ${today}">
+                                        정산완료
+                                    </c:if>
+                                    <c:if test="${r.useDate} gt ${today}">
+                                        미처리
+                                    </c:if>
                                 </td> 
                             </tr>
                         </c:forEach>

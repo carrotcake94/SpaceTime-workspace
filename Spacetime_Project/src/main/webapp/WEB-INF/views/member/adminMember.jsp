@@ -313,9 +313,6 @@
                 data : {tab : tab, cpage : currentPage},
                 success : function(result) { 
                     
-                    /* console.log(result); */
-                    /* console.log(result.pi.listCount); */
-                    
                     var resultStr = "";
                     
                     if(result.list.length != 0) {
@@ -328,13 +325,13 @@
                                             + "<td>" + result.list[i].memId + "</td>"
                                             + "<td>" + result.list[i].nickname + "</td>"
                                             + "<td id='grCode'>";
-	                                            if(result.list[i].grCode == '태양') {
-	                                            	resultStr += "<i class='fa-solid fa-sun' style='color: orange;'></i>";
-	                    						} else if(result.list[i].grCode == '지구') {
-	                    							resultStr += "<i class='fa-solid fa-earth-americas' style='color: green;'></i>";
-	                    						} else
-	                    							resultStr += "<i class='fa-solid fa-moon' style='color: #949494;'></i>";
-	                    						}
+                                            	if(result.list[i].grCode == '태양') {
+                                            		resultStr += "<i class='fa-solid fa-sun' style='color: orange;'></i>";
+                                            	} else if(result.list[i].grCode == '지구') {
+                                            		resultStr += "<i class='fa-solid fa-earth-americas' style='color: green;'></i>";
+                                            	} else if(result.list[i].grCode == '달') {
+                                            		resultStr += "<i class='fa-solid fa-moon' style='color: #949494;'></i>";
+                                            	}
 	                             resultStr += "</td><td>" + result.list[i].enrollDate + "</td>"
                                             + "<td>";
                                                 if(result.list[i].memStatus == 'N') {

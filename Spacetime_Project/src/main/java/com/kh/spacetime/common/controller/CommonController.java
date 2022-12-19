@@ -1,9 +1,10 @@
 package com.kh.spacetime.common.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -16,14 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.kh.spacetime.common.model.service.CommonService;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
-import com.kh.spacetime.space.model.vo.Review;
 
 @Controller
 public class CommonController {
@@ -357,6 +356,13 @@ public class CommonController {
 	@RequestMapping("searchS.ad")
 	public String selectSalesSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword, String month) {
 		
+		LocalDate now = LocalDate.now();
+		
+		int year = now.getYear();
+		int Month = now.getMonthValue();
+		String thisMonth = year + "-" + Month;
+		System.out.println(thisMonth);
+		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
@@ -378,11 +384,24 @@ public class CommonController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("month", month);
+		model.addAttribute("today", thisMonth);
 		
-		System.out.println(pi);
-		System.out.println(list);
+		System.out.println("model" + model);
+		
+		// System.out.println(pi);
+		// System.out.println(list);
 		
 		return "common/adminSalesSearch";
+	}
+	
+	/**
+	 * 관리자 매출 통계 페이지로 포워딩하는 메소드 - 혜민 
+	 * @return
+	 */
+	@RequestMapping(value="schart.ad") 
+	public String selectSalesChart() {
+		
+		return "common/adminSalesChart";
 	}
 	
 	

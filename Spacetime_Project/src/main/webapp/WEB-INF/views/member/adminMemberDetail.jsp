@@ -57,7 +57,7 @@
 
     /* 회원등급.. 일단 border 줘서 구분해줬는데.. 어떻게 할지... */
     #memGrade { 
-        border: 2px solid orange;
+        /* border: 2px solid orange; */
         border-radius: 5px;
         padding: 5px;
     }
