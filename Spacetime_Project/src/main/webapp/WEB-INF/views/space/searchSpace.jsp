@@ -26,7 +26,6 @@
 							class="listOption_listStyle listOption_options">
 							<img src="resources/images/space/picStyle.png">
 						</div>
-						<div id="changeMap">click</div>
 						<div id="listOption_filter" class="listOption_options">
 							<img src="resources/images/space/filter.png">
 						</div>
@@ -36,7 +35,7 @@
 						<div>
 							<div class="mapFilter_option_title">지역</div>
 							<div>
-								<select class="mapFilter_options" id="mapFilter_area"name="area">
+								<select class="mapFilter_options" id="mapFilter_area" name="area">
 									<option value="now">현재 지도 위치</option>
 									<option>강서구,양천구,구로구,영등포구</option>
 									<option>금천구,동작구,관악구,서초구</option>
@@ -54,10 +53,10 @@
 								<input type="checkbox" name="category" value="1">파티룸 
 								<input type="checkbox" name="category" value="2">카페 
 								<input type="checkbox" name="category" value="3">공연장
-								<input type="checkbox" name="category" value="4">연습실
-								<input type="checkbox" name="category" value="5">공유주방<br>
+								<input type="checkbox" name="category" value="4">연습실<br>
+								<input type="checkbox" name="category" value="5">공유주방
 								<input type="checkbox" name="category" value="6">갤러리 
-								<input type="checkbox" name="category" value="7">운동시설 
+								<input type="checkbox" name="category" value="7">운동시설<br>
 								<input type="checkbox" name="category" value="8">스터디룸
 								<input type="checkbox" name="category" value="9">회의실 
 								<input type="checkbox" name="category" value="10">촬영스튜디오
@@ -71,13 +70,9 @@
 							</div>
 						</div>
 						<div id="mapFilter_btns">
-							<button type="reset" class="mapFilter_btn">초기화</button>
-							<button class="mapFilter_btn" id="mapFilter_search">검색</button>
+							<button id="mapFilter_search">검색</button>
 						</div>
 					</div>
-					
-					<script>
-					</script>
 					
 					<!-- 사진형 리스트 -->
 					<div id="picList">
@@ -90,6 +85,7 @@
 				</div>
 				<!-- 지도 -->
 				<div id="map">
+					<div id="changeMap">현재지도 내 검색</div>
 				</div>
 				
 				<script>
