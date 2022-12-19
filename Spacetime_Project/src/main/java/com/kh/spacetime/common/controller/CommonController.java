@@ -1,9 +1,7 @@
 package com.kh.spacetime.common.controller;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.spacetime.common.model.service.CommonService;
 import com.kh.spacetime.common.model.vo.Chatting;
 import com.kh.spacetime.common.model.vo.PageInfo;
@@ -92,8 +91,7 @@ public class CommonController {
 		}
 
 		JSONObject jObj = new JSONObject();
-		jObj.put("listCount", pi.getListCount());
-		jObj.put("currentPage", pi.getCurrentPage());
+		jObj.put("listCount", pi.getListCount());		jObj.put("currentPage", pi.getCurrentPage());
 		jObj.put("pageLimit", pi.getPageLimit());
 		jObj.put("boardLimit", pi.getBoardLimit());
 		jObj.put("maxPage", pi.getMaxPage());
@@ -293,7 +291,6 @@ public class CommonController {
 
 		return mv;
 	}
-<<<<<<< Updated upstream
 	
 	/**
 	 * 관리자 매출 월별 조회 - 혜민 
@@ -303,9 +300,6 @@ public class CommonController {
 	 * @param month
 	 * @return
 	 */
-=======
-
->>>>>>> Stashed changes
 	@ResponseBody
 	@RequestMapping(value = "ajaxsdlist.ad", produces = "application/json; charset=UTF-8")
 	public String ajaxSalesDetailList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, Model model,
@@ -361,7 +355,6 @@ public class CommonController {
 
 		return json.toJSONString();
 	}
-<<<<<<< Updated upstream
 	
 	/**
 	 * 관리자 매출 검색 - 혜민
@@ -424,9 +417,6 @@ public class CommonController {
 	}
 	
 	
-=======
-
->>>>>>> Stashed changes
 	/**
 	 * 헤더에서 서비스정보 페이지 이동 - 하연
 	 */
@@ -447,20 +437,12 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value = "autoComplete.co", produces = "text/html; charset=UTF-8")
 	public String autoComplete(String keyword) {
-<<<<<<< Updated upstream
 		String keywords = commonService.autoComplete(keyword);
 		
 		return keywords;
 	}
-	
-	
-=======
-		ArrayList<String> keywords = commonService.autoComplete(keyword);
 
-		return new Gson().toJson(keywords);
-	}
 
->>>>>>> Stashed changes
 	/**
 	 * 
 	 * @param keyword
@@ -473,13 +455,10 @@ public class CommonController {
 	@RequestMapping(value = "hashtagAutoComplete.co", produces = "text/html; charset=UTF-8")
 	public String hashtagAutoComplete(String keyword) {
 		String keywords = commonService.hashtagAutoComplete(keyword);
-<<<<<<< Updated upstream
 		
-=======
 		String[] keywordArr = keywords.split(",");
 		System.out.println(keywordArr);
 
->>>>>>> Stashed changes
 		return keywords;
 	}
 
@@ -605,9 +584,9 @@ public class CommonController {
 	 * @author 정현 챗 인서트
 	 */
 	@ResponseBody
-	@RequestMapping(value = "detailChat.me", produces = "application/json; charset=UTF-8")
+	@RequestMapping(value = "insertChat.me", produces = "application/json; charset=UTF-8")
 	public String insertChat(Chatting c, HttpSession session) {
-		int result = commonService.insertChat(c);
+		commonService.insertChat(c);
 
 		return new Gson().toJson(c);
 	}

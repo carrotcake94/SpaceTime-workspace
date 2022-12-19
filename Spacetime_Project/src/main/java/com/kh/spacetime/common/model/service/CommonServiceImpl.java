@@ -99,7 +99,6 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.selectSalesDetailList(sqlSession, pi, map);
 	}
 
-<<<<<<< Updated upstream
 	// 매출 검색 글 개수 
 	@Override
 	public int selectSalesSearchListCount(HashMap<String, String> map) {
@@ -118,12 +117,6 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public String autoComplete(String keyword) {
 		
-=======
-	// 검색어 자동완성 -성훈
-	@Override
-	public ArrayList<String> autoComplete(String keyword) {
-
->>>>>>> Stashed changes
 		return commonDao.autoComplete(sqlSession, keyword);
 	}
 
