@@ -574,10 +574,11 @@
                 <li><a href="list.ne">뉴스레터</a></li>
                 <li><a onclick="openServieInfo()" style="cursor:pointer;">서비스정보</a>
 	                <ul class="service-info-ul">
-	                <li><a href="#">이용약관</a></li>
-	                <li><a href="#">개인정보처리방침</a></li>
-	                <li><a href="#">운영정책</a></li>
-	                <li><a href="report.co">신고함</a></li>
+                        <li><a href="introduction.co">서비스 소개</a></li>
+                        <li><a href="userAgreement.co">이용약관</a></li>
+                        <li><a href="privacyPolicy.co">개인정보처리방침</a></li>
+                        <li><a href="managementPolicy.co">운영정책</a></li>
+                        <li><a href="report.co">신고함</a></li>
 	                </ul>
                 </li>
             </ul>
