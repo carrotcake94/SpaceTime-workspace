@@ -234,7 +234,7 @@
                         </tr> 
                         <tr>
                             <th>비밀번호</th> 
-                            <td colspan="2"><a class="changePwd" data-toggle="modal" data-target="#editPwd">변경하기</a></td>
+                            <td colspan="2"><a class="changePwd" data-toggle="modal" data-target="#editPwd">초기화하기</a></td>
                         </tr> 
                         <c:choose>
                             <c:when test="${ m.hostStatus eq 'Y' }">
@@ -320,7 +320,7 @@
         </div>
     </div>
 
-    <!-- 비밀번호 수정 모달창 -->
+    <!-- 비밀번호 초기화 모달창 -->
     <div class="modal fade" id="editPwd">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -332,87 +332,19 @@
                 </div>
                 
                 <!-- Modal body -->
-                <form action="updateMem.ad" method="post">
+                <form action="updateTempPwd.ad" method="post">
                     <div class="modal-body">
                         <table>
-                            <tr>
+                            <tr style="width: 500px;">
                             	<input type="hidden" name="memId" value="${m.memId}">
                             	<input type="hidden" name="memNo" value="${m.memNo}">
-                                <th style="width:40%;">현재 비밀번호</th>
+                                <th style="width:30%;">이메일 주소</th>
                                 <td>
-                                    <input type="password" id="checkPwd" name="checkPwd" class="form-control mb-2" required>
-                                    <span class="error_next_box" id="pwdMsg">비밀번호가 일치하지 않습니다. 다시 확인해주세요.</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>새 비밀번호</th>
-                                <td><input id="memPwd" name="memPwd" type="password" class="form-control mb-2" required></td>
-                            </tr>
-                            <tr>
-                                <th>새 비밀번호 확인</th>
-                                <td><input id="pwOk" type="password" class="form-control mb-2" required>
-                                    <span class="error_next_box" id="pswd2Msg">비밀번호가 일치하지 않습니다.</span>
+                                    <input type="email" id="" name="email" class="form-control mb-2" style="width:300px;" required>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <script>
-                    
-                        $(function() { 
-                            $("#checkPwd").keyup(function() {
-                                // 현재 비밀번호 확인
-                                // 최소 8글자 이상으로 비밀번호값이 입력되어 있을 때만 ajax 요청
-                                if($("#checkPwd").val().length >= 8) {
-
-                                    $.ajax({
-                                        url : "pwdCheck.me",
-                                        data : {checkPwd : $("#checkPwd").val()},
-                                        success : function(result) {
-                                            
-                                            // console.log(result);
-                                            
-                                            if(result == "NNNNN") { // 사용 불가능
-                                                
-                                                // 빨간색 메세지 출력
-                                                $("#pwdMsg").show();
-                                                
-                                                // 버튼 비활성화
-                                                $("#pwdChange").attr("disabled", true);
-                                                
-                                            } else { // 사용 가능
-                                                // 버튼 활성화
-                                                $("#pwdMsg").hide();
-                                                $("#pwdChange").attr("disabled", false);
-                                            }
-                                            
-                                        },
-                                        error : function() {
-                                            console.log("비밀번호 확인용 ajax 통신 실패!");
-                                        }
-                                    });
-                                } else { // 8글자 미만일 때 => 버튼 비활성화, 메세지 내용 숨기기
-
-                                $("#pwdMsg").hide();
-                                $("#pwdChange").attr("disabled", false);
-                                }
-                            });
-                        
-                        $("#pwOk").keyup(function() {
-                            // 비밀번호 유효성 검사
-                            let pwOk = $("#pwOk").val();
-                            if($("#memPwd").val() != (pwOk)) {
-                                $("#pswd2Msg").css("display", "block");
-                                // $("#memPwd").select(); // 비밀번호부터 재입력 유도
-                                $("#pwdChange").attr("disabled", true);
-                                return false;
-                            } else {
-                                $("#pswd2Msg").css("display", "none");
-                                $("#pwdChange").attr("disabled", false);
-                                return true;
-                            }
-                        });
-                    });
-                    </script>
                     
                     <!-- Modal footer -->
                     <div class="modal-footer">

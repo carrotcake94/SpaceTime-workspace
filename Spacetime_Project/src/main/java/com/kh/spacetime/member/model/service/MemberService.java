@@ -57,5 +57,5 @@ public interface MemberService {
 	// 회원 검색 리스트 조회 
 	ArrayList<Member> selectMemberSearchList(PageInfo pi, HashMap<String, String> map);
 	
-	
+
 }

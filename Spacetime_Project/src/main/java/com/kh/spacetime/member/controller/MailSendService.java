@@ -10,12 +10,18 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 
+import com.kh.spacetime.member.model.service.MemberService;
+import com.kh.spacetime.member.model.service.MemberServiceImpl;
+import com.kh.spacetime.member.controller.MemberController;
+
 @Controller
 public class MailSendService {
 	
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 	private int authNumber; // 난수 발생
+	private String authString; // 비밀번호 초기화 임시 비번 생성 
+	private MemberController memberController;
 	
 	/**
 	* 난수를 발생시키는 메소드 - 경미
@@ -105,7 +111,8 @@ public class MailSendService {
 
 	// 비밀번호 초기화 임시 비밀번호 메일 보내기 
 	public String adminTempPwdEmail(String email) {
-		makeAdminRandom();
+		
+		String authString = makeAdminRandom();
 		
 		String setFrom = "final221223@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 		String toMail = email;
@@ -117,6 +124,8 @@ public class MailSendService {
 				"<br>" + 
 				"해당 임시 비밀번호로 로그인 후 비밀번호를 변경해주세요."; //이메일 내용 삽입
 		mailSend(setFrom, toMail, title, content);
+		
+		// System.out.println("초기화된 비밀번호 : " + authString);
 		
 		return authString;
 	}

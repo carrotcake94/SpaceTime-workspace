@@ -152,6 +152,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectMemberSearchList(sqlSession, pi, map);
 	}
 
+
 		
 
 }

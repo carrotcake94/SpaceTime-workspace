@@ -507,9 +507,9 @@ public class MemberController {
 	@RequestMapping("mdetail.ad")
 	public ModelAndView selectMember(int mno, ModelAndView mv) {
 		
-		Member loginMember = memberService.selectMember(mno);
+		Member m = memberService.selectMember(mno);
 		
-		mv.addObject("loginMember", loginMember).setViewName("member/adminMemberDetail");
+		mv.addObject("m", m).setViewName("member/adminMemberDetail");
 		
 		return mv;
 	}
@@ -631,6 +631,36 @@ public class MemberController {
 		if(result > 0) { // 성공
 			
 			session.setAttribute("alertMsg", "성공적으로 회원정보가 변경되었습니다.");
+			
+			return "redirect:/mdetail.ad?mno=" + m.getMemNo();
+		}
+		else { // 실패 => 에러문구를 담아서 에러페이지로 포워딩
+			
+			model.addAttribute("errorMsg", "회원정보 변경 실패");
+			
+			return "common/errorPage";
+		}
+	}
+	
+	/**
+	 * 비민번호 초기화 메일 발송 - 혜민 
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping(value="updateTempPwd.ad", produces="text/html; charset=UTF-8")
+	public String updateTempPwdEmail(String email, Member m, HttpSession session, Model model) {
+		
+		String authString = mailService.adminTempPwdEmail(email);
+		// System.out.println("memberController 비밀번호 초기화 : " + authString);
+		
+		// 암호화 
+		m.setMemPwd(bcryptPasswordEncoder.encode(authString));
+		
+		int result = memberService.changePwd(m);
+		
+		if(result > 0) { // 성공
+			
+			session.setAttribute("alertMsg", "성공적으로 비밀번호가 초기화 되었습니다.");
 			
 			return "redirect:/mdetail.ad?mno=" + m.getMemNo();
 		}

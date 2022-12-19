@@ -153,18 +153,6 @@ public class MemberDao {
 	}
 	
 	/**
-	 * 호스트 신청 - 희섭 
-	 * @param sqlSession
-	 * @param 
-	 * @return
-	 */
-	public int inserthostRequest(SqlSessionTemplate sqlSession, Member m) {
-		return sqlSession.update("memberMapper.inserthostRequest", m);
-	}
-	
-
-	
-	/**
 	 * 회원 검색 개수 조회 - 혜민 
 	 * @param sqlSession
 	 * @param map
@@ -191,4 +179,16 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberSearchList", map, rowBounds);
 	}
+	
+	/**
+	 * 호스트 신청 - 희섭 
+	 * @param sqlSession
+	 * @param 
+	 * @return
+	 */
+	public int inserthostRequest(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.inserthostRequest", m);
+	}
+	
+
 }
