@@ -59,7 +59,7 @@
 
       /* 채팅방 모달 */
       #chattingModal .modal-content {
-        width: 550px;
+        width: 450px;
         margin: auto;
         border: none;
         border-radius: 10px;
@@ -77,7 +77,7 @@
       }
 
       #chattingModal .modal-body {
-        height : 400px;
+        height : 600px;
         padding: 15px 20px;
         background-color: #FBFACD;
         overflow: auto;
@@ -100,12 +100,12 @@
       height: 50px;
       border: 1px solid lightgray;
       outline: none;
-      padding: 10px;
+      padding: 5px 10px;
       resize: none;
       color: rgb(54, 54, 54);
       margin-right: 2%;
-      font-size: 14px;
-                  border-radius: 5px;
+      font-size: 12px;
+      border-radius: 5px;
       
 	  
 	  }
@@ -157,7 +157,7 @@
 	  #chattingModal .sender .srealcontent {
 		float:left;
 	  	border-radius: 5px;
-	  	padding:2px 5px;
+	  	padding:4px 5px;
 	  	background-color: white;
 	  	border:1px solid gray;
 	  	max-width: 75%;
@@ -165,6 +165,7 @@
 	  	position : relative;
 	  	font-size: 15px;
         font-weight: 500;
+        white-space:pre;
 	  }
 	  
 	  #chattingModal .sender .sdate {
@@ -185,7 +186,7 @@
 	  #chattingModal .receiver .rrealcontent {
 		float:right;
 	  	border-radius: 5px;
-	  	padding:2px 5px;
+	  	padding:4px 5px;
 	  	background-color: white;
 	  	border:1px solid gray;
 	  	max-width: 75%;
@@ -193,6 +194,7 @@
 	  	position : relative;
 	  	font-size: 15px;
         font-weight: 500;
+        white-space:pre;
 	  }
 	  
 	  #chattingModal .receiver .rdate {
@@ -203,15 +205,21 @@
         font-weight: 500;
         color: rgb(107, 107, 107);
 	  }
-	  
 	
       /* -------------------------------------- */
 
     </style>
 </head>
 <body>
-	<div class="wrap">		
-	<jsp:include page="../common/hostHeader.jsp" />
+	<div class="wrap">
+	<c:choose>
+	<c:when test="${loginMember.hostStatus eq 'Y' }">
+		<jsp:include page="../common/hostHeader.jsp" />
+	</c:when>
+	<c:otherwise>
+		<jsp:include page="../common/header.jsp" />
+	</c:otherwise>
+	</c:choose>		
 	<div class="main">
 	<div id="reserveList_Host">
       <div>나의 채팅방</div>
@@ -242,7 +250,7 @@
 		      </c:when>
 		      <c:otherwise>
 		         <c:forEach var="r" items="${rList}" >
-		         <tr onclick="chatModalOpen(this)">
+		         <tr id="chatRoom${r.sender}" onclick="chatModalOpen(this)">
 		            <td>
 		            <c:choose>
 		            <c:when test="${empty r.profilePath }">
@@ -257,6 +265,7 @@
 		            <td>${r.message}</td>
 		            <td>${r.messageDate}</td>
 		            <input type="hidden"  value="${r.sender }"> 
+		            <input type="hidden"  value="${r.senderId }"> 
 		          </tr>
 		         </c:forEach>
 		       </c:otherwise>
@@ -280,6 +289,7 @@
           			<textarea name="chatMsg"></textarea>
           			<button type="button" onclick="chatInsert(this)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
           			<input type="hidden" name="sender"  > 
+          			<input type="hidden" name="senderId"  > 
           		</div>
           </div>
         </div>
@@ -295,8 +305,9 @@
     function chatModalOpen(tr) {
 		
 		$("#chattingModal .modal-header").text($(tr).children().eq(1).text());
-		 $("#chattingModal .modal-body").attr("id","chatRoom"+$(tr).children("input").val());
-		 $("#chatFooter input[name=sender]").val($(tr).children("input").val());
+		 $("#chattingModal .modal-body").attr("id","chatView-"+$(tr).children("input").val()+"-${loginMember.memNo}");
+		 $("#chatFooter input[name=sender]").val($(tr).children("input").eq(0).val());
+		 $("#chatFooter input[name=senderId]").val($(tr).children("input").eq(1).val());
 		
 		$.ajax({
 			url : "detailChat.me",
@@ -326,15 +337,18 @@
 					}
 				}
 				$("#chattingModal .modal-body").html(str);
+				$("#chattingModal .modal-body").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
+// 				 setTimeout(() => {
+// 					 $("#chattingModal .modal-body").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
+// 			       }, [100]);
 				
 			},
 			error : () => {
 				console.log("통신 실패");
 			}
-	});
+		});
 		
-       $("#chattingModal").modal("show");
-       $("#chattingModal .modal-body").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
+		 $("#chattingModal").modal("show");
 
     }
 	$(function() {
@@ -349,28 +363,27 @@
 	    });
 	});
 	
-	
 	// 채팅 인서트
 	chatInsert = btn => {
 		var message = $(btn).prev().val();
-		var sender = $(btn).next().val();
-		console.log(message);
-		console.log(sender);
+		var receiver = $(btn).next().val();
+		var receiverId = $(btn).next().next().val();
 		
 		$.ajax({
 			url : "insertChat.me",
 			data : {
 				message : message,
-				sender : sender,
-				receiver : ${loginMember.memNo}
+				sender : ${loginMember.memNo},
+				receiver : receiver
 			},
 			success : result => {
 				var str = "";
 				str+= "<div class='receiver'><div class='rcontent-area'>";
 				str+= "<div class='rrealcontent'>"+result.message+"<div class='rdate'>"+result.messageDate+"</div></div></div></div>";
 				$("#chattingModal .modal-body").append(str);
+				$("#chattingModal .modal-body").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
 				$("#chattingModal textarea[name=chatMsg]").val("");
-				
+				sendMessage("chat", receiverId, result.message, result.messageDate);
 			},
 			error : () => {
 				console.log("통신 실패");

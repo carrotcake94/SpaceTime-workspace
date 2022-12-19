@@ -13,8 +13,11 @@ import lombok.ToString;
 @ToString
 public class Message {
 	private String msgType;
-	private String sender;
-	private String receiver;
-	private String stitle;
+	private String senderNo;
+	private String senderName;
+	private String profilePath;
+	private String receiverId;
 	private String message;
+	private String messageDate;
+	
 }

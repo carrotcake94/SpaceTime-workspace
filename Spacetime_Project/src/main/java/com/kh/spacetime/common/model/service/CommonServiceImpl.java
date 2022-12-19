@@ -99,24 +99,24 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.selectSalesDetailList(sqlSession, pi, map);
 	}
 
-	// 매출 검색 글 개수 
+	// 매출 검색 글 개수
 	@Override
 	public int selectSalesSearchListCount(HashMap<String, String> map) {
-		
+
 		return commonDao.selectSalesSearchListCount(sqlSession, map);
 	}
 
-	// 매출 검색 리스트 조회 
+	// 매출 검색 리스트 조회
 	@Override
 	public ArrayList<Reserve> selectSalesSearchList(PageInfo pi, HashMap<String, String> map) {
-		
+
 		return commonDao.selectSalesSearchList(sqlSession, pi, map);
 	}
 
-	//검색어 자동완성 -성훈 
+	// 검색어 자동완성 -성훈
 	@Override
 	public String autoComplete(String keyword) {
-		
+
 		return commonDao.autoComplete(sqlSession, keyword);
 	}
 
@@ -152,6 +152,7 @@ public class CommonServiceImpl implements CommonService {
 	public ArrayList<Chatting> searchNoteList(HashMap<String, String> map) {
 		return commonDao.searchNoteList(sqlSession, map);
 	}
+
 	// 채팅방 상세뷰
 	@Override
 	public ArrayList<Chatting> selectChatList(Chatting c) {
@@ -161,6 +162,11 @@ public class CommonServiceImpl implements CommonService {
 	// 채팅 인서트
 	public int insertChat(Chatting c) {
 		return commonDao.insertChat(sqlSession, c);
+	}
+
+	// 방금 보낸 채팅 선택
+	public Chatting selectChat(Chatting c) {
+		return commonDao.selectChat(sqlSession, c);
 	}
 
 	// -----------------------------------------정현

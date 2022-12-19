@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -64,8 +63,8 @@ public class SpaceHandler extends TextWebSocketHandler {
 
 		if (msg != null) {
 
-			WebSocketSession receiverSession = userSessionsMap.get(msg.getReceiver());
-
+			WebSocketSession receiverSession = userSessionsMap.get(msg.getReceiverId());
+ 
 			Member m = new Member();
 			// 공간 예약완료 시 
 			if ("reserve".equals(msg.getMsgType()) && receiverSession != null) {
@@ -73,6 +72,10 @@ public class SpaceHandler extends TextWebSocketHandler {
 			}
 			// 이용후기 작성 시 
 			else if ("review".equals(msg.getMsgType()) && receiverSession != null) {
+				receiverSession.sendMessage(sendMsg);
+			}
+			// 챗 작성 시 
+			else if ("chat".equals(msg.getMsgType()) && receiverSession != null) {
 				receiverSession.sendMessage(sendMsg);
 			}
 			

@@ -536,9 +536,8 @@ public class CommonController {
 	public String selectNoteList(@RequestParam(value = "npage", defaultValue = "1") int currentPage, Model model,
 			HttpSession session) {
 
-//			Member loginMember = (Member)session.getAttribute("loginMember");
-//			int memNo = loginMember.getMemNo();
-		int memNo = 5;
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		int memNo = loginMember.getMemNo();
 
 		ArrayList<Chatting> rList = commonService.selectNoteList(memNo);
 
@@ -587,8 +586,9 @@ public class CommonController {
 	@RequestMapping(value = "insertChat.me", produces = "application/json; charset=UTF-8")
 	public String insertChat(Chatting c, HttpSession session) {
 		commonService.insertChat(c);
+		Chatting result = commonService.selectChat(c);
 
-		return new Gson().toJson(c);
+		return new Gson().toJson(result);
 	}
 
 	// ---------------------정현

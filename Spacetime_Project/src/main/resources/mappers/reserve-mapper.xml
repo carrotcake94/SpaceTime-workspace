@@ -15,6 +15,7 @@
 			<result column="ADDRESS_DEFAULT" property="denyMessage" />
 			<result column="ATTACHMENT_NO" property="endTime" />
 			<result column="ATTACHMENT_RENAME" property="attachmentRename" />
+			<result column="MEM_ID" property="memId" />
 		</resultMap>
 		
 		<!--   하연 : 조인떄문에 야매로 가공한 resultSet 입니다.. -->
@@ -63,10 +64,12 @@
 			     , TO_CHAR(USE_DATE, 'YYYYMMDD') AS "USE_DATE"
 			     , ATTACHMENT_RENAME
                  , REVIEW_NO
+                 , L.MEM_ID
 			FROM RESERVE R
 			JOIN SPACE S ON R.SPACE_NO= S.SPACE_NO
 			JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
 			JOIN SPACE_ATTACHMENT A ON S.SPACE_NO = A.SPACE_NO
+			JOIN MEMBER L ON S.HOST_NO = L.MEM_NO
             LEFT  JOIN REVIEW V ON (R.RESERVE_NO = V.RESERVE_NO)
 			WHERE ATTACHMENT_LEVEL = 1
 			  AND R.MEM_NO = #{memNo}

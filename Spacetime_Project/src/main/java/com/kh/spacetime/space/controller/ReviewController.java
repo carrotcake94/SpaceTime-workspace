@@ -238,11 +238,10 @@ public class ReviewController {
 	 */
 	@RequestMapping("hostRvwList.rv")
 	public String selectHostReviewList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
-			Model model) {
+			Model model, HttpSession session) {
 
-//		Member loginMember = (Member)session.getAttribute("loginMember");
-//		int memNo = loginMember.getMemNo();
-		int memNo = 5;
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		int memNo = loginMember.getMemNo();
 
 		int listCount = reviewService.selectHostReviewListCount(memNo);
 		int pageLimit = 10;
@@ -267,11 +266,10 @@ public class ReviewController {
 	public String searchHostReviewList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
 			@RequestParam(value = "key", defaultValue = "") String keyword,
 			@RequestParam(value = "stitle", defaultValue = "") String spaceTitle,
-			@RequestParam(value = "hanswer", defaultValue = "") String hostAnswer, Model model) {
+			@RequestParam(value = "hanswer", defaultValue = "") String hostAnswer, Model model, HttpSession session) {
 
-//		Member loginMember = (Member)session.getAttribute("loginMember");
-//		int memNo = Integer.parseInt(loginMember.getMemNo());
-		String memNo = "5";
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		String memNo = String.valueOf(loginMember.getMemNo());
 
 		HashMap<String, String> map = new HashMap<String, String>();
 

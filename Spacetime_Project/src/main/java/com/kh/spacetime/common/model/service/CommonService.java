@@ -43,15 +43,15 @@ public interface CommonService {
 	// 매출이 있는 공간의 상세 매출 조회
 	ArrayList<Reserve> selectSalesDetailList(PageInfo pi, HashMap<String, String> map);
 
-	// 매출 검색 글 개수 
+	// 매출 검색 글 개수
 	int selectSalesSearchListCount(HashMap<String, String> map);
 
-	// 매출 검색 리스트 조회 
-	ArrayList<Reserve>	selectSalesSearchList(PageInfo pi, HashMap<String, String> map);
-	
+	// 매출 검색 리스트 조회
+	ArrayList<Reserve> selectSalesSearchList(PageInfo pi, HashMap<String, String> map);
+
 	// 검색어 자동완성
 	String autoComplete(String keyword);
-	
+
 	// 해시태그 자동완성
 	String hashtagAutoComplete(String keyword);
 
@@ -74,6 +74,9 @@ public interface CommonService {
 
 	// 채팅 인서트
 	int insertChat(Chatting c);
+
+	// 방금보낸 채팅 셀렉
+	Chatting selectChat(Chatting c);
 
 	// ------------정현
 

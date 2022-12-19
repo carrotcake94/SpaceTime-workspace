@@ -15,5 +15,6 @@ public class Chatting {
 	private String messageDate; // MESSAGE_DATE DATE
 	private String sender; // SENDER NUMBER
 	private String receiver; // RECEIVER NUMBER
-	private String profilePath; // RECEIVER NUMBER
+	private String senderId; 
+	private String profilePath; 
 }

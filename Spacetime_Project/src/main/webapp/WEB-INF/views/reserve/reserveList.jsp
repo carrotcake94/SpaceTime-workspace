@@ -552,10 +552,11 @@
 				
 				              <c:set var="today" value="<%= today %>" /> 
 							
-								      <!-- ststus 가 'Y' 이고 사용일이 현재날짜를 지난 경우 그리고 작성한 리뷰가 없을경우 -->
+							  <!-- ststus 가 'Y' 이고 사용일이 현재날짜를 지난 경우 그리고 작성한 리뷰가 없을경우 -->
 				              <c:choose>
 				                <c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate) and (r.spaceNo eq 0) }">
 				                  <div class="space_btn_area">
+				                  <input type="hidden" value="${r.memId}" >
 				                  <button style="width: 70%" class="btn btn-warning" onclick="openRevEnrollModal(this)" >리뷰 작성하기</button>
 				                  <button style="width: 30%" class="btn btn-danger" data-toggle="modal" data-target="#report-Modal">신고하기</button>
 				                </div>
@@ -697,6 +698,7 @@
             <div class="modal-content">
                 <!-- Modal body -->
                 <div class="modal-body">
+            	    <input type="hidden" name="smemId" value="">
                     <form id="reviewForm" action="insert.re" method="post" enctype="multipart/form-data" >
                         <input type="hidden" name="reserveNo" value="">
                         <input type="hidden" name="rating" value="">
@@ -760,6 +762,8 @@
 		openRevEnrollModal = btn => {
 			var stitle = $(btn).parent().prev().children(".stitle").text();
 			var reserveNo = $(btn).parent().prev().children("input").val();
+			var smemId = $(btn).prev().val();
+			$("#reviewEnrollModal input[name=smemId]").val(smemId);
 			$("#reviewEnrollModal input[name=reserveNo]").val(reserveNo);
 			$("#reviewEnrollModal #sptitle").text(stitle);
 			$("#reviewEnrollModal").modal("show");
@@ -775,6 +779,7 @@
 			      return false;
 			}
 			$("#reviewForm").submit();
+			sendMessage("review", $("#reviewEnrollModal input[name=smemId]").val(), "", "")
 		}
 		
 		

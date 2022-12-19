@@ -255,6 +255,7 @@
 		<result column="MESSAGE_DATE" property="messageDate" />
 		<result column="SENDER" property="sender" />
 		<result column="MEM_NAME" property="receiver" />
+		<result column="MEM_ID" property="senderId" />
 		<result column="PROFILE_PATH" property="profilePath" />
 	</resultMap>
 	
@@ -262,7 +263,7 @@
 	<select id="selectNoteList" parameterType="_int" resultMap="chatListSet">
 	   SELECT CHAT_NO, MESSAGE
 	   , TO_CHAR(MESSAGE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS MESSAGE_DATE
-	   , SENDER, M.MEM_NAME, M.PROFILE_PATH
+	   , SENDER, M.MEM_NAME, M.MEM_ID, M.PROFILE_PATH
        FROM CHATTING C
        JOIN MEMBER M ON C.SENDER = M.MEM_NO
        WHERE CHAT_NO IN (
@@ -279,7 +280,7 @@
 	<select id="searchNoteList" parameterType="hashmap" resultMap="chatListSet">
 	   SELECT CHAT_NO, MESSAGE
 	   , TO_CHAR(MESSAGE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS MESSAGE_DATE
-	   , SENDER, M.MEM_NAME, M.PROFILE_PATH
+	   , SENDER, M.MEM_NAME, M.MEM_ID, M.PROFILE_PATH
        FROM CHATTING C
        JOIN MEMBER M ON C.SENDER = M.MEM_NO
        WHERE CHAT_NO IN (
@@ -303,7 +304,7 @@
        AND SENDER = #{sender}) OR 
        (RECEIVER = #{sender}
        AND SENDER = #{receiver})
-       ORDER BY CHAT_NO DESC
+       ORDER BY CHAT_NO ASC
 	</select>
 	
 	<insert id="insertChat" parameterType="chatting">
@@ -315,6 +316,18 @@
 			     , #{receiver})
 	</insert>
 	
+	<!-- 	방금 보낸 채팅 선택 -->
+	<select id="selectChat" parameterType="chatting" resultMap="chatListSet">
+	   SELECT * 
+	   FROM(
+	   SELECT MESSAGE
+       , TO_CHAR(MESSAGE_DATE, 'MM-DD HH24:MI') AS MESSAGE_DATE 
+       FROM CHATTING C
+       WHERE RECEIVER = #{receiver}
+       AND SENDER = #{sender}
+       ORDER BY CHAT_NO DESC
+       ) WHERE ROWNUM = 1
+	</select>
 	<!-- 정현 End-->
 	
 	

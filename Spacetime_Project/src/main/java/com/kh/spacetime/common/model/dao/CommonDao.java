@@ -102,27 +102,26 @@ public class CommonDao {
 
 		return (ArrayList) sqlSession.selectList("commonMapper.selectSalesDetailList", map, rowBounds);
 	}
-	
 
-	// 매출 검색 글 개수 
+	// 매출 검색 글 개수
 	public int selectSalesSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		
+
 		return sqlSession.selectOne("commonMapper.selectSalesSearchListCount", map);
 	}
-	
-	// 매출 검색 리스트 조회 
-	public ArrayList<Reserve> selectSalesSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
-		
+
+	// 매출 검색 리스트 조회
+	public ArrayList<Reserve> selectSalesSearchList(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, String> map) {
+
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
-		
+
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesSearchList", map, rowBounds);
+
+		return (ArrayList) sqlSession.selectList("commonMapper.selectSalesSearchList", map, rowBounds);
 	}
-	
-	
-	//검색어 자동완성기능 - 성훈
+
+	// 검색어 자동완성기능 - 성훈
 	public String autoComplete(SqlSessionTemplate sqlSession, String keyword) {
 		return sqlSession.selectOne("commonMapper.autoComplete", keyword);
 
@@ -175,7 +174,13 @@ public class CommonDao {
 	// 채팅방 상세뷰 - 정현
 	public int insertChat(SqlSessionTemplate sqlSession, Chatting c) {
 
-		return sqlSession.selectOne("commonMapper.insertChat", c);
+		return sqlSession.insert("commonMapper.insertChat", c);
+	}
+
+	// 방금 보낸 채팅 선택 - 정현
+	public Chatting selectChat(SqlSessionTemplate sqlSession, Chatting c) {
+
+		return sqlSession.selectOne("commonMapper.selectChat", c);
 	}
 
 	// ---------------------------------정현
