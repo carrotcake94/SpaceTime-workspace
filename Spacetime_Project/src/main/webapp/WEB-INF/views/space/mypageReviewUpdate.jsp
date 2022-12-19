@@ -62,8 +62,8 @@
 		padding: 20px;
 	}
 	.reviewImg div { margin-bottom: 20px;}
-	.spaceTitle {width: 60%;}
-	.rate {width: 40%;}
+	.spaceTitle {width: 58%;}
+	.rate {width: 30%;}
 
 	.reviewImg { padding-top: 20px; }
 	.reviewDetail{padding :10px;}
@@ -153,6 +153,9 @@
                                             class="s10"></span>
                                     </div>
                                 </div>
+                                <input type="hidden" name="rating">
+								
+								
 								<td class="review date">${r.reviewEnrollDate }</td>
 							</td>
 						</tr>

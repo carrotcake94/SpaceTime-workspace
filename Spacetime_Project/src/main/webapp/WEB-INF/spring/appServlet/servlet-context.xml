@@ -40,6 +40,9 @@
 			<mapping path="/enrollForm.sp" />
 			<mapping path="/spaceUpdateForm.sp" />
 			<mapping path="/spaceDel.sp" />
+			<mapping path="list.re" />
+			<mapping path="mypagebookmark.sp" />
+			<mapping path="report.co" />
 			<beans:bean class="com.kh.spacetime.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
 	</interceptors>

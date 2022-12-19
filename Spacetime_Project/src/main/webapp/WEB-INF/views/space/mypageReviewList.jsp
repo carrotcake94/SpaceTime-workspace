@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,9 +28,10 @@
 		text-align: center;
 	}
 	
-	.table { text-align: center; }
-	.reviewList tr { line-height: 40px; }
-	.table>tbody>tr:hover { cursor: pointer; }
+	
+	.table { text-align: center;}
+	.table tr { line-height: 35px;}
+	.table>tbody>tr:hover { cursor: pointer ;}
 	
 	
 
@@ -81,12 +83,6 @@
             margin: 0;
         }
 
-        #starArea span {
-            display: inline-block;
-            width: 17.875px;
-            height: 32px;
-            cursor: pointer;
-        }
 	
 
 </style>
@@ -122,24 +118,11 @@
 							<td>
 								<div id="starArea">
                                     <div id="realStarArea">
-                                    <!-- fa-solid fa-star -->
-                                    	<i class="<c:if test="${1 gt r.rating}"> fa fa-star-o </c:if>
-                                    			  <c:if test="${1 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
-                                    	<i class="<c:if test="${2 gt r.rating}"> fa fa-star-o </c:if>
-                                    			  <c:if test="${2 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
-                                    	<i class="<c:if test="${3 gt r.rating}"> fa fa-star-o </c:if>
-                                    			  <c:if test="${3 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
-                                    	<i class="<c:if test="${4 gt r.rating}"> fa fa-star-o </c:if>
-                                    			  <c:if test="${4 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
-                                    	<i class="<c:if test="${5 gt r.rating}"> fa fa-star-o </c:if>
-                                    			  <c:if test="${5 le r.rating}"> fa-solid fa-star </c:if>" aria-hidden="true"></i>
+                                   <fmt:parseNumber var="i" value="${r.rating/2}" integerOnly="true" />
+			        	<c:set var="j" value="${r.rating%2}" />
+			        	<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa-solid fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if>
                                     </div>
-                                    <div>
-                                        <span class="s1"></span><span class="s2"></span><span class="s3"></span><span
-                                            class="s4"></span><span class="s5"></span><span class="s6"></span><span
-                                            class="s7"></span><span class="s8"></span><span class="s9"></span><span
-                                            class="s10"></span>
-                                    </div>
+                                   
                                 </div>
 							</td>
 							<td>${r.reviewEnrollDate}</td>

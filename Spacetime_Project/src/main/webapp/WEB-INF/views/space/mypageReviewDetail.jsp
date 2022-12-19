@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +66,7 @@
 	.reviewImg td { 
 		padding: 20px;}
 	.reviewImg img:hover { opacity: 0.7;}
-	.spaceTitle {width: 60%;}
+	.spaceTitle {width: 40%;}
 	.rate, .date {width: 20%;}
 
 	.reviewImg, .reviewContent { padding-top: 20px; }
@@ -147,7 +148,31 @@
 	.prev:hover, .next:hover { background-color: rgba(0, 0, 0, 0.8); }
 	img.hover-shadow { transition: 0.3s; }
 	.hover-shadow:hover { box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+	
+	 #starArea {
+            position: relative;
+            height: 30px;
+            overflow: hidden;
+        }
 
+        #starArea>div {
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #starArea i {
+            font-size: 20px;
+            color: rgb(253, 193, 55);
+            padding: 0;
+            margin: 0;
+        }
+
+        #starArea span {
+            display: inline-block;
+            width: 17.875px;
+            height: 32px;
+            cursor: pointer;
+        }
 		
 </style>
 
@@ -172,7 +197,17 @@
 					</tr>
 					<tr>
 						<td class="review spaceTitle">${r.spaceTitle }</td>
-						<td class="review rate">${r.rating }</td>
+						<td class="review rate">
+						<div id="starArea">
+                                    <div id="realStarArea">
+                                   <fmt:parseNumber var="i" value="${r.rating/2}" integerOnly="true" />
+			        	<c:set var="j" value="${r.rating%2}" />
+			        	<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa-solid fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if>
+                                    </div>
+                                   
+                                </div>
+                         </td>
+						<input type="hidden" name="rating">
 						<td class="review date">${r.reviewEnrollDate }</td>
 					</tr>
 					<tr>
@@ -194,6 +229,7 @@
 					<tr>
 						<td colspan="3" class="reviewContent">
 						${r.reviewCont}
+						
 					</tr>
 				</table>
 			</div>
