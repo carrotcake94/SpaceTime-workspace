@@ -139,7 +139,7 @@
               <div class="cop_areaIn">
                 <ul class="cop_menu">
                   <li><a href="privacyPolicy.co" class="first">개인정보처리방침</a></li>
-                  <li><a href="rlist.ad">이용약관</a></li>
+                  <li><a href="userAgreement.co">이용약관</a></li>
                   <li><a href="managementPolicy.co">운영정책</a></li>
                 </ul>
                 <div class="footer_logo">

@@ -340,7 +340,7 @@
         }
 
         .com_infobox>ul:nth-child(1) {
-            border-bottom: 3px solid;
+            border-bottom: 3px solid #EDEDED;
         }
 
         .com_infobox>ul {
@@ -387,6 +387,11 @@
             text-transform: uppercase;
         }
 
+        .service-info-ul>li>a {
+            color: grey;
+            font-weight: 200;
+        }
+
         .sign-up {
             background: rgb(39, 123, 192);
             color: #FFF;
@@ -404,7 +409,9 @@
         }
 
         .sign-up:hover {
-            background: #FFB200;
+            background: rgb(213, 229, 243);
+            color: rgb(39, 123, 192);
+            cursor: pointer;
         }
 
         .sign-up a {
@@ -421,7 +428,7 @@
         }
 
         .sign-up>a:hover {
-            color: black;
+            color: rgb(39, 123, 192);
         }
         /* -------------------- */
         
@@ -602,16 +609,26 @@
         </div>
         <div id="my_menubtn">
             <table id="my_menubtn_tb">
-                <tr>
-                    <td><a href="myReserve.re"><i class="fa-solid fa-person-walking-luggage"></i></a></td>
-                    <td><a href="list.re"><i class="fa-solid fa-user-pen"></i></a></td>
-                    <td><a href="mypagebookmark.sp"><i class="fa-solid fa-heart"></i></a></td>
-                </tr>
-                <tr style="font-size: 15px;">
-                    <td><a href="myReserve.re">예약내역</a></td>
-                    <td><a href="list.re">리뷰내역</a></td>
-                    <td><a href="mypagebookmark.sp">찜한내역</a></td>
-                </tr>
+                <c:choose>
+                    <c:when test="${loginMember.memNo == 1}">
+                        <tr>
+                            <td><a href="rlist.ad">관리자 페이지로</ㅁ></td>
+                        </tr>
+
+                    </c:when>
+                    <c:otherwise>
+                        <tr>
+                            <td><a href="myReserve.re"><i class="fa-solid fa-person-walking-luggage"></i></a></td>
+                            <td><a href="list.re"><i class="fa-solid fa-user-pen"></i></a></td>
+                            <td><a href="mypagebookmark.sp"><i class="fa-solid fa-heart"></i></a></td>
+                        </tr>
+                        <tr style="font-size: 15px;">
+                            <td><a href="myReserve.re">예약내역</a></td>
+                            <td><a href="list.re">리뷰내역</a></td>
+                            <td><a href="mypagebookmark.sp">찜한내역</a></td>
+                        </tr>
+                    </c:otherwise>
+                </c:choose>
             </table>
         </div>
 
@@ -622,16 +639,19 @@
                 <li><a href="list.ne">뉴스레터</a></li>
                 <li><a onclick="openServieInfo()" style="cursor:pointer;">서비스정보</a>
 	                <ul class="service-info-ul">
-	                <li><a href="userAgreement.co">이용약관</a></li>
-	                <li><a href="privacyPolicy.co">개인정보처리방침</a></li>
-	                <li><a href="managementPolicy.co">운영정책</a></li>
-	                <li><a href="report.co">신고함</a></li>
+                        <li><a href="introduction.co">서비스 소개</a></li>
+                        <li><a href="userAgreement.co">이용약관</a></li>
+                        <li><a href="privacyPolicy.co">개인정보처리방침</a></li>
+                        <li><a href="managementPolicy.co">운영정책</a></li>
+                        <li><a href="report.co">신고함</a></li>
 	                </ul>
                 </li>
             </ul>
-            <ul>
-                <li><a href="logout.me">로그아웃</a></li>
-            </ul>
+            <c:if test="${!empty loginMember}">
+                <ul>
+                    <li><a href="logout.me">로그아웃</a></li>
+                </ul>
+            </c:if>
         </div>
         <div class="sign-up">
             <a>호스트신청하기<span class="ion-arrow-right-c"></span></a>
@@ -763,20 +783,26 @@
             console.log('modal close');
           $(this).find('form')[0].reset()
         });
-     </script>
-     <c:choose>
-	     <c:when test="${loginMember.hostStatus eq 'Y'}">
+    </script>
+    <c:choose>
+        <c:when test="${ empty loginMember }">
+            <script>
+                $(".sign-up>a").text("로그인 / 회원가입");
+                $(".sign-up>a").attr("href","login.me");
+            </script>
+        </c:when>
+	    <c:when test="${loginMember.hostStatus eq 'Y'}">
 	     	<script>
 	     		$(".sign-up>a").text("호스트 페이지로");
 	     		$(".sign-up>a").attr("href","hostCalList.re");
 	     	</script>
-		 </c:when>
-		 <c:otherwise>
+		</c:when>
+		<c:otherwise>
  	     	<script>
 	     		$(".sign-up>a").text("호스트 신청하기");
 	     		$(".sign-up>a").attr("onclick","openBankModal()"); 
 	     	</script>
-		 </c:otherwise>
+		</c:otherwise>
      </c:choose>
 
 <c:if test="${!empty loginMember}">
