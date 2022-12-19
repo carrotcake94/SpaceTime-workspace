@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
+<title>리뷰 리스트</title>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -142,7 +143,6 @@
 		</div>
 		<br>
 		<!-- 페이지 버튼 -->
-			<!-- 페이지 버튼 -->
 			<div id="pagingArea" align="center" id="btn">
                 <ul class="pagination">
 			      	<c:choose>

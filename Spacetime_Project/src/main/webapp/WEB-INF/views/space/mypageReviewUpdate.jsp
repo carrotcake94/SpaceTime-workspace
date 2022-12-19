@@ -220,6 +220,8 @@
             $("#realStarArea").html(str);
         });
     });
+	
+	
 	</script>
 
 </body>

@@ -531,8 +531,11 @@
 	
 	<select id="selectmypagebookmarkList" parameterType="_int" resultMap="spaceResultSet">
 		SELECT
-		    B.SPACE_TITLE
-		    ,B.ADDRESS_DEFAULT
+			B.SPACE_NO
+		    ,B.SPACE_TITLE
+		    ,SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT 
+	        ,MAX_PEOPLE
+	        ,(SELECT COUNT(*) FROM BOOKMARK WHERE BOOKMARK_MEM = #{memNo} AND BOOKMARK_SPACE = B.SPACE_NO) AS OPEN_TIME
 		    ,B.HOUR_PRICE
 		    ,C.ATTACHMENT_RENAME
 		FROM BOOKMARK A
