@@ -45,7 +45,6 @@
 
     /* 회원등급.. 일단 border 줘서 구분해줬는데.. 어떻게 할지... */
     #memGrade { 
-        border: 2px solid orange;
         border-radius: 5px;
         padding: 5px;
     }
@@ -193,7 +192,7 @@
 						}
 					})
 
-					</script>
+				</script>
 	            <!-- 프로필 정보 -->
 	            <div class="mem_info">
 	                <table id="mem_detail"> 
@@ -280,17 +279,80 @@
 	                                <td>
 	                                    <c:choose>
 	                                        <c:when test="${!empty loginMember.profilePath }">
-	                                            <img src="${loginMember.profilePath}" class="mem_img photo">
+	                                            <img src="${loginMember.profilePath}" id="preview-image1" class="mem_img photo">
+												<script>
+													$(function() {
+														function readImage(input) {
+
+														// 인풋 태그에 파일이 있는 경우
+														if(input.files && input.files[0]) {
+
+															// 이미지 파일인지 검사 (생략)
+
+															// FileReader 인스턴스 생성
+															const reader = new FileReader();
+
+															// 이미지가 로드가 된 경우
+															reader.onload = e => {
+																const previewImage1 = document.getElementById("preview-image1")
+																previewImage1.src = e.target.result
+															}
+
+															// reader가 이미지 읽도록 하기
+															reader.readAsDataURL(input.files[0]);
+														}
+														}
+
+														// input file에 change 이벤트 부여
+														const inputImage = document.getElementById("input-image")
+														inputImage.addEventListener("change", e => {
+														readImage(e.target);
+														})
+													})
+												</script>
 	                                        </c:when>
 	                                        <c:otherwise>
-	                                            <img src="resources/images/profile_default.png" class="mem_img photo">
+	                                            <img src="resources/images/profile_default.png" id="preview-image2" class="mem_img photo">
+												<script>
+													$(function() {
+														function readImage(input) {
+
+														// 인풋 태그에 파일이 있는 경우
+														if(input.files && input.files[0]) {
+
+															// 이미지 파일인지 검사 (생략)
+
+															// FileReader 인스턴스 생성
+															const reader = new FileReader();
+
+															// 이미지가 로드가 된 경우
+															reader.onload = e => {
+																const previewImage2 = document.getElementById("preview-image2")
+																previewImage2.src = e.target.result
+															}
+
+															// reader가 이미지 읽도록 하기
+															reader.readAsDataURL(input.files[0]);
+														}
+														}
+
+														// input file에 change 이벤트 부여
+														const inputImage = document.getElementById("input-image")
+														inputImage.addEventListener("change", e => {
+														readImage(e.target);
+														})
+													})
+												</script>
 	                                        </c:otherwise>
 	                                    </c:choose>
 	                                </td>
 	                            </tr>
+								<c:choose>
+									<c:when test="${!empty loginMember.profilePath }"></c:when>
+								</c:choose>
 	                            <tr>
 	                                <th></th>
-	                                <td style="height:70px;"><input type="file" name="upfile" class="form-control-file border"></td>
+	                                <td style="height:70px;"><input type="file" name="upfile" id="input-image" class="form-control-file border"></td>
 	                            </tr>
 	                            <tr>
 	                                <th>닉네임</th>
@@ -304,6 +366,7 @@
 	                    </div>
 	                    <script>
 	                        $(function() {
+
 	                            $("#nickname").on({blur:function() {
 	                                // 닉네임 정규식
 	                                // 영문자, 숫자, 한글 2~10글자

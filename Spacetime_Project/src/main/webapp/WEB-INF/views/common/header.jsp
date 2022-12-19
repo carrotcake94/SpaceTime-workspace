@@ -249,10 +249,9 @@
         /* 프로필 이미지 크기 */
         #profile-img {
 	        border: 2px solid rgba(128, 128, 128, 0.2);
-	        margin-bottom: 20px;
 	        border-radius: 100%;
-	        width: 80px;
-	        height: 80px;
+	        width: 90px;
+	        height: 90px;
     	}
 
         #profile_tb td {
@@ -343,8 +342,21 @@
             border-bottom: 3px solid #EDEDED;
         }
 
+        .com_infobox>ul:nth-child(2) li {
+            border-bottom: 1px solid #EDEDED;
+            font-size: 15px;
+            font-weight: 400;
+            padding: 15px 0;
+            text-align: center;
+            color: grey;
+        }
+
         .com_infobox>ul {
-            padding: 20px 0;
+            padding: 10px 0;
+        }
+
+        .com_infobox>ul {
+            margin-bottom: 0px;
         }
 
         .com_infobox>ul>li {
@@ -360,10 +372,6 @@
 
         .com_infobox ul a {
             color: black;
-        }
-
-        .com_infobox>ul:nth-child(2) li {
-            font-size: 10px;
         }
 
         .com_infobox>ul:nth-child(2) li:last-child {
@@ -413,18 +421,24 @@
             color: rgb(39, 123, 192);
             cursor: pointer;
         }
-
+        /*
         .sign-up a {
             display: block;
         }
+        */
 
         .sign-up span {
             margin: 0 auto 0 8px;
         }
 
         .sign-up>a {
-            text-decoration: none;
             color: white;
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            text-decoration: none;
+            padding-top: 5px;
+            font-size: 22px;
         }
 
         .sign-up>a:hover {
@@ -624,10 +638,14 @@
                             <a href="enrollLogin.me">로그인 및 회원가입</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td></td>
-                    </tr>
+
                 </table>
+                <script>
+                    $(function() {
+                        $("#profile_tb tr:nth-child(1)>td:nth-child(2)").css("padding-top", "0").css("font-weight","400");
+                        $("#profile_tb tr:nth-child(1)>td:nth-child(2)>a").css("text-decoration", "none").css("color", "whitesmoke");
+                    })
+                </script>
                 </c:when>
                 <c:otherwise>
                 <table id="profile_tb">
@@ -653,7 +671,10 @@
                 <c:choose>
                     <c:when test="${loginMember.memNo == 1}">
                         <tr>
-                            <td><a href="rlist.ad">관리자 페이지로</ㅁ></td>
+                            <td><a href="slist.ad"><i class="fa-sharp fa-solid fa-list-check"></i></a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="slist.ad">관리자 페이지로</a></td>
                         </tr>
 
                     </c:when>
