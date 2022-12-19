@@ -702,6 +702,9 @@
                 <li><a href="/spacetime">홈으로</a></li>
                 <li><a href="list.no">공지사항</a></li>
                 <li><a href="list.ne">뉴스레터</a></li>
+                <c:if test="${!empty loginMember}">
+                <li><a href="note.me">쪽지함</a></li>
+                </c:if>
                 <li><a onclick="openServieInfo()" style="cursor:pointer;">서비스정보</a>
 	                <ul class="service-info-ul">
                         <li><a href="introduction.co">서비스 소개</a></li>

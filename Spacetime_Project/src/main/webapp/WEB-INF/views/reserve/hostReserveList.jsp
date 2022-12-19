@@ -398,18 +398,18 @@
 	   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
 	   		</c:when>
 	   		<c:otherwise>
-	   			<li class="page-item"><a class="page-link" href="revHostList.re?rpage=${ pi.currentPage - 1 }">&lt;</a></li>
+	   			<li class="page-item"><a class="page-link" >&lt;</a></li>
 	   		</c:otherwise>
 	   	</c:choose>	       
 	       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	       	<li class="page-item page-btn"><a class="page-link" href="revHostList.re?rpage=${ p }">${ p }</a></li>
+	       	<li class="page-item page-btn"><a class="page-link" >${ p }</a></li>
 	       </c:forEach>
 	       <c:choose>
 	       	<c:when test="${ pi.currentPage eq pi.maxPage }">
 	       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
 	       	</c:when>
 	       	<c:otherwise>
-	      	 	<li class="page-item no-page-next"><a class="page-link" href="revHostList.re?rpage=${ pi.currentPage + 1 }">&gt;</a></li>
+	      	 	<li class="page-item no-page-next"><a class="page-link" >&gt;</a></li>
 	       	</c:otherwise>
 	       </c:choose>
       </ul>
@@ -589,6 +589,8 @@
 //     	<input type="hidden"  value="${r.member.phone }">
        
     }
+    
+    //페이징
 	$(function() {
 		$(".page-link").each(function() {
       		if ($(this).text() ==${ pi.currentPage}) {
@@ -598,6 +600,35 @@
       			$(this).removeAttr("id", "active-page");
       		}
       	});
+		
+		var keyword= "${keyword}";    
+    	var prevNo = "${pi.currentPage-1}";
+		var nextNo = "${pi.currentPage+1}";
+		
+		if(keyword == "") {
+			$(".no-page-prev>a").click(function() {
+				location.href ="revHostList.re?rpage="+prevNo;
+			});
+			$(".page-btn>a").click(function() {
+				location.href ="revHostList.re?rpage="+$(this).text();
+			});
+			$(".no-page-next>a").click(function() {
+				location.href ="revHostList.re?rpage="+nextNo;
+			});
+     	}else {
+     		$("input[name=keyword]").val(keyword);     		
+
+     		$(".no-page-prev>a").click(function() {
+				location.href ="schRevHostList.re?rpage="+prevNo+"&keyword="+keyword;
+			});
+			$(".page-btn>a").click(function() {
+				location.href ="schRevHostList.re?rpage="+$(this).text()+"&keyword="+keyword;
+			});
+			$(".no-page-next>a").click(function() {
+				location.href ="schRevHostList.re?rpage="+nextNo+"&keyword="+keyword;
+			});
+		}
+		
 	});
 	
 	confirmModal = () => {
