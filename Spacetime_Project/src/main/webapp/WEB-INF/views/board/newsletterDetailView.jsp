@@ -229,17 +229,6 @@
                                 <c:forEach var="attach" items="${attachments}">
                                     <img class="img-0" src="${attach.attachmentReName}" alt="사진 없음" />
                                 </c:forEach>
-                            <!--
-                                <input type="hidden" value="${imgStrList[i]}">
-                                <div class="img_btn_area">
-                                    <button type="button" class="button_img button_img_prev" onclick="imgLoader(this,1)">
-                                    <i class="fa fa-angle-left" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="button_img button_img_next" onclick="imgLoader(this,2)">
-                                    <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            -->
                                 <span class="bookmark">
                                     <c:choose>
                                     <c:when test="${ s.openTime eq 0 }">
@@ -272,40 +261,6 @@
                         </div>
 
                     </form>
-                    <!--
-                    <div id="place" style="padding: 15px 15px">
-                        <table width="100%" height="100%">
-                            <thead height="50%">
-                                <tr>
-                                    <td colspan="2">
-                                        <div style="width: 100%; height: 100%;">
-                                            <c:forEach var="attach" items="${attachments}">
-                                                <img src="${attach.attachmentReName}" style="width:100%; height:210px;">
-                                            </c:forEach>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" height="20%"><span>${s.spaceTitle}</span></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" height="10%"><i class="fa-solid fa-location-dot"></i></td>                                                                           
-                                </tr>
-                                <tr height="20%">
-                                    <td width="60%"><span style="color: #277BC0;">${s.hourPrice}</span> 원/시간</td>
-                                    <td width="40%" style="text-align: right;">
-                                        <i class="fa-solid fa-user"></i> 4
-                                        <i class="fa-solid fa-comment"></i> 3
-                                        <i class="fa-solid fa-heart"></i> 23
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    -->
-                    <!-- 반복 돌리기 -->
                     </c:forEach>
                 </div>
             </div>
@@ -316,7 +271,7 @@
     <script>
            $(function() {
                 $(".img-0").on({click:function() {
-                    let form = $(this).parent().parent().parent("form");
+                    let form = $(this).parent().parent().parent("#spaceDetailForm");
                     console.log(form.text());
                     form.attr("action", "detail.sp").submit();
                 }});
@@ -350,7 +305,7 @@
                                 url: "like.sp",
                                 data: {
                                     spaceNo: spaceNo,
-                                    memNo: ${loginMember.memNo}
+                                    memNo: memNo
                                 },
                                 success: function(result) {
                                     eventLike.show();
@@ -365,7 +320,7 @@
                                 url: "deletelike.sp",
                                 data: {
                                     spaceNo: spaceNo,
-                                    memNo: ${loginMember.memNo}
+                                    memNo: memNo
                                 },
                                 success: function(result) {
                                     eventLike.hide();
@@ -379,51 +334,6 @@
                     }
                 });
                             
-                            
-//              $("#bookmark").on("click", ".likeControl", function() {
-//                  console.log(121212);
-//                  let bookmark = $(this);
-//                  console.log(bookmark);
-//                  let eventLike = bookmark.child("#eventLike");
-//                  let eventUnLike = bookmark.child("#eventUnLike");
-//                  console.log(eventLike.text())
-
-//                  if("${ loginMember }" == "") {
-//                      alert("로그인 후 이용 가능한 서비스입니다.");
-//                  } else {
-//                      if(eventLike.css("display") == "none") {
-//                          $.ajax({
-//                              url: "like.sp",
-//                              data: {
-//                                  spaceNo: $("#spaceNo").val(),
-//                                  memNo: $("#memNo").val()
-//                              },
-//                              success: function(result) {
-//                                  eventLike.show();
-//                                  eventUnLike.hide();
-//                              },
-//                              error: function() {
-//                                  console.log("ajax failure");
-//                              }
-//                          });
-//                      } else {
-//                          $.ajax({
-//                              url: "deletelike.sp",
-//                              data: {
-//                                  spaceNo: $("#spaceNo").val(),
-//                                  memNo: $("#memNo").val()
-//                              },
-//                              success: function(result) {
-//                                  eventLike.hide();
-//                                  eventUnLike.show();
-//                              },
-//                              error: function() {
-//                                  console.log("ajax failure");
-//                              }
-//                          });
-//                      }
-//                  }
-//              });
              // ----------------------------------------------------
 
      });

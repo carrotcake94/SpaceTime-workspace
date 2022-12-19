@@ -25,7 +25,6 @@
 	
 	<context:component-scan base-package="com.kh.spacetime" />
 	
-	<!--
 	<interceptors>
 		<interceptor>
 			<mapping path="/myPage.me" />
@@ -43,10 +42,10 @@
 			<mapping path="list.re" />
 			<mapping path="mypagebookmark.sp" />
 			<mapping path="report.co" />
+			<mapping path="/myReserve.re" />
 			<beans:bean class="com.kh.spacetime.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
 	</interceptors>
-	-->
 	
 	<!-- 	소켓 핸들러 -->
 	<websocket:handlers>

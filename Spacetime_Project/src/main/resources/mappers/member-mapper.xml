@@ -26,10 +26,12 @@
 
 	<!-- 로그인용 쿼리문 - 경미 -->
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
-		SELECT *
+		SELECT MEM_NO, MEM_ID, MEM_PWD, MEM_NAME, GENDER, NICKNAME, PHONE, EMAIL, PROFILE_PATH, ENROLL_DATE, HOST_STATUS, BANK_NAME, ACCOUNT_NUM, BLACKLIST_YN, BLACKLIST_REASON, MEM_STATUS, GR_NAME AS "GR_CODE"
 		FROM MEMBER
+		JOIN MEMBER_GRADE USING (GR_CODE)
 		WHERE MEM_ID = #{memId}
 		AND MEM_STATUS = 'N'
+		AND BLACKLIST_YN = 'N'
 	</select>
 	
 	<!-- 회원가입용 쿼리문 - 경미 -->

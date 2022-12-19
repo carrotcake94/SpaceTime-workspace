@@ -177,20 +177,23 @@
 	                <br>
 	                <div style="height:30px;">
 		                <b>${ loginMember.nickname }</b>&nbsp;&nbsp;
-		                <c:choose>
-		                	<c:when test="${ loginMember.grCode eq 'S' } ">
-		                		<span id="memGrade">태양</span>
-		                	</c:when>
-		                	<c:when test="${ loginMember.grCode eq 'E' }">
-		                		<span id="memGrade">지구</span>
-		                	</c:when>
-		                	<c:otherwise>
-		                		<span id="memGrade">달</span>
-		                	</c:otherwise>
-		                </c:choose>
+						<input type="hidden" id="grCode" value="${loginMember.grCode}">
+		                <span id="memGrade"><i class="fa-solid fa-sun" style="color: orange;"></i></span>
 	                </div>
 	            </div>
-	
+				<script>
+					$(function() {
+						let grCode = $("#grCode").val();
+						if(grCode === '태양') {
+							$("#memGrade").html("<i class='fa-solid fa-sun' style='color: orange;'>");
+						} else if(grCode === '지구') {
+							$("#memGrade").html("<i class='fa-solid fa-earth-americas' style='color: green;'></i>");
+						} else {
+							$("#memGrade").html("<i class='fa-solid fa-moon' style='color: #949494;'></i>");
+						}
+					})
+
+					</script>
 	            <!-- 프로필 정보 -->
 	            <div class="mem_info">
 	                <table id="mem_detail"> 
