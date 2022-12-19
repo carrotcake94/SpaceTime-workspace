@@ -101,7 +101,7 @@ public class CommonServiceImpl implements CommonService {
 
 	//검색어 자동완성 -성훈 
 	@Override
-	public ArrayList<String> autoComplete(String keyword) {
+	public String autoComplete(String keyword) {
 		
 		return commonDao.autoComplete(sqlSession, keyword);
 	}

@@ -101,9 +101,8 @@ public class CommonDao {
 	}
 	
 	//검색어 자동완성기능 - 성훈
-	public ArrayList<String> autoComplete(SqlSessionTemplate sqlSession, String keyword) {
-		ArrayList<String> keywords = (ArrayList)sqlSession.selectList("commonMapper.autoComplete", keyword); 
-		return keywords;
+	public String autoComplete(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("commonMapper.autoComplete", keyword);
 	}
 	
 	//해시태그 자동완성기능 -성훈

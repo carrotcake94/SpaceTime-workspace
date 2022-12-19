@@ -506,6 +506,26 @@
 			padding-right: 15px;
 		}
 		
+		#autoComplete {
+			display: none;
+			border : 1px solid lightgrey;
+			border-radius : 15px;
+			height: 200px;
+			overflow-y: scroll;
+			background-color: white;
+			margin-left: 10px;
+			margin-top: -16.5px;
+		}
+		
+		.autoCompleteContent{
+			border-bottom: 1px solid lightgrey;
+			margin-left: 15px;
+			height: 30px;
+			font-size: 15px;
+		}
+		
+		
+		
       
        /* -------------------- */  
     </style>
@@ -531,15 +551,21 @@
 				})
 			})
 		</script>
-        <div id="home_btn">
-            <span style="color:#277BC0;">S</span><span>pace</span><span
-                style="color: #FFB200;">T</span><span>ime</span>
-        </div>
-        <div id="m_search_btn">
-            <i class="fa fa-search"aria-hidden="true"></i>
-        </div>
-        <div id="m_search_bar">
-            <input type="search" id="searchInput" name="keyword">
+		<div id="home_btn">
+			<span style="color: #277BC0;">S</span><span>pace</span><span
+				style="color: #FFB200;">T</span><span>ime</span>
+		</div>
+		<div id="m_search_btn">
+			<i class="fa fa-search" aria-hidden="true"></i>
+		</div>
+		<div>
+			<div id="m_search_bar">
+				<input type="search" id="searchInput" name="keyword">
+			</div>
+			<div id="autoComplete">
+				<div id=autoCompleteList>
+				</div>
+	        </div>
         </div>
         <div id="menu_btn">
             <i class="fa fa-bars" aria-hidden="true" data-toggle="modal" data-target="#main-menu-Modal">
@@ -552,20 +578,35 @@
 			location.href="searchSpaceList.mp";
 		}
 		
-		//검색어 자동완성기능
+		//검색어 자동완성기능에 필요한 변수
+		var autoCompleteBox = document.querySelector("#autoComplete");
+		var autoCompleteList = document.querySelector("#autoCompleteList");
 		var searchInput = document.querySelector("#searchInput");
 			
-			window.addEventListener("keyup", () => {
-				if(searchInput.value.startsWith("#") == true){
-					window.addEventListener("keyup", () => {
-						if(searchInput.value.startsWith("#") == true) {
-							hashtagAutoComplete(searchInput.value);
-						} else { return; }
-					});
-				} else {
-					autoComplete(searchInput.value);
+		//메인화면 검색창에서 keyup반응 시 자동완성기능 실행
+		searchInput.addEventListener("keyup", () => {
+			//입력 시 하단 자동완성 박스 생성
+			if(searchInput.value == ""){
+				autoCompleteBox.style.display = "none";
+			} else {
+				autoCompleteBox.style.display = "block";
+			}
+			
+			//"#"입력여부 확인하여 해시태그자동완성-일반자동완성 변환
+			if(searchInput.value.startsWith("#") == true){
+				hashtagAutoComplete(searchInput.value);
+				autoCompleteListShowUp(words, searchInput.value);
+			} else {
+				autoComplete(searchInput.value);
+				autoCompleteListShowUp(words, searchInput.value);
+			}
+			
+			window.addEventListener("click", (e) => {
+				if(e.target != autoCompleteBox){
+					autoCompleteBox.style.display = "none";
 				}
 			})
+		})
 	</script>
     <!-- 슬라이드 메뉴 -->
     <div id="overlay"></div>

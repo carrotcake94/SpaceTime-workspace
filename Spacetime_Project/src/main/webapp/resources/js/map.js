@@ -40,9 +40,9 @@ function loadList(spaceListArr, picListArr, lineListArr){
 		
 		lineContent = document.createElement("div");
 		lineContent.setAttribute("id", "lineList_" + spaceListArr[i].spaceNo);
-		picContent.setAttribute("onclick", "toSpaceDetail(" + spaceListArr[i].spaceNo + ")");
-		picContent.setAttribute("onmouseover", "linkListWithMarker(" + spaceListArr[i].spaceNo + ")");
-		picContent.setAttribute("onmouseout", "unlinkListWithMarker(" + spaceListArr[i].spaceNo + ")");
+		lineContent.setAttribute("onclick", "toSpaceDetail(" + spaceListArr[i].spaceNo + ")");
+		lineContent.setAttribute("onmouseover", "linkListWithMarker(" + spaceListArr[i].spaceNo + ")");
+		lineContent.setAttribute("onmouseout", "unlinkListWithMarker(" + spaceListArr[i].spaceNo + ")");
 		
 		//리스트를 위한 내용물 생성
 		picContent.innerHTML = "<div class='picList_content'>" +
@@ -97,12 +97,19 @@ function updateMarkers() {
 function linkMarkerWithList(markers, picListArr, lineListArr, map){
 	for(var i = 0; i < markers.length; i++){
 		naver.maps.Event.addListener(markers[i], "click", (e) => {
-			var list = document.getElementById("picList_" + e.overlay.title);
+			var clickedPicList = document.getElementById("picList_" + e.overlay.title);
 			$("#picList").animate({
-				scrollTop : list.offsetTop - 100
+				scrollTop : clickedPicList.offsetTop - 100
 			}, 500);
-			list.style.cssText = "background-color: black; color: white;";
-			setTimeout( () => list.style.cssText = "", 1000);
+			clickedPicList.style.cssText = "background-color: black; color: white;";
+			setTimeout( () => clickedPicList.style.cssText = "", 1000);
+			
+			var clickedLineList = document.getElementById("lineList_" + e.overlay.title);
+			$("#lineList").animate({
+				scrollTop : clickedLineList.offsetTop - 100
+			}, 500);
+			clickedLineList.style.cssText = "background-color: black; color: white;";
+			setTimeout( () => clickedLineList.style.cssText = "", 1000);
 		});
 	}
 }

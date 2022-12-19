@@ -142,10 +142,12 @@
 					filterBtn.onclick = () => {
 						filterOpenClose();
 					};
+					
 					filterSearch.onclick = () => {
 						filterMap();
-						loadList(spaceListArr);
+						loadList(spaceListArr, picListArr, lineListArr);
 						updateMarkers();
+						linkMarkerWithList(markers, picListArr, lineListArr, map);
 					};
 				</script>
 			</div>

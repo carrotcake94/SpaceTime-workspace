@@ -356,10 +356,11 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value="autoComplete.co", produces="text/html; charset=UTF-8")
 	public String autoComplete(String keyword) {
-		ArrayList<String> keywords = commonService.autoComplete(keyword);
+		String keywords = commonService.autoComplete(keyword);
 		
-		return new Gson().toJson(keywords);
+		return keywords;
 	}
+	
 	
 	/**
 	 * 
@@ -373,8 +374,6 @@ public class CommonController {
 	@RequestMapping(value="hashtagAutoComplete.co", produces="text/html; charset=UTF-8")
 	public String hashtagAutoComplete(String keyword) {
 		String keywords = commonService.hashtagAutoComplete(keyword);
-		String[] keywordArr = keywords.split(",");
-		System.out.println(keywordArr);
 		
 		return keywords;
 	}
