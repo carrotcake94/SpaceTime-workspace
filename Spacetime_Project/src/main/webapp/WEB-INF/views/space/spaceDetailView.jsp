@@ -605,8 +605,12 @@
                                         		var startTime = -1;
                                         		var endTime = -1;
                                         		
+                                        		
+                                        		
+                                        		
 		                                        // 시간 선택하는 함수 - onclick
 		                                   		function selectTime(k) {
+		                                        	
 		                                        	
 		                                        	if(startTime == -1) {
 		                                        		
@@ -617,6 +621,22 @@
 		                                        		
 		                                        		$("#time" + k + "").css("background-color","rgb(253, 193, 55)");
 			                                   			endTime = $("#time" + k + "").find(".time").text();
+			                                   			
+			                                   			if(startTime > endTime) {
+			                                   				$(".swiper-slide").css("background-color","white");
+				                                   			
+			                                        		$("#time" + k + "").css("background-color","rgb(253, 193, 55)");
+				                                   			startTime = $("#time" + k + "").find(".time").text();
+				                                   			endTime = -1
+			                                   			}
+			                                   			
+			                                   			/* for(var a=startTime; a<=endTime; a++) {
+			                                   				
+			                                   				console.log($("#time"+ a + "").css("text-decoration","line-through") != true);
+			                                   				
+			                                   				
+			                                   			} */
+			                                   			
 		                                        		
 		                                        	} else {
 			                                   			// 색 초기화 
@@ -630,16 +650,34 @@
 		                                        	}
 		                                        	
 		                                        	// 시작시간 끝시간 사이 자동색칠 
-		                                        	if(endTime != -1) {
+		                                        	if((endTime != -1) && (startTime < endTime)) {
 		                                        		for(var i=startTime; i<= endTime; i++){
 		                                        			$("#time" + i + "").css("background-color","rgb(253, 193, 55)");
+		                                        			
+		                                        			
+		                                        			//console.log(i);
+		                                        			
+		                                        			//console.log($("#time"+ i + "").css("text-decoration") == "line-through solid rgb(211, 211, 211)");
+		                                        			
+		                                        			/* if($("#time"+ i + "").css("text-decoration","line-through") == true){ */
+		                                        			if($("#time"+ i + "").css("text-decoration") == "line-through solid rgb(211, 211, 211)"){
+		                                        				
+		                                        				alert("중복되는 예약이 있습니다. 예약시간을 다시 확인해주세요.");
+
+		                                        				$(".swiper-slide").css("background-color","white");
+			                                   					startTime = -1;
+			                                            		endTime = -1;
+		                                        			}
+		                                        			
+			                                   					
+			                                   				
+		                                        			
 		                                        		}
 		                                        	}
 		                                        	
 		                                        	
 		                                        	
-		                                        	console.log(startTime);
-		                                        	console.log(endTime);
+		                                        	console.log("startTime : " + startTime + " / endTime : " + endTime);
 		                                        	
 		                                   		}
 	                                        	
@@ -670,7 +708,7 @@
 		                                                    },
 		                                                    success: function(result) {
 		                                                    	
-		                                                    			                                                    	
+		                                                    	
 		                                                    	
 		                                                    	var resultStr="";
 		                                                    	
@@ -696,7 +734,7 @@
  		                                							
  		                                                    		for(var j=result[i].startTime; j<=result[i].endTime; j++){
  		                                                    			
-
+ 		                                                    			
             														    if(dateClickInfo.dateStr == result[i].useDate) {
         		                                                    		// console.log(result[i].useDate);
         		                                                    		
@@ -705,25 +743,21 @@
  		                                                    			 	$("#time"+ j + ">a").attr('class','disabled'); // disable
  		                                                    			 	
  		                                                    			 	
- 		                                                    			 	$("#time"+ j + "").css("background-color","lightgrey"); 
- 		                                                    			 	$("#time"+ j + "").css("color","lightgrey"); 
- 		                                                    			 	
+ 		                                                    			 	$("#time"+ j + "").css("text-decoration","line-through");  
+ 		                                                    			 	$("#time"+ j + "").css("color","lightgrey");  
+/*  		                                                    			 	$("#time"+ j + "").attr("style","text-decoration: line-through !important"); 
+ 		                                                    			 	$("#time"+ j + "").attr("style","color: lightgrey !important");  */
 
 
  		  		                                                    	 /* console.log($(".time").text()); */
         		                                                    		
         		                                                    	}
 
- 		                        											
- 		                                                    			 	
- 		                                                    			
  		                                                    		}
  		                                                    		
  		                                							
  		                                						} 
 
-	                                                    		
-		                                                    	
 		                                                    },
 		                                                    error: function() {
 		                                                        console.log("getting reserve time ajax failure");
