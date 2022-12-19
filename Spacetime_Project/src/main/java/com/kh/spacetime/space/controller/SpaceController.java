@@ -60,7 +60,6 @@ public class SpaceController {
 	 */
 	@RequestMapping("insert.sp")
 	public ModelAndView insertSpace(Space s, MultipartFile[] upfile, HttpSession session, ModelAndView mv) {
-		s.setHostNo("5"); // 나중에 지울거
 		int result = spaceService.insertSpace(s);
 
 		// 내가 추가한 공간 마지막 번호 가져오기

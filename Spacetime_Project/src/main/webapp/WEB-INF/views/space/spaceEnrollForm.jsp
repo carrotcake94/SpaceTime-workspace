@@ -899,9 +899,9 @@
      	//해시태그 합치기
      	var hashtag = [];
      	$(".hashtag>span").each(function() {
-     		hashtag.push($(this).text());
+     		hashtag.push($(this).text().substr(1).trim());
      	});
-     	console.log($(".hashtag>span").length);
+     	
      	if($(".hashtag>span").length != 0) {
      		$("input[name=hashtag]").val(hashtag.join(","));
      	}     	
