@@ -106,7 +106,7 @@ public interface SpaceService {
 	// ------------- 하연 끝 ^0^ ---------------
 
 	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
-	ArrayList<Space> selectListForNewsletter(List<String> list);
+	ArrayList<Space> selectListForNewsletter(HashMap map);
 
 	// 관리자 공간 리스트 카운트 - 혜민
 	int selectAdminSpaceListCount(HashMap<String, String> map);
