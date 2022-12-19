@@ -193,8 +193,8 @@ public class SpaceServiceImpl implements SpaceService {
 	// ------------- 하연 끝 ^0^ ---------------
 	
 	// 뉴스레터 상세 페이지 공간 리스트 해쉬태그 검색 조회 - 경미
-	public ArrayList<Space> selectListForNewsletter(List<String> list) {
-		return spaceDao.selectListForNewsletter(sqlSession, list);
+	public ArrayList<Space> selectListForNewsletter(HashMap map) {
+		return spaceDao.selectListForNewsletter(sqlSession, map);
 	}
 
 	// 관리자 공간 리스트 카운트 - 혜민 

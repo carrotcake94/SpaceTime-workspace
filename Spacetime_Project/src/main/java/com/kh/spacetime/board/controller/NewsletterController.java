@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.board.model.service.NewsletterService;
 import com.kh.spacetime.board.model.vo.Newsletter;
-import com.kh.spacetime.board.model.vo.Notice;
+import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.space.model.service.SpaceService;
 import com.kh.spacetime.space.model.vo.Space;
 
@@ -55,9 +55,19 @@ public class NewsletterController {
 	 * @return
 	 */
 	@RequestMapping("detail.ne")
-	public ModelAndView selectNewsletter(@RequestParam(value = "nlno")int nlno, ModelAndView mv) {
+	public ModelAndView selectNewsletter(@RequestParam(value = "nlno")int nlno, ModelAndView mv, HttpSession session) {
 			
 		Newsletter n = newsletterService.selectNewsletter(nlno);
+		
+		int memNo = 0;
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
+		HashMap map = new HashMap();
+		
+		if(loginMember != null) {
+			memNo = loginMember.getMemNo();
+		}
+		map.put("memNo", memNo);
 		
 		if(n != null) {
 			
@@ -68,7 +78,9 @@ public class NewsletterController {
 				list.add(arr[i]);
 			}
 			
-			ArrayList<Space> spaceList = spaceService.selectListForNewsletter(list);
+			map.put("list", list);
+			
+			ArrayList<Space> spaceList = spaceService.selectListForNewsletter(map);
 			
 			mv.addObject("n", n);
 			mv.addObject("list", spaceList);

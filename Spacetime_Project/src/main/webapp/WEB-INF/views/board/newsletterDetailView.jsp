@@ -36,7 +36,7 @@
 
     #imgg>p { 
         width: 100%;
-        padding-top: 125px; 
+        padding-top: 110px; 
         vertical-align: middle;
         font-size: 35px;
         font-weight: bold;
@@ -340,7 +340,8 @@
 //                     console.log(eventLike);
 //                     console.log(eventUnLike);
                     var spaceNo = $(this).parent().parent().parent().prev().prev().val();
-					console.log(spaceNo);
+                    var memNo = $(this).parent().parent().parent().prev().val();
+					// console.log(memNo);
                     if("${ loginMember }" == "") {
                         alert("로그인 후 이용 가능한 서비스입니다.");
                     } else {

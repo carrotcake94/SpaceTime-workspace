@@ -415,6 +415,31 @@ public class CommonController {
 		return "common/mypageReport";
 	}
 	
+	/**
+	 * 이용약관 페이지를 띄워주는 메소드 - 경미
+	 * @return
+	 */
+	@RequestMapping("userAgreement.co")
+	public String userAgreements() {
+		return "common/userAgreements";
+	}
 	
+	/**
+	 * 개인정보처리방침 페이지를 띄워주는 메소드 - 경미
+	 * @return
+	 */
+	@RequestMapping("privacyPolicy.co")
+	public String privacyPolicy() {
+		return "common/privacyPolicy";
+	}
+	
+	/**
+	 * 운영정책 페이지를 띄워주는 메소드 - 경미
+	 * @return
+	 */
+	@RequestMapping("managementPolicy.co")
+	public String managementPolicy() {
+		return "common/managementPolicy";
+	}
 
 }
