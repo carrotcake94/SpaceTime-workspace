@@ -193,9 +193,25 @@
                     <br>
                     <div style="height:30px;">
                         <b>${ m.nickname }</b>&nbsp;&nbsp;
-                        <span id="memGrade">${m.grCode }</span>
+                        <input type="hidden" id="grCode" value="${m.grCode}">
+		                <span id="memGrade"><i class="fa-solid fa-sun" style="color: orange;"></i></span>
                     </div>
                 </div>
+                
+                <!-- 회원 등급 아이콘 -->
+                <script>
+					$(function() {
+						let grCode = $("#grCode").val();
+						if(grCode === '태양') {
+							$("#memGrade").html("<i class='fa-solid fa-sun' style='color: orange;'>");
+						} else if(grCode === '지구') {
+							$("#memGrade").html("<i class='fa-solid fa-earth-americas' style='color: green;'></i>");
+						} else {
+							$("#memGrade").html("<i class='fa-solid fa-moon' style='color: #949494;'></i>");
+						}
+					})
+
+				</script>
 
                 <!-- 프로필 정보 -->
                 <div class="mem_info">

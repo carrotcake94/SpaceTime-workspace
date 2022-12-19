@@ -282,6 +282,14 @@ public class CommonController {
 		return mv;
 	}
 	
+	/**
+	 * 관리자 매출 월별 조회 - 혜민 
+	 * @param currentPage
+	 * @param model
+	 * @param sno
+	 * @param month
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="ajaxsdlist.ad", produces="application/json; charset=UTF-8")
 	public String ajaxSalesDetailList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, int sno, String month) {
@@ -336,6 +344,48 @@ public class CommonController {
 		
 		return json.toJSONString();
 	}
+	
+	/**
+	 * 관리자 매출 검색 - 혜민
+	 * @param currentPage
+	 * @param model
+	 * @param condition
+	 * @param keyword
+	 * @param month
+	 * @return
+	 */
+	@RequestMapping("searchS.ad")
+	public String selectSalesSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword, String month) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("month", month);
+		
+		System.out.println(map);
+		
+		int listCount = commonService.selectSalesSearchListCount(map);
+		
+		int pageLimit = 5;
+		int boardLimit = 10;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Reserve> list = commonService.selectSalesSearchList(pi, map);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("month", month);
+		
+		System.out.println(pi);
+		System.out.println(list);
+		
+		return "common/adminSalesSearch";
+	}
+	
+	
 	/**
 	 * 헤더에서 서비스정보 페이지 이동 - 하연 
 	 */

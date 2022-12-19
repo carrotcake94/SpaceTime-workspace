@@ -327,8 +327,15 @@
                                             + "<td>" + result.list[i].memName + "</td>"
                                             + "<td>" + result.list[i].memId + "</td>"
                                             + "<td>" + result.list[i].nickname + "</td>"
-                                            + "<td>" + result.list[i].grCode + "</td>"
-                                            + "<td>" + result.list[i].enrollDate + "</td>"
+                                            + "<td id='grCode'>";
+	                                            if(result.list[i].grCode == '태양') {
+	                                            	resultStr += "<i class='fa-solid fa-sun' style='color: orange;'></i>";
+	                    						} else if(result.list[i].grCode == '지구') {
+	                    							resultStr += "<i class='fa-solid fa-earth-americas' style='color: green;'></i>";
+	                    						} else
+	                    							resultStr += "<i class='fa-solid fa-moon' style='color: #949494;'></i>";
+	                    						}
+	                             resultStr += "</td><td>" + result.list[i].enrollDate + "</td>"
                                             + "<td>";
                                                 if(result.list[i].memStatus == 'N') {
                                                     resultStr += "가입";
@@ -339,8 +346,8 @@
                                                 }                              
                                 resultStr += "</td> </tr>";
                         }
-                    } else if(result.list.length == 0) {
-                        resultStr += "<tr class='salesTr'><td colspan='7' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
+                    } else {
+                        resultStr += "<tr class='memberTr'><td colspan='7' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
                     }
                     
                     $(".myTable").html(resultStr);

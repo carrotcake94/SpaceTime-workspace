@@ -100,6 +100,25 @@ public class CommonDao {
 		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesDetailList", map, rowBounds);
 	}
 	
+
+	// 매출 검색 글 개수 
+	public int selectSalesSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		
+		return sqlSession.selectOne("commonMapper.selectSalesSearchListCount", map);
+	}
+	
+	// 매출 검색 리스트 조회 
+	public ArrayList<Reserve> selectSalesSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("commonMapper.selectSalesSearchList", map, rowBounds);
+	}
+	
+	
 	//검색어 자동완성기능 - 성훈
 	public String autoComplete(SqlSessionTemplate sqlSession, String keyword) {
 		return sqlSession.selectOne("commonMapper.autoComplete", keyword);
