@@ -215,10 +215,9 @@
 
 	<!-- 검색어 자동완성 -성훈 -->
 	<select id="autoComplete" parameterType="string" resultType="string">
-		SELECT SPACE_TITLE
-		FROM SPACE
-		WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
-		AND SPACE_STATUS = 'Y'
+		SELECT LISTAGG(SPACE_TITLE, ',') WITHIN GROUP (ORDER BY SPACE_TITLE DESC) AS TITLES
+		 FROM SPACE
+		 WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
 	</select>
 	
 	<select id="hashtagAutoComplete" parameterType="string" resultType="string">

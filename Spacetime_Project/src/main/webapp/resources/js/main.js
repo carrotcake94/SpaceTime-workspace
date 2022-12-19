@@ -51,6 +51,7 @@ function hashtagAutoComplete(input){
 	});
 }
 
+//(자동완성)키워드를 바탕으로 뽑아온 데이터를 동적리스트로 가공하여 화면에 뿌려줌
 function autoCompleteListShowUp(words, input){
 	//기존의 내용 삭제
 	while(autoCompleteList.hasChildNodes()){
