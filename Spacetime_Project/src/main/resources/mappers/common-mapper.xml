@@ -245,4 +245,78 @@
 		WHERE REPORT_MEM_NO = #{reportMemNo}
 		ORDER BY REPORT_NO DESC
 	</select>
+	
+	
+	<!-- 정현 Start-->
+	<!-- 채팅방 -->
+	<resultMap id="chatListSet" type="chatting" >
+		<result column="CHAT_NO" property="chatNo" />
+		<result column="MESSAGE" property="message" />
+		<result column="MESSAGE_DATE" property="messageDate" />
+		<result column="SENDER" property="sender" />
+		<result column="MEM_NAME" property="receiver" />
+		<result column="PROFILE_PATH" property="profilePath" />
+	</resultMap>
+	
+	<!-- 	나의 쪽지함 리스트-->
+	<select id="selectNoteList" parameterType="_int" resultMap="chatListSet">
+	   SELECT CHAT_NO, MESSAGE
+	   , TO_CHAR(MESSAGE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS MESSAGE_DATE
+	   , SENDER, M.MEM_NAME, M.PROFILE_PATH
+       FROM CHATTING C
+       JOIN MEMBER M ON C.SENDER = M.MEM_NO
+       WHERE CHAT_NO IN (
+           SELECT MAX(CHAT_NO)
+           FROM CHATTING
+           GROUP BY SENDER, RECEIVER
+       )
+       AND RECEIVER = #{memNo}
+       ORDER BY CHAT_NO DESC
+	</select>
+	
+	
+	<!-- 	나의 쪽지함 검색  리스트-->
+	<select id="searchNoteList" parameterType="hashmap" resultMap="chatListSet">
+	   SELECT CHAT_NO, MESSAGE
+	   , TO_CHAR(MESSAGE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS MESSAGE_DATE
+	   , SENDER, M.MEM_NAME, M.PROFILE_PATH
+       FROM CHATTING C
+       JOIN MEMBER M ON C.SENDER = M.MEM_NO
+       WHERE CHAT_NO IN (
+           SELECT MAX(CHAT_NO)
+           FROM CHATTING
+           GROUP BY SENDER, RECEIVER
+       )
+       AND RECEIVER = #{memNo}
+       AND MEM_NAME LIKE '%' || #{keyword} || '%'
+       ORDER BY CHAT_NO DESC
+	</select>
+	
+	<!-- 	채팅 상세 뷰-->
+	<select id="selectChatList" parameterType="chatting" resultMap="chatListSet">
+	   SELECT CHAT_NO, MESSAGE
+       , TO_CHAR(MESSAGE_DATE, 'MM-DD HH24:MI') AS MESSAGE_DATE 
+       , SENDER, M.MEM_NAME, M.PROFILE_PATH
+       FROM CHATTING C
+       JOIN MEMBER M ON C.SENDER = M.MEM_NO
+       WHERE (RECEIVER = #{receiver}
+       AND SENDER = #{sender}) OR 
+       (RECEIVER = #{sender}
+       AND SENDER = #{receiver})
+       ORDER BY CHAT_NO DESC
+	</select>
+	
+	<insert id="insertChat" parameterType="chatting">
+		INSERT INTO CHATTING
+		VALUES(SEQ_CNO.NEXTVAL
+			     , #{message}
+			     , SYSDATE
+			     , #{sender}
+			     , #{receiver})
+	</insert>
+	
+	<!-- 정현 End-->
+	
+	
+	
 </mapper>

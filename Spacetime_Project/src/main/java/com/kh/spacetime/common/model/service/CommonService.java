@@ -3,45 +3,47 @@ package com.kh.spacetime.common.model.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.spacetime.common.model.vo.Chatting;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 
 public interface CommonService {
-	
-	// 신고 글 총 개수 
+
+	// 신고 글 총 개수
 	int selectReportListCount(HashMap<String, String> map);
-	
-	// 신고 리스트 조회 
+
+	// 신고 리스트 조회
 	ArrayList<Report> selectReportList(PageInfo pi, HashMap<String, String> map);
-	
-	// 신고 상세조회 
+
+	// 신고 상세조회
 	Report selectReport(int reportNo);
-	
+
 	// 신고 처리 (승인, 반려)
 	int updateReport(HashMap<String, String> map);
 
 	// 신고 검색 글 개수
 	int selectReportSearchListCount(HashMap<String, String> map);
 
-	// 신고 검색 리스트 조회 
+	// 신고 검색 리스트 조회
 	ArrayList<Report> selectReportSearchList(PageInfo pi, HashMap<String, String> map);
-	
-	// 매출이 있는 공간 총 개수 
+
+	// 매출이 있는 공간 총 개수
 	int selectSalesListCount(String month);
-	
-	// 매출이 있는 공간 리스트 조회 
+
+	// 매출이 있는 공간 리스트 조회
 	ArrayList<Reserve> selectSalesList(PageInfo pi, String month);
 
-	// 공간 매출 상세조회 
+	// 공간 매출 상세조회
 	Reserve selectSales(int spaceNo);
-	
+
 	// 매출이 있는 공간의 상세 매출 총 개수
 	int selectSalesDetailCount(HashMap<String, String> map);
-	
+
 	// 매출이 있는 공간의 상세 매출 조회
 	ArrayList<Reserve> selectSalesDetailList(PageInfo pi, HashMap<String, String> map);
 
+<<<<<<< Updated upstream
 	// 매출 검색 글 개수 
 	int selectSalesSearchListCount(HashMap<String, String> map);
 
@@ -51,14 +53,34 @@ public interface CommonService {
 	// 검색어 자동완성
 	String autoComplete(String keyword);
 	
+=======
+	// 검색어 자동완성
+	ArrayList<String> autoComplete(String keyword);
+
+>>>>>>> Stashed changes
 	// 해시태그 자동완성
 	String hashtagAutoComplete(String keyword);
 
-	//==============================================================================================
-	
-	//마이페이지 신고리스트 조회 - 신희섭
+	// ==============================================================================================
+
+	// 마이페이지 신고리스트 조회 - 신희섭
 	int selectMypageReportListCount(int reportMemNo);
-	
+
 	ArrayList<Report> selectMypageReportList(int reportMemNo, PageInfo pi);
-	
+
+	// 정현------------
+	// 나의 채팅 리스트
+	ArrayList<Chatting> selectNoteList(int memNo);
+
+	// 나의 채팅 리스트 검색
+	ArrayList<Chatting> searchNoteList(HashMap<String, String> map);
+
+	// 나의 채팅 상세뷰
+	ArrayList<Chatting> selectChatList(Chatting c);
+
+	// 채팅 인서트
+	int insertChat(Chatting c);
+
+	// ------------정현
+
 }
