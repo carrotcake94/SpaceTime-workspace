@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -601,18 +601,52 @@
                                 <tr>
                                     <th>
                                         <script>
+                                        		
+                                        		var startTime = -1;
+                                        		var endTime = -1;
+                                        		
+		                                        // 시간 선택하는 함수 - onclick
+		                                   		function selectTime(k) {
+		                                        	
+		                                        	if(startTime == -1) {
+		                                        		
+		                                        		$("#time" + k + "").css("background-color","rgb(253, 193, 55)");
+			                                   			startTime = $("#time" + k + "").find(".time").text();
+		                                        		
+		                                        	} else if((startTime != -1) && (endTime == -1)) {
+		                                        		
+		                                        		$("#time" + k + "").css("background-color","rgb(253, 193, 55)");
+			                                   			endTime = $("#time" + k + "").find(".time").text();
+		                                        		
+		                                        	} else {
+			                                   			// 색 초기화 
+			                                   			$(".swiper-slide").css("background-color","white");
+			                                   			
+		                                        		$("#time" + k + "").css("background-color","rgb(253, 193, 55)");
+			                                   			startTime = $("#time" + k + "").find(".time").text();
+			                                   			endTime = -1
+			                                   			
+			                                   			
+		                                        	}
+		                                        	
+		                                        	// 시작시간 끝시간 사이 자동색칠 
+		                                        	if(endTime != -1) {
+		                                        		for(var i=startTime; i<= endTime; i++){
+		                                        			$("#time" + i + "").css("background-color","rgb(253, 193, 55)");
+		                                        		}
+		                                        	}
+		                                        	
+		                                        	
+		                                        	
+		                                        	console.log(startTime);
+		                                        	console.log(endTime);
+		                                        	
+		                                   		}
 	                                        	
 	                                        	document.addEventListener('DOMContentLoaded', function() {
 	                                        		  var calendarEl = document.getElementById('calendar');
 
 	                                        		  var calendar = new FullCalendar.Calendar(calendarEl, {
-	                                        		    /* dateClick: function(info) {
-	                                        		     alert('clicked '+ info.dateStr);
-	                                        		      console.log(info.dateStr); 
-	                                        		      
-	                                        		    	  info.dayEl.style.backgroundColor = 'lightgrey';
-	                                        		    }
-	                                        		   */
 	                                        		  dateClick: function (dateClickInfo) {
 		                                        		  // get all fc-day element
 		                                        		  const fcDayElements = document.querySelectorAll(
@@ -625,7 +659,7 @@
 		                                        		  // set background color clicked Element
 		                                        		  dateClickInfo.dayEl.style.backgroundColor = "lightgrey";
 		                                        		  
-		                                        		  // console.log(dateClickInfo.dateStr); 
+		                                        		 /*  console.log(dateClickInfo.dateStr);  */
 		                                        		  // console.log(${s.spaceNo});
 		                                        		  
 		                                        		// 시간예약 현황 불러오기 
@@ -636,18 +670,22 @@
 		                                                    },
 		                                                    success: function(result) {
 		                                                    	
+		                                                    			                                                    	
+		                                                    	
 		                                                    	var resultStr="";
 		                                                    	
 		                                                    	
 		                                                    	for(var k=0; k<24;k++){
 		                                                    		
-		                                                    		resultStr += "<li class='swiper-slide able'' id='time" + k + "'>"
-            														    + "<a class='time_box' href='confirm-modal' data-toggle='modal' data-target='#confirm-modal'>"
+		                                                    		resultStr += "<li class='swiper-slide able' id='time" + k + "'>"
+            														    /* + "<a class='time_box' href='confirm-modal' data-toggle='modal' data-target='#confirm-modal'>" */
+            														    + "<a class='time_box' id= 'time_box'" + k + "' onclick='return selectTime(" + k + ");'>"
             														    + "<span class='time'>" + k + "</span>"
             														    + "<br>"
             														    + "<span class='price'>" + ${s.hourPrice } + "</span>"
             														    + "</a>"
-            														    + "</li>";
+            														    + "</li>"; 
+            														    
             														    
 		                                                    	}
 		                                                    	
@@ -658,10 +696,11 @@
  		                                							
  		                                                    		for(var j=result[i].startTime; j<=result[i].endTime; j++){
  		                                                    			
- 		                                                    			
- 		                                                    	 		
- 		                        											
- 		                                                    			 	/* $("#time"+ j + ">a").attr('href','#'); // disable
+
+            														    if(dateClickInfo.dateStr == result[i].useDate) {
+        		                                                    		// console.log(result[i].useDate);
+        		                                                    		
+        		                                                    		/* $("#time"+ j + ">a").attr('href','#'); // disable
  		                                                    			 	$("#time"+ j + ">a").attr('data-toggle',''); // disable */
  		                                                    			 	$("#time"+ j + ">a").attr('class','disabled'); // disable
  		                                                    			 	
@@ -672,6 +711,11 @@
 
 
  		  		                                                    	 /* console.log($(".time").text()); */
+        		                                                    		
+        		                                                    	}
+
+ 		                        											
+ 		                                                    			 	
  		                                                    			
  		                                                    		}
  		                                                    		
@@ -680,7 +724,6 @@
 
 	                                                    		
 		                                                    	
-		                                                    	/* $("#replyArea>tbody").html(resultStr); */
 		                                                    },
 		                                                    error: function() {
 		                                                        console.log("getting reserve time ajax failure");
@@ -694,7 +737,8 @@
 	                                        		  calendar.render();
 	                                        		});
 	                                        	
-	                                        		
+
+                                           	 
 	                                        
                                         </script>
                                         
@@ -725,7 +769,7 @@
                                             $('.test').scrollLeft(_scrollX + 100);
                                           };
                                         </script>
-                                        <!-- <input type="button" class="" value="예약하기" data-toggle="modal" data-target="#confirm-modal"> -->
+                                        <input type="button" class="" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
                                     </th>
                                 </tr>
                             </table>
