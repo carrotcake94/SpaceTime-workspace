@@ -144,7 +144,7 @@
                 </div>
             </div>
             <div align="center" style="margin-top: 50px;">
-                <a class="btn btn-sm btn-secondary" onclick="history.back();">목록</a>
+                <a class="btn btn-sm btn-secondary" href="rlist.ad">목록</a>
             </div>
         </div>
     </div>

@@ -142,7 +142,7 @@
                     <table align="center" id="searchForm">
                         <tr>
                             <td style="width: 20%;">
-                                <input type="month" id="searchMonth" name="month" class="mb-2 form-control" style="width:150px; display: inline-block;" required>
+                                <input type="month" id="searchMonth" name="month" class="mb-2 form-control" style="width:150px; display: inline-block;" value="${month}" required>
                             </td>
                             <td align="right" style="width: 20%;">
                                 <input type="hidden" name="currentPage" value="1">

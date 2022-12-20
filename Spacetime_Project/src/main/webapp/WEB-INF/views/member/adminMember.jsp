@@ -326,7 +326,10 @@
                 url : "ajaxmlist.ad",
                 data : {tab : tab, cpage : currentPage},
                 success : function(result) { 
-             
+                	
+                	// console.log(result.list[0].memStatus);
+                	// console.log(result.list[0].blacklist);
+                	
                     var resultStr = "";
                     
                     if(result.list.length != 0) {

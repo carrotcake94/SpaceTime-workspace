@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>매출 통계</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <style>
 
     #header_container {height: 80px;}
@@ -70,80 +70,109 @@
         width: 50%;
     }
     
-
-    .sales_graph {
-        height: 230px;
-        border: 1px solid blue;
+    #chartjs {
+        height: 380px;
+        border: 1px solid red;
+        box-sizing: border-box;
+    }
+    .line {
+        height: 100%;
+        width: 60%;
+        float: left;
     }
 
-    .sales_round {
-        height: 300px;
-        border: 1px solid green;
+    .doughnut {
+        height: 100%;
+        width: 40$;
+        border: 1px solid blue;
+        float: left;
     }
 </style>
 </head>
 
 <body>
-
-<div class="wrap">
-    <div id="header_container"><jsp:include page="header.jsp" /></div>
-    <jsp:include page="adminNavi.jsp" />
-    <div id="content">
-
-        <!-- 매출통계 제목 -->
-        <div align="left" id="title"><h3>매출 통계</h3></div>
-
-        <!-- 매출통계 -->
-        <div class="chart" align="center">
-
-            <!-- 일, 월, 연 매출 보드 -->
-            <div class="sales_board">
-                <div id="today">
-                    <div id="todaySalesData" class="salesData" style="color:rgb(41, 162, 184)">xxxx 원</div>
-                    <div id="todaySalesText" class="salesText">
-                        <div align="left">오늘</div>
-                        <div id="todaySalesCount" align="right" style="color:rgb(41, 162, 184)">???건</div>
+    
+    <div class="wrap">
+        <div id="header_container"><jsp:include page="header.jsp" /></div>
+        <jsp:include page="adminNavi.jsp" />
+        <div id="content">
+    
+            <!-- 매출통계 제목 -->
+            <div align="left" id="title"><h3>매출 통계</h3></div>
+    
+            <!-- 매출통계 -->
+            <div class="chart" align="center">
+    
+                <!-- 일, 월, 연 매출 보드 -->
+                <div class="sales_board">
+                    <div id="today">
+                        <div id="todaySalesData" class="salesData" style="color:rgb(41, 162, 184)">xxxx 원</div>
+                        <div id="todaySalesText" class="salesText">
+                            <div align="left">오늘</div>
+                            <div id="todaySalesCount" align="right" style="color:rgb(41, 162, 184)">???건</div>
+                        </div>
+                    </div>
+    
+                    <div id="week">
+                        <div id="weekSalesData" class="salesData" style="color:rgba(228, 118, 118, 0.884)">xxxx 원</div>
+                        <div id="weekSalesText" class="salesText">
+                            <div align="left">이번주</div>
+                            <div id="weekSalesCount" align="right" style="color:rgba(228, 118, 118, 0.884)">???건</div>
+                        </div>
+                    </div>
+    
+                    <div id="month">
+                        <div id="monthSalesData" class="salesData" style="color:rgb(67, 211, 127)">xxxx 원</div>
+                        <div id="monthSalesText" class="salesText">
+                            <div align="left">이번달</div>
+                            <div id="monthSalesCount" align="right" style="color:rgb(67, 211, 127)">??? 건</div>
+                        </div>
+                    </div>
+    
+                    <div id="year">
+                        <div id="yearSalesData" class="salesData" style="color:rgb(155, 41, 184)">xxxx 원</div>
+                        <div id="yearSalesText" class="salesText">
+                            <div align="left">올해</div>
+                            <div id="yearSalesCount" align="right" style="color:rgb(155, 41, 184)">??? 건</div>
+                        </div>
                     </div>
                 </div>
-
-                <div id="week">
-                    <div id="weekSalesData" class="salesData" style="color:rgba(228, 118, 118, 0.884)">xxxx 원</div>
-                    <div id="weekSalesText" class="salesText">
-                        <div align="left">이번주</div>
-                        <div id="weekSalesCount" align="right" style="color:rgba(228, 118, 118, 0.884)">???건</div>
+                <br><br>
+                
+                <div id="chartjs">
+                    <div class="line">
+                        <!-- 매출 그래프 -->sdf
+                        <canvas id="line_graph"></canvas>
                     </div>
-                </div>
-
-                <div id="month">
-                    <div id="monthSalesData" class="salesData" style="color:rgb(67, 211, 127)">xxxx 원</div>
-                    <div id="monthSalesText" class="salesText">
-                        <div align="left">이번달</div>
-                        <div id="monthSalesCount" align="right" style="color:rgb(67, 211, 127)">??? 건</div>
-                    </div>
-                </div>
-
-                <div id="year">
-                    <div id="yearSalesData" class="salesData" style="color:rgb(155, 41, 184)">xxxx 원</div>
-                    <div id="yearSalesText" class="salesText">
-                        <div align="left">올해</div>
-                        <div id="yearSalesCount" align="right" style="color:rgb(155, 41, 184)">??? 건</div>
+        
+                    <div class="doughnut">
+                        <!-- 원형 그래프 -->sdf
+                        <canvas id="doughnut_graph"></canvas>
                     </div>
                 </div>
             </div>
-
-            <div class="sales_graph">
-                <!-- 매출 그래프 -->
-                <canvas id="graph"></canvas>
-            </div>
-
-            <div class="sales_round">
-                <!-- 원형 그래프 -->
-                <canvas id="doughnut"></canvas>
-            </div>
+    
         </div>
-
     </div>
-</div>
+    
+    <script>
+        $(document).ready(function() {
+            getGraph();
+        });
+        
+        function getGraph() {
+            let timeList = [];
+            let salesList = [];
+            
+            $.ajax({
+                url: "ajax30days.ad",
+                data: {
+                    
+                }
+            })
+            
+        }
+    </script>
 
 </body>
 
