@@ -591,8 +591,22 @@ body * {
 							<div>
 								<textarea id="reportContent" name="reportContent" cols="50"
 									rows="3" placeholder="신고 내용을 입력해주세요." maxlength="200"></textarea>
+
 							</div>
 						</div>
+						<script>
+							$(document).ready(function () {
+								$('#reportContent').summernote({
+									placeholder: '신고할 내용과 증빙 가능한 이미지를 첨부해주세요.<br>증빙이 되지 않으면 신고가 처리되지 않습니다.',
+									lang: "ko-KR",
+									height: 200,
+									minHeight: 200,
+									maxHeight: 200
+								});
+
+							});
+                    
+						</script>
 						<!-- Modal footer -->
 						<div class="modal-footer">
 							<button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
@@ -822,6 +836,7 @@ body * {
 		 
 		 $.ajax({
 				url : "reportReview.rv",
+				type : "post",
 				data : {
 					reportType : reportType,
 					reportContent : reportContent,
