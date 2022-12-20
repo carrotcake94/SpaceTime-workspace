@@ -277,7 +277,7 @@
     }
 
     .btn_responsive .btn.btn_option1 {
-        background-color: #818181;
+        background-color: #656565;
     }
 
     .btn_responsive .btn.btn_option2 {
@@ -519,9 +519,9 @@
                             </div> 
                             <div class="btn_order_area">
                                 <div class="btn_responsive">
-                                    <a class="btn btn_option1" data-toggle="modal" data-target="#cancle-modal">예약취소</a>
-                                    <a class="btn btn_option2">
-                                        <span class="txt_call">채팅</span>
+                                    <a class="btn btn_option1 btn-primary" data-toggle="modal" data-target="#cancle-modal" style="border-color:#656565;">예약취소</a>
+                                    <a class="btn btn_option2 btn-primary" onclick="history.back()" style="background-color: #FFB200; border-color: #FFB200;">
+                                        <span class="txt_call">확인</span>
                                     </a>
                                 </div>
                             </div>
@@ -541,11 +541,6 @@
                     </div> 
                     <div class="map">
                         지도 들어갈 곳~~
-                    </div>
-                </div>
-                <div class="btn_order_area" style="margin-top:40px;">
-                    <div class="btn_responsive">
-                        <a class="btn btn-primary" onclick="history.back()" style="background-color: #FFB200; border-color: #FFB200;">확인</a>
                     </div>
                 </div>
             </div>
@@ -715,10 +710,12 @@
 		<fmt:formatDate var="now" value="${now}" pattern="yyyyMMdd" />
 		<fmt:parseDate var="useDate" value="${r.useDate}" pattern="yyyy-MM-dd HH:mm:ss.S"/> <!-- String 을 Date 로 바꿈 -->
 		<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
-		
+
+        <!-- 하연아 여기 주석처리 안하면 뜨길래 주석 처리 해놨음!-->
+		<!--
                                     <c:out value="${useDate1}" />
                                     <c:out value="${now}" />
-                                    <c:out value="${useDate1 - now}" />
+                                    <c:out value="${useDate1 - now}" />-->
                                     
         <!-- 취소 Modal -->
         <div class="modal" id="cancle-modal">
