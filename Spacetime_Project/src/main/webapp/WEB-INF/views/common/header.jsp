@@ -225,7 +225,6 @@
         }
 
         #profile_dv {
-
             overflow: hidden;
             background-color: #FFB200;
             position: relative;
@@ -248,10 +247,11 @@
         
         /* 프로필 이미지 크기 */
         #profile-img {
-	        border: 2px solid rgba(128, 128, 128, 0.2);
+	        border: 2px solid #ffc43a;
 	        border-radius: 100%;
 	        width: 90px;
 	        height: 90px;
+            background-color: whitesmoke;
     	}
 
         #profile_tb td {
@@ -376,6 +376,12 @@
 
         .com_infobox>ul:nth-child(2) li:last-child {
             border-bottom: 1px solid #EDEDED;
+        }
+
+        .com_infobox>ul:nth-child(2) li:hover {
+        	background-color: #EEEEEE;
+        	cursor: pointer;
+        	font-size: 18px;
         }
   
         .com_infobox ul li:last-child {
@@ -629,23 +635,23 @@
             <c:choose>
                 <c:when test="${empty loginMember}">
                     <table id="profile_tb">
-                    <!-- 로그인 전 -->
-                    <tr>
-                        <td rowspan="2">
-                            <img id="profile-img" src="resources/images/logo.png">
-                        </td>
-                        <td>
-                            <a href="enrollLogin.me">로그인 및 회원가입</a>
-                        </td>
-                    </tr>
+                        <!-- 로그인 전 -->
+                        <tr>
+                            <td rowspan="2">
+                                <img id="profile-img" src="resources/images/profile_default.png">
+                            </td>
+                            <td>
+                                <a href="enrollLogin.me">로그인 및 회원가입</a>
+                            </td>
+                        </tr>
 
-                </table>
-                <script>
-                    $(function() {
-                        $("#profile_tb tr:nth-child(1)>td:nth-child(2)").css("padding-top", "0").css("font-weight","400");
-                        $("#profile_tb tr:nth-child(1)>td:nth-child(2)>a").css("text-decoration", "none").css("color", "whitesmoke");
-                    })
-                </script>
+                    </table>
+                    <script>
+                        $(function() {
+                            $("#profile_tb tr:nth-child(1)>td:nth-child(2)").css("padding-top", "0").css("font-weight","400");
+                            $("#profile_tb tr:nth-child(1)>td:nth-child(2)>a").css("text-decoration", "none").css("color", "whitesmoke");
+                        })
+                    </script>
                 </c:when>
                 <c:otherwise>
                 <table id="profile_tb">
@@ -662,6 +668,13 @@
                         <td><a href="myPage.me">프로필 관리 및 수정</a></td>
                     </tr>
                 </table>
+                    <c:if test="${empty loginMember.profilePath}">
+                        <script>
+                            $(function() {
+                                $("#profile-img").attr("src", "resources/images/profile_default.png");
+                            })
+                        </script>
+                    </c:if>
                 </c:otherwise>
             </c:choose>
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
@@ -711,7 +724,7 @@
             </ul>
             <c:if test="${!empty loginMember}">
                 <ul>
-                    <li><a href="logout.me">로그아웃</a></li>
+                    <li onclick="location.href='logout.me'">로그아웃</li>
                 </ul>
             </c:if>
         </div>
@@ -850,7 +863,7 @@
         <c:when test="${ empty loginMember }">
             <script>
                 $(".sign-up>a").text("로그인 / 회원가입");
-                $(".sign-up>a").attr("href","login.me");
+                $(".sign-up>a").attr("href","enrollLogin.me");
             </script>
         </c:when>
 	    <c:when test="${loginMember.hostStatus eq 'Y'}">

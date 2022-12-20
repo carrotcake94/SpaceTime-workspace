@@ -136,11 +136,11 @@ public class ReviewController {
 				String changeName = saveFile(upfile[i], session, "space/review/");
 
 				if (i == 0) {
-					r.setReviewAttach1("resources/uploadFiles/space/review"+changeName);
+					r.setReviewAttach1("resources/uploadFiles/space/review/"+changeName);
 				} else if (i == 1) {
-					r.setReviewAttach2("resources/uploadFiles/space/review"+changeName);
+					r.setReviewAttach2("resources/uploadFiles/space/review/"+changeName);
 				} else if (i == 2) {
-					r.setReviewAttach3("resources/uploadFiles/space/review"+changeName);
+					r.setReviewAttach3("resources/uploadFiles/space/review/"+changeName);
 				}
 			}
 		}
