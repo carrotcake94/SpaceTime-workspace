@@ -253,6 +253,41 @@
 		 WHERE HASHTAG LIKE '%' || #{keyword} || '%'
 	</select>
 	
+	<!-- 추천공간 -성훈 -->
+	<select id="spaceRecommend" parameterType="string" resultMap="spaceResultSet">
+	    SELECT S.SPACE_NO,
+	           SPACE_TITLE,
+	           HOUR_PRICE,
+	           HASHTAG,
+	           MAX_PEOPLE,
+	           ATTACHMENT_RENAME,
+	           SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT
+	      FROM SPACE S
+	      LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
+	     WHERE SPACE_STATUS = 'Y'
+	       AND ATTACHMENT_LEVEL = 1
+	       AND HASHTAG LIKE '%'|| #{keyword} || '%'
+	       AND ROWNUM <![CDATA[<=]]> 6
+	     ORDER BY COUNT DESC
+	</select>
+	
+	<!-- 리뷰존 (최신순) -->
+	<select id="spaceReview" resultMap="spaceResultSet">
+		SELECT DISTINCT S.SPACE_NO,
+		       S.SPACE_TITLE,
+		       A.ATTACHMENT_RENAME,
+		       RV.REVIEW_CONT
+		  FROM SPACE S
+		  LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
+		  LEFT JOIN RESERVE RS ON (S.SPACE_NO = RS.SPACE_NO)
+		  LEFT JOIN REVIEW RV ON (RS.RESERVE_NO = RV.RESERVE_NO)
+		 WHERE SPACE_STATUS = 'Y'
+		   AND ATTACHMENT_LEVEL = 1
+		   AND REVIEW_STATUS = 'N'
+		   AND ROWNUM <![CDATA[<=]]> 6
+		 ORDER BY (SELECT REVIEW_NO FROM REVIEW) DESC;
+	</select>
+	
 	<!-- 마이페이지 신고리스트 신희섭 -->
 	<select id="selectMypageReportListCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)

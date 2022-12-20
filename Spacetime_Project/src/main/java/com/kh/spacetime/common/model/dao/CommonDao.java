@@ -11,6 +11,7 @@ import com.kh.spacetime.common.model.vo.Chatting;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Space;
 
 @Repository
 public class CommonDao {
@@ -136,6 +137,16 @@ public class CommonDao {
 	// 해시태그 자동완성기능 -성훈
 	public String hashtagAutoComplete(SqlSessionTemplate sqlSession, String keyword) {
 		return sqlSession.selectOne("commonMapper.hashtagAutoComplete", keyword);
+	}
+	
+	// 추천공간 -성훈
+	public ArrayList<Space> spaceRecommend(SqlSessionTemplate sqlSession, String keyword) {
+	    return (ArrayList)sqlSession.selectList("commonMapper.spaceRecommend", keyword);
+	}
+
+	// 리뷰존 -성훈
+	public ArrayList<Space> spaceReview(SqlSessionTemplate sqlSession) {
+	    return (ArrayList)sqlSession.selectList("commonMapper.spaceReview");
 	}
 
 	// ----------------------------------------------------------------------------------------

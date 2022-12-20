@@ -24,6 +24,7 @@ import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.common.template.Pagination;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Space;
 
 @Controller
 public class CommonController {
@@ -438,6 +439,26 @@ public class CommonController {
 		System.out.println(keywordArr);
 
 		return keywords;
+	}
+	
+	//추천공간리스트
+	@ResponseBody
+	@RequestMapping(value="spaceRecommend.co", produces = "application/json; charset=UTF-8")
+	public String spaceRecommend(String keyword){
+	    
+	    ArrayList<Space> recommendList = commonService.spaceRecommend(keyword);
+	    
+	    return new Gson().toJson(recommendList);
+	}
+
+	//리뷰존리스트
+	@ResponseBody
+	@RequestMapping(value="spaceReview.co", produces = "application/json; charset=UTF-8")
+	public String spaceReview(){
+	    
+	    ArrayList<Space> reviewList = commonService.spaceReview();
+	    
+	    return new Gson().toJson(reviewList);
 	}
 
 	// 카테고리 페이지 이동

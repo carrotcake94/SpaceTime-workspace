@@ -12,6 +12,7 @@ import com.kh.spacetime.common.model.vo.Chatting;
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.model.vo.Report;
 import com.kh.spacetime.reserve.model.vo.Reserve;
+import com.kh.spacetime.space.model.vo.Space;
 
 @Service
 public class CommonServiceImpl implements CommonService {
@@ -131,6 +132,18 @@ public class CommonServiceImpl implements CommonService {
 	@Override
 	public String hashtagAutoComplete(String keyword) {
 		return commonDao.hashtagAutoComplete(sqlSession, keyword);
+	}
+	
+	// 추천공간 -성훈
+	@Override
+	public ArrayList<Space> spaceRecommend(String keyword) {
+	    return commonDao.spaceRecommend(sqlSession, keyword);
+	}
+
+	// 추천공간 -성훈
+	@Override
+	public ArrayList<Space> spaceReview() {
+	    return commonDao.spaceReview(sqlSession);
 	}
 
 	// 마이페이지 신고리스트 -신희섭
