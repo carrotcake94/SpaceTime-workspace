@@ -100,11 +100,11 @@
 	<jsp:include page="../common/header.jsp" />
 	
 	<div id="content">
-		<div id="content_1">왼쪽여백</div>
+		<div id="content_1"></div>
 		
 		<!--컨텐츠작성부분-->
 		<div id="content_2">
-			<form action="update.re" method="post" enctype="multipart/form-data">
+			<form action="update.re" id="update" method="post" enctype="multipart/form-data">
 			<input id="reviewNo" type="hidden" name="reviewNo" value="${r.reviewNo}">
 			<script>
 				$(function() {
@@ -120,27 +120,10 @@
 							<th class="review date"><h3><b>등록일</b></h3></th>
 						</tr>
 						<tr>
-							<td class="review spaceTitle" required>${r.spaceTitle }</td>
+							<td class="review spaceTitle">${r.spaceTitle }</td>
 							<!-- 리뷰를 작성하는 공간명을 그대로 가져와서 보여주는 것이므로 공간명을 내가 쓰진 않음 -->
 							<td class="review rate">
-								<%-- <div class="form-group"  >
-									<!-- <select name="" class="form-control mb-2">
-										<option value="5">⭐⭐⭐⭐⭐</option>
-										<option value="4">⭐⭐⭐⭐</option>
-										<option value="3">⭐⭐⭐</option>
-										<option value="2">⭐⭐</option>
-										<option value="1">⭐</option>
-									</select> -->
-										<select class="form-control mb-2" name="rating">
-										<option value="5">5</option>
-										<option value="4">4</option>
-										<option value="3">3</option>
-										<option value="2">2</option>
-										<option value="1">1</option>
-										<option value="${r.rating }"></option>
-									</select>
-								</div> --%>
-								
+																
                                 <div id="starArea">
                                     <div id="realStarArea"><i class="fa fa-star-o" aria-hidden="true"></i><i
                                             class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o"
@@ -153,7 +136,7 @@
                                             class="s10"></span>
                                     </div>
                                 </div>
-                                <input type="hidden" name="rating">
+                                <input type="hidden" name="rating" value="${r.rating }">
 								
 								
 								<td class="review date">${r.reviewEnrollDate }</td>
@@ -163,7 +146,7 @@
 							<th colspan="2" class="review"><h3><b>내용</b></h3></th>					
 						</tr>
 						<tr class="reviewImg">
-							<!-- 이미지 파일 첨부하면 썸네일 미리보기처럼 떴으면 좋겠는데.. -->
+							
 							<td colspan="2" class="row">
 								<div>
 									<input type="file" class="real-upload" name="upfile" accept="image/*">
@@ -188,21 +171,49 @@
 
 				<div class="btns" align="center">
 					
-					<button type="submit" class="btn btn-sm btn-primary">수정</button>
+					<button type="button" class="btn btn-sm btn-primary" onclick="updatereview()">수정</button>
 					<button type="button" class="btn btn-sm btn-secondary" onclick="javascript:history.go(-1);">취소</button>
 				</div>
 			</form>
 
 		</div>
-		<div id="content_3">오른쪽여백</div>
+		<div id="content_3"></div>
 
 		<jsp:include page="../common/footer.jsp" />
 	</div>
 	<script>
+	
+	function updatereview(){
+		if($("input[name=rating]").val() == "") {
+		      alert("평점을 등록해주세요.");
+		      return false;
+		}
+		$("#update").submit();
+	} 
+	
 	$(function () {
+		var rating = $("input[name=rating]").val();
+        var str = "";
+        var i = parseInt(rating / 2);
+        var j = rating % 2;
+        
+        for (let index = 0; index < i; index++) {
+            str += "<i class='fa-solid fa-star' aria-hidden='true'></i>";
+        }
+        if (j == 1) {
+            str += "<i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i>";
+        }
+        for (let index = 0; index < 5 - i - j; index++) {
+            str += "<i class='fa fa-star-o' aria-hidden='true'></i>";
+        }
+        $("#realStarArea").html(str);
+        
+        
+          
         $("#starArea span").click(function () {
         	console.log("!!");
-            var rating = $(this).attr("class").substr(1);
+            
+        	var rating = $(this).attr("class").substr(1);
             $("input[name=rating]").val(rating);
             var str = "";
             var i = parseInt(rating / 2);

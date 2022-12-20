@@ -21,6 +21,7 @@
 		width: 60%;
 	}
 	#title1{cursor : pointer;}
+	
 	#review-admin1{text-align: center;}
 	#reviewTitle {
 		font-size: 40px;
@@ -32,8 +33,11 @@
 	
 	.table { text-align: center;}
 	.table tr { line-height: 35px;}
-	.table>tbody>tr:hover { cursor: pointer ;}
+	.reviewList>table>tbody>tr>td:hover { cursor: pointer ;}
 	
+	#reviewlist_tr{font-size : 20px;
+	height : 15px;
+	}
 	
 
     /* 페이지 버튼 */
@@ -84,8 +88,15 @@
             margin: 0;
         }
 
+	#reviewList tr:not(#reviewlist_tr):hover {
+	background-color: #E5E5E5;
+	cursor: pointer;
+	}
 	
-
+	#reviewlist_tr{
+	font : 30px;}
+	
+	#tr1{height:10px;}
 </style>
 </head>
 <body>
@@ -102,7 +113,7 @@
 		<div id="review-admin1" class="">
 			<table align="center" id="reviewList">
 				<thead>
-					<tr>
+					<tr id="reviewlist_tr">
 						<th style="width: 10%;">예약번호</th>
 						<th style="width: 20%;">공간명</th>
 						<th style="width: 40%;">리뷰내용</th>
@@ -110,7 +121,8 @@
 						<th style="width: 15%;">작성날짜</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tr id=tr1><tr>
+				<tbody id="tbody_1">
 					<c:forEach var="r" items="${ list }">
 						<tr>
 							<td>${r.reserveNo}</td>
@@ -128,6 +140,8 @@
 							</td>
 							<td>${r.reviewEnrollDate}</td>
 							<input type="hidden" value="${r.reviewNo}">
+							
+							
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -138,6 +152,18 @@
 							
 							location.href = "detail.re?rde=" + $(this).children().eq(5).val();
 						});
+					});
+			
+					$(function() {
+						$(".page-link").each(function() {
+			          		if ($(this).text() ==${ pi.currentPage}) {
+			          			$(this).attr("id", "active-page");
+			          			$(this).parent().addClass("disabled");
+			          		} else {
+			          			$(this).removeAttr("id", "active-page");
+			          		}
+			          	});
+			 			
 					});
 			</script>
 		</div>
@@ -169,7 +195,7 @@
 		</div>
 	<br><br><br>
 	
-	<div id="content_3">오른쪽여백</div>
+	<div id="content_3"></div>
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />

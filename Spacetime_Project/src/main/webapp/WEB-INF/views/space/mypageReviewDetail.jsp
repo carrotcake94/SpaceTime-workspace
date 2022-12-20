@@ -286,7 +286,7 @@
 			</div>
 		</div>
 		
-		<div id="content_3">오른쪽여백</div>
+		<div id="content_3"></div>
 	</div>
 	
 	<jsp:include page="../common/footer.jsp" />

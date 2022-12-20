@@ -243,14 +243,14 @@
                                     <span> 원/시간</span>
                                 </span>
                                 <span style="float:right;">
-                                    <span><i class="fa-solid fa-comment"></i> 3</span>
+                                    <span><i class="fa-solid fa-comment"></i> ${s.closeTime}</span>
                                 </span>
                                 
 
                             </div>
                         </div>
 
-                    </form>
+                    </form> <!-- 이 반복 부분을 다 지우고 ajax 로 $function 으로 불러오기!! (selectBookmarkList 이런식으로) -->
                    
                     <!-- 반복 돌리기 -->
                     </c:forEach>
@@ -345,8 +345,7 @@
                                     memNo: ${loginMember.memNo}
                                 },
                                 success: function(result) {
-                                    eventLike.hide();
-                                    eventUnLike.show();
+                                   location.reload(); // 새로고침 함수 (화면이 깜빡거릴수밖에없음) => 기능 동작에는 문제가 없음
                                 },
                                 error: function() {
                                     console.log("ajax failure");

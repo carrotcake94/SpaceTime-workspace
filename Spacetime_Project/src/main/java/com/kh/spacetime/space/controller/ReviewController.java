@@ -68,20 +68,23 @@ public class ReviewController {
 
 		Review r = reviewService.selectReview(rde);
 
+		
 		if (r != null) {
-			String savePath = "resources/uploadFiles/space/review/";
 
 			if (r.getReviewAttach1() != null) {
-				r.setReviewAttach1(savePath + r.getReviewAttach1());
+				r.setReviewAttach1(r.getReviewAttach1());
 			}
 			if (r.getReviewAttach2() != null) {
-				r.setReviewAttach2(savePath + r.getReviewAttach2());
+				r.setReviewAttach2(r.getReviewAttach2());
 			}
 			if (r.getReviewAttach3() != null) {
-				r.setReviewAttach3(savePath + r.getReviewAttach3());
+				r.setReviewAttach3(r.getReviewAttach3());
 			}
 		}
-
+		
+		
+		System.out.println(r);
+		
 		// 조회된 데이터를 담아서space/mypageReviewDetail.jsp 로 포워딩
 		mv.addObject("r", r).setViewName("space/mypageReviewDetail");
 
