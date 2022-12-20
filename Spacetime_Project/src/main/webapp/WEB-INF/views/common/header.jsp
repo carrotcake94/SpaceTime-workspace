@@ -238,7 +238,7 @@
             right: 20px;
             top: 20px;
             cursor: pointer;
-            color: rgb(96, 155, 204);
+            color:rgb(96, 155, 204);
         }
 
         #profile_tb {
@@ -504,6 +504,7 @@
 	 	  right: 0;
 	 	  width: 50px;
 		  height:50px;     	
+	 	  background-color: white;
       }  
 
 
@@ -519,7 +520,7 @@
 			padding-right: 15px;
 		}
 		
-    		#autoComplete {
+		#autoComplete {
 			display: none;
 			border : 1px solid lightgrey;
 			border-radius : 15px;
@@ -605,18 +606,15 @@
 				autoCompleteBox.style.display = "block";
 			}
 			
-			var inputValue = searchInput.value;
-			
 			//"#"입력여부 확인하여 해시태그자동완성-일반자동완성 변환
-			if(inputValue.startsWith("#") == true){
+			if(searchInput.value.startsWith("#") == true){
 				hashtagAutoComplete(searchInput.value);
-				autoCompleteListShowUp(words, inputValue);
+				autoCompleteListShowUp(words, searchInput.value);
 			} else {
 				autoComplete(searchInput.value);
-				autoCompleteListShowUp(words, inputValue);
+				autoCompleteListShowUp(words, searchInput.value);
 			}
 			
-			//외부클릭시 자동완성창 소멸
 			window.addEventListener("click", (e) => {
 				if(e.target != autoCompleteBox){
 					autoCompleteBox.style.display = "none";
@@ -673,10 +671,10 @@
                 <c:choose>
                     <c:when test="${loginMember.memNo == 1}">
                         <tr>
-                            <td><a href="schart.ad"><i class="fa-sharp fa-solid fa-list-check"></i></a></td>
+                            <td><a href="slist.ad"><i class="fa-sharp fa-solid fa-list-check"></i></a></td>
                         </tr>
                         <tr>
-                            <td><a href="schart.ad">관리자 페이지로</a></td>
+                            <td><a href="slist.ad">관리자 페이지로</a></td>
                         </tr>
 
                     </c:when>
@@ -701,9 +699,6 @@
                 <li><a href="/spacetime">홈으로</a></li>
                 <li><a href="list.no">공지사항</a></li>
                 <li><a href="list.ne">뉴스레터</a></li>
-                <c:if test="${!empty loginMember}">
-                <li><a href="note.me">쪽지함</a></li>
-                </c:if>
                 <li><a onclick="openServieInfo()" style="cursor:pointer;">서비스정보</a>
 	                <ul class="service-info-ul">
                         <li><a href="introduction.co">서비스 소개</a></li>
@@ -881,75 +876,45 @@
    		sock.onclose = onClose;
    		sock.onopen = onOpen;
    		
-   		function sendMessage(msgType, receiverId, message, messageDate) {
+   		function sendMessage(msgType, userId, stitle, message) {
    			var msg = {
    					msgType : msgType,
-   					senderNo : "${loginMember.memNo}", 
-   					senderName : "${loginMember.memName}",
-   					profilePath : "${loginMember.profilePath}",
-   					receiverId : receiverId, 
-   					message : message,
-   					messageDate : messageDate
+   					sender : 'filan705', 
+   					receiver : 'filan705', 
+   					stitle : '모스트홈쉐어 경리단길', 
+   					message : '공간을 예약하셨습니다.'
    			};
+   				
   			sock.send(JSON.stringify(msg));
+//    		sock.send(msg);
    		}
    		//메시지 수신
    		function onMessage(msg) {
    			var data = msg.data; // 전달 받은 데이터
    			
-   			socketData = JSON.parse(data); 
-   	           	        
-   			if(socketData.msgType == "chat" && $("#chattingModal #chatView-"+socketData.senderNo+"-${loginMember.memNo}").length > 0) {
-   				
-   				var str=""
-   				str+= "<div class='sender'><div>";
-				
-				if(socketData.profilePath == "") {
-			    	  str+= "<img src='resources/images/logo.png' 	 >";
-			      }else {
-			    	  str+= "<img src='"+socketData.profilePath+"' class='rounded-circle'	 >";
-			      }
-				str+= "</div><div class='sender-con'>";
-				str+= "<div class='sname'>"+socketData.senderName+"</div>";
-				str+= "<div class='scontent-area'>";
-				str+= "<div class='srealcontent'>"+socketData.message+"<div class='sdate'>"+socketData.messageDate+"</div></div></div></div></div>";
-				$("#chattingModal #chatView-"+socketData.senderNo+"-${loginMember.memNo}").append(str);
-				$("#chattingModal #chatView-"+socketData.senderNo+"-${loginMember.memNo}").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
-   				
-   			}
-
-   				toastCount++;
-   		   	    let toast;
-   	   			
-   			    toast = "<div class='toast toast-" + toastCount + "' data - autohide='false' > "; 	
-   			    toast += "<i class='fa fa-times' aria-hidden='true' data-dismiss='toast'></i>";
-   	   	        toast += "<div class='toast-body'>"
-   	   	        toast += "<div class='toast-left'>"
-	   	   	    if(socketData.profilePath == "") {
-	   	   	 		toast += "<img src='resources/images/logo.png' >"   
-			    }else {
-			    	toast += "<img src='"+socketData.profilePath+"' class='rounded-circle' >"   
-			    }
-   	   	        toast += "</div>"
-   	   	        toast += "<div class='toast-right'>"
-   	   	  		if(socketData.msgType == "chat" ) {
-	   	   		    toast += "<div></div>"  
-	   	 	     	toast += "<div class='chat' style='cursor:pointer;'>"+socketData.senderName+"님이 메시지를 보내셨습니다.</div>"
-   	   	  		}
-   	   	  		else if(socketData.msgType == "reserve" ) {
-			   	   	toast += "<div>"+socketData.message+"</div>"   		   	   		
-			   	   	toast += "<div class='reserve' style='cursor:pointer;'>"+socketData.senderName+"님이 예약하셨습니다.</div>"   	  
-		   	   	}
-   	   	  		else if(socketData.msgType == "review" ) {
-			   	   	toast += "<div>"+socketData.message+"</div>"   
-			   	   	toast += "<div class='review' style='cursor:pointer;'>"+socketData.senderName+"님이 후기를 남겼습니다.</div>"   	
-		   	   	}
-   	    		toast += "</div></div></div>"
+   			msgData = JSON.parse(data); 
    			
-	   	        $("#socketAlarmArea").append(toast);
-   	   	        $(".toast-" + toastCount).toast({ animation: true, delay: 10000 });
-   	   	        $(".toast-" + toastCount).toast("show");
-   	   	        $("#socketAlarmArea").addClass("slideon");
+   			var cur_session = '${loginUser.memId}'; //현재 세션에 로그인 한 사람
+   		
+   			toastCount++;
+   	        let toast;
+
+   	        toast = "<div class='toast toast-" + toastCount + "' data - autohide='false' > ";
+   	        toast += "<i class='fa fa-times' aria-hidden='true' data-dismiss='toast'></i>";
+   	        toast += "<div class='toast-body'>"
+   	        toast += "<div class='toast-left'>"
+   	        toast += "<img src='resources/images/logo.png' class='rounded-circle'	 >"   
+   	        toast += "</div>"
+   	        toast += "<div class='toast-right'>"
+   	    	toast += "<div>"+msgData.stitle+"</div>"   
+   	    	toast += "<div>"+msgData.sender+"님이 "+msgData.message+"</div>"   
+   	    	toast += "</div></div></div>"
+
+   	        $("#socketAlarmArea").append(toast);
+   	        $(".toast-" + toastCount).toast({ animation: true, delay: 10000 });
+   	        $(".toast-" + toastCount).toast("show");
+   	        $("#socketAlarmArea").addClass("slideon");
+   			
    			
    		}
    		//아웃
@@ -961,18 +926,13 @@
    			console.log("연결 인");
    			
    		}
+   		//테스트용
    		$(function() {
-   			$("#socketAlarmArea").on("click", ".chat", function() {
-   				location.href="note.me";
-   			});
-   			$("#socketAlarmArea").on("click", ".reserve", function() {
-   				location.href="revHostList.re";
-   			});
-			$("#socketAlarmArea").on("click", ".review", function() {
-				location.href="hostRvwList.rv";
+   			$("#testBtn4").click(function () {
+//    				let smsg = "reserve,filan705,올모스트홈쉐어 경리단길";
+   				sendMessage("reserve", "filan705", "올모스트홈쉐어 경리단길");
    			});
    		});
-
 </script>
 </c:if>
 <div id="socketAlarmArea"></div>

@@ -31,7 +31,6 @@
 		JOIN MEMBER_GRADE USING (GR_CODE)
 		WHERE MEM_ID = #{memId}
 		AND MEM_STATUS = 'N'
-		AND BLACKLIST_YN = 'N'
 	</select>
 	
 	<!-- 회원가입용 쿼리문 - 경미 -->

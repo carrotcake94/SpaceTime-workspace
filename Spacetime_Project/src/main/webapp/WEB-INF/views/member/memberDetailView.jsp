@@ -233,7 +233,7 @@
 	                        <td colspan="2"><a class="changePwd" data-toggle="modal" data-target="#editPwd">변경하기</a></td>
 	                    </tr> 
 						<c:choose>
-							<c:when test="${ loginMember.hostStatus eq 'Y' }">
+							<c:when test="${ loginMember.hostStatus eq 'Y' and loginMember.memNo != 1 }">
 								<!-- ===================================== 호스트만 보이기 ===================================== -->
 			                    <tr>
 			                        <th>정산 계좌</th>
@@ -243,10 +243,8 @@
 			                    <tr>
 			                        <th>운영공간</th> 
 			                        <td class="space">
-			                            <div class="space"><a href="#" class="space">운영공간이름 1</a></div> 
-			                            <div class="space"><a href="#" class="space">운영공간이름 2</a></div>
+										<a href="hostSpaceList.sp" class="showmore">더보기</a>
 			                        </td>
-			                        <td align="right"><a href="" class="showmore">더보기</a></td>
 			                    </tr>
 			                    <!-- ===================================== 호스트만 보이기 ===================================== -->
 							</c:when>

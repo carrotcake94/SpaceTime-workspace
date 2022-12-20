@@ -253,7 +253,7 @@
                                     <span> 원/시간</span>
                                 </span>
                                 <span style="float:right;">
-                                    <span><i class="fa-solid fa-comment"></i> 3</span>
+                                    <span><i class="fa-solid fa-comment"></i> ${s.closeTime}</span>
                                 </span>
                                 
 

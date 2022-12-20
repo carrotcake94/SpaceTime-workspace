@@ -75,15 +75,17 @@ public class MemberController {
 		
 		Member loginMember = memberService.loginMember(m);
 		
-		if(loginMember != null && 
-			bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd())) {
+		if(loginMember.getBlacklist().equals("Y")) {
 			
+			session.setAttribute("alertMsg", "다수의 신고로 회원 자격이 정지되어 로그인이 불가능합니다. 자세한 사항은 고객센터 문의를 통해 확인 가능합니다.");
+			mv.setViewName("redirect:/");
+			
+		} else if(loginMember != null && bcryptPasswordEncoder.matches(m.getMemPwd(), loginMember.getMemPwd())) {
 			session.setAttribute("loginMember", loginMember);
 			session.setAttribute("alertMsg", "로그인에 성공했습니다.");
 			mv.setViewName("redirect:/");
 		}
 		else {
-			
 			mv.addObject("errorMsg", "로그인 실패");
 			mv.setViewName("common/errorPage");
 		}
