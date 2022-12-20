@@ -351,12 +351,17 @@
             color: grey;
         }
 
-        .com_infobox>ul {
-            padding: 10px 0;
+        .com_infobox>ul:nth-child(1) {
+            border-bottom: 2px solid #EDEDED;
         }
 
         .com_infobox>ul {
+            padding: 10px 0;
             margin-bottom: 0px;
+        }
+
+        .com_infobox>ul:nth-child(2) {
+        	padding: 0;
         }
 
         .com_infobox>ul>li {
@@ -444,7 +449,7 @@
             display: inline-block;
             text-decoration: none;
             padding-top: 5px;
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .sign-up>a:hover {
@@ -475,8 +480,6 @@
         position: relative;
       }
       
-      .toast * {
-      }
       .toast i {
         position: absolute;
         right: 7px;
@@ -729,7 +732,7 @@
             </c:if>
         </div>
         <div class="sign-up">
-            <a>호스트신청하기<span class="ion-arrow-right-c"></span></a>
+            <a>호스트신청하기</a>
         </div>
     </div>
     <!-- 정산계좌정보 입력 모달창 -->

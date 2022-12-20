@@ -44,6 +44,31 @@
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> 
     
 	<script src="resources/js/main.js"></script>
+
+    <!-- 해피톡 관리자-고객 1대1 채팅 -->
+	<script>
+	    var ht = null;
+	    (function(id, scriptSrc, callback) {
+	        var d = document,
+	            tagName = 'script',
+	            $script = d.createElement(tagName),
+	            $element = d.getElementsByTagName(tagName)[0];
+	
+	        $script.id = id;
+	        $script.async = true;
+	        $script.src = scriptSrc;
+	
+	        if (callback) { $script.addEventListener('load', function (e) { callback(null, e); }, false); }
+	        $element.parentNode.insertBefore($script, $element);
+	    })('happytalkSDK', 'https://design.happytalkio.com/sdk/happytalk.chat.v2.min.js', function() {
+	        ht = new Happytalk({
+	          siteId: '5000100385',
+	          siteName: 'SpaceTime',
+	          categoryId: '154917',
+	          divisionId: '154918'
+	      });
+	    });
+	</script>
    <style>
     
    		/*
@@ -223,8 +248,9 @@
         /* 프로필 이미지 크기 */
         #profile-img {
 	        border: 2px solid rgba(128, 128, 128, 0.2);
-	        margin-bottom: 20px;
+	        /* margin-bottom: 20px; */
 	        border-radius: 100%;
+            background-color: whitesmoke;
 	        width: 80px;
 	        height: 80px;
     	}
@@ -243,6 +269,7 @@
             font-size: 20px;
             font-weight: 600;
             padding-top: 20px;
+            color: whitesmoke;
         }
 
         #profile_tb tr:nth-child(2)>td {
@@ -253,7 +280,7 @@
 
         #profile_tb tr:nth-child(2)>td>a {
             text-decoration: none;
-            color: black;
+            color: whitesmoke;
         }
 
         #profile_tb tr:nth-child(2)>td>:hover {
@@ -292,7 +319,7 @@
        /*---------- */
 
         .com_infobox>ul:nth-child(1) {
-            border-bottom: 3px solid;
+            border-bottom: 2px solid #EDEDED;
         }
 
         .com_infobox>ul {
@@ -331,6 +358,12 @@
             line-height: 45px;
             text-transform: uppercase;
         }
+
+        .service-info-ul>li>a {
+            color: grey;
+            font-weight: 200;
+        }
+
         .com_infobox>ul:nth-child(2) {
         	padding: 0;
         }
@@ -364,7 +397,7 @@
         }
 	
         .sign-up:hover {
-            background: rgb(39, 123, 192);
+            background: #fffde3;
         }
 
         .sign-up a {
@@ -377,11 +410,23 @@
 
         .sign-up>a {
             text-decoration: none;
-            color: black;
+            color: white;
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            text-decoration: none;
+            padding-top: 5px;
+            font-size: 20px;
         }
 
         .sign-up>a:hover {
-              color: white;
+              color: #eea806;
+              width: 100%;
+            height: 100%;
+            display: inline-block;
+            text-decoration: none;
+            padding-top: 5px;
+            font-size: 20px;
         }
         /* -------------------- */
         
@@ -548,6 +593,13 @@
                         <td><a href="myPage.me">프로필 관리 및 수정</a></td>
                     </tr>
                 </table>
+                <c:if test="${empty loginMember.profilePath}">
+                    <script>
+                        $(function() {
+                            $("#profile-img").attr("src", "resources/images/profile_default.png");
+                        })
+                    </script>
+                </c:if>
                 </c:otherwise>
             </c:choose>
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>

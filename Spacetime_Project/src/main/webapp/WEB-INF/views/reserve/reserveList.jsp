@@ -645,7 +645,7 @@
   
       <!--공간 신고 Modal -->
       <div class="modal" id="report-Modal">
-        <form action="reportMyReserve.re" method="get" id="reportInfoSubmit">
+        <form action="reportMyReserve.re" method="post" id="reportInfoSubmit">
         <input type="hidden" name="rno" id="rno"> 
         <script>
        		 $("#rno").val($(".rnoInput").val());
@@ -688,7 +688,19 @@
               </div>
             </div>
         </form>
-        
+        <script>
+          $(document).ready(function () {
+            $('#reportContent').summernote({
+              placeholder: '신고할 내용과 증빙 가능한 이미지를 첨부해주세요.<br>증빙이 되지 않으면 신고가 처리되지 않습니다.',
+              lang: "ko-KR",
+              height: 200,
+              minHeight: 200,
+              maxHeight: 200
+            });
+
+          });
+                
+        </script>
         
       </div>
       

@@ -41,9 +41,9 @@
 			<mapping path="/spaceDel.sp" />
 			<mapping path="/note.me" />
 			<mapping path="/schNote.me" />
-			<mapping path="list.re" />
-			<mapping path="mypagebookmark.sp" />
-			<mapping path="report.co" />
+			<mapping path="/list.re" />
+			<mapping path="/mypagebookmark.sp" />
+			<mapping path="/report.co" />
 			<mapping path="/myReserve.re" />
 			<beans:bean class="com.kh.spacetime.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
