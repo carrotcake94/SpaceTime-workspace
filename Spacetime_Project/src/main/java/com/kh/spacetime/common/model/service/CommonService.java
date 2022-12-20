@@ -76,6 +76,9 @@ public interface CommonService {
 	ArrayList<Chatting> selectChatList(Chatting c);
 
 	// 채팅 인서트
+	int selectRoomNo(Chatting c);
+	
+	// 채팅 인서트
 	int insertChat(Chatting c);
 
 	// 방금보낸 채팅 셀렉

@@ -280,50 +280,77 @@
 		<result column="MESSAGE" property="message" />
 		<result column="MESSAGE_DATE" property="messageDate" />
 		<result column="SENDER" property="sender" />
-		<result column="MEM_NAME" property="receiver" />
-		<result column="MEM_ID" property="senderId" />
-		<result column="PROFILE_PATH" property="profilePath" />
+		<result column="RECEIVER" property="receiver" />
+		<result column="ROOM_NO" property="roomNo" />
+		<result column="SNAME" property="senderName" />
+		<result column="RNAME" property="receiverName" />
+		<result column="SPROFILE" property="senderProfilePath" />
+		<result column="RPROFILE" property="receiverProfilePath" />
+		<result column="SMEMID" property="senderId" />
+		<result column="RMEMID" property="receiverId" />
 	</resultMap>
 	
 	<!-- 	나의 쪽지함 리스트-->
 	<select id="selectNoteList" parameterType="_int" resultMap="chatListSet">
 	   SELECT CHAT_NO, MESSAGE
-	   , TO_CHAR(MESSAGE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS MESSAGE_DATE
-	   , SENDER, M.MEM_NAME, M.MEM_ID, M.PROFILE_PATH
+	   , TO_CHAR(MESSAGE_DATE, 'MM-DD HH24:MI') AS MESSAGE_DATE
+	   , SENDER, RECEIVER, ROOM_NO
+	   , M.MEM_NAME AS SNAME
+	   , L.MEM_NAME AS RNAME
+	   , M.PROFILE_PATH AS SPROFILE
+	   , L.PROFILE_PATH AS RPROFILE
+	   , M.MEM_ID AS SMEMID
+	   , L.MEM_ID AS RMEMID
        FROM CHATTING C
        JOIN MEMBER M ON C.SENDER = M.MEM_NO
+       JOIN MEMBER L ON C.RECEIVER = L.MEM_NO
        WHERE CHAT_NO IN (
            SELECT MAX(CHAT_NO)
            FROM CHATTING
-           GROUP BY SENDER, RECEIVER
+           WHERE (RECEIVER = #{memNo}
+      	   OR SENDER = #{memNo})
+           GROUP BY ROOM_NO
        )
-       AND RECEIVER = #{memNo}
        ORDER BY CHAT_NO DESC
 	</select>
 	
 	
 	<!-- 	나의 쪽지함 검색  리스트-->
 	<select id="searchNoteList" parameterType="hashmap" resultMap="chatListSet">
-	   SELECT CHAT_NO, MESSAGE
-	   , TO_CHAR(MESSAGE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS MESSAGE_DATE
-	   , SENDER, M.MEM_NAME, M.MEM_ID, M.PROFILE_PATH
+       SELECT CHAT_NO, MESSAGE
+	   , TO_CHAR(MESSAGE_DATE, 'MM-DD HH24:MI') AS MESSAGE_DATE
+	   , SENDER , RECEIVER, ROOM_NO
+	   , M.MEM_NAME AS SNAME
+	   , L.MEM_NAME AS RNAME
+	   , M.PROFILE_PATH AS SPROFILE
+	   , L.PROFILE_PATH AS RPROFILE
+	   , M.MEM_ID AS SMEMID
+	   , L.MEM_ID AS RMEMID
+	   , ROOM_NO
        FROM CHATTING C
        JOIN MEMBER M ON C.SENDER = M.MEM_NO
+       JOIN MEMBER L ON C.RECEIVER = L.MEM_NO
        WHERE CHAT_NO IN (
            SELECT MAX(CHAT_NO)
            FROM CHATTING
-           GROUP BY SENDER, RECEIVER
+           WHERE (RECEIVER = #{memNo}
+      	   OR SENDER = #{memNo})
+           GROUP BY ROOM_NO
        )
-       AND RECEIVER = #{memNo}
-       AND MEM_NAME LIKE '%' || #{keyword} || '%'
+       AND (M.MEM_NAME LIKE '%' || #{keyword} || '%'
+       OR L.MEM_NAME LIKE '%' || #{keyword} || '%')
        ORDER BY CHAT_NO DESC
+       
 	</select>
 	
 	<!-- 	채팅 상세 뷰-->
 	<select id="selectChatList" parameterType="chatting" resultMap="chatListSet">
 	   SELECT CHAT_NO, MESSAGE
        , TO_CHAR(MESSAGE_DATE, 'MM-DD HH24:MI') AS MESSAGE_DATE 
-       , SENDER, M.MEM_NAME, M.PROFILE_PATH
+       , SENDER
+       , M.MEM_NAME AS SNAME
+	   , M.PROFILE_PATH AS SPROFILE
+	   , ROOM_NO
        FROM CHATTING C
        JOIN MEMBER M ON C.SENDER = M.MEM_NO
        WHERE (RECEIVER = #{receiver}
@@ -334,12 +361,26 @@
 	</select>
 	
 	<insert id="insertChat" parameterType="chatting">
+		<choose>
+		<when test='roomNo != ""'>
 		INSERT INTO CHATTING
 		VALUES(SEQ_CNO.NEXTVAL
 			     , #{message}
 			     , SYSDATE
 			     , #{sender}
-			     , #{receiver})
+			     , #{receiver}
+			     , #{roomNo})
+		</when>
+		<otherwise>
+		INSERT INTO CHATTING
+		VALUES(SEQ_CNO.NEXTVAL
+			     , #{message}
+			     , SYSDATE
+			     , #{sender}
+			     , #{receiver}
+			     , SEQ_RONO.NEXTVAL)
+		</otherwise>
+		</choose>
 	</insert>
 	
 	<!-- 	방금 보낸 채팅 선택 -->
@@ -348,6 +389,7 @@
 	   FROM(
 	   SELECT MESSAGE
        , TO_CHAR(MESSAGE_DATE, 'MM-DD HH24:MI') AS MESSAGE_DATE 
+       , ROOM_NO
        FROM CHATTING C
        WHERE RECEIVER = #{receiver}
        AND SENDER = #{sender}

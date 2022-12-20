@@ -636,15 +636,17 @@
    		sock.onclose = onClose;
    		sock.onopen = onOpen;
    		
-   		function sendMessage(msgType, receiverId, message, messageDate) {
+   		function sendMessage(msgType, receiverId, message, messageDate, roomNo) {
    			var msg = {
    					msgType : msgType,
    					senderNo : "${loginMember.memNo}", 
    					senderName : "${loginMember.memName}",
    					profilePath : "${loginMember.profilePath}",
+   					senderId : "${loginMember.memId}",
    					receiverId : receiverId, 
    					message : message,
-   					messageDate : messageDate
+   					messageDate : messageDate,
+   					roomNo : roomNo
    			};
   			sock.send(JSON.stringify(msg));
    		}
@@ -653,7 +655,32 @@
    			var data = msg.data; // 전달 받은 데이터
    			
    			socketData = JSON.parse(data); 
-   	           	        
+   	        
+   			if(socketData.msgType == "chat" && $("#chatTb").length > 0) {
+  						var str=""
+  		   				str +=  "<tr id='chatRoom-"+socketData.senderNo+"-${loginMember.memNo}' onclick='chatModalOpen(this)'>";
+  		   				str +=  "<td>";
+  		   				if(socketData.profilePath == "") {
+  					    	  str+= "<img src='resources/images/logo.png' 	 >";
+  					      }else {
+  					    	  str+= "<img src='"+socketData.profilePath+"' class='rounded-circle'	 >";
+  					      }
+  		   				str +=  "</td>";
+  		   				str +=  "<td>"+socketData.senderName+"</td>";   				
+  		   				str +=  "<td>"+socketData.message+"</td>";   				
+  		   				str +=  "<td>"+socketData.messageDate+"</td>";   	
+  		   				str += "<input type='hidden'  value='"+socketData.senderNo+"'>"
+  		   				str += "<input type='hidden'  value='"+socketData.senderId+"'>"
+  		   				str += "<input type='hidden'  value='"+socketData.roomNo+"'>"
+  		   				str +=  "</tr>";
+  		   				
+  		   				if($("#noChatTd").length > 0) {
+  		   					$("#noChatTd").remove();
+  		   				}   			
+  		   				$("#chatTb #chatRoom-"+socketData.senderNo+"-${loginMember.memNo}").remove();
+  		   				$("#chatTb tbody").prepend(str);
+   			}
+   			
    			if(socketData.msgType == "chat" && $("#chattingModal #chatView-"+socketData.senderNo+"-${loginMember.memNo}").length > 0) {
    				
    				var str=""

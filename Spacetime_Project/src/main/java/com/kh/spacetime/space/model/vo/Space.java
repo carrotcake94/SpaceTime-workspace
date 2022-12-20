@@ -38,6 +38,7 @@ public class Space {
 		private List<SpaceAttachment> attachments; // join용
 		private String memId; // join 용
 		private String bookmarkMem; // join 용
+		private String memName; // join 용
 		private int rating;
 }
 

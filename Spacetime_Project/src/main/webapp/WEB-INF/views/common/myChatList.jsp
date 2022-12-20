@@ -47,12 +47,18 @@
         border: none;
         font-size: 18px;
       }
+      #chatTb {
+   	    table-layout: fixed; 
+      }
       
-      #hReserveTb th,
-	   #hReserveTb td {
+      #chatTb th,
+	   #chatTb td {
 			text-align: center;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
 		}
-      #hReserveTb img {
+      #chatTb img {
 	 	  width: 30px;
 		  height:30px;     	
       }
@@ -161,11 +167,10 @@
 	  	background-color: white;
 	  	border:1px solid gray;
 	  	max-width: 75%;
-	  	word-break:break-all;
 	  	position : relative;
 	  	font-size: 15px;
         font-weight: 500;
-        white-space:pre;
+        white-space:pre-wrap;
 	  }
 	  
 	  #chattingModal .sender .sdate {
@@ -190,11 +195,10 @@
 	  	background-color: white;
 	  	border:1px solid gray;
 	  	max-width: 75%;
-	  	word-break:break-all;
 	  	position : relative;
 	  	font-size: 15px;
         font-weight: 500;
-        white-space:pre;
+        white-space:pre-wrap;
 	  }
 	  
 	  #chattingModal .receiver .rdate {
@@ -232,41 +236,67 @@
         />
         <button type="submit">검색</button>
       </form>
-      <table id="hReserveTb" class="table table-hover">
+      <table id="chatTb" class="table table-hover">
         <thead>
           <tr>
-            <th>No</th>
-            <th>보낸사람</th>
-            <th>마지막메시지</th>
-            <th>보낸일자</th>
+            <th style="width: 10%">프로필</th>
+            <th style="width: 10%">이름</th>
+            <th style="width: 60%">메시지</th>
+            <th style="width: 20%">보낸일자</th>
           </tr>
         </thead>
         <tbody>
 	        <c:choose>
 		      <c:when test="${rList.size() eq 0}">
 		      	<tr>
-		      	<td colspan="4">수신 메시지가 없습니다.</td>
+		      	<td colspan="4" id="noChatTd">수신 메시지가 없습니다.</td>
 		      	</tr>
 		      </c:when>
 		      <c:otherwise>
 		         <c:forEach var="r" items="${rList}" >
-		         <tr id="chatRoom${r.sender}" onclick="chatModalOpen(this)">
-		            <td>
-		            <c:choose>
-		            <c:when test="${empty r.profilePath }">
-		            <img src='resources/images/logo.png' 	 >
-		            </c:when>
-		            <c:otherwise>
-		            <img src="${r.profilePath}" class='rounded-circle'	 >
-		            </c:otherwise>
-		            </c:choose>		    
-				    </td>
-		            <td>${r.receiver }</td>
-		            <td>${r.message}</td>
-		            <td>${r.messageDate}</td>
-		            <input type="hidden"  value="${r.sender }"> 
-		            <input type="hidden"  value="${r.senderId }"> 
-		          </tr>
+		         
+		         <c:choose>
+		         <c:when test="${loginMember.memNo eq r.receiver }">
+			         <tr id="chatRoom-${r.sender}-${loginMember.memNo}" onclick="chatModalOpen(this)">
+			            <td>
+			            <c:choose>
+			            <c:when test="${empty r.senderProfilePath }">
+			            <img src='resources/images/logo.png' 	 >
+			            </c:when>
+			            <c:otherwise>
+			            <img src="${r.senderProfilePath}" class='rounded-circle'	 >
+			            </c:otherwise>
+			            </c:choose>		    
+					    </td>
+			            <td>${r.senderName }</td>
+			            <td>${r.message}</td>
+			            <td>${r.messageDate}</td>
+			            <input type="hidden"  value="${r.sender }"> 
+			            <input type="hidden"  value="${r.senderId }"> 
+			            <input type="hidden"  value="${r.roomNo }"> 
+			          </tr>
+		         </c:when>
+		         <c:otherwise>
+			         <tr id="chatRoom-${r.receiver}-${loginMember.memNo}" onclick="chatModalOpen(this)">
+			            <td>
+			            <c:choose>
+			            <c:when test="${empty r.receiverProfilePath }">
+			            <img src='resources/images/logo.png' 	 >
+			            </c:when>
+			            <c:otherwise>
+			            <img src="${r.receiverProfilePath}" class='rounded-circle'	 >
+			            </c:otherwise>
+			            </c:choose>		    
+					    </td>
+			            <td>${r.receiverName }</td>
+			            <td>${r.message}</td>
+			            <td>${r.messageDate}</td>
+			            <input type="hidden"  value="${r.receiver }"> 
+			            <input type="hidden"  value="${r.receiverId }">
+			            <input type="hidden"  value="${r.roomNo }">  
+			          </tr>
+		         </c:otherwise>
+		         </c:choose>
 		         </c:forEach>
 		       </c:otherwise>
 		       </c:choose>
@@ -290,6 +320,7 @@
           			<button type="button" onclick="chatInsert(this)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
           			<input type="hidden" name="sender"  > 
           			<input type="hidden" name="senderId"  > 
+          			<input type="hidden" name="roomNo"  > 
           		</div>
           </div>
         </div>
@@ -305,14 +336,15 @@
     function chatModalOpen(tr) {
 		
 		$("#chattingModal .modal-header").text($(tr).children().eq(1).text());
-		 $("#chattingModal .modal-body").attr("id","chatView-"+$(tr).children("input").val()+"-${loginMember.memNo}");
+		 $("#chattingModal .modal-body").attr("id","chatView-"+$(tr).children("input").eq(0).val()+"-${loginMember.memNo}");
 		 $("#chatFooter input[name=sender]").val($(tr).children("input").eq(0).val());
 		 $("#chatFooter input[name=senderId]").val($(tr).children("input").eq(1).val());
+		 $("#chatFooter input[name=roomNo]").val($(tr).children("input").eq(2).val());
 		
 		$.ajax({
 			url : "detailChat.me",
 			data : {
-				sender : $(tr).children("input").val(),
+				sender : $(tr).children("input").eq(0).val(),
 				receiver : ${loginMember.memNo}
 			},
 			success : result => {
@@ -325,13 +357,13 @@
 					}else { // 내가 받은경우
 						str+= "<div class='sender'><div>";
 						
-						if(typeof cList[i].profilePath == "undefined") {
+						if(typeof cList[i].senderProfilePath == "undefined") {
 					    	  str+= "<img src='resources/images/logo.png' 	 >";
 					      }else {
-					    	  str+= "<img src='"+cList[i].profilePath+"' class='rounded-circle'	 >";
+					    	  str+= "<img src='"+cList[i].senderProfilePath+"' class='rounded-circle'	 >";
 					      }
 						str+= "</div><div class='sender-con'>";
-						str+= "<div class='sname'>"+cList[i].receiver+"</div>";
+						str+= "<div class='sname'>"+cList[i].senderName+"</div>";
 						str+= "<div class='scontent-area'>";
 						str+= "<div class='srealcontent'>"+cList[i].message+"<div class='sdate'>"+cList[i].messageDate+"</div></div></div></div></div>";
 					}
@@ -368,13 +400,15 @@
 		var message = $(btn).prev().val();
 		var receiver = $(btn).next().val();
 		var receiverId = $(btn).next().next().val();
+		var roomNo = $(btn).next().next().next().val();
 		
 		$.ajax({
 			url : "insertChat.me",
 			data : {
 				message : message,
 				sender : ${loginMember.memNo},
-				receiver : receiver
+				receiver : receiver,
+				roomNo : roomNo
 			},
 			success : result => {
 				var str = "";
@@ -383,7 +417,13 @@
 				$("#chattingModal .modal-body").append(str);
 				$("#chattingModal .modal-body").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
 				$("#chattingModal textarea[name=chatMsg]").val("");
-				sendMessage("chat", receiverId, result.message, result.messageDate);
+				sendMessage("chat", receiverId, result.message, result.messageDate, roomNo);
+				
+				$("#chatTb #chatRoom-"+receiver+"-${loginMember.memNo}").children("td").eq(2).text(result.message);
+				
+				var $tr = $("#chatTb #chatRoom-"+receiver+"-${loginMember.memNo}").clone();
+				$("#chatTb #chatRoom-"+receiver+"-${loginMember.memNo}").remove();
+	   			$("#chatTb tbody").prepend($tr);
 			},
 			error : () => {
 				console.log("통신 실패");

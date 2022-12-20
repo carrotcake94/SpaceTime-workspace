@@ -166,6 +166,11 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.selectChatList(sqlSession, c);
 	}
 
+	// 룸번호 가져오기
+	public int selectRoomNo(Chatting c) {
+		return commonDao.selectRoomNo(sqlSession, c);
+	}
+	
 	// 채팅 인서트
 	public int insertChat(Chatting c) {
 		return commonDao.insertChat(sqlSession, c);

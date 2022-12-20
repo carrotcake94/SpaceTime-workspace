@@ -178,6 +178,12 @@ public class CommonDao {
 	}
 
 	// 채팅방 상세뷰 - 정현
+	public int selectRoomNo(SqlSessionTemplate sqlSession, Chatting c) {
+
+		return sqlSession.selectOne("commonMapper.selectRoomNo", c);
+	}
+
+	// 채팅방 상세뷰 - 정현
 	public int insertChat(SqlSessionTemplate sqlSession, Chatting c) {
 
 		return sqlSession.insert("commonMapper.insertChat", c);

@@ -556,11 +556,14 @@ public class CommonController {
 	@ResponseBody
 	@RequestMapping(value = "insertChat.me", produces = "application/json; charset=UTF-8")
 	public String insertChat(Chatting c, HttpSession session) {
+		
 		commonService.insertChat(c);
 		Chatting result = commonService.selectChat(c);
 
 		return new Gson().toJson(result);
 	}
+	
+
 
 	// ---------------------정현
 

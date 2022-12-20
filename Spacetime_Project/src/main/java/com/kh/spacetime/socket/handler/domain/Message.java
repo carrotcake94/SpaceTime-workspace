@@ -16,8 +16,10 @@ public class Message {
 	private String senderNo;
 	private String senderName;
 	private String profilePath;
+	private String senderId;
 	private String receiverId;
 	private String message;
 	private String messageDate;
+	private int roomNo;
 	
 }

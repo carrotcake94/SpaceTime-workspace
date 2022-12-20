@@ -29,6 +29,8 @@
 		<result column="STYPE_NO" property="stypeNo" />
 		<result column="BOOKMARK_MEM" property="bookmarkMem" />
 		<result column="RATING" property="rating" />
+		<result column="MEM_NAME" property="memName" />
+		<result column="MEM_ID" property="memId" />
 		<collection resultMap="spaceAttachmentResultSet" property="attachments" />
 	</resultMap>
 	
@@ -378,8 +380,9 @@
 	
 	<!-- 하연 -->
 	<select id="selectSpaceDetail" parameterType="_int" resultMap="spaceResultSet">
-		SELECT *
-		FROM SPACE
+		SELECT S.*, M.MEM_NAME, M.MEM_ID
+		FROM SPACE S
+		JOIN MEMBER M ON S.HOST_NO = M.MEM_NO
 		WHERE SPACE_NO = #{spaceNo}
 	</select>
 	 
