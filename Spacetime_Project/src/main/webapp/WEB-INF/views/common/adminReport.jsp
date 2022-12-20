@@ -278,114 +278,117 @@
 
     <script>
         $(function() {
-            $(".page-link").each(function() {
-                if ($(this).text() ==${ pi.currentPage}) {
-                    $(this).attr("id", "active-page");
-                    $(this).parent().addClass("disabled");
-                } else {
-                    $(this).removeAttr("id", "active-page");
-                }
+            $(".pagination").each(function() {
+
+                console.log($(".pagination").find("li.page-link").val());
+
+                // if ($(this).text() == ${pi.currentPage}) {
+                //     $(this).attr("id", "active-page");
+                //     $(this).parent().addClass("disabled");
+                // } else {
+                //     $(this).removeAttr("id", "active-page");
+                // }
             });
         });
     </script>
     
     <!-- 리스트 불러오기... -->
     <script>
-    
-    $(function() {
-        showReportList();
-    });
-    
-    function showReportList(num, currentPage) {
         
-        var tab = "전체 신고";
+        $(function() {
+            showReportList();
+        });
         
-        switch(num) {
-        case 1 : tab = "전체 신고"; break;
-        case 2 : tab = "미처리 신고"; break;
-        case 3 : tab = "승인된 신고"; break;
-        case 4 : tab = "반려된 신고"; break;
-        }
-        
-        /* alert(tab); */
-        console.log(tab);
-        console.log(currentPage);
-        
-        $.ajax({
-            url : "ajaxrlist.ad",
-            data : {tab : tab, cpage : currentPage},
-            success : function(result) { // 이 result에는 pi 와 list 가 들어있어야 한다. 
-                
-                console.log(result);
-                console.log(result.pi.listCount);
-                
-                var resultStr = "";
+        function showReportList(num, currentPage) {
+            
+            var tab = "전체 신고";
+            
+            switch(num) {
+            case 1 : tab = "전체 신고"; break;
+            case 2 : tab = "미처리 신고"; break;
+            case 3 : tab = "승인된 신고"; break;
+            case 4 : tab = "반려된 신고"; break;
+            }
+            
+            // alert(tab);
+            // console.log(tab);
+            // console.log(currentPage);
+            
+            $.ajax({
+                url : "ajaxrlist.ad",
+                data : {tab : tab, cpage : currentPage},
+                success : function(result) { // 이 result에는 pi 와 list 가 들어있어야 한다. 
+                    
+                    // console.log(result);
+                    // console.log(result.pi.listCount);
+                    
+                    var resultStr = "";
 
-                if(result.list.length != 0) {
+                    if(result.list.length != 0) {
 
-                    for(var i = 0; i < result.list.length; i++) {
-                        
-                        resultStr += "<tr class='reportTr'>"
-                                        + "<td class='rpno'>" + result.list[i].reportNo + "</td>"
-                                        + "<td>" + result.list[i].reportedMemNo + "</td>"
-                                        + "<td>" + result.list[i].reportType + "</td>"
-                                        + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>"
-                                        + "<td>" + result.list[i].reportDate + "</td>"
-                                        + "<td>";
-                                                if(result.list[i].reportStatus == 'Y') {
-                                                    resultStr += "승인";
-                                                } else if (result.list[i].reportStatus == 'N') {
-                                                    resultStr += "미처리";
-                                                } else if (result.list[i].reportStatus == 'D') {
-                                                    resultStr += "반려";
-                                                }
-                            resultStr += "</td> </tr>";
-                    } 
-
-                } else if(result.list.length == 0) {
-                    resultStr += "<tr class='salesTr'><td colspan='5' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
-                }
-                
-                $(".myTable").html(resultStr); 
-                
-                // console.log(result.pi.startPage);
-                // console.log(result.pi.endPage);
-                console.log(result.pi.currentPage);
-                
-                var resultPi = "";
-
-                if(result.list.length != 0) {
-                
-                    if(result.pi.currentPage == 1) {
-                        resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
-                    } else {
-                        resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"
-                    }
-                
-                    for(var p = result.pi.startPage; p <= result.pi.endPage; p++) {
-                        
-                        if(p != result.pi.currentPage) {
-                            resultPi += "<li class='page-item page-btn'><a id='' class='page-link' href='#' onclick='showReportList(" + num + ", " + p + ");'>" + p +"</a></li>"
+                        for(var i = 0; i < result.list.length; i++) {
+                            
+                            resultStr += "<tr class='reportTr'>"
+                                            + "<td class='rpno'>" + result.list[i].reportNo + "</td>"
+                                            + "<td>" + result.list[i].reportedMemNo + "</td>"
+                                            + "<td>" + result.list[i].reportType + "</td>"
+                                            + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>"
+                                            + "<td>" + result.list[i].reportDate + "</td>"
+                                            + "<td>";
+                                                    if(result.list[i].reportStatus == 'Y') {
+                                                        resultStr += "승인";
+                                                    } else if (result.list[i].reportStatus == 'N') {
+                                                        resultStr += "미처리";
+                                                    } else if (result.list[i].reportStatus == 'D') {
+                                                        resultStr += "반려";
+                                                    }
+                                resultStr += "</td> </tr>";
                         } 
-                        if(p == result.pi.currentPage) {
-                            resultPi += "<li class='page-item page-btn' disbled>" + p + "</li>"
-                        }
+
+                    } else if(result.list.length == 0) {
+                        resultStr += "<tr class='salesTr'><td colspan='5' onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td></tr>";
                     }
                     
-                    if(result.pi.currentPage == result.pi.maxPage) {
-                        resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
-                    } else {
-                        resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
-                    }
-                }
+                    $(".myTable").html(resultStr); 
+                    
+                    // console.log(result.pi.startPage);
+                    // console.log(result.pi.endPage);
+                    // console.log(result.pi.currentPage);
+                    
+                    var resultPi = "";
 
-                $(".pagination").html(resultPi);
-                
-            }, error : function() {
-                console.log("탭 선택 ajax 통신 실패ㅠㅠ");
-            }
-        });
-    }
+                    if(result.list.length != 0) {
+                    
+                        if(result.pi.currentPage == 1) {
+                            resultPi += "<li class='page-item no-page-prev disabled'><a class='page-link' href='#'>&lt;</a></li>";
+                        } else {
+                            resultPi += "<li class='page-item no-page-prev'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "- 1);'>&lt;</a></li>"
+                        }
+                    
+                        for(var p = result.pi.startPage; p <= result.pi.endPage; p++) {
+                            
+                            if(p != result.pi.currentPage) {
+                                resultPi += "<li class='page-item page-btn'><a id='' class='page-link' href='#' onclick='showReportList(" + num + ", " + p + ");'>" + p +"</a></li>"
+                            } 
+                            if(p == result.pi.currentPage) {
+                                resultPi += "<li class='page-item page-btn' disbled>" + p + "</li>"
+                            }
+                        }
+                        
+                        if(result.pi.currentPage == result.pi.maxPage) {
+                            resultPi += "<li class='page-item no-page-next disabled'><a class='page-link' href='#'>&gt;</a></li>";
+                        } else {
+                            resultPi += "<li class='page-item no-page-next'><a class='page-link' href='#' onclick='showReportList(" + num + ", " + result.pi.currentPage  + "+ 1);'>&gt;</a></li>"
+                        }
+                    }
+
+                    $(".pagination").html(resultPi);
+                    
+                }, error : function() {
+                    console.log("탭 선택 ajax 통신 실패ㅠㅠ");
+                }
+            });
+        }
     </script>
     
 </body>

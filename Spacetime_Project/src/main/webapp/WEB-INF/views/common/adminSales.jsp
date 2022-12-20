@@ -142,7 +142,7 @@
                     <table align="center" id="searchForm">
                         <tr>
                             <td style="width: 20%;">
-                                <input type="month" id="searchMonth" name="month" class="mb-2 form-control" style="width:150px; display: inline-block;" required>
+                                <input type="month" id="searchMonth" name="month" class="mb-2 form-control" style="width:150px; display: inline-block;" value="${month}" required>
                             </td>
                             <td align="right" style="width: 20%;">
                                 <input type="hidden" name="currentPage" value="1">
@@ -185,24 +185,33 @@
                         </tr>
                     </thead>
                     <tbody class="myTable">
-                        <c:forEach var="r" items="${list}">
-                            <tr class='salesTr'>
-                                <input type="hidden" class='sno' name='sno' value="${r.spaceNo}">
-                                <input type="hidden" class='detailMonth' value="${month}">
-                                <td>${r.memName}</td>
-                                <td>${r.memId}</td>
-                                <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.spaceTitle}</td>
-                                <td>${r.price}</td>
-                                <td>
-                                    <c:if test="${r.useDate} lt ${today}">
-                                        정산완료
-                                    </c:if>
-                                    <c:if test="${r.useDate} gt ${today}">
-                                        미처리
-                                    </c:if>
-                                </td> 
-                            </tr>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${list.size() eq 0}">
+                                <tr class='salesTr'>
+                                    <td colspan="5" onclick='event.cancelBubble=true;'>결과가 존재하지 않습니다.</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="r" items="${list}">
+                                    <tr class='salesTr'>
+                                        <input type="hidden" class='sno' name='sno' value="${r.spaceNo}">
+                                        <input type="hidden" class='detailMonth' value="${month}">
+                                        <td>${r.memName}</td>
+                                        <td>${r.memId}</td>
+                                        <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.spaceTitle}</td>
+                                        <td>${r.price}</td>
+                                        <td>
+                                            <c:if test="${r.useDate} lt ${today}">
+                                                정산완료
+                                            </c:if>
+                                            <c:if test="${r.useDate} gt ${today}">
+                                                미처리
+                                            </c:if>
+                                        </td> 
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
                 <br>
@@ -210,26 +219,32 @@
                 <div class="btnPage" align="center">
                     <ul class="pagination">
                         <c:choose>
-                            <c:when test="${pi.currentPage eq 1}">
-                                <li class="page-item no-page-prev disabled"><a class="page-link" href="#">&lt;</a></li>
+                            <c:when test="${list.size() eq 0}">
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item no-page-prev"><a class="page-link" href="searchS.ad?month=${month}&currentPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">&lt;</a></li>
+                                <c:choose>
+                                    <c:when test="${ pi.currentPage eq 1 }">
+                                        <li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item"><a class="page-link" href="slist.ad?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
+                                    </c:otherwise>
+                                </c:choose>	  
+                                    
+                                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                                    <li class="page-item page-btn"><a class="page-link" href="slist.ad?cpage=${ p }">${ p }</a></li>
+                                </c:forEach>
+                                
+                                <c:choose>
+                                    <c:when test="${ pi.currentPage eq pi.maxPage }">
+                                        <li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item no-page-next"><a class="page-link" href="slist.ad?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
+                                    </c:otherwise>
+                                </c:choose>	 
                             </c:otherwise>
-                        </c:choose>
-    
-                        <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
-                            <li class="page-item page-btn"><a id="" class="page-link" href="searchS.ad?month=${month}&currentPage=${p}&condition=${condition}&keyword=${keyword}">${p}</a></li>
-                        </c:forEach>
-    
-                        <c:choose>
-                            <c:when test="${pi.currentPage eq pi.maxPage}">
-                                <li class="page-item no-page-next disabled"><a class="page-link" href="#">&gt;</a></li>        
-                            </c:when>
-                            <c:otherwise>
-                                <li class="page-item no-page-next"><a class="page-link" href="searchS.ad?month=${month}&currentPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">&gt;</a></li>
-                            </c:otherwise>
-                        </c:choose>
+                        </c:choose>      
                     </ul>
                 </div>
             </div>
@@ -246,10 +261,22 @@
     <script>
         $(function() {
             $(".salesList>tbody").on("click", ".salesTr", function() {
-                location.href = "sdetail.ad?sno=" + $(this).children(".sno").eq(0).val() + "&month=" + $('#searchDate').val();
+                location.href = "sdetail.ad?sno=" + $(this).children(".sno").eq(0).val() + "&month=" + $('#searchMonth').val();
             });
         });
     </script>
 
+	<script>
+   		$(function() {
+			$(".page-link").each(function() {
+         		if ($(this).text() ==${ pi.currentPage}) {
+         			$(this).attr("id", "active-page");
+         			$(this).parent().addClass("disabled");
+         		} else {
+         			$(this).removeAttr("id", "active-page");
+         		}
+         	});
+		});
+    </script>
 </body>
 </html>

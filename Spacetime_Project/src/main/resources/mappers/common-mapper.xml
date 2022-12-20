@@ -20,6 +20,7 @@
 		<result column="USE_DATE" property="useDate" />
 		<result column="PRICE" property="price" />
 		<result column="SPACE_NO" property="spaceNo" />
+		<result column="START_TIME" property="startTime" />
 		
 		<result column="MEM_NAME" property="memName" />
 		<result column="MEM_ID" property="memId" />
@@ -128,7 +129,7 @@
 		SELECT COUNT(*)
 		FROM (SELECT SPACE_NO
 		      FROM RESERVE
-		      WHERE EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{MONTH}
+		      WHERE EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE)|| '-' || EXTRACT(MONTH FROM SYSDATE)
 		      GROUP BY SPACE_NO)
 	</select>
 	
@@ -139,7 +140,7 @@
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		WHERE MEM_STATUS = 'N'
-		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{MONTH}
+		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE)|| '-' || EXTRACT(MONTH FROM SYSDATE)
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE, USE_DATE
 		ORDER BY SPACE_NO DESC
 	</select>
@@ -164,11 +165,11 @@
 	
 	<!-- 매출이 있는 공간의 상세 매출 조회 -->
 	<select id="selectSalesDetailList" parameterType="hashmap" resultMap="reserveResultSet">
-		SELECT TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE", R.START_TIME, R.PRICE, (R.PRICE*0.1) AS "INCOME"
+		SELECT TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE", START_TIME, R.PRICE, (R.PRICE*0.1) AS "INCOME"
 		FROM RESERVE R
 		WHERE SPACE_NO = #{spaceNo}
 		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
-		ORDER BY USE_DATE ASC
+		ORDER BY USE_DATE, START_TIME ASC
 	</select>
 	
 	<!-- 매출 검색 글 개수 -->

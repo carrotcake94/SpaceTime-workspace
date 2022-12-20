@@ -29,10 +29,10 @@ public interface CommonService {
 	ArrayList<Report> selectReportSearchList(PageInfo pi, HashMap<String, String> map);
 
 	// 매출이 있는 공간 총 개수
-	int selectSalesListCount(String month);
+	int selectSalesListCount();
 
 	// 매출이 있는 공간 리스트 조회
-	ArrayList<Reserve> selectSalesList(PageInfo pi, String month);
+	ArrayList<Reserve> selectSalesList(PageInfo pi);
 
 	// 공간 매출 상세조회
 	Reserve selectSales(int spaceNo);

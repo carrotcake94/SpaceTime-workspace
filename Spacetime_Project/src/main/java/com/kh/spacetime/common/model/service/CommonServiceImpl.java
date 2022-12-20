@@ -66,16 +66,16 @@ public class CommonServiceImpl implements CommonService {
 
 	// 매출이 있는 공간 총 개수
 	@Override
-	public int selectSalesListCount(String month) {
+	public int selectSalesListCount() {
 
-		return commonDao.selectSalesListCount(sqlSession, month);
+		return commonDao.selectSalesListCount(sqlSession);
 	}
 
 	// 매출이 있는 공간 리스트 조회
 	@Override
-	public ArrayList<Reserve> selectSalesList(PageInfo pi, String month) {
+	public ArrayList<Reserve> selectSalesList(PageInfo pi) {
 
-		return commonDao.selectSalesList(sqlSession, pi, month);
+		return commonDao.selectSalesList(sqlSession, pi);
 	}
 
 	// 공간 매출 상세조회

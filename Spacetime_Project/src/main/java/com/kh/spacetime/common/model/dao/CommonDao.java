@@ -63,20 +63,20 @@ public class CommonDao {
 	}
 
 	// 매출이 있는 공간 리스트 페이징
-	public int selectSalesListCount(SqlSessionTemplate sqlSession, String month) {
+	public int selectSalesListCount(SqlSessionTemplate sqlSession) {
 
-		return sqlSession.selectOne("commonMapper.selectSalesListCount", month);
+		return sqlSession.selectOne("commonMapper.selectSalesListCount");
 	}
 
 	// 매출이 있는 공간 리스트 조회
-	public ArrayList<Reserve> selectSalesList(SqlSessionTemplate sqlSession, PageInfo pi, String month) {
+	public ArrayList<Reserve> selectSalesList(SqlSessionTemplate sqlSession, PageInfo pi) {
 
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
-		return (ArrayList) sqlSession.selectList("commonMapper.selectSalesList", month, rowBounds);
+		return (ArrayList) sqlSession.selectList("commonMapper.selectSalesList", null, rowBounds);
 	}
 
 	// 공간 매출 상세조회

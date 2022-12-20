@@ -202,72 +202,39 @@ public class CommonController {
 	}
 
 	/**
-	 * 관리자 매출관리 리스트 페이지로 포워딩 - 혜민
+	 * 관리자 매출관리 리스트 조회 - 혜민
 	 * 
 	 * @return
 	 */
 	@RequestMapping("slist.ad")
-	public String selectSalesList() {
+	public String selectSalesList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
 
-		return "common/adminSales";
-	}
 
-	/**
-	 * 관리자 매출관리 리스트 조회 - 혜민
-	 * 
-	 * @param currentPage
-	 * @param model
-	 * @param month
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "ajaxslist.ad", produces = "application/json; charset=UTF-8")
-	public String ajaxSalesList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, Model model,
-			String month) {
-
-		// System.out.println(month);
-
-		int listCount = commonService.selectSalesListCount(month);
-
+		LocalDate now = LocalDate.now();
+		
+		int year = now.getYear();
+		int Month = now.getMonthValue();
+		String thisMonth = year + "-" + Month;
+		// System.out.println(thisMonth);
+		
+		int listCount = commonService.selectSalesListCount();
+		
 		int pageLimit = 5;
 		int boardLimit = 10;
-
+		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-
-		ArrayList<Reserve> list = commonService.selectSalesList(pi, month);
-
-		// System.out.println(listCount);
-		// System.out.println(list);
-		JSONArray jArr = new JSONArray();
-		for (Reserve r : list) {
-			JSONObject jObj = new JSONObject();
-			jObj.put("memName", r.getMemName());
-			jObj.put("memId", r.getMemId());
-			jObj.put("spaceNo", r.getSpaceNo());
-			jObj.put("spaceTitle", r.getSpaceTitle());
-			jObj.put("useDate", r.getUseDate());
-			jObj.put("price", r.getPrice());
-			jArr.add(jObj);
-		}
-
-		JSONObject jObj = new JSONObject();
-		jObj.put("listCount", pi.getListCount());
-		jObj.put("currentPage", pi.getCurrentPage());
-		jObj.put("pageLimit", pi.getPageLimit());
-		jObj.put("boardLimit", pi.getBoardLimit());
-		jObj.put("maxPage", pi.getMaxPage());
-		jObj.put("startPage", pi.getStartPage());
-		jObj.put("endPage", pi.getEndPage());
-
-		JSONObject json = new JSONObject();
-		json.put("list", jArr); // 0번 인덱스
-		json.put("pi", jObj); // 1번 인덱스
-
-		// System.out.println(json);
-
-		return json.toJSONString();
+		
+		ArrayList<Reserve> list = commonService.selectSalesList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		model.addAttribute("month", thisMonth);
+		
+		// System.out.println(model);
+		
+		return "common/adminSales";
 	}
-
+	
 	/**
 	 * 관리자 매출 상세조회 - 혜민
 	 * 
@@ -278,16 +245,11 @@ public class CommonController {
 	@RequestMapping("sdetail.ad")
 	public ModelAndView selcetSales(int sno, String month, ModelAndView mv) {
 
-//		System.out.println("컨트롤러까지왓니?");
-//		System.out.println(sno + "," + month);
-
 		Reserve r = commonService.selectSales(sno);
 
 		mv.addObject("month", month);
 		mv.addObject("r", r);
 		mv.setViewName("common/adminSalesDetail");
-
-//		System.out.println(mv);
 
 		return mv;
 	}
