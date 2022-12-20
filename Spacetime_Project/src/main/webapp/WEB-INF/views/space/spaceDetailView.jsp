@@ -465,162 +465,6 @@
 	        background-color: #fff;
 	    border: 1px solid #e0e0e0;
 	}
-	#chatBtn {
-        background-color: rgb(39, 123, 192);
-        color: white;
-        border-radius: 5px;
-        border: none;
-        font-size: 15px;
-        padding: 5px 10px;
-	}
-	/* 채팅방 모달 */
-      #chattingModal .modal-content {
-        width: 450px;
-        margin: auto;
-        border: none;
-        border-radius: 10px;
-        overflow: hidden;
-      }
-
-      #chattingModal .modal-header {
-        background-color: rgb(39, 123, 192);
-        text-align: center;
-        color: white;
-        font-size: 23px;
-        border-bottom: none;
-        display: block;
-        padding: 10px;
-      }
-
-      #chattingModal .modal-body {
-        height : 600px;
-        padding: 15px 20px;
-        background-color: #FBFACD;
-        overflow: auto;
-      }
-
-
-	  #chatFooter {
-	  	margin:0;
-	  	padding:0;
-	  	overflow: hidden;
-	  }
-	  #chatFooter>div {
-	  margin:0;
-	  padding:10px;
-	  	overflow : hidden;
-	  	width: 100%;
-	  }
-	  #chatFooter textarea {
-	  width: 68%;
-      height: 50px;
-      border: 1px solid lightgray;
-      outline: none;
-      padding: 5px 10px;
-      resize: none;
-      color: rgb(54, 54, 54);
-      margin-right: 2%;
-      font-size: 12px;
-      border-radius: 5px;
-      
-	  
-	  }
-	  #chatFooter button {
-		  float:right;
-		  margin:0;
-		   width:30%;
-		  height: 50px;
-		  background-color:  rgb(253, 193, 55);
-        font-size: 22px;
-        font-weight: 600;
-          color: white;
-                 border-radius: 5px;
-                 border:none;
-	  }
-	  #chatFooter button:hover {
-          color: rgb(39, 123, 192);
-	  }
-	  
-
-	  #chattingModal .sender {
-	  	overflow: hidden;
-	  	margin-bottom: 10px;
-	  }
-	   #chattingModal .sender>div {
-	  	float:left;
-	  }
-	  
-	  #chattingModal .sender>div:nth-child(1) {
-	  	width: 10%;
-	  }
-	   #chattingModal .sender>div:nth-child(2) {
-	  	width: 90%;
-	  }
-	  #chattingModal .sender img {
-		  display: block;
-		  margin: 20px auto 10px;
-	 	  width: 30px;
-		  height:30px;     	
-	  }
-	  #chattingModal .sender .sname {
-	 	 font-size: 12px;
-        font-weight: 500;
-	  }
-	  #chattingModal .sender .scontent-area {
-	  	overflow: hidden;
-	  
-	  }
-	  #chattingModal .sender .srealcontent {
-		float:left;
-	  	border-radius: 5px;
-	  	padding:4px 5px;
-	  	background-color: white;
-	  	border:1px solid gray;
-	  	max-width: 75%;
-	  	position : relative;
-	  	font-size: 15px;
-        font-weight: 500;
-        white-space:pre-wrap;
-	  }
-	  
-	  #chattingModal .sender .sdate {
-	 	position : absolute;
-	 	bottom : 0;
-	 	right : -58px;
-	    font-size: 10px;
-        font-weight: 500;
-        color: rgb(107, 107, 107);
-	  
-	  }
-	  #chattingModal .receiver {
-	  	  margin-bottom: 10px;
-	  }
-	  #chattingModal .receiver .rcontent-area {
-	  	overflow: hidden;
-	  }
-	  #chattingModal .receiver .rrealcontent {
-		float:right;
-	  	border-radius: 5px;
-	  	padding:4px 5px;
-	  	background-color: white;
-	  	border:1px solid gray;
-	  	max-width: 75%;
-	  	position : relative;
-	  	font-size: 15px;
-        font-weight: 500;
-        white-space:pre-wrap;
-	  }
-	  
-	  #chattingModal .receiver .rdate {
-	 	position : absolute;
-	 	bottom : 0;
-	 	left : -58px;
-	    font-size: 10px;
-        font-weight: 500;
-        color: rgb(107, 107, 107);
-	  }
-	
-      /* -------------------------------------- */
 	
 </style>
 </head>
@@ -631,7 +475,18 @@
         <div id="content">
             <div class="sheader" style="padding-top: 100px;">
                 ${ s.spaceTitle }
+                <button class="chatBtn">채팅임시버튼</button>
             </div>
+            
+            <script>
+           		/* 채팅버튼  */
+             	$(function() {
+             		$(".chatBtn").click(function() {
+             			location.href = "chat.sp"; 
+             		});
+             	});
+           	</script>
+
             <div class="sub_title">
                 ${ s.spaceSubTitle }
             </div>
@@ -671,6 +526,8 @@
 	                              x[myIndex-1].style.display = "block";  
 	                              setTimeout(carousel, 2500);    
 	                            }
+	                            
+	                            var totalPrice = 0;
                             </script>
                     </td>
                     <td> <!-- 오른쪽 화면 -->
@@ -749,9 +606,8 @@
                                         		
                                         		var startTime = -1;
                                         		var endTime = -1;
-                                        		
-                                        		
-                                        		
+                                        		 
+                                        		var timeCount = 0;
                                         		
 		                                        // 시간 선택하는 함수 - onclick
 		                                   		function selectTime(k) {
@@ -819,10 +675,28 @@
 		                                        			
 		                                        		}
 		                                        	}
+		                                        	var realEndTime = endTime;
+		                                        	realEndTime = parseInt(realEndTime);
+		                                        	startTime = parseInt(startTime);
+		                                        	if(realEndTime == -1) {
+		                                        		realEndTime = startTime;
+		                                        	}  
+		                                        	
+		                                        	realEndTime += 1;
 		                                        	
 		                                        	
+		                                        	// 총결제금액 
+		                                        	totalPrice = (realEndTime - startTime) * ${ s.hourPrice};
+		                                        	timeCount = realEndTime - startTime;
 		                                        	
-		                                        	console.log("startTime : " + startTime + " / endTime : " + endTime);
+		                                        	/* console.log(totalPrice);
+		                                        	console.log(typeof(totalPrice)); */
+		                                        	
+
+	                                        		 $("#selectedTime").text(startTime + "시 - " + realEndTime + "시"); // 모달에 시간 대입 
+	                                        		 $("#totalPrice").text(totalPrice); // 모달에 결제금액 대입 
+		                                        	
+		                                        	// console.log("startTime : " + startTime + " / endTime : " + endTime);
 		                                        	
 		                                   		}
 	                                        	
@@ -842,8 +716,12 @@
 		                                        		  // set background color clicked Element
 		                                        		  dateClickInfo.dayEl.style.backgroundColor = "lightgrey";
 		                                        		  
+		                                        		  var selectedDate = dateClickInfo.dateStr;
+		                                        		  
 		                                        		 /*  console.log(dateClickInfo.dateStr);  */
-		                                        		  // console.log(${s.spaceNo});
+		                                        		 $("#selectedDate").text(dateClickInfo.dateStr); // 모달에 날짜 대입 
+		                                        		 
+		                                        		 
 		                                        		  
 		                                        		// 시간예약 현황 불러오기 
 			                                        	$.ajax({
@@ -947,17 +825,11 @@
                                             var _scrollX = $('.scroll').scrollLeft();
                                             $('.test').scrollLeft(_scrollX + 100);
                                           };
+                                          
+                                          
                                         </script>
-                                        <input type="button" class="" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
-                                        <c:choose>
-                                        <c:when test="${!empty loginMember}">
-                                        <button type="button" id="chatBtn" onclick="chatModalOpen(this)">일대일문의</button>
-                                        </c:when>
-                                        <c:otherwise>
-                                        <button type="button" id="chatBtn" onclick="denyChat()">일대일문의</button>
-                                        </c:otherwise>
-                                        </c:choose>
-                                        <input type="hidden" value="${s.hostNo}">
+                                        예약인원 <input type="number" class="reserveCount" min="1" value="1" name="reserveCount">
+                                        <input type="button" class="forReserve" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
                                     </th>
                                 </tr>
                             </table>
@@ -1124,23 +996,98 @@
                               </tr>
                               <tr>
                                   <td>예약날짜</td>
-                                  <td>날짜가들어갈자리</td>
+                                  <td id="selectedDate"></td>
                               </tr>
                               <tr>
                                   <td>예약시간</td>
-                                  <td>시간이들어갈자리</td>
+                                  <td id="selectedTime"></td>
                               </tr>
                               <tr>
                                   <td>결제예정금액</td>
-                                  <td>결제금액들어갈자리</td>
+                                  <td id="totalPrice"></td>
                               </tr>
                           </table>
                           <br>
                       </div>
+                      
+                        <%-- post 버전으로 넘기기 위한 form hidden --%>
+                        <form action="payUpdate.do" method="post">
+                            <input type="hidden" name="rId"> <%-- 결제번호(부트페이 제공) --%>
+                            <!-- <input type="hidden" name="oId"> --> <%-- 주문번호(payment 테이블 PK) --%>
+                            <input type="hidden" name="rUrl"> <%-- 결제 영수증 URL(부트페이 제공) --%>
+                            <input type="hidden" name="payMethod"> <%-- 결제 방식(부트페이 제공) --%>
+                            
+                            <input type="hidden" name="reserveCount">
+                            <input type="hidden" name="useDate">
+                            <input type="hidden" name="startTime">
+                            <input type="hidden" name="endTime">
+                            <input type="number" name="price" style="display:none;">
+                            <input type="hidden" name="memNo" value="${ loginMember.memNo }">
+                             <input type="hidden" name="spaceNo" value="${ s.spaceNo }">
+                             
+                            <script>
+                            /* console.log(response);
+                            $("form>input[name=rId]").val(response.data.receipt_id);
+                            $("form>input[name=rUrl]").val(response.data.receipt_url);
+                            $("form>input[name=payMethod]").val(response.data.method);
+                            $("form>button[type=submit]").click();
+                            <td>예약공간</td>
+                            <td>${ s.spaceTitle }</td>
+                        </tr>
+                        <tr>
+                            <td>예약날짜</td>
+                            <td id="selectedDate"></td>
+                        </tr>
+                        <tr>
+                            <td>예약시간</td>
+                            <td id="selectedTime"></td>
+                        </tr>
+                        <tr>
+                            <td>결제예정금액</td>
+                            <td id="totalPrice"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    
+                    $("#totalPrice").text(totalPrice); 
+                    
+                            */
+                            
+                            
+                            $(".forReserve").click(function() {
+                                var totalPrice2 = $("#totalPrice").text();
+                                
+                                $("form>input[name=reserveCount]").val($(".reserveCount").val());
+                                $("form>input[name=useDate]").val(selectedDate.innerText);
+                                $("form>input[name=startTime]").val(startTime);
+                                $("form>input[name=endTime]").val(endTime);
+                                $("form>input[name=price]").val(totalPrice2);
+                            })
+                            
+
+                            
+                            
+                           /*  
+                           console.log($(".personCount").val());
+                            console.log(selectedDate.innerText);
+                            console.log(startTime);
+                            console.log(endTime);
+                            console.log(totalPrice);
+                             */
+                            
+                            
+                            
+                            </script>
+                            
+                            <button type="submit" style="display:none;"></button>
+                        </form>
+                      
+                      
+                      
                       <!-- Modal footer -->
                       <div class="modal-footer">
                           <button type="button"  class="btn btn-light" onclick="$('#confirm-modal').modal('hide')">닫기</button>
-                          <button type="button" class="btn btn-primary" id="bootPayment" onclick="pay();">결제하기</button> <!-- 결제버튼 여기 -->
+                          <button type="button" class="btn btn-primary" id="bootPayment">결제하기</button> <!-- 결제버튼 여기 -->
 
                         <!-- 부트페이 -->
                         <script>
@@ -1161,22 +1108,22 @@
                               try {
                                   const response = await Bootpay.requestPayment({
                                       "application_id": "638d424dd01c7e001e7bd63e", // 부트페이에서 발급해주는 ID
-                                      "price": 1000, 
-                                      "order_name": "결제내용들어갈공간",
-                                      "order_id": "TEST_ORDER_ID",
+                                      "price": totalPrice, 
+                                      "order_name": "${s.spaceTitle}",
+                                      "order_id": "test",
                                       "tax_free": 0, 
                                       "user": { // loginMember 객체로부터 추출
                                           "id": "회원아이디",
-                                          "username": "회원이름",
-                                          "phone": "01000000000",
-                                          "email": "test@test.com"
+                                          "username": "${loginMember.memName}",
+                                          "phone": "${loginMember.phone}",
+                                          "email": "${loginMember.email}"
                                       },
                                       "items": [
                                             {
-                                              "id": "item_id",
-                                              "name": "테스트아이템",
-                                              "qty": 1,
-                                              "price": 1000
+                                              "id": "temporary",
+                                              "name": "결제",
+                                              "qty": timeCount,
+                                              "price": ${ s.hourPrice}
                                             }
                                           ],
                                       "extra": {
@@ -1198,7 +1145,7 @@
                                           // 결제 완료 시 hidden으로 숨긴 input들 안에 부트페이 데이터를 넣고 서블릿으로 요청
                                           console.log(response);
                                           $("form>input[name=rId]").val(response.data.receipt_id);
-                                          $("form>input[name=oId]").val(response.data.order_id);
+                                          /* $("form>input[name=oId]").val(response.data.order_id); */
                                           $("form>input[name=rUrl]").val(response.data.receipt_url);
                                           $("form>input[name=payMethod]").val(response.data.method);
                                           $("form>button[type=submit]").click();
@@ -1371,8 +1318,22 @@
                 <b>신고내용</b>  <br>
                 <div>
                   <textarea id="reportContent" name="reportContent" cols="50" rows="3" placeholder="신고 내용을 입력해주세요." maxlength="200"></textarea>
+                  
                 </div>              
                 </div>
+                <script>
+					$(document).ready(function () {
+						$('#reportContent').summernote({
+							placeholder: '신고할 내용과 증빙 가능한 이미지를 첨부해주세요.<br>증빙이 되지 않으면 신고가 처리되지 않습니다.',
+							lang: "ko-KR",
+							height: 200,
+							minHeight: 200,
+							maxHeight: 200
+						});
+
+					});
+                  
+				</script>
                 <!-- Modal footer -->
                 <div class="modal-footer">
                   <button type="button" class="btn btn-light" data-dismiss="modal">취소</button>
@@ -1382,132 +1343,9 @@
             </div>
       </div>
 	
-	
-	<!-- 채팅방 Modal -->
-    <div class="modal" id="chattingModal">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">${s.memName}</div>
-          <!-- Modal body -->
-          <div class="modal-body" id="chatView-${s.hostNo}-${loginMember.memNo}">
-          </div>
-          <!-- Modal footer -->
-          <div id="chatFooter" class="modal-footer">
-          		<div >
-          			<textarea name="chatMsg"></textarea>
-          			<button type="button" onclick="chatInsert(this)"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-          			<input type="hidden" name="sender" value="${s.hostNo }"  > 
-          			<input type="hidden" name="senderId" value="${s.memId }"  > 
-          			<input type="hidden" name="roomNo"  > 
-          		</div>
-          </div>
-        </div>
-      </div>
-    </div>
-	
   <jsp:include page="../common/footer.jsp" />
 </div>
-
-<c:if test="${!empty loginMember}">
-<script>
-//챗 모달 오픈
-function chatModalOpen(btn) {
-		$.ajax({
-			url : "detailChat.me",
-			data : {
-				sender : $(btn).next().val(),
-				receiver : ${loginMember.memNo}
-			},
-			success : result => {
-				var str = "";
-				var cList = result;
-				
-				if(cList.length > 0) {
-					$("#chatFooter input[name=roomNo]").val(cList[0].roomNo);
-					for(var i in cList) {
-						if(cList[i].sender == "${loginMember.memNo}") { // 내가 보낸 메시지일경우
-							str+= "<div class='receiver'><div class='rcontent-area'>";
-							str+= "<div class='rrealcontent'>"+cList[i].message+"<div class='rdate'>"+cList[i].messageDate+"</div></div></div></div>";
-						}else { // 내가 받은경우
-							str+= "<div class='sender'><div>";
-							
-							if(typeof cList[i].senderProfilePath == "undefined") {
-						    	  str+= "<img src='resources/images/logo.png' 	 >";
-						      }else {
-						    	  str+= "<img src='"+cList[i].senderProfilePath+"' class='rounded-circle'	 >";
-						      }
-							str+= "</div><div class='sender-con'>";
-							str+= "<div class='sname'>"+cList[i].senderName+"</div>";
-							str+= "<div class='scontent-area'>";
-							str+= "<div class='srealcontent'>"+cList[i].message+"<div class='sdate'>"+cList[i].messageDate+"</div></div></div></div></div>";
-						}
-					}
-					$("#chattingModal .modal-body").html(str);
-					$("#chattingModal .modal-body").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
-				}
-			},
-			error : () => {
-				console.log("통신 실패");
-			}
-		});
-		
-		 $("#chattingModal").modal("show");
-
-}
-$(function() {
-	//챗창 엔터키 막기
-	$("textarea[name=chatMsg]").keydown(function () {    
-		 if (event.keyCode === 13 && $(this).val().trim() != "") {
-			 if (!event.shiftKey) {
-				 event.preventDefault();
-				 $("#chatFooter button").click();
-			 }
-		 }
-    });
-});
-
-// 채팅 인서트
-chatInsert = btn => {
-	var message = $(btn).prev().val();
-	var receiver = $(btn).next().val();
-	var receiverId = $(btn).next().next().val();
-	var roomNo = $(btn).next().next().next().val();
-	
-	$.ajax({
-		url : "insertChat.me",
-		data : {
-			message : message,
-			sender : ${loginMember.memNo},
-			receiver : receiver,
-			roomNo : roomNo
-		},
-		success : result => {
-			
-			var str = "";
-			str+= "<div class='receiver'><div class='rcontent-area'>";
-			str+= "<div class='rrealcontent'>"+result.message+"<div class='rdate'>"+result.messageDate+"</div></div></div></div>";
-			$("#chattingModal .modal-body").append(str);
-			$("#chattingModal .modal-body").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
-			$("#chattingModal textarea[name=chatMsg]").val("");
-			sendMessage("chat", receiverId, result.message, result.messageDate, result.roomNo);
-			$("#chatFooter input[name=roomNo]").val(result.roomNo);
-		},
-		error : () => {
-			console.log("통신 실패");
-		}
-	});
-}
-
-</script>
-</c:if>
-
 <script>	
-	denyChat = () => {
-		 alert("로그인 후 이용 가능한 서비스입니다.");
-	}
-
-
 	 $(function () {
 		// img 컨트롤
 		 $("#reviewDiv ").on("mouseover", ".rcontent-img-area img", function() {
@@ -1610,6 +1448,7 @@ chatInsert = btn => {
 		 
 		 $.ajax({
 				url : "reportReview.rv",
+				type : "post",
 				data : {
 					reportType : reportType,
 					reportContent : reportContent,
@@ -1762,7 +1601,6 @@ chatInsert = btn => {
 		});
 	}
 	 
-	
 	</script>
 </body>
 </html>

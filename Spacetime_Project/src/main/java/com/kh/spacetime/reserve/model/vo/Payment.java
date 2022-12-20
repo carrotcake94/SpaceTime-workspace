@@ -10,7 +10,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Payment {
-	private int receiptId;	//	RECEIPT_ID	NUMBER
+	private String receiptId;	//	RECEIPT_ID	NUMBER
 	private String receiptUrl;	//	RECEIPT_URL	VARCHAR2(300 BYTE)
 	private String payStatus;	//	PAY_STATUS	CHAR(1 BYTE)
 	private int reserveNo;	//	RESERVE_NO	NUMBER

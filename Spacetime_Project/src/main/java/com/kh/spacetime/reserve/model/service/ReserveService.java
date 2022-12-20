@@ -82,5 +82,11 @@ public interface ReserveService {
 	
 	// 예약 현황 가져오기 
 	ArrayList<Reserve> selectReserveTime(int spaceNo);
+	
+	// 예약 insert 
+	int insertReserve(Reserve r);
+	
+	// 결제하기 
+	int insertPay(Payment p);
 
 }

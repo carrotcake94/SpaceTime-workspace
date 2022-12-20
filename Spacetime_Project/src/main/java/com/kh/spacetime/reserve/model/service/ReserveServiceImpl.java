@@ -165,5 +165,16 @@ public class ReserveServiceImpl implements ReserveService {
 		return reserveDao.selectReserveTime(sqlSession, spaceNo);
 	}
 	
+	// 예약 insert 
+	public int insertReserve(Reserve r) {
+		
+		return reserveDao.insertReserve(sqlSession, r);
+	}
+	
+	// 결제하기 
+	public int insertPay(Payment p) {
+		
+		return reserveDao.insertPay(sqlSession, p);
+	}
 
 }

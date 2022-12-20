@@ -341,9 +341,52 @@ public class ReserveController {
 
 		ArrayList<Reserve> r = reserveService.selectReserveTime(spaceNo);
 		
-		System.out.println(r);
+		//System.out.println(r);
 
 		return r;
 	}
+	
+	// 결제하기 
+    @RequestMapping("payUpdate.do")
+	public String payUpdate(String reserveCount, String useDate, int startTime, String endTime, int price, String memNo, int spaceNo, String rId, String rUrl, String payMethod, HttpSession session) {
+    	
+    	
+    	Reserve r = new Reserve();
+    	
+    	
+    	
+    	int newReserveCount = Integer.parseInt(reserveCount);
+    	int newEndTime = Integer.parseInt(endTime);
+    	
+    	r.setReserveCount(newReserveCount);
+    	r.setUseDate(useDate);
+    	r.setStartTime(startTime);
+    	r.setEndTime(newEndTime);
+    	r.setPrice(price);
+    	r.setMemNo(memNo);
+    	r.setSpaceNo(spaceNo);
+    	
+    	System.out.println(r);
+    	
+    	int reserveResult = reserveService.insertReserve(r);
+    	
+    	Payment p = new Payment();
+    	
+    	
+    	p.setReceiptId(rId);
+    	p.setReceiptUrl(rUrl);
+    	p.setPayMethod(payMethod);
+    	
+    	int payResult = reserveService.insertPay(p);
+    	
+//    	if (payResult > 0) { // insert 성공
+//			session.setAttribute("alertMsg", "결제 성공");
+//		} else {
+//			session.setAttribute("alertMsg", "결제 실패");
+//		}
+    	
+    	return "space/chat";
+	}
+
 
 }

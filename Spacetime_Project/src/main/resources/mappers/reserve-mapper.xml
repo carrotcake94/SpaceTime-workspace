@@ -232,6 +232,40 @@
 			FROM RESERVE
 			WHERE SPACE_NO = #{spaceNo}
 		</select>
+		<!-- 예약 insert -->
+		<insert  id="insertReserve" parameterType="reserve">
+			INSERT INTO RESERVE 
+			VALUES (SEQ_RNO.NEXTVAL
+					      , #{reserveCount}
+					      , SYSDATE
+					      , TO_DATE(#{useDate}, 'YYYY-MM-DD')
+					      , #{startTime}
+					      , #{endTime}
+					      , #{price}
+					      , #{spaceNo}
+					      , #{memNo}
+					      , 'W'
+					      , null)
+		</insert>
+		
+		
+		<resultMap id="paymentResultSet" type="payment">
+			<result column="RECEIPT_ID" property="receiptId" />
+			<result column="RECEIPT_URL" property="receiptUrl" />
+			<result column="PAY_STATUS" property="payStatus" />
+			<result column="RESERVE_NO" property="reserveNo" />
+			<result column="PAY_METHOD" property="payMethod" />
+		</resultMap>
+		
+		<!-- 결제하기  -->
+		<insert  id="insertPay" parameterType="payment">
+			INSERT INTO PAYMENT
+			VALUES ( #{receiptId}
+			      , #{receiptUrl}
+			      , 'N'
+			      , SEQ_RNO.CURRVAL
+			      , #{payMethod})
+		</insert>
 			
 	<!-- 	정현 -->
 	<!-- 	정현 start -->

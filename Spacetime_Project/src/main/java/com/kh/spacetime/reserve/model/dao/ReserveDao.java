@@ -124,6 +124,18 @@ public class ReserveDao {
 		return (ArrayList) sqlSession.selectList("reserveMapper.selectReserveTime", spaceNo);
 	}
 	
+	// 예약 insert 
+	public int insertReserve(SqlSessionTemplate sqlSession, Reserve r) {
+
+		return sqlSession.insert("reserveMapper.insertReserve", r);
+	}
+	
+	// 결제하기 
+	public int insertPay(SqlSessionTemplate sqlSession, Payment p) {
+
+		return sqlSession.update("reserveMapper.insertPay", p);
+	}
+	
 
 	// 정현-------------------------------------------
 	// 호스트 공간 예약 리스트 개수 가져오기-정현
