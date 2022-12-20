@@ -880,56 +880,114 @@
 		</c:otherwise>
      </c:choose>
 
+<!-- 정현 스크립트 -->
 <c:if test="${!empty loginMember}">
 <script>	
-		let toastCount = 0;
-   		var sock = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/space.sc");
-  
-   		sock.onmessage = onMessage;
-   		sock.onclose = onClose;
-   		sock.onopen = onOpen;
-   		
-   		function sendMessage(msgType, userId, stitle, message) {
-   			var msg = {
-   					msgType : msgType,
-   					sender : 'filan705', 
-   					receiver : 'filan705', 
-   					stitle : '모스트홈쉐어 경리단길', 
-   					message : '공간을 예약하셨습니다.'
-   			};
-   				
-  			sock.send(JSON.stringify(msg));
-//    		sock.send(msg);
-   		}
+	let toastCount = 0;
+	var sock = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/space.sc");
+
+	sock.onmessage = onMessage;
+	sock.onclose = onClose;
+	sock.onopen = onOpen;
+	
+	function sendMessage(msgType, receiverId, message, messageDate, roomNo) {
+		var msg = {
+				msgType : msgType,
+				senderNo : "${loginMember.memNo}", 
+				senderName : "${loginMember.memName}",
+				profilePath : "${loginMember.profilePath}",
+				senderId : "${loginMember.memId}",
+				receiverId : receiverId, 
+				message : message,
+				messageDate : messageDate,
+				roomNo : roomNo
+		};
+		sock.send(JSON.stringify(msg));
+	}
    		//메시지 수신
-   		function onMessage(msg) {
-   			var data = msg.data; // 전달 받은 데이터
-   			
-   			msgData = JSON.parse(data); 
-   			
-   			var cur_session = '${loginUser.memId}'; //현재 세션에 로그인 한 사람
-   		
-   			toastCount++;
-   	        let toast;
+   	   		function onMessage(msg) {
+   	   			var data = msg.data; // 전달 받은 데이터
+   	   			
+   	   			socketData = JSON.parse(data); 
+   	   	        
+   	   			if(socketData.msgType == "chat" && $("#chatTb").length > 0) {
+   	  						var str=""
+   	  		   				str +=  "<tr id='chatRoom-"+socketData.senderNo+"-${loginMember.memNo}' onclick='chatModalOpen(this)'>";
+   	  		   				str +=  "<td>";
+   	  		   				if(socketData.profilePath == "") {
+   	  					    	  str+= "<img src='resources/images/logo.png' 	 >";
+   	  					      }else {
+   	  					    	  str+= "<img src='"+socketData.profilePath+"' class='rounded-circle'	 >";
+   	  					      }
+   	  		   				str +=  "</td>";
+   	  		   				str +=  "<td>"+socketData.senderName+"</td>";   				
+   	  		   				str +=  "<td>"+socketData.message+"</td>";   				
+   	  		   				str +=  "<td>"+socketData.messageDate+"</td>";   	
+   	  		   				str += "<input type='hidden'  value='"+socketData.senderNo+"'>"
+   	  		   				str += "<input type='hidden'  value='"+socketData.senderId+"'>"
+   	  		   				str += "<input type='hidden'  value='"+socketData.roomNo+"'>"
+   	  		   				str +=  "</tr>";
+   	  		   				
+   	  		   				if($("#noChatTd").length > 0) {
+   	  		   					$("#noChatTd").remove();
+   	  		   				}   			
+   	  		   				$("#chatTb #chatRoom-"+socketData.senderNo+"-${loginMember.memNo}").remove();
+   	  		   				$("#chatTb tbody").prepend(str);
+   	   			}
+   	   			
+   	   			if(socketData.msgType == "chat" && $("#chattingModal #chatView-"+socketData.senderNo+"-${loginMember.memNo}").length > 0) {
+   	   				
+   	   				var str=""
+   	   				str+= "<div class='sender'><div>";
+   					
+   					if(socketData.profilePath == "") {
+   				    	  str+= "<img src='resources/images/logo.png' 	 >";
+   				      }else {
+   				    	  str+= "<img src='"+socketData.profilePath+"' class='rounded-circle'	 >";
+   				      }
+   					str+= "</div><div class='sender-con'>";
+   					str+= "<div class='sname'>"+socketData.senderName+"</div>";
+   					str+= "<div class='scontent-area'>";
+   					str+= "<div class='srealcontent'>"+socketData.message+"<div class='sdate'>"+socketData.messageDate+"</div></div></div></div></div>";
+   					$("#chattingModal #chatView-"+socketData.senderNo+"-${loginMember.memNo}").append(str);
+   					$("#chattingModal #chatView-"+socketData.senderNo+"-${loginMember.memNo}").scrollTop($("#chattingModal .modal-body")[0].scrollHeight);
+   	   				
+   	   			}
 
-   	        toast = "<div class='toast toast-" + toastCount + "' data - autohide='false' > ";
-   	        toast += "<i class='fa fa-times' aria-hidden='true' data-dismiss='toast'></i>";
-   	        toast += "<div class='toast-body'>"
-   	        toast += "<div class='toast-left'>"
-   	        toast += "<img src='resources/images/logo.png' class='rounded-circle'	 >"   
-   	        toast += "</div>"
-   	        toast += "<div class='toast-right'>"
-   	    	toast += "<div>"+msgData.stitle+"</div>"   
-   	    	toast += "<div>"+msgData.sender+"님이 "+msgData.message+"</div>"   
-   	    	toast += "</div></div></div>"
-
-   	        $("#socketAlarmArea").append(toast);
-   	        $(".toast-" + toastCount).toast({ animation: true, delay: 10000 });
-   	        $(".toast-" + toastCount).toast("show");
-   	        $("#socketAlarmArea").addClass("slideon");
-   			
-   			
-   		}
+   	   				toastCount++;
+   	   		   	    let toast;
+   	   	   			
+   	   			    toast = "<div class='toast toast-" + toastCount + "' data - autohide='false' > "; 	
+   	   			    toast += "<i class='fa fa-times' aria-hidden='true' data-dismiss='toast'></i>";
+   	   	   	        toast += "<div class='toast-body'>"
+   	   	   	        toast += "<div class='toast-left'>"
+   		   	   	    if(socketData.profilePath == "") {
+   		   	   	 		toast += "<img src='resources/images/logo.png' >"   
+   				    }else {
+   				    	toast += "<img src='"+socketData.profilePath+"' class='rounded-circle' >"   
+   				    }
+   	   	   	        toast += "</div>"
+   	   	   	        toast += "<div class='toast-right'>"
+   	   	   	  		if(socketData.msgType == "chat" ) {
+   		   	   		    toast += "<div></div>"  
+   		   	 	     	toast += "<div class='chat' style='cursor:pointer;'>"+socketData.senderName+"님이 메시지를 보내셨습니다.</div>"
+   	   	   	  		}
+   	   	   	  		else if(socketData.msgType == "reserve" ) {
+   				   	   	toast += "<div>"+socketData.message+"</div>"   		   	   		
+   				   	   	toast += "<div class='reserve' style='cursor:pointer;'>"+socketData.senderName+"님이 예약하셨습니다.</div>"   	  
+   			   	   	}
+   	   	   	  		else if(socketData.msgType == "review" ) {
+   				   	   	toast += "<div>"+socketData.message+"</div>"   
+   				   	   	toast += "<div class='review' style='cursor:pointer;'>"+socketData.senderName+"님이 후기를 남겼습니다.</div>"   	
+   			   	   	}
+   	   	    		toast += "</div></div></div>"
+   	   			
+   		   	        $("#socketAlarmArea").append(toast);
+   	   	   	        $(".toast-" + toastCount).toast({ animation: true, delay: 10000 });
+   	   	   	        $(".toast-" + toastCount).toast("show");
+   	   	   	        $("#socketAlarmArea").addClass("slideon");
+   	   			
+   	   		}
    		//아웃
    		function onClose(evt) {
    			console.log("연결 끊김");
@@ -939,14 +997,19 @@
    			console.log("연결 인");
    			
    		}
-   		//테스트용
    		$(function() {
-   			$("#testBtn4").click(function () {
-//    				let smsg = "reserve,filan705,올모스트홈쉐어 경리단길";
-   				sendMessage("reserve", "filan705", "올모스트홈쉐어 경리단길");
+   			$("#socketAlarmArea").on("click", ".chat", function() {
+   				location.href="note.me";
+   			});
+   			$("#socketAlarmArea").on("click", ".reserve", function() {
+   				location.href="revHostList.re";
+   			});
+			$("#socketAlarmArea").on("click", ".review", function() {
+				location.href="hostRvwList.rv";
    			});
    		});
 </script>
+<!-- 정현 스크립트  끝-->
 </c:if>
 <div id="socketAlarmArea"></div>
 </body>
