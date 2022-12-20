@@ -478,6 +478,7 @@ public class MemberController {
 			jObj.put("grCode", m.getGrCode());
 			jObj.put("enrollDate", m.getEnrollDate().toString());
 			jObj.put("memStatus", m.getMemStatus());
+			jObj.put("blacklist", m.getBlacklist());
 			jArr.add(jObj);
 		}
 		

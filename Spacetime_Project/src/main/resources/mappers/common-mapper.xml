@@ -27,6 +27,8 @@
 		<result column="GENDER" property="gender" />
 		
 		<result column="SPACE_TITLE" property="spaceTitle" />
+		<result column="INCOME" property="income" />
+		<result column="SALES_STATUS" property="salesStatus" />
 	</resultMap>
 	
 	<!-- 신고 글 총 개수 -->
@@ -85,6 +87,19 @@
 		WHERE REPORT_NO = #{reportNo}
 	</update>
 	
+	<!-- 블랙리스트 처리 -->
+	<update id="updateBlacklist" parameterType="report">
+		UPDATE MEMBER
+		SET BLACKLIST_YN = 'Y'
+		WHERE (SELECT COUNT(*) 
+		       FROM REPORT 
+		       LEFT JOIN MEMBER ON (REPORTED_MEM_NO = MEM_NO) 
+		       WHERE MEM_ID = #{reportedMemNo}
+		       AND MEM_STATUS = 'N' 
+		       AND REPORT_STATUS = 'Y') >= 5
+		  AND MEM_ID = #{reportedMemNo}
+	</update>
+	
 	<!-- 신고 검색 글 개수 -->
 	<select id="selectReportSearchListCount" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
@@ -135,7 +150,10 @@
 	
 	<!-- 매출이 있는 공간 리스트 조회 -->
 	<select id="selectSalesList" resultMap="reserveResultSet">
-		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE"
+		<![CDATA[
+		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE",
+		CASE WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) < EXTRACT(MONTH FROM SYSDATE))) THEN '정산완료' 
+		     WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) >= EXTRACT(MONTH FROM SYSDATE))) THEN '미처리' END AS "SALES_STATUS"
 		FROM RESERVE R
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
@@ -143,15 +161,17 @@
 		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE)|| '-' || EXTRACT(MONTH FROM SYSDATE)
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE, USE_DATE
 		ORDER BY SPACE_NO DESC
+		]]>
 	</select>
 	
 	<!-- 공간별 매출 상세조회 (기본정보만)-->
-	<select id="selectSales" parameterType="_int" resultMap="reserveResultSet">
-		SELECT M.MEM_NAME, M.MEM_ID, GENDER, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "INCOME"
+	<select id="selectSales" parameterType="hashmap" resultMap="reserveResultSet">
+		SELECT M.MEM_NAME, M.MEM_ID, GENDER, SPACE_NO, S.SPACE_TITLE, (SUM(R.PRICE)*0.1) AS "INCOME"
 		FROM RESERVE R
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
-		WHERE SPACE_NO = #{SPACE_NO}
+		WHERE SPACE_NO = #{spaceNo}
+		  AND EXTRACT(YEAR FROM R.USE_DATE)|| '-' || EXTRACT(MONTH FROM R.USE_DATE) = #{month}
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, GENDER, SPACE_TITLE
 	</select>
 	
@@ -194,7 +214,12 @@
 	
 	<!-- 매출 검색 리스트 조회 -->
 	<select id="selectSalesSearchList" parameterType="hashmap" resultMap="reserveResultSet">
-		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE"
+		
+		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE",
+		<![CDATA[
+		CASE WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) < EXTRACT(MONTH FROM SYSDATE))) THEN '정산완료' 
+		     WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) >= EXTRACT(MONTH FROM SYSDATE))) THEN '미처리'END AS "SALES_STATUS"
+		]]>
 		FROM RESERVE R
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)

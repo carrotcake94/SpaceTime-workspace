@@ -49,6 +49,13 @@ public class CommonServiceImpl implements CommonService {
 
 		return commonDao.updateReport(sqlSession, map);
 	}
+	
+	// 블랙리스트 처리 
+	@Override
+	public int updateBlacklist(String reportedMemNo) {
+		
+		return commonDao.updateBlacklist(sqlSession, reportedMemNo);
+	}
 
 	// 신고 검색 글 개수
 	@Override
@@ -80,9 +87,9 @@ public class CommonServiceImpl implements CommonService {
 
 	// 공간 매출 상세조회
 	@Override
-	public Reserve selectSales(int spaceNo) {
+	public Reserve selectSales(HashMap<String, String> map) {
 
-		return commonDao.selectSales(sqlSession, spaceNo);
+		return commonDao.selectSales(sqlSession, map);
 	}
 
 	// 매출이 있는 공간의 상세 매출 총 개수

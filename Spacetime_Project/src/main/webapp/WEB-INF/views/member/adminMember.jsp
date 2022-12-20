@@ -326,6 +326,9 @@
                 url : "ajaxmlist.ad",
                 data : {tab : tab, cpage : currentPage},
                 success : function(result) { 
+                	
+                	console.log(result.list[0].memStatus);
+                	console.log(result.list[0].blacklist);
                     
                     var resultStr = "";
                     
@@ -348,10 +351,8 @@
                                             	}
 	                             resultStr += "</td><td>" + result.list[i].enrollDate + "</td>"
                                             + "<td>";
-                                                if(result.list[i].memStatus == 'N') {
+                                                if(result.list[i].memStatus == 'N' && result.list[i].blacklist == 'N') {
                                                     resultStr += "가입";
-                                                } else if (result.list[i].memStatus == 'Y') {
-                                                    resultStr += "탈퇴";
                                                 } else if (result.list[i].memStatus == 'N' && result.list[i].blacklist == 'Y') {
                                                     resultStr += "블랙리스트";
                                                 }                              

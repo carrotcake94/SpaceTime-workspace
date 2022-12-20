@@ -179,13 +179,10 @@
                                         <td>${m.enrollDate}</td>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${m.memStatus eq 'N'}">
+                                                <c:when test="${m.memStatus eq 'N' and m.blacklist eq 'N'}">
                                                     가입 
                                                 </c:when>
-                                                <c:when test="${m.memStatus eq 'Y'}">
-                                                    탈퇴
-                                                </c:when>
-                                                <c:when test="${m.memStatus eq 'N' && m.blacklist eq 'Y'}">
+                                                <c:when test="${m.memStatus eq 'N' and m.blacklist eq 'Y'}">
                                                     블랙리스트
                                                 </c:when>
                                             </c:choose>

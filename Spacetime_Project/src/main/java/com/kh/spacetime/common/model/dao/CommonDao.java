@@ -43,6 +43,12 @@ public class CommonDao {
 
 		return sqlSession.update("commonMapper.updateReport", map);
 	}
+	
+	// 블랙리스트 처리 
+	public int updateBlacklist(SqlSessionTemplate sqlSession, String reportedMemNo) {
+		
+		return sqlSession.update("commonMapper.updateBlacklist", reportedMemNo);
+	}
 
 	// 신고 검색 글 개수
 	public int selectReportSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
@@ -80,9 +86,9 @@ public class CommonDao {
 	}
 
 	// 공간 매출 상세조회
-	public Reserve selectSales(SqlSessionTemplate sqlSession, int spaceNo) {
+	public Reserve selectSales(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 
-		return sqlSession.selectOne("commonMapper.selectSales", spaceNo);
+		return sqlSession.selectOne("commonMapper.selectSales", map);
 	}
 
 	// 매출이 있는 공간의 상세 매출 총 개수

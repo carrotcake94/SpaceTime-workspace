@@ -137,8 +137,9 @@ public class CommonController {
 	@RequestMapping("updateReport.ad")
 	public String updateReport(Report r, Model model, HttpSession session) {
 
-		// System.out.println(r.getReportNo());
-
+		String reportedMemNo = r.getReportedMemNo();
+		System.out.println(reportedMemNo);
+		
 		HashMap<String, String> map = new HashMap<>();
 
 		String reportNo = Integer.toString(r.getReportNo());
@@ -153,8 +154,14 @@ public class CommonController {
 		int result = commonService.updateReport(map);
 
 		if (result > 0) { // 신고처리 성공
-
-			session.setAttribute("alertMsg", "신고처리가 완료되었습니다.");
+			
+			int resultBlack = commonService.updateBlacklist(reportedMemNo);
+			
+				if(resultBlack > 0) { // 신고 5회이상, 블랙리스트로 업데이트 성공 
+					session.setAttribute("alertMsg", "신고 누적 5회, 블랙리스트 처리 성공");
+				} else { // 신고 5회 미만
+					session.setAttribute("alertMsg", "신고처리가 완료되었습니다.");
+				}
 			return "redirect:/rdetail.ad?rpno=" + r.getReportNo();
 
 		} else { // 신고처리 실패
@@ -209,14 +216,6 @@ public class CommonController {
 	@RequestMapping("slist.ad")
 	public String selectSalesList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
 
-
-		LocalDate now = LocalDate.now();
-		
-		int year = now.getYear();
-		int Month = now.getMonthValue();
-		String thisMonth = year + "-" + Month;
-		// System.out.println(thisMonth);
-		
 		int listCount = commonService.selectSalesListCount();
 		
 		int pageLimit = 5;
@@ -228,7 +227,6 @@ public class CommonController {
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
-		model.addAttribute("month", thisMonth);
 		
 		// System.out.println(model);
 		
@@ -243,15 +241,26 @@ public class CommonController {
 	 * @return
 	 */
 	@RequestMapping("sdetail.ad")
-	public ModelAndView selcetSales(int sno, String month, ModelAndView mv) {
+	public String selcetSales(int sno, String month, Model model) {
+		
+		String spaceNo = Integer.toString(sno);
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("month", month);
+		map.put("spaceNo", spaceNo);
+		
+		System.out.println("map : " + map);
+		
+		Reserve r = commonService.selectSales(map);
 
-		Reserve r = commonService.selectSales(sno);
+		System.out.println("r : " + r);
+		
+		model.addAttribute("r", r);
+		model.addAttribute("month", month);
+		
+		System.out.println("model : " + model);
 
-		mv.addObject("month", month);
-		mv.addObject("r", r);
-		mv.setViewName("common/adminSalesDetail");
-
-		return mv;
+		return "common/adminSalesDetail";
 	}
 	
 	/**
@@ -275,7 +284,7 @@ public class CommonController {
 		map.put("month", month);
 		map.put("spaceNo", spaceNo);
 
-		System.out.println(map);
+		// System.out.println(map);
 
 		int listCount = commonService.selectSalesDetailCount(map);
 
@@ -313,7 +322,7 @@ public class CommonController {
 		json.put("list", jArr);
 		json.put("pi", jObj);
 
-		System.out.println("컨트롤러에서 찍히는 json : " + json);
+		// System.out.println("컨트롤러에서 찍히는 json : " + json);
 
 		return json.toJSONString();
 	}

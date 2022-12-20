@@ -44,6 +44,8 @@ public class Reserve {
 		private String gender;
 		private int income;
 		private String month;
+		private String salesStatus;
+		private int incomeTotal;
 		
 
 }

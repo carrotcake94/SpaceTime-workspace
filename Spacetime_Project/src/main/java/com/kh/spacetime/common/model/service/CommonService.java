@@ -22,6 +22,9 @@ public interface CommonService {
 	// 신고 처리 (승인, 반려)
 	int updateReport(HashMap<String, String> map);
 
+	// 블랙리스트 처리 
+	int updateBlacklist(String reportedMemNo);
+
 	// 신고 검색 글 개수
 	int selectReportSearchListCount(HashMap<String, String> map);
 
@@ -35,7 +38,7 @@ public interface CommonService {
 	ArrayList<Reserve> selectSalesList(PageInfo pi);
 
 	// 공간 매출 상세조회
-	Reserve selectSales(int spaceNo);
+	Reserve selectSales(HashMap<String, String> map);
 
 	// 매출이 있는 공간의 상세 매출 총 개수
 	int selectSalesDetailCount(HashMap<String, String> map);

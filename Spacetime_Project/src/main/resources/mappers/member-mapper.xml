@@ -137,10 +137,12 @@
 		<if test="tab == '게스트'">
 			WHERE MEM_STATUS = 'N'
 			  AND HOST_STATUS = 'N'
+			  AND BLACKLIST_YN = 'N'
 		</if>
 		<if test="tab == '호스트'">
 			WHERE MEM_STATUS = 'N'
 			  AND HOST_STATUS = 'Y'
+			  AND BLACKLIST_YN = 'N'
 		</if>
 		<if test="tab == '블랙리스트'">
 			WHERE MEM_STATUS = 'N'
@@ -159,10 +161,12 @@
 		<if test="tab == '게스트'">
 			WHERE MEM_STATUS = 'N'
 			  AND HOST_STATUS = 'N'
+			  AND BLACKLIST_YN = 'N'
 		</if>
 		<if test="tab == '호스트'">
 			WHERE MEM_STATUS = 'N'
 			  AND HOST_STATUS = 'Y'
+			  AND BLACKLIST_YN = 'N'
 		</if>
 		<if test="tab == '블랙리스트'">
 			WHERE MEM_STATUS = 'N'

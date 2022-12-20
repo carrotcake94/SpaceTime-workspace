@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>매출 검색 결과</title>
+<title>매출 관리</title>
 <style>
         
     #header_container { height: 80px;}
@@ -134,7 +134,7 @@
         <div id="content">
 
             <!-- 매출 검색 결과 제목 -->
-            <div align="left" id="title"><h3>매출 검색 결과</h3></div>
+            <div align="left" id="title"><h3>매출 관리</h3></div>
             
             <!-- 검색창 -->
             <div id="search">
@@ -199,14 +199,7 @@
                                         <td>${r.memId}</td>
                                         <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.spaceTitle}</td>
                                         <td>${r.price}</td>
-                                        <td>
-                                            <c:if test="${r.useDate} lt ${today}">
-                                                정산완료
-                                            </c:if>
-                                            <c:if test="${r.useDate} gt ${today}">
-                                                미처리
-                                            </c:if>
-                                        </td> 
+                                        <td>${r.salesStatus}</td> 
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>

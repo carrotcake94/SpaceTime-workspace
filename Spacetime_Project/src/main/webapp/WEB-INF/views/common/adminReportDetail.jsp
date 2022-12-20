@@ -164,6 +164,7 @@
                 <!-- Modal body -->
                 <form action="updateReport.ad" method="post">
                 <input type="hidden" name="reportNo" value="${r.reportNo}">
+                <input type="hidden" name="reportedMemNo" value="${r.reportedMemNo}">
                     <div class="modal-body">
                         <!-- 신고 정보 -->
                         <div class="report_info">
