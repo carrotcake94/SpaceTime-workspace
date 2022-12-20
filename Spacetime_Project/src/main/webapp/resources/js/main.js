@@ -79,6 +79,19 @@
      }
  }
  
+ //검색 후 엔터
+function enterPressed(e){
+	var keyword = document.querySelector("#searchInput").value;
+	if(e.keyCode == 13){
+		searchStart(keyword);
+	}
+}
+
+//엔터 혹은 검색클릭
+function searchStart(keyword){
+	location.href="#";
+}
+ 
  //추천공간
  function spaceRecommend(keyword){
      $.ajax({
@@ -132,20 +145,20 @@
          success : (reviewList) => {
              console.log(reviewList);
              
-             for(var i in recommendList){
+             for(var i in reviewList){
                  var card = document.createElement("div");
-                 card.innerHTML = "<input type='hidden' name='sno' value='" + recommendList[i].spaceNo + "' >" +
-                                    "<div class='recommedCard' id='recommend" + i + "'>" +
+                 card.innerHTML = "<input type='hidden' name='sno' value='" + reviewList[i].spaceNo + "' >" +
+                                    "<div class='reviewCard' id='recommend" + i + "'>" +
                                         "<div class='img_area'>" +
-                                                "<img class='img-0' src='" + recommendList[i].attachments[0].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
+                                                "<img class='img-0' src='" + reviewList[i].attachments[0].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
                                         "</div>" + 
-                                        "<div class='recommend_content_area>" +
-                                            "<span class='stitle'>" + recommendList[i].spaceTitle + "</span>" +
+                                        "<div class='review_content_area>" +
+                                            "<span class='stitle'>" + reviewList[i].spaceTitle + "</span>" +
                                             "<hr />" +
-                                            "<span><i class='fa-solid fa-location-dot'></i>" + recommendList[i].addressDefault + "</span>" +
+                                            "<span><i class='fa-solid fa-location-dot'></i>" + reviewList[i].addressDefault + "</span>" +
                                             "<hr />" +
                                             "<span style='width:50%; display:inline-block;'>" +
-                                                "<span class='sprice' style='color: #277BC0;' >" + recommendList[i].hourPrice + "</span>" +
+                                                "<span class='sprice' style='color: #277BC0;' >" + reviewList[i].hourPrice + "</span>" +
                                                 "<span> 원/시간</span>" +
                                             "</span>" +
                                         "</div>" +

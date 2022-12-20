@@ -130,6 +130,10 @@
 	margin-top: 30px;
 }
 
+.main_recommned_card > div : hover {
+	cursor: pointer;
+}
+
 .main_recommend_card>div {
 	display: inline-block;
 	width: 30%;
@@ -141,10 +145,23 @@
 	height: 240px;
 }
 
+#moreRecommend {
+	width: 80%;
+	height: 50px;
+	margin-left: 120px;
+	margin-top: 50px;
+	background-color: rgb(96, 155, 204);
+	border: none;
+}
+
+#moreRecommend:hover {
+	cursor: pointer;
+}
+
 /* 리뷰존 *************************************************************************************/
 #main_reviewZone {
 	width: 100%;
-	margin: 150px 0px 150px 0px;
+	margin: 350px 0px 150px 0px;
 }
 
 #main_reviewZone_title {

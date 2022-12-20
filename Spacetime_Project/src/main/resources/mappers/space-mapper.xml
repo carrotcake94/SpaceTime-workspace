@@ -64,6 +64,7 @@
 		<result column="ATTACHMENT_LEVEL" property="attachmentLevel" />
 		<result column="SPACE_NO" property="spaceNo" />
 	</resultMap>
+	
 	<resultMap id="reviewResultSet" type="review">
 		<result column="REVIEW_NO" property="reviewNo" />
 		<result column="REVIEW_CONT" property="reviewCont" />
@@ -331,6 +332,8 @@
 		SELECT COUNT(*)
           FROM SPACE
          WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
+           AND SPACE_STATUS = 'Y'
+           AND ATTACHMENT_LEVEL = 1
            AND STYPE_NO IN (<foreach collection="category" item="category" separator=",">
 					           	#{category}
 							</foreach>)
@@ -351,6 +354,8 @@
           FROM SPACE
      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
          WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
+           AND SPACE_STATUS = 'Y'
+           AND ATTACHMENT_LEVEL = 1
            AND STYPE_NO IN (<foreach collection="category" item="category" separator=",">
 					           	#{category}
 							</foreach>)
@@ -373,9 +378,43 @@
          WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
            AND LATITUDE BETWEEN #{bound.min_lat} AND #{bound.max_lat}
 	       AND LONGITUDE BETWEEN #{bound.min_lng} AND #{bound.max_lng}
+	       AND SPACE_STATUS = 'Y'
+	       AND ATTACHMENT_LEVEL = 1
            AND STYPE_NO IN (<foreach collection="category" item="category" separator=",">
 					           	#{category}
 							</foreach>)
+	</select>
+	
+	<!-- 메인화면에서 해시태그 검색 -성훈 -->
+	<select id="searchSpaceByHashtag" parameterType="string" resultMap="spaceResultSet">
+		SELECT SPACE_NO, 
+			   SPACE_TITLE, 
+		       HOUR_PRICE, 
+			   HASHTAG, 
+			   LATITUDE, 
+			   LONGITUDE, 
+			   ATTACHMENT_RENAME
+          FROM SPACE
+     LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+         WHERE HASHTAG LIKE '%' || #{keyword} || '%'
+           AND SPACE_STATUS = 'Y'
+           AND ATTACHMENT_LEVEL = 1
+	</select>
+	
+	<!-- 메인화면에서 일반 검색(상호명) -성훈 -->
+	<select id="searchSpaceByKeyword" parameterType="string" resultMap="spaceResultSet">
+		SELECT SPACE_NO, 
+			   SPACE_TITLE, 
+		       HOUR_PRICE, 
+			   HASHTAG, 
+			   LATITUDE, 
+			   LONGITUDE, 
+			   ATTACHMENT_RENAME
+          FROM SPACE
+     LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
+         WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
+           AND SPACE_STATUS = 'Y'
+           AND ATTACHMENT_LEVEL = 1
 	</select>
 	
 	<!-- 하연 -->

@@ -331,32 +331,52 @@ public class SpaceController {
 	}
 	
 	// 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈
-		@ResponseBody
-		@RequestMapping(value = "mapFilterOnCurrentMap.mp", produces = "application/json; charset=UTF-8")
-		public String mapFilterOnCurrentMap(double max_lat, double max_lng, double min_lat, double min_lng,
-				HttpServletRequest request, String min_price, String max_price) {
-			String[] category = request.getParameterValues("category[]");
-			ArrayList<String> categoryArr = new ArrayList<>();
-			for (int i = 0; i < category.length; i++) {
-				categoryArr.add(category[i]);
-			}
-
-			HashMap<String, Double> bound = new HashMap<>();
-			bound.put("max_lat", max_lat);
-			bound.put("max_lng", max_lng);
-			bound.put("min_lat", min_lat);
-			bound.put("min_lng", min_lng);
-
-			HashMap<String, Object> condition = new HashMap<>();
-			condition.put("bound", bound);
-			condition.put("category", categoryArr);
-			condition.put("min_price", min_price);
-			condition.put("max_price", max_price);
-
-			ArrayList<Space> listArr = spaceService.mapFilterOnCurrentMap(condition);
-
-			return new Gson().toJson(listArr);
+	@ResponseBody
+	@RequestMapping(value = "mapFilterOnCurrentMap.mp", produces = "application/json; charset=UTF-8")
+	public String mapFilterOnCurrentMap(double max_lat, double max_lng, double min_lat, double min_lng,
+			HttpServletRequest request, String min_price, String max_price) {
+		String[] category = request.getParameterValues("category[]");
+		ArrayList<String> categoryArr = new ArrayList<>();
+		for (int i = 0; i < category.length; i++) {
+			categoryArr.add(category[i]);
 		}
+
+		HashMap<String, Double> bound = new HashMap<>();
+		bound.put("max_lat", max_lat);
+		bound.put("max_lng", max_lng);
+		bound.put("min_lat", min_lat);
+		bound.put("min_lng", min_lng);
+
+		HashMap<String, Object> condition = new HashMap<>();
+		condition.put("bound", bound);
+		condition.put("category", categoryArr);
+		condition.put("min_price", min_price);
+		condition.put("max_price", max_price);
+
+		ArrayList<Space> listArr = spaceService.mapFilterOnCurrentMap(condition);
+
+		return new Gson().toJson(listArr);
+	}
+	
+	//메인화면에서 해시태그 검색 -성훈
+	@ResponseBody
+	@RequestMapping(value="searchSpaceByHashtag.mp", produces = "application/json; charset=UTF-8")
+	public String searchSpaceByHashtag(String keyword){
+	    
+	    ArrayList<Space> list = spaceService.searchSpaceByHashtag(keyword);
+	    
+	    return new Gson().toJson(list);
+	}
+	
+	//메인화면에서 일반검색 -성훈
+	@ResponseBody
+	@RequestMapping(value="searchSpaceByKeyword.mp", produces = "application/json; charset=UTF-8")
+	public String searchSpaceByKeyword(String keyword){
+	    
+	    ArrayList<Space> list = spaceService.searchSpaceByKeyword(keyword);
+	    
+	    return new Gson().toJson(list);
+	}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
 	// => Spring 의 Controller 메소드는 반드시 요청을 처리하는 역할이 아니여도 된다!!

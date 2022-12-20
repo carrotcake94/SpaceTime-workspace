@@ -128,7 +128,8 @@ public class SpaceServiceImpl implements SpaceService {
 	public ArrayList<Space> selectListForMap(HashMap<String, Double> map) {
 	    return spaceDao.selectListForMap(sqlSession, map);
 	}
-
+	
+	//지도 필터링(지역설정 O) -성훈
 	@Override
 	public ArrayList<Space> filterListForMap(HashMap<String, Object> map) {
 	    return spaceDao.filterListForMap(sqlSession, map);
@@ -138,6 +139,18 @@ public class SpaceServiceImpl implements SpaceService {
 	@Override
 	public ArrayList<Space> mapFilterOnCurrentMap(HashMap<String, Object> condition){
 		return spaceDao.mapFilterOnCurrentMap(sqlSession, condition);
+	}
+	
+	//메인화면에서 해시태그 검색 -성훈 
+	@Override
+	public ArrayList<Space> searchSpaceByHashtag(String keyword){
+		return spaceDao.searchSpaceByHashtag(sqlSession, keyword);
+	}
+	
+	//메인화면에서 일반 검색 -성훈 
+	@Override
+	public ArrayList<Space> searchSpaceByKeyword(String keyword){
+		return spaceDao.searchSpaceByKeyword(sqlSession, keyword);
 	}
 	
 	/*****************************************************/

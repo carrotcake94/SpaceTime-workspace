@@ -92,6 +92,9 @@
 
 				<!-- 오늘의 추천 공간 / onclick="location.href'링크'"로 페이지 이동 -->
 				<div id="main_recommend">
+					<div id="recommendChange">
+					<input type="text" id="recommendKeyword" name="hashtag" value="파티룸"><button id="recommendSelect"></button>
+					</div>
 					<div id="main_recommend_title">
 						<div>오늘의 추천 공간</div>
 					</div>
@@ -105,9 +108,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="recommendChange">
-					<input type="text" id="recommendKeyword" name="hashtag" value="파티룸"><button id="recommendSelect"></button>
-					</div>
+					<button id="moreRecommend">+ 더 보기</button>
 				</div>
 				
 				<script>

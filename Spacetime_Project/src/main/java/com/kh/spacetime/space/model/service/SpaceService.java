@@ -72,6 +72,12 @@ public interface SpaceService {
 	
 	// 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈
 	ArrayList<Space> mapFilterOnCurrentMap(HashMap<String, Object> condition);
+	
+	//메인화면에서 해시태그 검색
+	public ArrayList<Space> searchSpaceByHashtag(String keyword);
+	
+	//메인화면에서 일반 검색
+	public ArrayList<Space> searchSpaceByKeyword(String keyword);
 
 	/*****************************************************/
 

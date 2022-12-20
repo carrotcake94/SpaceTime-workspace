@@ -583,7 +583,7 @@
 		</div>
 		<div>
 			<div id="m_search_bar">
-				<input type="search" id="searchInput" name="keyword">
+				<input type="search" id="searchInput" name="keyword" onkeypress="searchStart(e)">
 			</div>
 			<div id="autoComplete">
 				<div id=autoCompleteList>
@@ -629,7 +629,7 @@
 					autoCompleteBox.style.display = "none";
 				}
 			})
-		})
+		});
 	</script>
     <!-- 슬라이드 메뉴 -->
     <div id="overlay"></div>

@@ -140,7 +140,7 @@ public class CommonServiceImpl implements CommonService {
 	    return commonDao.spaceRecommend(sqlSession, keyword);
 	}
 
-	// 추천공간 -성훈
+	// 리뷰존 -성훈
 	@Override
 	public ArrayList<Space> spaceReview() {
 	    return commonDao.spaceReview(sqlSession);

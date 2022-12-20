@@ -2,6 +2,85 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="commonMapper">
 
+	<!-- 메인화면 추천공간 -->
+	<resultMap id="spaceResultSetForRecommend" type="space">
+		<result column="SPACE_NO" property="spaceNo" />
+		<result column="SPACE_TITLE" property="spaceTitle" />
+		<result column="HOUR_PRICE" property="hourPrice" />
+		<result column="MAX_PEOPLE" property="maxPeople" />
+		<result column="ADDRESS_DEFAULT" property="addressDefault" />
+		<result column="HASHTAG" property="hashtag" />
+		<result column="SPACE_STATUS" property="spaceStatus" />
+		<collection resultMap="spaceAttachmentResultSetForReviewZone" property="attachments" />
+	</resultMap>
+	
+	<resultMap id="spaceResultSetForReviewZone" type="space">
+		<result column="SPACE_NO" property="spaceNo" />
+		<result column="SPACE_TITLE" property="spaceTitle" />
+		<result column="HOUR_PRICE" property="hourPrice" />
+		<result column="MAX_PEOPLE" property="maxPeople" />
+		<result column="ADDRESS_DEFAULT" property="addressDefault" />
+		<result column="HASHTAG" property="hashtag" />
+		<result column="SPACE_STATUS" property="spaceStatus" />
+		<collection resultMap="spaceAttachmentResultSetForReviewZone" property="attachments" />
+		<collection resultMap="reviewResultSetForReviewZone" property="reviewContForReviewZone"/>
+		<collection resultMap="reserveResultSetForReviewZone" property="reserveNoForReviewZone"/>
+	</resultMap>
+	
+	<resultMap id="spaceAttachmentResultSetForReviewZone" type="spaceAttachment">
+		<result column="ATTACHMENT_RENAME" property="attachmentReName" />
+		<result column="ATTACHMENT_LEVEL" property="attachmentLevel" />
+		<result column="SPACE_NO" property="spaceNo" />
+	</resultMap>
+	
+	<resultMap id="reviewResultSetForReviewZone" type="review">
+		<result column="REVIEW_CONT" property="reviewCont" />
+		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
+		<result column="RESERVE_NO" property="reserveNo" />
+	</resultMap>
+	
+	<resultMap id="reserveResultSetForReviewZone" type="reserve">
+		<result column="RESERVE_NO" property="reserveNo"/>
+		<result column="SPACE_NO" property="spaceNo"/>	
+	</resultMap>
+	
+	<!-- 추천공간 -성훈 -->
+	<select id="spaceRecommend" parameterType="string" resultMap="spaceResultSetForRecommend">
+	    SELECT S.SPACE_NO,
+	           SPACE_TITLE,
+	           HOUR_PRICE,
+	           HASHTAG,
+	           MAX_PEOPLE,
+	           ATTACHMENT_RENAME,
+	           SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT
+	      FROM SPACE S
+	      LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
+	     WHERE SPACE_STATUS = 'Y'
+	       AND ATTACHMENT_LEVEL = 1
+	       AND HASHTAG LIKE '%'|| #{keyword} || '%'
+	       AND ROWNUM <![CDATA[<=]]> 6
+	     ORDER BY COUNT DESC
+	</select>
+	
+	<!-- 리뷰존 (최신순) -성훈 -->
+	<select id="spaceReview" resultMap="spaceResultSetForReviewZone">
+		SELECT DISTINCT S.SPACE_NO,
+		       S.SPACE_TITLE,
+		       A.ATTACHMENT_RENAME,
+		       RV.REVIEW_CONT
+		  FROM SPACE S
+		  LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
+		  LEFT JOIN RESERVE RS ON (S.SPACE_NO = RS.SPACE_NO)
+		  LEFT JOIN REVIEW RV ON (RS.RESERVE_NO = RV.RESERVE_NO)
+		 WHERE SPACE_STATUS = 'Y'
+		   AND ATTACHMENT_LEVEL = 1
+		   AND REVIEW_STATUS = 'N'
+		   AND ROWNUM <![CDATA[<=]]> 6
+		 ORDER BY (SELECT REVIEW_NO FROM REVIEW) DESC
+	</select>
+	
+	
+
 	<!-- 신고관리 -->
 	<resultMap id="reportResultSet" type="report">
 		<result column="REPORT_NO" property="reportNo" />
@@ -253,40 +332,7 @@
 		 WHERE HASHTAG LIKE '%' || #{keyword} || '%'
 	</select>
 	
-	<!-- 추천공간 -성훈 -->
-	<select id="spaceRecommend" parameterType="string" resultMap="spaceResultSet">
-	    SELECT S.SPACE_NO,
-	           SPACE_TITLE,
-	           HOUR_PRICE,
-	           HASHTAG,
-	           MAX_PEOPLE,
-	           ATTACHMENT_RENAME,
-	           SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT
-	      FROM SPACE S
-	      LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
-	     WHERE SPACE_STATUS = 'Y'
-	       AND ATTACHMENT_LEVEL = 1
-	       AND HASHTAG LIKE '%'|| #{keyword} || '%'
-	       AND ROWNUM <![CDATA[<=]]> 6
-	     ORDER BY COUNT DESC
-	</select>
 	
-	<!-- 리뷰존 (최신순) -->
-	<select id="spaceReview" resultMap="spaceResultSet">
-		SELECT DISTINCT S.SPACE_NO,
-		       S.SPACE_TITLE,
-		       A.ATTACHMENT_RENAME,
-		       RV.REVIEW_CONT
-		  FROM SPACE S
-		  LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
-		  LEFT JOIN RESERVE RS ON (S.SPACE_NO = RS.SPACE_NO)
-		  LEFT JOIN REVIEW RV ON (RS.RESERVE_NO = RV.RESERVE_NO)
-		 WHERE SPACE_STATUS = 'Y'
-		   AND ATTACHMENT_LEVEL = 1
-		   AND REVIEW_STATUS = 'N'
-		   AND ROWNUM <![CDATA[<=]]> 6
-		 ORDER BY (SELECT REVIEW_NO FROM REVIEW) DESC;
-	</select>
 	
 	<!-- 마이페이지 신고리스트 신희섭 -->
 	<select id="selectMypageReportListCount" parameterType="_int" resultType="_int">
