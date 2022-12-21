@@ -69,7 +69,7 @@
 	.spaceTitle {width: 40%;}
 	.rate, .date {width: 20%;}
 
-	.reviewImg, .reviewContent { padding-top: 20px; }
+	.reviewImg, .reviewContent { padding-top: 5px; }
 
 	/* 이미지 클릭 시 원본 이미지 보이는 모달창! 이 아래로 수정하지 마세요 */
 
@@ -112,6 +112,7 @@
 		color: white;
 		text-decoration: none;
 		cursor: pointer;
+		
 	}
 
 	/* Hide the slides by default */
@@ -136,12 +137,14 @@
 		border-radius: 0 3px 3px 0;
 		user-select: none;
 		-webkit-user-select: none;
+		background-color: #0062cc;
 	}
 
 	/* Position the "next button" to the right */
 	.next {
 		right: 0;
 		border-radius: 3px 0 0 3px;
+		background-color: #0062cc;
 	}
 
 	/* On hover, add a black background color with a little bit see-through */
@@ -173,6 +176,7 @@
             height: 32px;
             cursor: pointer;
         }
+					
 		
 </style>
 
@@ -226,12 +230,41 @@
 							</div>
 						</td>
 					</tr>
+					
 					<tr>
 						<td colspan="3" class="reviewContent">
 						${r.reviewCont}
 						
 					</tr>
+					<tr height="20px;"></tr>
+					<tr class="hotitle">
+					<th colspan="3" class="reviewhost"><h3><b>호스트 답글</b></h3></th>	
+					<input type="hidden" name="reviewNo" value="${r.reviewNo }">
+					</tr>
+					<tr>
+					<td  class="host" name="hostAnswer">${r.hostAnswer}</td>
+					</tr>
 				</table>
+				<%-- <div class="hotitle">호스트 답글</div>
+								<input type="hidden" name="reviewNo" value="${r.reviewNo }">
+								<c:choose>
+									<c:when test="${empty r.hostAnswer}">
+										<div class="answer-area">
+											<div class="answer-text">
+												<td colspan="3" class="host" name="hostAnswer">${r.hostAnswer}</td>
+											<div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="answer-area">
+											<div style="white-space: pre;">${r.hostAnswer }</div>
+											<button type="button" class="upd-btn"
+												onclick="answerMod(this, 1)">수정</button>
+											<button type="button" class="del-btn"
+												onclick="answerMod(this, 2)">삭제</button>
+										</div>
+									</c:otherwise>
+								</c:choose> --%>
 			</div>
 			<br><br>
 
@@ -315,9 +348,25 @@
 		var slides = document.getElementsByClassName("mySlides");
 		var dots = document.getElementsByClassName("demo");
 		var captionText = document.getElementById("caption");
-		if (n > slides.length) {slideIndex = 1}
-		if (n < 1) {slideIndex = slides.length}
-		for (i = 0; i < slides.length; i++) {
+		
+		var count = 0; // 사진의 갯수 (최대 3개) => 사진의 갯수만큼 반복을 돌리고싶다!
+		if(${ not empty r.reviewAttach1 }) {
+			count++;
+		}
+		
+		if(${ not empty r.reviewAttach2 }) {
+			count++;
+		}
+		
+		if(${ not empty r.reviewAttach3 }) {
+			count++;
+		}
+		
+		// 이 시점으로 봤을 때 있을 경우만 각 단일 이프문 안으로 들어왔으니까 사진의 갯수만큼이 count 값이 될거임 => 테스트 해보기!!
+		
+		if (n > count) {slideIndex = 1}
+		if (n < 1) {slideIndex = count}
+		for (i = 0; i < count; i++) {
 			slides[i].style.display = "none";
 		}
 		for (i = 0; i < dots.length; i++) {

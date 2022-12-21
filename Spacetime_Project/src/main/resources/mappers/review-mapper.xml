@@ -12,6 +12,7 @@
 		<result column="REVIEW_ATTACH1" property="reviewAttach1" />
 		<result column="REVIEW_ATTACH2" property="reviewAttach2" />
 		<result column="REVIEW_ATTACH3" property="reviewAttach3" />
+		<result column="HOST_ANSWER" property="hostAnswer" />
 	</resultMap>
 	<!-- 리스트조회 -->
 	<select id="selectListCount" resultType="_int">
@@ -54,6 +55,7 @@
 		, A.REVIEW_ATTACH1
 		, A.REVIEW_ATTACH2
 		, A.REVIEW_ATTACH3
+		, A.HOST_ANSWER
 		FROM REVIEW A
 		JOIN RESERVE C
 		ON A.RESERVE_NO = C.RESERVE_NO

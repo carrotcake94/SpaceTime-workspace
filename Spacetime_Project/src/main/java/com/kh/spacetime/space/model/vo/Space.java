@@ -40,5 +40,6 @@ public class Space {
 		private String bookmarkMem; // join 용
 		private String memName; // join 용
 		private int rating;
+		private String hostAnswer;// join 용
 }
 
