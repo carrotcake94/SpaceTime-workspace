@@ -129,6 +129,11 @@
         height: 100%;
         width: 100%;
       }
+      .img-div {
+   	  	float:left;
+      	height: 100%;
+        width: calc(100% - 80px);
+      }
 
       .button_img_prev,
       .button_img_next {
@@ -403,12 +408,13 @@
 
       	<div class="space">
           <div class="img_area">
-            <img class="img-0" src="${s.spaceSubTitle}" alt="사진 없음" />
+            <img class="img-0" src="${s.spaceSubTitle}" alt="사진 없음"  />
             <input type="hidden" value="${imgStrList[i]}">
             <div class="img_btn_area">
               <button type="button" class="button_img button_img_prev" onclick="imgLoader(this,1)">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
               </button>
+              <div class="img-div" onclick="location.href='detail.sp?sno=${s.spaceNo}';"></div>
               <button type="button" class="button_img button_img_next" onclick="imgLoader(this,2)">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
               </button>
