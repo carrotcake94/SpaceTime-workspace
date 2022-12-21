@@ -2,11 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
 <title>매출 통계</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 
     #header_container {height: 80px;}
@@ -41,7 +40,6 @@
         padding: 10px;
     }
 
-    /* Chart js */
     .chart div {
         margin: auto;
         width: 100%;
@@ -51,40 +49,39 @@
         border: 2px solid lightgray;
         border-radius: 5px;
     }
-
+    
     #today, #week, #month {
         border-right: 2px solid lightgray;
         width: 25%;
         height: 100%;
         float: left;
     }
-
     #year {
         width: 25%;
         height: 100%;
         float: left;
     }
-
     #todaySalesText div, #weekSalesText div, #monthSalesText div, #yearSalesText div {
         float:left;
         width: 50%;
     }
     
+    /* Chart js */
     #chartjs {
         height: 380px;
-        border: 1px solid red;
         box-sizing: border-box;
     }
-    .line {
+    #chartjs .line {
         height: 100%;
         width: 60%;
+        /* border: 1px solid red; */
         float: left;
     }
 
-    .doughnut {
+    #chartjs .doughnut {
         height: 100%;
-        width: 40$;
-        border: 1px solid blue;
+        width: 40%;
+        /* border: 1px solid blue; */
         float: left;
     }
 </style>
@@ -106,34 +103,34 @@
                 <!-- 일, 월, 연 매출 보드 -->
                 <div class="sales_board">
                     <div id="today">
-                        <div id="todaySalesData" class="salesData" style="color:rgb(41, 162, 184)">xxxx 원</div>
+                        <div id="todaySalesData" class="salesData" style="color:rgb(41, 162, 184)">${r.todaySales} 원</div>
                         <div id="todaySalesText" class="salesText">
                             <div align="left">오늘</div>
-                            <div id="todaySalesCount" align="right" style="color:rgb(41, 162, 184)">???건</div>
+                            <div id="todaySalesCount" align="right" style="color:rgb(41, 162, 184)">${r.todaySalesCount} 건</div>
                         </div>
                     </div>
     
                     <div id="week">
-                        <div id="weekSalesData" class="salesData" style="color:rgba(228, 118, 118, 0.884)">xxxx 원</div>
+                        <div id="weekSalesData" class="salesData" style="color:rgba(228, 118, 118, 0.884)">${r.weekSales} 원</div>
                         <div id="weekSalesText" class="salesText">
                             <div align="left">이번주</div>
-                            <div id="weekSalesCount" align="right" style="color:rgba(228, 118, 118, 0.884)">???건</div>
+                            <div id="weekSalesCount" align="right" style="color:rgba(228, 118, 118, 0.884)">${r.weekSalesCount} 건</div>
                         </div>
                     </div>
     
                     <div id="month">
-                        <div id="monthSalesData" class="salesData" style="color:rgb(67, 211, 127)">xxxx 원</div>
+                        <div id="monthSalesData" class="salesData" style="color:rgb(67, 211, 127)">${r.monthSales} 원</div>
                         <div id="monthSalesText" class="salesText">
                             <div align="left">이번달</div>
-                            <div id="monthSalesCount" align="right" style="color:rgb(67, 211, 127)">??? 건</div>
+                            <div id="monthSalesCount" align="right" style="color:rgb(67, 211, 127)">${r.monthSalesCount} 건</div>
                         </div>
                     </div>
     
                     <div id="year">
-                        <div id="yearSalesData" class="salesData" style="color:rgb(155, 41, 184)">xxxx 원</div>
+                        <div id="yearSalesData" class="salesData" style="color:rgb(155, 41, 184)">${r.yearSales} 원</div>
                         <div id="yearSalesText" class="salesText">
                             <div align="left">올해</div>
-                            <div id="yearSalesCount" align="right" style="color:rgb(155, 41, 184)">??? 건</div>
+                            <div id="yearSalesCount" align="right" style="color:rgb(155, 41, 184)">${r.yearSalesCount} 건</div>
                         </div>
                     </div>
                 </div>
@@ -141,13 +138,13 @@
                 
                 <div id="chartjs">
                     <div class="line">
-                        <!-- 매출 그래프 -->sdf
-                        <canvas id="line_graph"></canvas>
+                        <!-- 매출 그래프 -->
+                        <canvas id="bar_graph" style="margin-top: 50px; margin-right: 50px;"></canvas>
                     </div>
         
                     <div class="doughnut">
-                        <!-- 원형 그래프 -->sdf
-                        <canvas id="doughnut_graph"></canvas>
+                        <!-- 원형 그래프 -->
+                        <canvas id="doughnut_graph" style="padding-bottom: 30px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -156,23 +153,61 @@
     </div>
     
     <script>
-        $(document).ready(function() {
-            getGraph();
+    
+    	// 한 달 매출 bar 차트  
+        const ctx = document.getElementById('bar_graph');
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+	            labels: ['${bList[0].chartMonth}', '${bList[1].chartMonth}', '${bList[2].chartMonth}', '${bList[3].chartMonth}', '${bList[4].chartMonth}', '${bList[5].chartMonth}'], 
+	            datasets: [{
+	                label: '한 달 매출',
+	                data: [${bList[0].chartPrice}, ${bList[1].chartPrice}, ${bList[2].chartPrice}, ${bList[3].chartPrice}, ${bList[4].chartPrice}, ${bList[5].chartPrice}], 
+	                borderWidth: 0.5
+	            }]
+            },
+            options: {
+	            scales: {
+	                y: {
+	                beginAtZero: true
+	                }
+	            }
+            }
         });
         
-        function getGraph() {
-            let timeList = [];
-            let salesList = [];
-            
-            $.ajax({
-                url: "ajax30days.ad",
-                data: {
-                    
+        console.log(${dList[0].count})
+        
+        // 공간타입별 도넛 차트 
+        new Chart(document.getElementById("doughnut_graph"), {
+            type: 'doughnut',
+            data: {
+            labels: ['파티룸', '카페', '공연장', '연습실', '공유주방', '갤러리', '운동시설', '스터디룸', '회의실', '촬영스튜디오'],
+            datasets: [
+                {
+                backgroundColor: ["#9e0142", "#d53e4f", "#f46d43","#fdae61", "#fee08b", "#ffffbf", "#e6f598", "#abdda4", "#66c2a5", "#3288bd", "#5e4fa2"],
+                data: [${dList[0].count}, ${dList[1].count}, ${dList[2].count}, ${dList[3].count}, ${dList[4].count}, 
+                	${dList[5].count}, ${dList[6].count}, ${dList[7].count}, ${dList[8].count}, ${dList[9].count}]
                 }
-            })
-            
-        }
-    </script>
+            ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: '이번 달 공간 타입 별 매출 비율',
+                    font: { size: 15}
+                }
+                }
+            }
+        });
+        
+	</script>
+    
 
 </body>
 

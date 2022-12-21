@@ -46,6 +46,19 @@ public class Reserve {
 		private String month;
 		private String salesStatus;
 		private int incomeTotal;
+		private String todaySales;
+		private String weekSales;
+		private String monthSales;
+		private String yearSales;
+		private int todaySalesCount;
+		private int weekSalesCount;
+		private int monthSalesCount;
+		private int yearSalesCount;
+		private int chartPrice;
+		private String chartMonth;
+		private String stypeName;
+		private int stypeNo;
+		private int count;
 		
 
 }

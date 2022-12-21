@@ -360,12 +360,12 @@ public class CommonController {
 	@RequestMapping("searchS.ad")
 	public String selectSalesSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword, String month) {
 		
-		LocalDate now = LocalDate.now();
-		
-		int year = now.getYear();
-		int Month = now.getMonthValue();
-		String thisMonth = year + "-" + Month;
-		System.out.println(thisMonth);
+//		LocalDate now = LocalDate.now();
+//		
+//		int year = now.getYear();
+//		int Month = now.getMonthValue();
+//		String thisMonth = year + "-" + Month;
+//		System.out.println(thisMonth);
 		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
@@ -388,9 +388,9 @@ public class CommonController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("month", month);
-		model.addAttribute("today", thisMonth);
+//		model.addAttribute("today", thisMonth);
 		
-		System.out.println("model" + model);
+//		System.out.println("model" + model);
 		
 		// System.out.println(pi);
 		// System.out.println(list);
@@ -399,13 +399,23 @@ public class CommonController {
 	}
 	
 	/**
-	 * 관리자 매출 통계 페이지로 포워딩하는 메소드 - 혜민 
+	 * 관리자 매출 통계 페이지 메소드 - 혜민 
 	 * @return
 	 */
 	@RequestMapping(value="schart.ad") 
-	public String selectSalesChart() {
+	public ModelAndView selectSalesChartBoard(ModelAndView mv) {
 		
-		return "common/adminSalesChart";
+		Reserve r = commonService.selectSalesChartBoard();
+		ArrayList<Reserve> bList = commonService.selectbChart();
+		ArrayList<Reserve> dList = commonService.selectdChart();
+		
+		mv.addObject("r", r);
+		mv.addObject("bList", bList);
+		mv.addObject("dList", dList);
+		
+		mv.setViewName("common/adminSalesChart");
+		
+		return mv;
 	}
 	
 	

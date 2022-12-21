@@ -127,6 +127,23 @@ public class CommonDao {
 
 		return (ArrayList) sqlSession.selectList("commonMapper.selectSalesSearchList", map, rowBounds);
 	}
+	
+	// 매출차트 보드 조회 
+	public Reserve selectSalesChartBoard(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("commonMapper.selectSalesChartBoard");
+	}
+	// 매출 bar 차트 조회 
+	public ArrayList<Reserve> selectbChart(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("commonMapper.selectbChart");
+	}
+	
+	// 매출 doughnut 차트 조회 
+	public ArrayList<Reserve> selectdChart(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("commonMapper.selectdChart");
+	}
 
 	// 검색어 자동완성기능 - 성훈
 	public String autoComplete(SqlSessionTemplate sqlSession, String keyword) {

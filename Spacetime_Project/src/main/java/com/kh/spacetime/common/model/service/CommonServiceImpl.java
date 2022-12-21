@@ -120,6 +120,27 @@ public class CommonServiceImpl implements CommonService {
 
 		return commonDao.selectSalesSearchList(sqlSession, pi, map);
 	}
+	
+	// 매출차트 보드 조회 
+	@Override
+	public Reserve selectSalesChartBoard() {
+		
+		return commonDao.selectSalesChartBoard(sqlSession);
+	}
+	
+	// 매출 bar 차트 조회 
+	@Override
+	public ArrayList<Reserve> selectbChart() {
+		
+		return commonDao.selectbChart(sqlSession);
+	}
+	
+	// 매출 doughnut 차트 조회 
+	@Override
+	public ArrayList<Reserve> selectdChart() {
+		
+		return commonDao.selectdChart(sqlSession);
+	}
 
 	// 검색어 자동완성 -성훈
 	@Override

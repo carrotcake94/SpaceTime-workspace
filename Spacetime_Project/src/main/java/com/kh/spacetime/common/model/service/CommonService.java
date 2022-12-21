@@ -52,6 +52,15 @@ public interface CommonService {
 
 	// 매출 검색 리스트 조회
 	ArrayList<Reserve> selectSalesSearchList(PageInfo pi, HashMap<String, String> map);
+	
+	// 매출차트 보드 조회 
+	Reserve selectSalesChartBoard();
+	
+	// 매출 bar 차트 조회 
+	ArrayList<Reserve> selectbChart();
+		
+	// 매출 doughnut 차트 조회 
+	ArrayList<Reserve> selectdChart();
 
 	// 검색어 자동완성
 	String autoComplete(String keyword);

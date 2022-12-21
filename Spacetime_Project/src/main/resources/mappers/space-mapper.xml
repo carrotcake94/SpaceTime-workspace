@@ -526,7 +526,7 @@
 		<if test="tab == '승인된 공간'">
 			WHERE SPACE_STATUS = 'Y'
 		</if>
-		ORDER BY SPACE_NO DESC
+		ORDER BY SPACE_MODIFY_DATE DESC, SPACE_NO DESC
 	</select>
 
 	<!-- 관리자 공간 처리 (승인, 반려) - 혜민 --> 
@@ -563,7 +563,7 @@
 			WHERE SPACE_TITLE
 		</if>
 		LIKE '%' || #{keyword} || '%'	
-		ORDER By SPACE_NO DESC
+		ORDER BY SPACE_MODIFY_DATE DESC, SPACE_NO DESC
 	</select>
 	
 	<!-- 마이페이지 북마크 희섭 -->

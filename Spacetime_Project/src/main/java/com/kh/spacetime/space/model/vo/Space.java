@@ -1,5 +1,6 @@
 package com.kh.spacetime.space.model.vo;
 
+import java.sql.Date;
 import java.util.List;
 
 import lombok.Getter;
@@ -41,5 +42,6 @@ public class Space {
 		private String memName; // join 용
 		private int rating;
 		private String hostAnswer;// join 용
+		private Date spaceModifyDate;
 }
 

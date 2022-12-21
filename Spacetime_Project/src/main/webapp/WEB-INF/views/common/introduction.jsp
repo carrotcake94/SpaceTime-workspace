@@ -122,7 +122,7 @@
 
 
 
-  <div class="title_wrap">
+  <div class="title_wrap" style="margin-bottom: 0px;">
     <div><img src="resources/images/common/introductionImg2.jpeg" alt="사진없음"></div>
     <div class="text">
       원하는 공간을 찾아보세요 <br>
