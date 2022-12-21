@@ -641,9 +641,11 @@ body * {
         if(searchInput.value.startsWith("#") == true){
             hashtagAutoComplete(searchInput.value);
             autoCompleteListShowUp(words, searchInput.value);
-        } else {
+        } else if(searchInput.value != null) {
             autoComplete(searchInput.value);
             autoCompleteListShowUp(words, searchInput.value);
+        } else {
+        	window.alert("검색어를 입력해주세요!");
         }
         
         window.addEventListener("click", (e) => {
@@ -652,6 +654,14 @@ body * {
             }
         })
     });
+    
+    document.querySelector("#m_search_btn").onclick = () => {
+    	if(searchInput.value == "" || searchInput.value == "#"){
+    		window.alert("검색어를 입력해주세요!");
+    	} else {
+    		searchStart(searchInput.value);
+    	}
+    }
     
 
     //엔터 혹은 검색클릭

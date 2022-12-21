@@ -102,32 +102,57 @@
 					var picListArr = [];
 					var lineListArr = [];
 					
+					//필터를 위한 전역변수
+					var filterBtn = document.querySelector("#listOption_filter");
+					var filter = document.querySelector("#mapFilter");
+					var filterSearch = document.querySelector("#mapFilter_search");
+					var area = document.querySelector("#mapFilter_area");
+					var category = document.querySelectorAll("input[type=checkbox]");
+					var checkedCategory = [];
+					
+					function getCategory(){
+						for(var i in category){
+							if(category[i].checked == true){
+								checkedCategory.push(category[i].value);
+							}
+						}
+					};
+					
+					
+					//중복코드 묶은 메소드
+					function initiateMap(){
+						loadList(spaceListArr, picListArr, lineListArr);
+						updateMarkers();
+						linkMarkerWithList(markers, picListArr, lineListArr, map);
+					}
 					 
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
-						console.log('${pureKeyword}');
 						if('${pureKeyword}'.startsWith("#")){
 							selectListByHashtag('${pureKeyword}');
-							loadList(spaceListArr, picListArr, lineListArr);
-							updateMarkers();
-							linkMarkerWithList(markers, picListArr, lineListArr, map);
+							initiateMap();
 						} else if ('${pureKeyword}' != null && !'${pureKeyword}'.startsWith("#")) {
 							selectListByKeyword('${pureKeyword}');
-							loadList(spaceListArr, picListArr, lineListArr);
-							updateMarkers();
-							linkMarkerWithList(markers, picListArr, lineListArr, map);
+							initiateMap();
+						} else if ('${pureKeyword}' == null){
+							window.alert("입력하세요");
 						}
  					};
- 					
- 					
  					
 					//지도 이동 후 해당 범위의 장소 재검색
 					var changeMap = document.querySelector("#changeMap");
 					changeMap.onclick = () => {
-						selectList(map);
-						loadList(spaceListArr, picListArr, lineListArr);
-						updateMarkers();
-						linkMarkerWithList(markers, picListArr, lineListArr, map);
+						getCategory();
+						if(area.value == "now"){
+							if(checkedCategory.length == 0){
+								window.alert("지역과 시설의 종류를 설정해주세요!");
+							} else {
+								mapFilterOnCurrentMap(map);
+							}
+						} else {
+							filterMap();
+						}
+						initiateMap();
 					};
 					
 					//게시판 형태 변환 (게시판형-사진형)
@@ -142,39 +167,25 @@
 						toLineList();
 					};
 					
-					//필터
-					var filterBtn = document.querySelector("#listOption_filter");
-					var filter = document.querySelector("#mapFilter");
-					var filterSearch = document.querySelector("#mapFilter_search");
 					filterBtn.onclick = () => {
 						filterOpenClose();
 					};
 					
 					filterSearch.onclick = () => {
-						filter.style.display = "none";
-						if(document.querySelector("#mapFilter_area").value == "now"){
-							mapFilterOnCurrentMap(map);
+						getCategory();
+						if(area.value == "now"){
+							if(checkedCategory.length == 0){
+								window.alert("지역과 시설의 종류를 설정해주세요!");
+							} else {
+								filter.style.display = "none";
+								mapFilterOnCurrentMap(map);
+							}
 						} else {
+							filter.style.display = "none";
 							filterMap();
 						}
-						loadList(spaceListArr, picListArr, lineListArr);
-						updateMarkers();
-						linkMarkerWithList(markers, picListArr, lineListArr, map);
+						initiateMap();
 					};
-					
-/* 					//지역
-					var area = document.querySelector("#mapFilter_area");
-					var selectedArea = area.options[area.selectedIndex].value;
-					var areaArr = selectedArea.split(',');
-					
-					//카테고리
-					var category = document.querySelectorAll("input[type=checkbox]");
-					var checkedCategory = [];
-					for(var i in category){
-						if(category[i].checked == true){
-							checkedCategory.push(category[i].value);
-						}
-					} */
 				</script>
 			</div>
 		</div>

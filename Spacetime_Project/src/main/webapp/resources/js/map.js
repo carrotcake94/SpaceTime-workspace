@@ -78,7 +78,7 @@ function loadList(spaceListArr, picListArr, lineListArr){
 		
 		//리스트를 위한 내용물 생성
 		picContent.innerHTML = "<div class='picList_content'>" +
-								   "<div class='picList_content_pic'>이미지</div>" +
+								   "<div class='picList_content_pic'><img src='" + spaceListArr[i].attachments[0].attachmentReName + "' alt='사진없음'/></div>" +
 								   "<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
 								   "<div class='picList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
 							   "</div>";
@@ -184,19 +184,11 @@ function toLineList() {
 
 function filterMap() {
 	//지역
-	var area = document.querySelector("#mapFilter_area");
+	
 	var selectedArea = area.options[area.selectedIndex].value;
 	var areaArr = selectedArea.split(',');
 	
 	//카테고리
-	var category = document.querySelectorAll("input[type=checkbox]");
-	var checkedCategory = [];
-	for(var i in category){
-		if(category[i].checked == true){
-			checkedCategory.push(category[i].value);
-		}
-	}
-	
 	if(checkedCategory.length == 0){
 		for(var i = 0; i < 10; i++){
 		checkedCategory.push(i);
