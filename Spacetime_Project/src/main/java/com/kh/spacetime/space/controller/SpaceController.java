@@ -446,8 +446,8 @@ public class SpaceController {
 
 		mv.addObject("s", s);
 
-		mv.setViewName("space/spaceDetailView");
-//		mv.setViewName("redirect:/detail.sp?sno="+sno);
+//		mv.setViewName("space/spaceDetailView");
+		mv.setViewName("redirect:/detail.sp?sno="+sno);
 
 		return mv;
 
