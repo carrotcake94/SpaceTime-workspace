@@ -105,33 +105,18 @@
 					 
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
-						
-						console.log('${hashtagSearchList}');
-						
-						var hashtagSearch = '${hashtagSearchList}'
-						var keywordSearch = '${keywordSearchList}'
-						
-						console.log(hashtagSearch);
-						console.log(keywordSearch);
-						
-						var hashtagSearchList = JSON.parse(hashtagSearch);
-						var keywordSearchList = JSON.parse(keywordSearch);
-						
-						console.log("완료");
-						console.log(hashtageSearchList);
-						console.log(typeof(hashtageSearchList));
-						console.log(keywordSearchList);
-						console.log(typeof(keywordSearchList));
-						console.log("완료");
-						/* if(${not empty keywordSearchList}){
-							loadList(${keywordSearchList}, picListArr, lineListArr);
+						console.log('${pureKeyword}');
+						if('${pureKeyword}'.startsWith("#")){
+							selectListByHashtag('${pureKeyword}');
+							loadList(spaceListArr, picListArr, lineListArr);
 							updateMarkers();
 							linkMarkerWithList(markers, picListArr, lineListArr, map);
-						} else if (${not empty hashtagSearchList}) {
-							loadList(${hashtagSearchList}, picListArr, lineListArr);
+						} else if ('${pureKeyword}' != null && !'${pureKeyword}'.startsWith("#")) {
+							selectListByKeyword('${pureKeyword}');
+							loadList(spaceListArr, picListArr, lineListArr);
 							updateMarkers();
 							linkMarkerWithList(markers, picListArr, lineListArr, map);
-						} */
+						}
  					};
  					
  					

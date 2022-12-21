@@ -18,6 +18,38 @@ function selectList(map) {
 	});
 };
 
+function selectListByHashtag(pureKeyword){
+	$.ajax({
+		url: "searchSpaceByHashtag.mp",
+		type : "get",
+		async : false,
+		data : {
+			pureKeyword : pureKeyword
+		},
+		success : (listArr) => {
+			spaceListArr = listArr;
+		},
+		error : () => {
+		}
+	});
+}
+
+function selectListByKeyword(pureKeyword){
+	$.ajax({
+		url: "searchSpaceByKeyword.mp",
+		type : "get",
+		async : false,
+		data : {
+			keyword : pureKeyword
+		},
+		success : (listArr) => {
+			spaceListArr = listArr;
+		},
+		error : () => {
+		}
+	});
+}
+
 function loadList(spaceListArr, picListArr, lineListArr){
 	//기존의 리스트 삭제
 	while(picList.hasChildNodes()){

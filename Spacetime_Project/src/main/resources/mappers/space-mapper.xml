@@ -385,7 +385,7 @@
 							</foreach>)
 	</select>
 	
-	<!-- 메인화면에서 해시태그 검색 -성훈 -->
+	<!-- 해시태그 검색 -성훈 -->
 	<select id="searchSpaceByHashtag" parameterType="string" resultMap="spaceResultSet">
 		SELECT SPACE_NO, 
 			   SPACE_TITLE, 
@@ -401,7 +401,7 @@
            AND ATTACHMENT_LEVEL = 1
 	</select>
 	
-	<!-- 메인화면에서 일반 검색(상호명) -성훈 -->
+	<!-- 일반 검색(상호명) -성훈 -->
 	<select id="searchSpaceByKeyword" parameterType="string" resultMap="spaceResultSet">
 		SELECT SPACE_NO, 
 			   SPACE_TITLE, 

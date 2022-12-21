@@ -130,12 +130,12 @@ public class SpaceDao {
 		return (ArrayList)sqlSession.selectList("spaceMapper.mapFilterOnCurrentMap", condition);
 	}
 	
-	//메인화면에서 해시태그 검색 -성훈 
+	//해시태그 검색 -성훈 
 	public ArrayList<Space> searchSpaceByHashtag(SqlSessionTemplate sqlSession, String keyword){
 		return (ArrayList)sqlSession.selectList("spaceMapper.searchSpaceByHashtag", keyword);
 	}
 	
-	//메인화면에서 일반 검색 -성훈 
+	//일반 검색 -성훈 
 	public ArrayList<Space> searchSpaceByKeyword(SqlSessionTemplate sqlSession, String keyword){
 		return (ArrayList)sqlSession.selectList("spaceMapper.searchSpaceByKeyword", keyword);
 	}

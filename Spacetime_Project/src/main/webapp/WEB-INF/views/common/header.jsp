@@ -656,11 +656,7 @@ body * {
 
     //엔터 혹은 검색클릭
     function searchStart(pureKeyword){
-        if(pureKeyword.startsWith("#")==true){
-            document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceByHashtag.mp").submit();
-        } else {
-            document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceByKeyword.mp").submit();
-        }
+           document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
     }
 	</script>
 	<!-- 슬라이드 메뉴 -->

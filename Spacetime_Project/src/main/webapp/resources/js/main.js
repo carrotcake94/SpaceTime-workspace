@@ -130,7 +130,6 @@ function spaceRecommend(keyword){
          async : false,
          data : { keyword : keyword },
          success : (reviewList) => {
-             console.log(reviewList);
              
              for(var i in reviewList){
                  var card = document.createElement("div");

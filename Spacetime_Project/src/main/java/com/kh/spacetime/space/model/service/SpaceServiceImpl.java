@@ -141,13 +141,13 @@ public class SpaceServiceImpl implements SpaceService {
 		return spaceDao.mapFilterOnCurrentMap(sqlSession, condition);
 	}
 	
-	//메인화면에서 해시태그 검색 -성훈 
+	//해시태그 검색 -성훈 
 	@Override
 	public ArrayList<Space> searchSpaceByHashtag(String keyword){
 		return spaceDao.searchSpaceByHashtag(sqlSession, keyword);
 	}
 	
-	//메인화면에서 일반 검색 -성훈 
+	//일반 검색 -성훈 
 	@Override
 	public ArrayList<Space> searchSpaceByKeyword(String keyword){
 		return spaceDao.searchSpaceByKeyword(sqlSession, keyword);
