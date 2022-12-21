@@ -210,4 +210,16 @@ public class ReserveDao {
 	}
 
 	// -------------------------------------------정현
+	
+	// 회원 등급 업데이트를 위한 결제 금액 SUM - 경미
+	public int sumPrice(SqlSessionTemplate sqlSession, int memNo) {
+		
+		return sqlSession.selectOne("reserveMapper.sumPrice", memNo);
+	}
+	
+	// 결제 취소를 위한 Payment select - 경미
+	public Payment selectPayment(SqlSessionTemplate sqlSession, int reserveNo) {
+		
+		return sqlSession.selectOne("reserveMapper.selectPayment", reserveNo);
+	}
 }

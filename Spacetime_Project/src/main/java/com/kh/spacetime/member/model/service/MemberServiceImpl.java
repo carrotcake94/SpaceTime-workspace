@@ -96,6 +96,32 @@ public class MemberServiceImpl implements MemberService{
 	public int changePwd(Member m) {
 		return memberDao.changePwd(sqlSession, m);
 	}
+	
+	/**
+	 * 회원 등급 자동 업데이트 서비스 - 경미
+	 */
+	@Override
+	public int updateGrade(int sumPrice, int memNo) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("sumPrice", sumPrice);
+		map.put("memNo", memNo);
+		
+		return memberDao.updateGrade(sqlSession, map);
+	}
+	
+	
+	/**
+	 * 회원 등급 자동 하향 서비스 - 경미
+	 */
+	@Override
+	public int downGrade(int sumPrice, int memNo) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("sumPrice", sumPrice);
+		map.put("memNo", memNo);
+		
+		return memberDao.downGrade(sqlSession, map);
+	}
 
 	// --------------------------------------------------------------
 	
@@ -153,6 +179,5 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 
-		
 
 }

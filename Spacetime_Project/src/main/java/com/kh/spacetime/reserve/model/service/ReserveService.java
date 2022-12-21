@@ -88,5 +88,12 @@ public interface ReserveService {
 	
 	// 결제하기 
 	int insertPay(Payment p);
-
+	
+	// ------------------------------------------
+	
+	// 회원 등급 업데이트를 위한 결제 금액 SUM - 경미
+	int sumPrice(int memNo);
+	
+	// 결제 취소를 위한 select Payment - 경미
+	Payment selectPayment(int reserveNo);
 }

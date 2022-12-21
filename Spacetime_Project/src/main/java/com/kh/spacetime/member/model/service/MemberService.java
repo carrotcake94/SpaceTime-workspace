@@ -36,6 +36,12 @@ public interface MemberService {
 	// 비밀번호 변경 서비스 (update)
 	int changePwd(Member m);
 	
+	// 회원 등급 자동 상향 서비스 (update)
+	int updateGrade(int sumPrice, int memNo);
+	
+	// 회원 등급 자동 하향 서비스
+	int downGrade(int sumPrice, int memNo);
+	
 	//----------------------------희섭
 	// 호스트 신청하기 서비스(insert)
 	int inserthostRequest(Member m);

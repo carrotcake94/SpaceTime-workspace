@@ -74,6 +74,26 @@ public class MailSendService {
 		return Integer.toString(authNumber);
 	}
 	
+	/**
+	 * 결제 영수증 발송 이메일 - 경미
+	 * @param email
+	 * @param receiptUrl
+	 */
+	public void reserveEmail(String email, String receiptUrl) {
+
+		String setFrom = "final221223@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
+		String toMail = email;
+		String title = "[예약확인] 스페이스타임 예약 확인 및 결제 영수증 이메일입니다."; // 이메일 제목 
+		String content = 
+				"안녕하세요!<br> 저희 '스페이스 타임' 서비스를 이용해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
+				"<br><br>" + 
+				"게스트님의 예약 신청은 성공적으로 완료되어 호스트님의 승인을 기다리는 중입니다 :)" + 
+				"<br>" + 
+				"게스트님의 결제 영수증은 <a href='"+receiptUrl+"'>"+receiptUrl+"</a> 에서 확인하실 수 있습니다!" +
+				"<br>감사합니다!"; //이메일 내용 삽입
+		mailSend(setFrom, toMail, title, content);
+	}
+	
 	//이메일 전송 메소드
 	public void mailSend(String setFrom, String toMail, String title, String content) { 
 		MimeMessage message = mailSender.createMimeMessage();

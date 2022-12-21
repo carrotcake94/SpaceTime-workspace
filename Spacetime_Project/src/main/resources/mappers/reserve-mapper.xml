@@ -46,6 +46,7 @@
 			<result column="MEM_NO" property="stypeNo" />
 			<result column="HOST_NO" property="hostNo" />
 		</resultMap>
+		
 
 		<select id="selectMyReserveListCount" parameterType="_int" resultType="_int">
 			SELECT COUNT(*)
@@ -487,5 +488,20 @@
 	</select>
 	
 	<!-- 정현 End -->
-
+	
+	<!-- 회원 등급 업데이트를 위한 결제 금액 SUM - 경미 -->
+	<select id="sumPrice" parameterType="_int" resultType="_int">
+		SELECT SUM(PRICE)
+        FROM RESERVE
+        WHERE MEM_NO = #{memNo}
+        AND RESERVE_STATUS IN ('Y', 'W')
+	</select>
+	
+	
+	<select id="selectPayment" parameterType="_int" resultMap="paymentResultSet">
+		SELECT *
+		FROM PAYMENT
+		WHERE RESERVE_NO = #{reserveNo}
+	</select>
+	
 </mapper>

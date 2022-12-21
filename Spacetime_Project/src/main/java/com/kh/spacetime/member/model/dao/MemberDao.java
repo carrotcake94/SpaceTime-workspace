@@ -113,6 +113,28 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMember", map);
 	}
 	
+	/**
+	 * 회원 등급 자동 상향 Dao - 경미
+	 * @param sqlSession
+	 * @param map
+	 * @return
+	 */
+	public int updateGrade(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		
+		return sqlSession.update("memberMapper.updateGrade", map);
+	}
+	
+	/**
+	 * 회원 등급 자동 하향 Dao - 경미
+	 * @param sqlSession
+	 * @param map
+	 * @return
+	 */
+	public int downGrade(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		
+		return sqlSession.update("memberMapper.downGrade", map);
+	}
+	
 	// ------------------------------------------------------------
 	
 	/**

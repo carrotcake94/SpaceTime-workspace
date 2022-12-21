@@ -176,5 +176,22 @@ public class ReserveServiceImpl implements ReserveService {
 		
 		return reserveDao.insertPay(sqlSession, p);
 	}
+	
+	// ------------------------------------------
+	
+	// 회원 등급 업데이트를 위한 결제 금액 SUM - 경미
+	@Override
+	public int sumPrice(int memNo) {
+		
+		return reserveDao.sumPrice(sqlSession, memNo);
+	}
+	
+	// 결제 취소를 위한 Payment select - 경미
+	@Override
+	public Payment selectPayment(int reserveNo) {
+		
+		return reserveDao.selectPayment(sqlSession, reserveNo);
+	}
+
 
 }

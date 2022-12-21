@@ -127,6 +127,44 @@
 		AND MEM_STATUS = 'N'
 	</update>
 	
+	<!-- 회원 등급 변경(상향) 쿼리문 - 경미 -->
+	<update id="updateGrade" parameterType="hashmap">
+		UPDATE MEMBER
+		<choose>
+			<when test="sumPrice >= 1000000">
+				SET GR_CODE = 'S'
+				WHERE MEM_NO = #{memNo}
+			</when>
+			<when test="sumPrice >= 500000">
+				SET GR_CODE = 'E'
+				WHERE MEM_NO = #{memNo}
+			</when>
+			<otherwise>
+				SET GR_CODE = 'M'
+				WHERE MEM_NO = 0
+			</otherwise>
+		</choose>
+	</update>
+	
+	<!-- 회원 등급 변경(하향) 쿼리문 - 경미 -->
+	<update id="downGrade" parameterType="hashmap">
+		UPDATE MEMBER
+		<choose>
+			<when test="sumPrice lt 500000">
+				SET GR_CODE = 'M'
+				WHERE MEM_NO = #{memNo}
+			</when>
+			<when test="sumPrice lt 1000000">
+				SET GR_CODE = 'E'
+				WHERE MEM_NO = #{memNo}
+			</when>
+			<otherwise>
+				SET GR_CODE = 'S'
+				WHERE MEM_NO = 0
+			</otherwise>
+		</choose>
+	</update>
+	
 	<!-- 회원수 조회용 쿼리문 - 혜민 -->
 	<select id="selectMemberListCount" resultType="_int">
 		SELECT COUNT(*)

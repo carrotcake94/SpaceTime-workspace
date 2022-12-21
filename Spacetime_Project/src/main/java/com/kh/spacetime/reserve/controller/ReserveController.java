@@ -16,14 +16,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spacetime.common.model.vo.PageInfo;
 import com.kh.spacetime.common.template.Pagination;
+import com.kh.spacetime.member.controller.MailSendService;
+import com.kh.spacetime.member.model.service.MemberService;
 import com.kh.spacetime.member.model.vo.Member;
 import com.kh.spacetime.reserve.model.service.ReserveService;
 import com.kh.spacetime.reserve.model.vo.Payment;
 import com.kh.spacetime.reserve.model.vo.Reserve;
 import com.kh.spacetime.space.model.service.ReviewService;
-import com.kh.spacetime.space.model.service.ReviewServiceImpl;
-import com.kh.spacetime.space.model.vo.Review;
 import com.kh.spacetime.space.model.vo.Space;
+
+import kr.co.bootpay.Bootpay;
+import kr.co.bootpay.model.request.Cancel;
 
 @Controller
 public class ReserveController {
@@ -33,6 +36,14 @@ public class ReserveController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private MailSendService mailService; // 이메일 인증
+	
+	private Bootpay bootpay = new Bootpay("638d424dd01c7e001e7bd641", "Sm+kU05f6KJuTeZcL65ZZutUQTGedEciqPKbLuIJ06Y="); // 부트페이 API
 
 	// 정현---------------------
 	/**
@@ -299,15 +310,53 @@ public class ReserveController {
 
 	// 예약 취소
 	@RequestMapping("cancleMyReserve.re")
-	public String cancleMyReserve(int rno, HttpSession session, Model model) {
+	public ModelAndView cancleMyReserve(int rno, HttpSession session, ModelAndView mv) {
 
 		int result = reserveService.cancleMyReserve(rno);
-
+		
 		if (result > 0) { // 예약 취소 성공
-			session.setAttribute("alertMsg", "예약이 취소되었습니다.");
-			;
+			
+			// 부트페이 결제 취소 - 경미
+			try {
+			    HashMap<String, Object> token = bootpay.getAccessToken();
+			    
+			    if(token.get("error_code") != null) { // 토큰 발급 실패 시
+			    	
+			    	System.out.println("토큰 발급 실패");
+			    	session.setAttribute("alertMsg", "결제 취소가 실패하였습니다. 관리자에게 문의해주세요.");
+			    	mv.setViewName("common/errorPage");
+			    }
+			    
+			    String receiptId = reserveService.selectPayment(rno).getReceiptId();
+			    
+			    Cancel cancel = new Cancel();
+			    cancel.receiptId = receiptId;
+			    cancel.cancelUsername = "관리자";
+			    cancel.cancelMessage = "예약 취소";
+
+			    HashMap<String, Object> res = bootpay.receiptCancel(cancel);
+			    if(res.get("error_code") == null) { // 결제 취소 성공
+			    	
+		    		// 예약 취소 시 회원 등급 자동 변경 - 경미
+			    	int memNo = ((Member)session.getAttribute("loginMember")).getMemNo();
+		    		int sumPrice = reserveService.sumPrice(memNo);
+		    		int upgradeResult = memberService.downGrade(sumPrice, memNo);
+			    	
+			    	session.setAttribute("alertMsg", "예약이 취소되었습니다.");
+			    	mv.setViewName("redirect:/myReserve.re");
+			    	
+			    } else { // 결제 취소 실패
+			    	session.setAttribute("alertMsg", "결제 취소가 실패하였습니다. 관리자에게 문의해주세요.");
+			    	mv.setViewName("common/errorPage");
+			    }
+			} catch (Exception e) {
+			    e.printStackTrace();
+		    	session.setAttribute("alertMsg", "결제 취소가 실패하였습니다. 관리자에게 문의해주세요.");
+		    	mv.setViewName("common/errorPage");
+			}
+
 		}
-		return "redirect:/myReserve.re";
+		return mv;
 	}
 
 	// 예약 신고
@@ -350,10 +399,7 @@ public class ReserveController {
     @RequestMapping("payUpdate.do")
 	public String payUpdate(String reserveCount, String useDate, int startTime, String endTime, int price, String memNo, int spaceNo, String rId, String rUrl, String payMethod, HttpSession session) {
     	
-    	
     	Reserve r = new Reserve();
-    	
-    	
     	
     	int newReserveCount = Integer.parseInt(reserveCount);
     	int newEndTime = Integer.parseInt(endTime);
@@ -380,9 +426,23 @@ public class ReserveController {
     	int payResult = reserveService.insertPay(p);
     	
     	if ((payResult > 0) && (reserveResult > 0)) { // insert 성공
-			session.setAttribute("alertMsg", "결제 성공");
+    		
+    		// 결제 영수증 보내는 메일 서비스 - 경미
+        	String email = ((Member)session.getAttribute("loginMember")).getEmail();
+    		mailService.reserveEmail(email, rUrl);
+    		
+    		// 회원 등급 자동 변경 - 경미
+    		int sumPrice = reserveService.sumPrice(Integer.parseInt(memNo));
+    		int upgradeResult = memberService.updateGrade(sumPrice, Integer.parseInt(memNo));
+    		
+    		if(upgradeResult > 0) {
+    			session.setAttribute("alertMsg", "축하드립니다! 이번 예약으로 회원 등급이 상향되었습니다. 스페이스타임과 함께 해주셔서 감사드립니다 :)");
+    		} else {
+    			session.setAttribute("alertMsg", "결제에 성공했습니다.");
+    		}
+
 		} else {
-			session.setAttribute("alertMsg", "결제 실패");
+			session.setAttribute("alertMsg", "결제에 실패했습니다. 관리자에게 문의해주세요.");
 		}
     	
     	return "redirect:/detail.sp?sno=" + spaceNo;

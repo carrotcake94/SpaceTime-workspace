@@ -183,9 +183,9 @@
 				<script>
 					$(function() {
 						let grCode = $("#grCode").val();
-						if(grCode === '태양') {
+						if(grCode == '태양') {
 							$("#memGrade").html("<i class='fa-solid fa-sun' style='color: orange;'>");
-						} else if(grCode === '지구') {
+						} else if(grCode == '지구') {
 							$("#memGrade").html("<i class='fa-solid fa-earth-americas' style='color: green;'></i>");
 						} else {
 							$("#memGrade").html("<i class='fa-solid fa-moon' style='color: #949494;'></i>");
