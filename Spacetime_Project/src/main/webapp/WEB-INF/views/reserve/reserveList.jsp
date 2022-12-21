@@ -662,7 +662,7 @@
                 <b>신고유형</b> <br>
                 <div class="selectType">
                   <label for="type_select">신고유형선택</label>
-                    <select id="type_select" name="reportType">
+                    <select id="type_select" name="reportType" class="form-control">
                         <option>욕설</option>
                         <option>인신공격</option>
                         <option>음란</option>

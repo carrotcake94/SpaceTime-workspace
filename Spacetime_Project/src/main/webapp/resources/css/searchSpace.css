@@ -10,12 +10,12 @@
 
 #search_display {
     width: 100%;
-    height : 775px;
+    height : 830px;
 }
 
 #search_display > div {
     box-sizing: border-box;
-    height: 775px;
+    height: 830px;
     margin: 0 auto;
     float: left;
 }
@@ -45,13 +45,15 @@
 
 #listOption {
 	padding: 10px 10px 10px 20px;
-	height: 12%;
+	height: 8%;
 }
 
 #listOption > div {
     display: inline-block;
     margin: 0 auto;
     margin-bottom : 5px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 #listOption > div :hover{
@@ -64,8 +66,8 @@
 }
 
 #listOption > div{
-    border: 4px solid rgb(96, 155, 204);
-    border-radius: 15px;
+    /*border: 4px solid rgb(96, 155, 204);*/
+    /*border-radius: 15px;*/
 }
 
 .listOption_listStyle {
@@ -78,14 +80,14 @@
     height: 70px;
     float: right;
 }
-
+/*
 .listOption_options {
 	padding: 10px;
 }
-
+*/
 .listOption_options > img {
-	width: 70%;
-	height: 70%;
+	width: 40px;
+	height: 40px;
 	object-fit: cover;
 	margin: 0 auto;
 }
@@ -95,6 +97,7 @@
     height: 50%;
     position: absolute;
     display: none; 
+    display: table;
     background-color: white;
     margin-top: 5px;
     border: 3px solid rgb(96, 155, 204);
@@ -115,7 +118,7 @@
 .mapFilter_option_title {
     width: 20%;
     height: 100%;
-    
+    display: table-cell;
     font-size: 20px;
     color: #007bff;
     font-weight: 650;
@@ -137,6 +140,7 @@
 }
 
 #mapFilter_category_list{
+    display: table-cell;
     width: 80%;
 }
 
@@ -177,20 +181,24 @@
 	background-color: #FFB200;
 }
 
-#changeMap {
+#map> #changeMap {
 	position: absolute;
-	float: left;
-	width: 100px;
-	height: 60px;
+	/*float: left;*/
+	width: 150px;
+	height: 50px;
 	border-radius: 15px;
-	margin-top: 570px;
-	margin-left: 450px;
+    top: 720px;
+	left:47%;
+    right:50%;
+    bottom: 110px;
 	z-index: 100;
-	background-color: #FFB200;
-	opacity: 0.5;
-	font-size: 13px;
-	text-align: center;
-	line-height: 4.5;
+	opacity: 0.77;
+}
+
+#changeMap>button {
+    width:100%;
+    height:100%;
+    border-radius: 30px;
 }
 
 #changeMap:hover {

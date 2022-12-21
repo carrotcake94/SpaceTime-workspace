@@ -74,8 +74,11 @@ public class MemberController {
 		}
 		
 		Member loginMember = memberService.loginMember(m);
-		
-		if(loginMember.getBlacklist().equals("Y")) {
+		if(loginMember.getMemStatus().equals("Y")) {
+			session.setAttribute("alertMsg", "탈퇴한 회원입니다. 이용을 원하시면 다시 가입해주세요.");
+			mv.setViewName("redirect:/");
+			
+		} else if(loginMember.getBlacklist().equals("Y")) {
 			
 			session.setAttribute("alertMsg", "다수의 신고로 회원 자격이 정지되어 로그인이 불가능합니다. 자세한 사항은 고객센터 문의를 통해 확인 가능합니다.");
 			mv.setViewName("redirect:/");

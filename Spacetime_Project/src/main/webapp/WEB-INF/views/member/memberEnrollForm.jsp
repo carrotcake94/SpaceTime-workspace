@@ -377,7 +377,6 @@
 	                        <span class="error_next_box" id="nickMsg"></span>
 							<span class="error_next_box" id="nickCheckMsg"></span>
 	                        <select id="gender" name="gender" class="form-control" style="height: 50px;" required>
-	                            <option selected>성별</option>
 	                            <option value="M">남자</option>
 	                            <option value="F">여자</option>
 	                        </select>
@@ -404,7 +403,7 @@
 								<!-- VO로 합치기 위해 input type="hidden" 으로 생년월일 다 합쳐서 birthday로 넘길 것 -->
 	                        </div>
 	                        <span class="error_next_box" id="birthdayMsg">생년월일을 다시 확인해주세요.</span>
-	                        <input id="phone" name="phone" class="form-control" type="text" placeholder="전화번호(- 제외)">
+	                        <input id="phone" name="phone" class="form-control" type="text" placeholder="전화번호(- 제외)" required>
 							<span class="error_next_box" id="phoneMsg">-을 제외한 유효한 전화번호를 입력해주세요.</span>
 							<!-- 정규식 검사 -->
 	                        <script>

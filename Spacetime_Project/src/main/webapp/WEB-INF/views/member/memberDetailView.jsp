@@ -503,7 +503,9 @@
 	                            </tr>
 	                            <tr>
 	                                <th>새 비밀번호</th>
-	                                <td><input id="memPwd" name="memPwd" type="password" class="form-control mb-2" required></td>
+	                                <td><input id="memPwd" name="memPwd" type="password" class="form-control mb-2" required>
+										<span class="error_next_box" id="pwd1Msg">비밀번호가 일치하지 않습니다.</span>
+									</td>
 	                            </tr>
 	                            <tr>
 	                                <th>새 비밀번호 확인</th>
@@ -552,6 +554,21 @@
 	                                $("#pwdMsg").hide();
 	                                $("#pwdChange").attr("disabled", false);
 	                                }
+								});
+
+								$("#memPwd").blur(function() {
+									// 비밀번호 정규식
+									// 영문자, 숫자, 특수문자(!@#$%^&*()) 로 총 12~20 자 로 이루어져야함
+									let regExp = /^[a-z\d!@#$%^&*()]{8,20}$/i;
+									if(!regExp.test($("#memPwd").val())) {
+										$("#pwd1Msg").text("비밀번호는 총 8~20자의 영문자,숫자,특수문자로만 입력 가능합니다.");
+										$("#pwd1Msg").css("display", "block");
+										$("#memPwd").select(); // 재입력 유도
+										return false;
+									} else {
+										$("#pwd1Msg").css("display", "none");
+										return true;
+									}
 								});
 							
 							$("#pwOk").keyup(function() {

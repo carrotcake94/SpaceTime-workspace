@@ -362,8 +362,8 @@
                     <div class="modal-body">
                         <table>
                             <tr style="width: 500px;">
-                            	<input type="hidden" name="memId" value="${m.memId}">
-                            	<input type="hidden" name="memNo" value="${m.memNo}">
+                            	<input type="hidden" name="memId" value="${m.memId}" class="form-control">
+                            	<input type="hidden" name="memNo" value="${m.memNo}" class="form-control">
                                 <th style="width:30%;">이메일 주소</th>
                                 <td>
                                     <input type="email" id="" name="email" class="form-control mb-2" style="width:300px;" required>

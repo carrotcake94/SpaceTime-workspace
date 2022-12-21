@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공간 검색</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
 	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script> <!-- nrd3zj6gm7 -->
@@ -35,7 +35,7 @@
 						<div>
 							<div class="mapFilter_option_title">지역</div>
 							<div>
-								<select class="mapFilter_options" id="mapFilter_area" name="area">
+								<select class="mapFilter_options form-control" id="mapFilter_area" name="area">
 									<option value="now">현재 지도 위치</option>
 									<option>강서구,양천구,구로구,영등포구</option>
 									<option>금천구,동작구,관악구,서초구</option>
@@ -65,8 +65,8 @@
 						<div id="mapFilter_option_price">
 							<div class="mapFilter_option_title">가격</div>
 							<div id="mapFilter_priceRange" class="mapFilter_options">
-								최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="">원 &nbsp;~&nbsp; 최대
-								<input type="text" id="max_price" name="max_price" value="9999999" placeholder="">원
+								최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="" class="form-control">원 &nbsp;~&nbsp; 최대
+								<input type="text" id="max_price" name="max_price" value="9999999" placeholder="" class="form-control">원
 							</div>
 						</div>
 						<div id="mapFilter_btns">
@@ -85,7 +85,7 @@
 				</div>
 				<!-- 지도 -->
 				<div id="map">
-					<div id="changeMap">현재지도 내 검색</div>
+					<div id="changeMap"><button class="btn btn-warning">현재지도 내 검색</button></div>
 				</div>
 				
 				<script>
