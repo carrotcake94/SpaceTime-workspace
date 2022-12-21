@@ -446,7 +446,7 @@
 				                </button>
 				              </div>
 				              <div>
-				                <span class="stitle">${ r.memNo }</span>
+				                <span class="stitle">${ r.memNo }</span> <input type="hidden" class="rnoInput" value="${ r.reserveNo }"/>
 				                <hr />
 				                ${ r.denyMessage }
 				                <span class="sprice">${ r.price }</span>
@@ -467,7 +467,16 @@
 				                </c:when>
 				                <c:otherwise>
 				                  <div class="space_btn_area">
-				                    <button style="width: 100%;" class="btn-reserveList">예약내역 확인</button>
+				                    <button style="width: 100%;" class="btn-reserveList detailBtn">예약내역 확인</button>
+				                    <script>
+				                			/* 예약내역확인버튼  */
+						                	$(function() {
+						                		$(".detailBtn").click(function() {
+						                			console.log($(".rnoInput").val());
+						                			location.href = "reserveDetail.re?rno=" + $(this).parent().prev().children(".rnoInput").val();
+						                		});
+						                	});
+				                	</script>
 				                </div>
 				                </c:otherwise>
 				              </c:choose>              

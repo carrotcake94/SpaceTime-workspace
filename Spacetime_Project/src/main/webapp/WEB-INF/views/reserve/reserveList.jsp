@@ -456,7 +456,7 @@
                 <option>예약반려</option> 
             </select>
         </div>
-  
+        
         <button type="submit" class="btn-sort">검색</button>
       </div>
      </form>
