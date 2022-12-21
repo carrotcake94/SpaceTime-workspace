@@ -330,6 +330,105 @@
         border: none;
         color: white;
       }
+      
+      /* 리뷰 등록 모달 */
+        #reviewEnrollModal .modal-content {
+            width: 800px;
+            margin: auto;
+            border: 1px solid gray;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 100px;
+        }
+
+        #reviewEnrollModal .modal-body {
+            padding: 30px 30px 10px;
+        }
+
+        #reviewEnrollModal .rev1,
+        #reviewEnrollModal .rev2 {
+            float: left;
+            margin-bottom: 15px;
+        }
+
+        #reviewEnrollModal .rev1 {
+            width: 65%;
+        }
+
+        #reviewEnrollModal .rev2 {
+            width: 35%;
+        }
+
+        #reviewEnrollModal .rtitle {
+            margin-bottom: 15px;
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        #reviewEnrollModal .ftitle {
+            margin-bottom: 25px;
+            font-size: 25px;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        #reviewEnrollModal .file-input {
+            display: block;
+            margin-bottom: 10px;
+            width: 35%;
+            cursor: pointer;
+        }
+
+        #reviewText {
+            width: 100%;
+            height: 100px;
+            border: 1px solid lightgray;
+            outline: none;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 14px;
+            resize: none;
+            color: rgb(54, 54, 54);
+            border-radius: 5px;
+        }
+
+        #reviewEnrollModal .modal-footer {
+            margin: 0 auto 20px;
+            border: none;
+        }
+
+        #reviewEnrollModal button {
+            margin: 0 7px;
+            text-align: center;
+        }
+
+        #starArea {
+            position: relative;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        #starArea>div {
+            overflow: hidden;
+            position: absolute;
+        }
+
+        #starArea i {
+            font-size: 30px;
+            color: rgb(253, 193, 55);
+            padding: 0;
+            margin: 0;
+        }
+
+        #starArea span {
+            display: inline-block;
+            width: 17.875px;
+            height: 32px;
+            cursor: pointer;
+        }
+
+        /* -------------------------------------- */
+      
 
 </style>
 </head>
@@ -461,8 +560,8 @@
 				              <c:choose>
 				                <c:when test="${(r.reserveStatus eq 'Y') and (today gt parseDate)}">
 				                  <div class="space_btn_area">
-				                  <button style="width: 70%" class="btn btn-warning">리뷰 작성하기</button>
-				                  <button style="width: 30%" class="btn btn-danger">신고하기</button>
+				                  <button style="width: 70%" class="btn btn-warning" onclick="openRevEnrollModal(this)" >리뷰 작성하기</button>
+				                  <button style="width: 30%" class="btn btn-danger" data-toggle="modal" data-target="#report-Modal">신고하기</button>
 				                </div>
 				                </c:when>
 				                <c:otherwise>
@@ -537,6 +636,117 @@
         
       </div>
   
+   <!--공간 신고 Modal -->
+      <div class="modal" id="report-Modal">
+        <form action="reportMyReserve.re" method="post" id="reportInfoSubmit">
+        <input type="hidden" name="rno" id="rno"> 
+        <script>
+       		 $("#rno").val($(".rnoInput").val());
+        </script>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">공간 신고</div>
+              <!-- Modal body -->
+              <div class="modal-body">
+                
+              <!--  신고유형 선택 드롭박스  -->
+              <div>
+                <b>신고유형</b> <br>
+                <div class="selectType">
+                  <label for="type_select">신고유형선택</label>
+                    <select id="type_select" name="reportType">
+                        <option>욕설</option>
+                        <option>인신공격</option>
+                        <option>음란</option>
+                        <option>비매너</option>
+                        <option>혐오컨텐츠</option> 
+                        <option>시설물관련</option> 
+                        <option>기타</option> 
+                    </select>
+                </div>
+                </div>
+                <br>
+                <!-- 신고내용 -->
+                <b>신고내용</b>  <br>
+                <div>
+                  <textarea id="reportContent" name="reportContent" cols="50" rows="3" placeholder="신고 내용을 입력해주세요."></textarea>
+                </div>              
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" onclick="$('#report-Modal').modal('hide');">취소</button>
+                  <button type="submit" class="reportBtn btn btn-danger">신고하기</button>
+                </div>
+              </div>
+            </div>
+        </form>
+        <script>
+          $(document).ready(function () {
+            $('#reportContent').summernote({
+              placeholder: '신고할 내용과 증빙 가능한 이미지를 첨부해주세요.<br>증빙이 되지 않으면 신고가 처리되지 않습니다.',
+              lang: "ko-KR",
+              height: 200,
+              minHeight: 200,
+              maxHeight: 200
+            });
+
+          });
+                
+        </script>
+        
+      </div>
+      
+       <!-- 리뷰 등록 Modal -->
+    <div class="modal" id="reviewEnrollModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+            	    <input type="hidden" name="smemId" value="">
+                    <form id="reviewForm" action="insert.re" method="post" enctype="multipart/form-data" >
+                        <input type="hidden" name="reserveNo" value="">
+                        <input type="hidden" name="rating" value="">
+                        <input type="hidden" name="memNo" value="${loginMember.memNo}">
+                        <div style="overflow: hidden;">
+                            <div class="rev1">
+                                <div class="rtitle">공간명</div>
+                                <div id="sptitle"></div>
+                            </div>
+                            <div class="rev2">
+                                <div class="rtitle">평점</div>
+                                <div id="starArea">
+                                    <div id="realStarArea"><i class="fa fa-star-o" aria-hidden="true"></i><i
+                                            class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o"
+                                            aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <span class="s1"></span><span class="s2"></span><span class="s3"></span><span
+                                            class="s4"></span><span class="s5"></span><span class="s6"></span><span
+                                            class="s7"></span><span class="s8"></span><span class="s9"></span><span
+                                            class="s10"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ftitle">내용</div>
+                        <input class="file-input" type="file" name="upfile">
+                        <input class="file-input" type="file" name="upfile">
+                        <input class="file-input" type="file" name="upfile">
+                        <textarea name="reviewCont" id="reviewText" placeholder="이용후기를 작성해주세요"
+                            maxlength="300"></textarea>
+                    </form>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" onclick="reviewSub()">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  
       <!-- 공간 검수 반려 확정 Modal -->
       <div class="modal" id="refuse-info-Modal">
         <div class="modal-dialog modal-lg">
@@ -564,6 +774,54 @@
 	
 	<jsp:include page="../common/footer.jsp" />
 	
+	<script>
+		/* 리뷰작성하기  */
+		openRevEnrollModal = btn => {
+			console.log("여기");
+			var stitle = $(btn).parent().prev().children(".stitle").text();
+			var reserveNo = $(btn).parent().prev().children("input").val();
+			var smemId = $(btn).prev().val();
+			$("#reviewEnrollModal input[name=smemId]").val(smemId);
+			$("#reviewEnrollModal input[name=reserveNo]").val(reserveNo);
+			$("#reviewEnrollModal #sptitle").text(stitle);
+			$("#reviewEnrollModal").modal("show");
+		}
+		reviewSub = () => {
+			
+			if($("input[name=rating]").val() == "") {
+			      alert("평점을 등록해주세요.");
+			      return false;
+			}
+			if($("textarea[name=reviewCont]").val().trim() == "") {
+			      alert("리뷰 내용을 입력해주세요.");
+			      return false;
+			}
+			$("#reviewForm").submit();
+			sendMessage("review", $("#reviewEnrollModal input[name=smemId]").val());
+		}
+		
+		
+        $(function () {
+            $("#starArea span").click(function () {
+                var rating = $(this).attr("class").substr(1);
+                $("input[name=rating]").val(rating);
+                var str = "";
+                var i = parseInt(rating / 2);
+                var j = rating % 2;
+                
+                for (let index = 0; index < i; index++) {
+                    str += "<i class='fa-solid fa-star' aria-hidden='true'></i>";
+                }
+                if (j == 1) {
+                    str += "<i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i>";
+                }
+                for (let index = 0; index < 5 - i - j; index++) {
+                    str += "<i class='fa fa-star-o' aria-hidden='true'></i>";
+                }
+                $("#realStarArea").html(str);
+            });
+        });
+    </script>
 
 	
 </body>

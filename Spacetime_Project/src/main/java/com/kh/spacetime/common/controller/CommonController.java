@@ -31,6 +31,19 @@ public class CommonController {
 
 	@Autowired
 	private CommonService commonService;
+	
+	/**
+	 * @author 에러 404
+	 */
+	@RequestMapping(value = "error404.er")
+	public String error404() {
+		return "common/errorPage404";
+	}
+	@RequestMapping(value = "error500.er")
+	public String error500() {
+		return "common/errorPage500";
+	}
+	
 
 	/**
 	 * 관리자 신고관리 리스트 페이지로 포워딩 - 혜민
