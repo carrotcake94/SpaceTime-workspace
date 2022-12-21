@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
-	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nrd3zj6gm7"></script>
+	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script> <!-- nrd3zj6gm7 -->
 	<script src="resources/js/map.js"></script>
 </head>
 <body>
@@ -93,23 +93,48 @@
 					var spaceListArr = [];
 					var markers = [];
 					var mapOptions = {
-						//center: new naver.maps.LatLng(37.539861, 126.990815),
-						center: new naver.maps.LatLng(37.533937, 126.897133),
-				        zoom: 14
+						center: new naver.maps.LatLng(37.539861, 126.990815),
+						//center: new naver.maps.LatLng(37.533937, 126.897133),
+				        zoom: 12
 					};
 					var map = new naver.maps.Map('map', mapOptions);
 					var HOME_PATH = window.HOME_PATH || '.';
 					var picListArr = [];
 					var lineListArr = [];
 					
-					
+					 
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
-						selectList(map);
-						loadList(spaceListArr, picListArr, lineListArr);
-						updateMarkers();
-						linkMarkerWithList(markers, picListArr, lineListArr, map);
+						
+						console.log('${hashtagSearchList}');
+						
+						var hashtagSearch = '${hashtagSearchList}'
+						var keywordSearch = '${keywordSearchList}'
+						
+						console.log(hashtagSearch);
+						console.log(keywordSearch);
+						
+						var hashtagSearchList = JSON.parse(hashtagSearch);
+						var keywordSearchList = JSON.parse(keywordSearch);
+						
+						console.log("완료");
+						console.log(hashtageSearchList);
+						console.log(typeof(hashtageSearchList));
+						console.log(keywordSearchList);
+						console.log(typeof(keywordSearchList));
+						console.log("완료");
+						/* if(${not empty keywordSearchList}){
+							loadList(${keywordSearchList}, picListArr, lineListArr);
+							updateMarkers();
+							linkMarkerWithList(markers, picListArr, lineListArr, map);
+						} else if (${not empty hashtagSearchList}) {
+							loadList(${hashtagSearchList}, picListArr, lineListArr);
+							updateMarkers();
+							linkMarkerWithList(markers, picListArr, lineListArr, map);
+						} */
  					};
+ 					
+ 					
  					
 					//지도 이동 후 해당 범위의 장소 재검색
 					var changeMap = document.querySelector("#changeMap");
@@ -119,7 +144,7 @@
 						updateMarkers();
 						linkMarkerWithList(markers, picListArr, lineListArr, map);
 					};
-					 
+					
 					//게시판 형태 변환 (게시판형-사진형)
 					var picList = document.querySelector("#picList");
 					var lineList = document.querySelector("#lineList");

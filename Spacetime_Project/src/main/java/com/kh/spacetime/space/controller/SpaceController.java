@@ -74,7 +74,7 @@ public class SpaceController {
 				String changeName = saveFile(upfile[i], session, "space/space/");
 
 				SpaceAttachment at = new SpaceAttachment();
-				at.setAttachmentReName("resources/uploadFiles/space/space/"+changeName);
+				at.setAttachmentReName("resources/uploadFiles/space/space/" + changeName);
 				if (i == 0) {
 					at.setAttachmentLevel(1);
 				} else {
@@ -122,12 +122,11 @@ public class SpaceController {
 		int result2 = 1;
 		if (mainChg == 1) {
 			mainAttach = aList.get(0);
-			String realPath = session.getServletContext()
-					.getRealPath(aList.get(0).getAttachmentReName());
+			String realPath = session.getServletContext().getRealPath(aList.get(0).getAttachmentReName());
 			new File(realPath).delete();
 
 			String changeName = saveFile(upfile[0], session, "space/space/");
-			mainAttach.setAttachmentReName("resources/uploadFiles/space/space/"+changeName);
+			mainAttach.setAttachmentReName("resources/uploadFiles/space/space/" + changeName);
 			result2 = spaceService.updateMainImg(mainAttach);
 		}
 		// 수정 이미지 내역 확인
@@ -138,8 +137,7 @@ public class SpaceController {
 		for (int i = 1; i < aList.size(); i++) {
 			// 기존 추가이미지 삭제
 			if (Integer.parseInt(thum[i - 1]) != 0) {
-				String realPath = session.getServletContext()
-						.getRealPath(aList.get(i).getAttachmentReName());
+				String realPath = session.getServletContext().getRealPath(aList.get(i).getAttachmentReName());
 				new File(realPath).delete();
 
 				result3 *= spaceService.deleteThumImg(aList.get(i).getAttachmentNo());
@@ -155,7 +153,7 @@ public class SpaceController {
 				String changeName = saveFile(upfile[i], session, "space/space/");
 
 				SpaceAttachment at = new SpaceAttachment();
-				at.setAttachmentReName("resources/uploadFiles/space/space/"+changeName);
+				at.setAttachmentReName("resources/uploadFiles/space/space/" + changeName);
 				at.setAttachmentLevel(2);
 				at.setSpaceNo(s.getSpaceNo());
 				attachList.add(at);
@@ -200,7 +198,7 @@ public class SpaceController {
 	public String selectHostSpaceList(@RequestParam(value = "spage", defaultValue = "1") int currentPage,
 			HttpSession session, Model model) {
 
-		Member loginMember = (Member)session.getAttribute("loginMember");
+		Member loginMember = (Member) session.getAttribute("loginMember");
 		int memNo = loginMember.getMemNo();
 
 		int listCount = spaceService.selectHostSpaceListCount(memNo);
@@ -264,8 +262,7 @@ public class SpaceController {
 
 			// 공간에대한 모든 첨부파일 삭제
 			for (SpaceAttachment a : aList) {
-				String realPath = session.getServletContext()
-						.getRealPath(a.getAttachmentReName());
+				String realPath = session.getServletContext().getRealPath(a.getAttachmentReName());
 				System.out.println(realPath);
 				new File(realPath).delete();
 			}
@@ -329,7 +326,7 @@ public class SpaceController {
 
 		return new Gson().toJson(listArr);
 	}
-	
+
 	// 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈
 	@ResponseBody
 	@RequestMapping(value = "mapFilterOnCurrentMap.mp", produces = "application/json; charset=UTF-8")
@@ -357,25 +354,31 @@ public class SpaceController {
 
 		return new Gson().toJson(listArr);
 	}
-	
-	//메인화면에서 해시태그 검색 -성훈
-	@ResponseBody
-	@RequestMapping(value="searchSpaceByHashtag.mp", produces = "application/json; charset=UTF-8")
-	public String searchSpaceByHashtag(String keyword){
-	    
-	    ArrayList<Space> list = spaceService.searchSpaceByHashtag(keyword);
-	    
-	    return new Gson().toJson(list);
+
+	// 메인화면에서 해시태그 검색 -성훈
+	@RequestMapping("searchSpaceByHashtag.mp")
+	public ModelAndView searchSpaceByHashtag(String pureKeyword, ModelAndView mv) {
+		String keyword = pureKeyword.replace("#", "");
+
+		ArrayList<Space> hashtagSearchList = spaceService.searchSpaceByHashtag(keyword);
+		mv.addObject(new Gson().toJson(hashtagSearchList), hashtagSearchList).setViewName("space/searchSpace");
+
+		System.out.println(new Gson().toJson(hashtagSearchList));
+		System.out.println(hashtagSearchList);
+		return mv;
 	}
-	
-	//메인화면에서 일반검색 -성훈
-	@ResponseBody
-	@RequestMapping(value="searchSpaceByKeyword.mp", produces = "application/json; charset=UTF-8")
-	public String searchSpaceByKeyword(String keyword){
-	    
-	    ArrayList<Space> list = spaceService.searchSpaceByKeyword(keyword);
-	    
-	    return new Gson().toJson(list);
+
+	// 메인화면에서 일반검색 -성훈
+	@RequestMapping("searchSpaceByKeyword.mp")
+	public ModelAndView searchSpaceByKeyword(String pureKeyword, ModelAndView mv) {
+		ArrayList<Space> keywordSearchList = spaceService.searchSpaceByKeyword(pureKeyword);
+
+		System.out.println(new Gson().toJson(keywordSearchList));
+
+		mv.addObject(new Gson().toJson(keywordSearchList), keywordSearchList).setViewName("space/searchSpace");
+		System.out.println(keywordSearchList);
+
+		return mv;
 	}
 
 	// 현재 넘어온 첨부파일 그 자체를 수정명으로 서버의 폴더에 저장시키는 메소드 (일반메소드)
@@ -438,18 +441,17 @@ public class SpaceController {
 
 		if (result > 0) { // 신고 insert 성공
 			session.setAttribute("alertMsg", "신고가 접수되었습니다.");
-			
+
 		}
 
 		mv.addObject("s", s);
 
 		mv.setViewName("space/spaceDetailView");
 //		mv.setViewName("redirect:/detail.sp?sno="+sno);
-		
+
 		return mv;
 
 	}
-
 
 	// 공간 상세조회 - 북마크 기능
 	@RequestMapping(value = "detail.sp", produces = "text/html; charset=UTF-8")
@@ -501,7 +503,7 @@ public class SpaceController {
 			} else {
 				map.put("memNo", m.getMemNo());
 			}
-			
+
 			ArrayList<Review> reviewList = spaceService.selectReviewListBySno(map, pi);
 			mv.addObject("rList", reviewList);
 			mv.addObject("pi", pi);
@@ -717,9 +719,9 @@ public class SpaceController {
 
 		int listCount = spaceService.selectmypagebookmarkListCount(MemNo);
 
-		int pageLimit = 10;		// 페이지바 버튼갯수
-		int boardLimit = 9;		// 한 페이지 게시글 갯수
-		
+		int pageLimit = 10; // 페이지바 버튼갯수
+		int boardLimit = 9; // 한 페이지 게시글 갯수
+
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
 		ArrayList<Space> list = spaceService.selectmypagebookmarkList(MemNo, pi);
