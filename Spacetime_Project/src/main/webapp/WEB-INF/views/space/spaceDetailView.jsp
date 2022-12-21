@@ -877,8 +877,7 @@
 	                                        		  var calendarEl = document.getElementById('calendar');
 
 	                                        		  var calendar = new FullCalendar.Calendar(calendarEl, {
-	                                        			  height: 650,
-	                                        			  contentHeight: 200,
+	                                        			  contentHeight: "auto",
 	                                        			  initialView: 'dayGridMonth',
 	                                        			  validRange: function(nowDate) {
 	                                        				    return {
@@ -1013,7 +1012,7 @@
                                         
                                         <div align="center">
                                         <br>
-                                        예약인원 <input type="number" class="reserveCount" min="1" value="1" name="reserveCount" style="width:40px; text-align:center; border: 1px solid lightgrey;">
+                                        예약인원 <input type="number" class="reserveCount" min="1" value="1" name="reserveCount" style="width:40px; text-align:center; border: 1px solid lightgrey; border-radius: 3px;">
                                         <br><br>
                                         <c:choose>
                                         <c:when test="${(!empty loginMember) and (loginMember.memNo ne s.hostNo) }">
