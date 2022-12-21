@@ -621,6 +621,20 @@
         color: rgb(107, 107, 107);
 	  }
 	
+	/* 달력 border 없애기   */
+	.fc-theme-standard .fc-scrollgrid {
+    border: none;
+    }
+    .forReserve {
+	    background-color: rgb(253, 193, 55);
+	    color: white;
+	    border-radius: 5px;
+	    border: none;
+	    font-size: 15px;
+	    padding: 5px 10px;
+	}
+}
+	
       /* -------------------------------------- */
 	
 </style>
@@ -863,6 +877,15 @@
 	                                        		  var calendarEl = document.getElementById('calendar');
 
 	                                        		  var calendar = new FullCalendar.Calendar(calendarEl, {
+	                                        			  height: 650,
+	                                        			  contentHeight: 200,
+	                                        			  initialView: 'dayGridMonth',
+	                                        			  validRange: function(nowDate) {
+	                                        				    return {
+	                                        				      start: nowDate,
+	                                        				      end: nowDate + 30
+	                                        				    };
+	                                        			},
 	                                        		  dateClick: function (dateClickInfo) {
 		                                        		  // get all fc-day element
 		                                        		  const fcDayElements = document.querySelectorAll(
@@ -987,8 +1010,10 @@
                                           
                                           
                                         </script>
-                                        예약인원 <input type="number" class="reserveCount" min="1" value="1" name="reserveCount">
-                                        <input type="button" class="forReserve" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
+                                        
+                                        <div align="center">
+                                        <br>
+                                        예약인원 <input type="number" class="reserveCount" min="1" value="1" name="reserveCount" style="width:40px; text-align:center; border: 1px solid lightgrey;">
                                         <br><br>
                                         <c:choose>
                                         <c:when test="${(!empty loginMember) and (loginMember.memNo ne s.hostNo) }">
@@ -998,7 +1023,13 @@
                                          <button type="button" id="chatBtn" onclick="denyChat()">일대일문의</button>
                                         </c:when>
                                         </c:choose>
+                                        
+                                        <input type="button" class="forReserve" value="예약하기" data-toggle="modal" data-target="#confirm-modal">
                                         <input type="hidden" value="${s.hostNo}">
+                                        
+                                        </div>
+                                        
+                                        
                                     </th>
                                 </tr>
                             </table>
