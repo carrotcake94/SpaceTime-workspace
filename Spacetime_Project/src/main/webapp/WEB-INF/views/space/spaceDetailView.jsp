@@ -527,7 +527,6 @@
 	                              setTimeout(carousel, 2500);    
 	                            }
 	                            
-	                            var totalPrice = 0;
                             </script>
                     </td>
                     <td> <!-- 오른쪽 화면 -->
@@ -685,12 +684,25 @@
 		                                        	realEndTime += 1;
 		                                        	
 		                                        	
-		                                        	// 총결제금액 
-		                                        	totalPrice = (realEndTime - startTime) * ${ s.hourPrice};
-		                                        	timeCount = realEndTime - startTime;
+		                                        	// 총결제금액 등급별 할인 
+		                                        	if("${loginMember.grCode}" == "태양"){ // 5퍼 할인 
+		                                        		
+		                                        		totalPrice = (realEndTime - startTime) * ${ s.hourPrice} * 0.95;
+		                                        		
+		                                        	}else if("${loginMember.grCode}" == "지구"){ //3퍼 할인 
+		                                        		
+		                                        		totalPrice = (realEndTime - startTime) * ${ s.hourPrice} * 0.97;
+		                                        		
+		                                        	} else { // 달 일때 할인 없음  
+		                                        		
+		                                        		totalPrice = (realEndTime - startTime) * ${ s.hourPrice};
+		                                        		
+		                                        	}
 		                                        	
-		                                        	/* console.log(totalPrice);
-		                                        	console.log(typeof(totalPrice)); */
+		                                        	
+		                                        	
+		                                        	/* totalPrice = (realEndTime - startTime) * ${ s.hourPrice}; */
+		                                        	timeCount = realEndTime - startTime;
 		                                        	
 
 	                                        		 $("#selectedTime").text(startTime + "시 - " + realEndTime + "시"); // 모달에 시간 대입 
@@ -1026,33 +1038,6 @@
                              <input type="hidden" name="spaceNo" value="${ s.spaceNo }">
                              
                             <script>
-                            /* console.log(response);
-                            $("form>input[name=rId]").val(response.data.receipt_id);
-                            $("form>input[name=rUrl]").val(response.data.receipt_url);
-                            $("form>input[name=payMethod]").val(response.data.method);
-                            $("form>button[type=submit]").click();
-                            <td>예약공간</td>
-                            <td>${ s.spaceTitle }</td>
-                        </tr>
-                        <tr>
-                            <td>예약날짜</td>
-                            <td id="selectedDate"></td>
-                        </tr>
-                        <tr>
-                            <td>예약시간</td>
-                            <td id="selectedTime"></td>
-                        </tr>
-                        <tr>
-                            <td>결제예정금액</td>
-                            <td id="totalPrice"></td>
-                        </tr>
-                    </table>
-                    <br>
-                    
-                    $("#totalPrice").text(totalPrice); 
-                    
-                            */
-                            
                             
                             $(".forReserve").click(function() {
                                 var totalPrice2 = $("#totalPrice").text();
@@ -1063,18 +1048,6 @@
                                 $("form>input[name=endTime]").val(endTime);
                                 $("form>input[name=price]").val(totalPrice2);
                             })
-                            
-
-                            
-                            
-                           /*  
-                           console.log($(".personCount").val());
-                            console.log(selectedDate.innerText);
-                            console.log(startTime);
-                            console.log(endTime);
-                            console.log(totalPrice);
-                             */
-                            
                             
                             
                             </script>
@@ -1102,6 +1075,22 @@
                                   toPay();
                               });
                           });
+                          
+
+                    	    var price = 0;
+							if("${loginMember.grCode}" == "태양"){ // 5퍼 할인 
+		               		
+								price = ${ s.hourPrice} * 0.95;
+		               		
+		                   	}else if ("${loginMember.grCode}" == "지구"){ //3퍼 할인 
+		                   		
+		                   		price =  ${ s.hourPrice} * 0.97;
+		                   		
+		                   	} else { // 달 일때 할인 없음  
+		                   		price =  ${ s.hourPrice};
+		                   		
+		                   	}
+                          
 
                           // 부트페이 결제 함수
                           async function toPay() {
@@ -1123,7 +1112,8 @@
                                               "id": "temporary",
                                               "name": "결제",
                                               "qty": timeCount,
-                                              "price": ${ s.hourPrice}
+                                              "price": price
+                                            
                                             }
                                           ],
                                       "extra": {
@@ -1149,6 +1139,8 @@
                                           $("form>input[name=rUrl]").val(response.data.receipt_url);
                                           $("form>input[name=payMethod]").val(response.data.method);
                                           $("form>button[type=submit]").click();
+                                          
+                                          
 
                                           break;
                                       case 'confirm': //payload.extra.separately_confirmed = true; 일 경우 승인 전 해당 이벤트가 호출됨
@@ -1181,14 +1173,16 @@
                                       case 'cancel':
                                           // 사용자가 결제창을 닫을때 호출
                                           // 결제 실패 alert창과 함께 홈으로 가기 + 가정보 delete 하는 서블릿 호출
-                                          //--------------------------------------------------------원본참고하기 
+                                          location.href="detail.sp?sno=" + ${s.spaceNo};
                                           console.log(e.message);
+                                          alert("결제가 취소되었습니다.");
                                           break;
                                       case 'error':
                                           // 결제 승인 중 오류 발생시 호출
                                           // 결제 실패 alert창과 함께 홈으로 가기 + 가정보 delete 하는 서블릿 호출
-                                          console.log(e.error_code);
-                                          //--------------------------------------------------------원본참고하기 
+                                    	  console.log(e.error_code);
+                                          location.href="detail.sp?sno=" + ${s.spaceNo};
+                                          alert("결제가 취소되었습니다.");
                                           break;
                                   }
                               }

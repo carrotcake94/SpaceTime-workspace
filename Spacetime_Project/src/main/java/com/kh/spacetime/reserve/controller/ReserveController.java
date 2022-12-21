@@ -379,13 +379,13 @@ public class ReserveController {
     	
     	int payResult = reserveService.insertPay(p);
     	
-//    	if (payResult > 0) { // insert 성공
-//			session.setAttribute("alertMsg", "결제 성공");
-//		} else {
-//			session.setAttribute("alertMsg", "결제 실패");
-//		}
+    	if ((payResult > 0) && (reserveResult > 0)) { // insert 성공
+			session.setAttribute("alertMsg", "결제 성공");
+		} else {
+			session.setAttribute("alertMsg", "결제 실패");
+		}
     	
-    	return "space/chat";
+    	return "redirect:/detail.sp?sno=" + spaceNo;
 	}
 
 
