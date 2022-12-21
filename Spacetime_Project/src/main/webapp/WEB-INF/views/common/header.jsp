@@ -979,11 +979,11 @@
    		   	 	     	toast += "<div class='chat' style='cursor:pointer;'>"+socketData.senderName+"님이 메시지를 보내셨습니다.</div>"
    	   	   	  		}
    	   	   	  		else if(socketData.msgType == "reserve" ) {
-   				   	   	toast += "<div>"+socketData.message+"</div>"   		   	   		
+   				   	   	toast += "<div></div>"   		   	   		
    				   	   	toast += "<div class='reserve' style='cursor:pointer;'>"+socketData.senderName+"님이 예약하셨습니다.</div>"   	  
    			   	   	}
    	   	   	  		else if(socketData.msgType == "review" ) {
-   				   	   	toast += "<div>"+socketData.message+"</div>"   
+   				   	   	toast += "<div></div>"   
    				   	   	toast += "<div class='review' style='cursor:pointer;'>"+socketData.senderName+"님이 후기를 남겼습니다.</div>"   	
    			   	   	}
    	   	    		toast += "</div></div></div>"
