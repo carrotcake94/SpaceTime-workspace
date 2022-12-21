@@ -257,7 +257,7 @@ public class ReserveController {
 			break;
 		case "예약확정":
 			selectbox = "Y";
-			System.out.println(selectbox);
+			// System.out.println(selectbox);
 			sortListCount = reserveService.selectMyReserveListSortConfirmCount(m);
 			break; // 기본 카운트
 		case "이용완료":
@@ -288,7 +288,7 @@ public class ReserveController {
 			list = reserveService.selectMyReserveSortConfirmList(pi, m);
 		}
 
-		System.out.println(list);
+		// System.out.println(list);
 
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -303,6 +303,8 @@ public class ReserveController {
 
 		Reserve r = reserveService.selectMyReserve(rno);
 
+		System.out.println(r);
+		
 		mv.addObject("r", r).setViewName("reserve/reserveDetailView");
 
 		return mv;
@@ -371,7 +373,7 @@ public class ReserveController {
 		s.setAddressDefault(reportType); // 임시
 		s.setAddressDetail(reportContent); // 임시
 
-		System.out.println(s);
+		// System.out.println(s);
 
 		// 가져온 정보로 insert 하기
 		int result = reserveService.insertReportMyReserve(s);
@@ -412,9 +414,11 @@ public class ReserveController {
     	r.setMemNo(memNo);
     	r.setSpaceNo(spaceNo);
     	
-    	System.out.println(r);
+    	
     	
     	int reserveResult = reserveService.insertReserve(r);
+    	
+    	// System.out.println(reserveResult);
     	
     	Payment p = new Payment();
     	

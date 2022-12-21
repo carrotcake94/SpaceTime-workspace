@@ -35,9 +35,15 @@
 			<result column="NICKNAME" property="nickname" />
 			<!-- PAYMENT 테이블 -->
 			<result column="PAY_METHOD" property="payMethod" />
-			
+			<result column="RECEIPT_URL" property="month" />
 			<!-- SPACE 테이블 -->
 			<result column="SPACE_TITLE" property="spaceTitle" />
+			<result column="ADDRESS_DEFAULT" property="memId" />
+			<result column="ADDRESS_DETAIL" property="gender" />
+			
+			<result column="TEL" property="salesStatus" />
+			<result column="LATITUDE" property="latitude" />
+			<result column="LONGITUDE" property="longitude" />
 		</resultMap>
 		
 		<!--   하연 : 조인떄문에 야매로 가공한 resultSet 입니다.. -->
@@ -175,23 +181,29 @@
 		
 		<select id="selectMyReserve" resultMap="joinReserveDetailResultSet">
 			SELECT RESERVE_NO 
-			     , RESERVE_DATE
-			     , SPACE_TITLE
-			     , USE_DATE
-			     , START_TIME
-			     , END_TIME
-			     , RESERVE_COUNT
-			     , MEM_NO
-			     , NICKNAME
-			     , PHONE
-			     , EMAIL
-			     , PAY_METHOD 
-			     , PRICE
-			  FROM RESERVE
-			  JOIN SPACE USING(SPACE_NO)
-			  JOIN MEMBER USING(MEM_NO)
-			  JOIN PAYMENT USING (RESERVE_NO)
-			 WHERE RESERVE_NO = #{reserveNo}
+		     , RESERVE_DATE
+		     , SPACE_TITLE
+		     , USE_DATE
+		     , START_TIME
+		     , END_TIME
+		     , RESERVE_COUNT
+		     , MEM_NO
+		     , NICKNAME
+		     , PHONE
+		     , EMAIL
+		     , PAY_METHOD 
+		     , PRICE
+		     , RECEIPT_URL
+		     , ADDRESS_DEFAULT
+		     , ADDRESS_DETAIL
+		     , TEL
+		     , LATITUDE
+		     , LONGITUDE
+		  FROM RESERVE
+		  JOIN SPACE USING(SPACE_NO)
+		  JOIN MEMBER USING(MEM_NO)
+		  JOIN PAYMENT USING (RESERVE_NO)
+		 WHERE RESERVE_NO = #{reserveNo}
 		</select>
 		
 		<update id="cancleMyReserve" parameterType="_int">

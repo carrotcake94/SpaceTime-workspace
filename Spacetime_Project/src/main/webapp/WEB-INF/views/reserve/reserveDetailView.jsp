@@ -4,6 +4,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script> <!-- 지도 api -->
 <head>
 <meta charset="UTF-8">
 <title>예약 내역 리스트</title>
@@ -331,68 +332,6 @@
         border-top: 0;
     }
 
-    /*
-      h3 {
-        background-color: rgb(253, 193, 55);
-        border-bottom: 1px solid black;
-        padding : 5px;
-      }
-
-      #content {
-        width: 1200px;
-        margin: 0 auto;
-        margin-top: 50px;
-        margin-bottom: 50px;
-      }
-      
-        .sheader {
-        overflow: hidden;
-        font-size: 25px;
-        font-weight: 800;
-        margin-bottom: 40px;
-      }
-
-      .reserve_content {
-        padding: 30px 30px;
-      }
-      
-      .reserve_inner_context{
-      	padding-left : 50px;
-      }
-      
-      #summary {
-        width: 500px;
-        border: 1px solid lightgray;
-        padding: 30px;
-        text-align: center;
-        margin: auto;
-      }
-
-      #summary td {
-        padding: 5px;
-      }
-      
-      .btn-back {
-      	background-color: lightgray;
-	    display: inline-block;
-	    font-weight: 400;
-	    color: #212529;
-	    text-align: center;
-	    vertical-align: middle;
-	    -webkit-user-select: none;
-	    -moz-user-select: none;
-	    -ms-user-select: none;
-	    user-select: none;
-	    border: 1px solid transparent;
-	    padding: 0.375rem 0.75rem;
-	    font-size: 1rem;
-	    line-height: 1.5;
-	    border-radius: 0.25rem;
-	    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-      	
-      }
-      */
-      
 </style>
 </head>
 <body>
@@ -477,8 +416,18 @@
                             <div class="heading">
                                 <h3>결제금액</h3>
                                 <div class="reserve_price_btns">
-                                    <a class="btn_print">거래명세서 인쇄</a>
+                                	<button onclick="window.open('${ r.month }')" class="btn_print">거래명세서 인쇄</button>
+                                  		<script>
+
+	           	                         		/* // 거래명세서 새창으로 열기 
+	                                           function openReceipt(){
+	                                   			concole.log("${ r.month }");
+	                                             window.open(${ r.month }, "_blank");
+	                                           } */
+                                  		</script>
+                                    <!-- <a  href=“${ r.month }" class="btn_print">거래명세서 인쇄</a> -->
                                     <!-- href 로 payment의 결제영수증 주소 연결-->
+                                    
                                 </div>
                             </div> 
                             <div class="scroll_box">
@@ -534,173 +483,44 @@
                         <div class="inner">
                             <div class="sp_location">
                                 <p class="sp_name">${ r. spaceTitle}</p> 
-                                <p class="sp_address">예약 공간 주소~~</p> 
-                                <p class="sp_call">예약 공간 연락처~~</p>
+                                <p class="sp_address">${ r.memId } ${ r.gender }</p> 
+                                <p class="sp_call">${ r.salesStatus }</p>
                             </div> 
                         </div>
                     </div> 
-                    <div class="map">
-                        지도 들어갈 곳~~
+                    
+                   <div id="map" style="width:100%;height:400px;"></div>
+					<script>
+					  /* var mapOptions = {
+					    center: new naver.maps.LatLng(${r.latitude}, ${r.longitude}),
+					    zoom: 20
+					  };
+					
+					  var map = new naver.maps.Map('map', mapOptions); */
+					  
+					  var map = new naver.maps.Map('map', {
+						    center: new naver.maps.LatLng(${r.latitude}, ${r.longitude}),
+						    zoom: 20
+						  });
+
+						  var marker = new naver.maps.Marker({
+						    position: new naver.maps.LatLng(${r.latitude}, ${r.longitude}),
+						    map: map
+						  });
+					  
+					</script> 
+                   <!--  <div class="map">
+                    
                     </div>
+                    
+					<script>
+							var mapDiv = document.getElementById('map');
+						    var map = new naver.maps.Map(mapDiv);
+					</script> -->
+					                    
                 </div>
             </div>
         </div>
-
-            <!--
-            <div class="sheader" style="padding-top: 100px;">
-                예약 확인 
-                <!-- <button type="button" onclick="">공간등록하기</button> 
-              </div>
-      
-             <h3>예약내용</h3>
-              <div class="reserve_content">
-                 <!-- 예약 내용 
-                <table>                    
-                	<tr>
-                        <td>예약번호</td>
-                        <td>${r.reserveNo }</td>
-                    </tr>
-                    <tr>
-                        <td>신청일</td>
-                        <td>${ r.reserveDate }</td>
-                    </tr>
-                    <tr>
-                        <td>예약공간</td>
-                        <td>
-                       		${ r. spaceTitle}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>예약내용</td>
-                        <td>${ r.useDate } ${ r.startTime }시 - ${ r.endTime}시</td>
-                    </tr>
-                    <tr>
-                        <td>예약인원</td>
-                        <td>${ r.reserveCount }명</td>
-                    </tr>
-                    <!-- <tr>
-                        <td>추가옵션</td>
-                        <td>없음</td>
-                    </tr>
-                    <tr>
-                        <td>요청사항</td>
-                        <td>없음</td>
-                    </tr>
-                    <tr>
-                        <td>사용목적</td>
-                        <td>없음</td>
-                    </tr> 
-                </table>
-              </div>
-              
-              <h3>예약자 정보</h3>
-              <div class="reserve_content">
-                <!-- 예약자 정보 
-                <table>
-                    <tr>
-                        <td>예약자 아이디</td>
-                        <td>${r.nickname }</td>
-                    </tr>
-                    <tr>
-                        <td>연락처</td>
-                        <td>${ r.denyMessage }</td>
-                    </tr>
-                    <tr>
-                        <td>이메일</td>
-                        <td>${ r.email }</td>
-                    </tr>
-                </table>
-
-              </div>
-              
-              
-               <h3>환불 규정 안내</h3>
-              <div class="reserve_content">
-                 <!-- 환불 규정 안내 
-                <span style="color: red;">이용당일 이후에 환불 관련 사항은 호스트에게 직접 문의하셔야 합니다. </span><br>
-                결제 후 2시간 이내에는 100% 환불이 가능합니다.(단,이용시간 전까지만 가능)<br><br>
-        
-                이용8일 전 총 금액의 100% 환불<br><br>
-        
-                이용7일 전 ~ 이용 당일 환불 불가
-        
-              </div>
-              
-              <h3>결제 금액</h3>
-              <div class="reserve_content">
-                <!-- 결제 금액 
-                <table>
-                    <tr>
-                        <td>예약 날짜</td>
-                        <td>${ r.useDate }</td>
-                    </tr>
-                    <tr>
-                        <td>예약 시간</td>
-                        <td>${ r.startTime }시 - ${ r.endTime }시 (${r.endTime - r.startTime }시간)</td>
-                    </tr>
-                    <tr>
-                        <td>예약 인원</td>
-                        <td>${ r.reserveCount }명</td>
-                    </tr>
-                    <tr>
-                        <td>결제 정보</td>
-                        <td>${ r.payMethod }</td>
-                    </tr>
-                </table>
-        
-              </div>
-
-              <hr>
-
-              <div style="text-align: right;">
-                <h4>총 금액 ${ r.price }원</h4>
-              </div>
-
-              <!-- 지도 넣을 공간  
-              <div align="center">
-              		<br><br><br><br><br><br><br><br>
-						<h1>!!!지도가 들어갈 공간!!!</h1> 
-					<br><br><br><br><br><br><br><br>
-             </div>
-
-
-              </div>
-             <!-- 요약내용 
-              <div id="summary">
-                <table >
-                    <tr>
-                        <td>예약날짜</td>
-                        <td>${ r.useDate }</td>
-                    </tr>
-                    <tr>
-                        <td>예약시간</td>
-                        <td>${ r.startTime }시 - ${ r.endTime }시 (${r.endTime - r.startTime }시간)</td>
-                    </tr>
-                    <tr>
-                        <td>예약인원</td>
-                        <td>${ r.reserveCount }명</td>
-                    </tr>
-                    <tr>
-                        <td>결제정보</td>
-                        <td>${ r.payMethod }</td>
-                    </tr>
-                    <tr>
-                        <td>결제금액</td>
-                        <td> ${ r.price }원</td>
-                    </tr>
-                 </table>
-
-                 <br>
-
-                 <input type="button" class="btn-back" value="예약취소" data-toggle="modal"
-                 data-target="#cancle-modal">
-                 <button class="btn btn-primary" onclick="history.back()">확인</button>
-                 </div>
-              
-                <br>
-                <br><br>
-            -->
-              
         
        
         <jsp:include page="../common/footer.jsp" />

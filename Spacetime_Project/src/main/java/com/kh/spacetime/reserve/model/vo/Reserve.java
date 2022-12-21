@@ -60,5 +60,8 @@ public class Reserve {
 		private int stypeNo;
 		private int count;
 		
+		// 위도경도join 
+		private double latitude;
+		private double longitude;
 
 }
