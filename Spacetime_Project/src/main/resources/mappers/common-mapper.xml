@@ -257,7 +257,7 @@
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		WHERE SPACE_NO = #{spaceNo}
-		  AND EXTRACT(YEAR FROM R.USE_DATE)|| '-' || EXTRACT(MONTH FROM R.USE_DATE) = #{month}
+		  AND TO_CHAR(R.USE_DATE, 'YYYY-MM') = #{month}
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, GENDER, SPACE_TITLE
 	</select>
 	
@@ -266,7 +266,7 @@
 		SELECT COUNT(*)
 		FROM RESERVE R
 		WHERE SPACE_NO = #{spaceNo}
-		  AND EXTRACT(YEAR FROM R.USE_DATE)|| '-' || EXTRACT(MONTH FROM R.USE_DATE) = #{month}
+		  AND TO_CHAR(R.USE_DATE, 'YYYY-MM') = #{month}
 	</select>
 	
 	<!-- 매출이 있는 공간의 상세 매출 조회 -->
@@ -274,7 +274,7 @@
 		SELECT TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE", START_TIME, R.PRICE, (R.PRICE*0.1) AS "INCOME"
 		FROM RESERVE R
 		WHERE SPACE_NO = #{spaceNo}
-		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
+		  AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
 		ORDER BY USE_DATE, START_TIME ASC
 	</select>
 	
@@ -285,7 +285,7 @@
 		JOIN SPACE USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		WHERE MEM_STATUS = 'N'
-		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
+		  AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
 		  	<if test="condition == 'spaceTitle'">
 		    	AND SPACE_TITLE
 			</if>
@@ -310,7 +310,7 @@
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		WHERE MEM_STATUS = 'N'
-		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = #{month}
+		  AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
 			<if test="condition == 'spaceTitle'">
 		    	AND SPACE_TITLE
 			</if>

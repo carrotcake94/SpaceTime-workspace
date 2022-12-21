@@ -154,61 +154,55 @@
     
     <script>
     
-    	// 한 달 매출 bar 차트  
+        // 한 달 매출 bar 차트  
         const ctx = document.getElementById('bar_graph');
         
         new Chart(ctx, {
             type: 'bar',
             data: {
-	            labels: ['${bList[0].chartMonth}', '${bList[1].chartMonth}', '${bList[2].chartMonth}', '${bList[3].chartMonth}', '${bList[4].chartMonth}', '${bList[5].chartMonth}'], 
-	            datasets: [{
-	                label: '한 달 매출',
-	                data: [${bList[0].chartPrice}, ${bList[1].chartPrice}, ${bList[2].chartPrice}, ${bList[3].chartPrice}, ${bList[4].chartPrice}, ${bList[5].chartPrice}], 
-	                borderWidth: 0.5
-	            }]
+                labels: ['${bList[0].chartMonth}', '${bList[1].chartMonth}', '${bList[2].chartMonth}', '${bList[3].chartMonth}', '${bList[4].chartMonth}', '${bList[5].chartMonth}'], 
+                datasets: [{
+                    label: '한 달 매출',
+                    data: [${bList[0].chartPrice}, ${bList[1].chartPrice}, ${bList[2].chartPrice}, ${bList[3].chartPrice}, ${bList[4].chartPrice}, ${bList[5].chartPrice}], 
+                    borderWidth: 0.5
+                }]
             },
             options: {
-	            scales: {
-	                y: {
-	                beginAtZero: true
-	                }
-	            }
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
+                }
             }
         });
-        
-        console.log(${dList[0].count})
         
         // 공간타입별 도넛 차트 
         new Chart(document.getElementById("doughnut_graph"), {
             type: 'doughnut',
             data: {
-            labels: ['파티룸', '카페', '공연장', '연습실', '공유주방', '갤러리', '운동시설', '스터디룸', '회의실', '촬영스튜디오'],
-            datasets: [
-                {
-                backgroundColor: ["#9e0142", "#d53e4f", "#f46d43","#fdae61", "#fee08b", "#ffffbf", "#e6f598", "#abdda4", "#66c2a5", "#3288bd", "#5e4fa2"],
-                data: [${dList[0].count}, ${dList[1].count}, ${dList[2].count}, ${dList[3].count}, ${dList[4].count}, 
-                	${dList[5].count}, ${dList[6].count}, ${dList[7].count}, ${dList[8].count}, ${dList[9].count}]
-                }
-            ]
+                labels: ['파티룸', '카페', '공연장', '연습실', '공유주방', '갤러리', '운동시설', '스터디룸', '회의실', '촬영스튜디오'],
+                datasets: [{
+                    backgroundColor: ["#9e0142", "#d53e4f", "#f46d43","#fdae61", "#fee08b", "#ffffbf", "#e6f598", "#abdda4", "#66c2a5", "#3288bd", "#5e4fa2"],
+                    data: [${dList[0].count}, ${dList[1].count}, ${dList[2].count}, ${dList[3].count}, ${dList[4].count}, 
+                        ${dList[5].count}, ${dList[6].count}, ${dList[7].count}, ${dList[8].count}, ${dList[9].count}]
+                }]
             },
             options: {
                 responsive: true,
                 plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: '이번 달 공간 타입 별 매출 비율',
-                    font: { size: 15}
-                }
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: '이번 달 공간 타입 별 매출 비율',
+                        font: { size: 15}
+                    }
                 }
             }
         });
         
-	</script>
-    
-
+    </script>
 </body>
 
 </html>
