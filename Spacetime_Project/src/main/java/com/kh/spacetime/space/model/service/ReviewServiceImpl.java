@@ -117,6 +117,11 @@ public class ReviewServiceImpl implements ReviewService {
 	public int insertReport(Report r) {
 		return reviewDao.insertReport(sqlSession, r);
 	}
+	// 신고 카운트
+	@Override
+	public int countReport(Report r) {
+		return reviewDao.countReport(sqlSession, r);
+	}
 
 	// ---------------------정현
 

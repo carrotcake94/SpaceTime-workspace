@@ -1049,11 +1049,12 @@
                 </tr>
             </table>
 			<!-- 리뷰 -->
+			<br><br>
               <h3>리뷰</h3>
               <div id="reviewDiv">
               <c:choose>
 		      <c:when test="${rList.size() eq 0}">
-		      	<div class="nodata">이용후기가 없습니다.</div>     
+		      	<div class="nodata"><i class="fa fa-commenting-o" aria-hidden="true" style="font-size: 50px;"></i><br>아직 작성된 리뷰가 없습니다.</div>     
 		      </c:when>
 		      <c:otherwise>
 		      
@@ -1080,7 +1081,7 @@
 			        	<c:if test="${r.memNo ne loginMember.memNo}" >
 			        	<span onclick="reviewReportModalOpen(this,${r.memNo})">신고하기 <i class="fa-solid fa-triangle-exclamation"></i></span>
 			        	</c:if>
-			        	<span>
+			        	<span style="cursor: default;">
 			        	<c:choose>
 			        	<c:when test="${(empty loginMember) or (r.memNo eq loginMember.memNo)}">
 			        		좋아요 ${r.reviewLike.reviewNo}
@@ -1726,9 +1727,27 @@ chatInsert = btn => {
              alert("로그인 후 이용 가능한 서비스입니다.");
             return false;
          } 
-		$("#reviewReportModal input[name=reportedMemNo]").val(reportedMemNo);
-		$("#reviewReportModal textarea[name=reportContent]").val("");
-		$("#reviewReportModal").modal("show");
+		 var reportMemNo = $("#reviewReportModal input[name=reportMemNo]").val();
+		 
+		 $.ajax({
+				url : "countReport.rv",
+				data : {
+					reportMemNo : reportMemNo,
+					reportedMemNo : reportedMemNo
+				},
+				success : result => {
+					if(result == "success") {
+						alert("신고는 하루에 1회 가능합니다.");
+					} else {
+						$("#reviewReportModal input[name=reportedMemNo]").val(reportedMemNo);
+						$("#reviewReportModal textarea[name=reportContent]").val("");
+						$("#reviewReportModal").modal("show");
+					}
+				},
+				error : () => {
+					console.log("통신 실패");
+				}
+		});
 	 }
 	 
 	 reviewReport = () => {
@@ -1828,7 +1847,7 @@ chatInsert = btn => {
 	        	if(rList[i].memNo != "${loginMember.memNo}") {
 	        		str+= "<span onclick='reviewReportModalOpen(this,"+rList[i].memNo+")'>신고하기 <i class='fa-solid fa-triangle-exclamation'></i></span>";
 	        	}
-                str += "<span>";
+                str += "<span style='cursor:default;'>";
                 if(("${loginMember}"=="") || (rList[i].memNo == "${loginMember.memNo}")) {
                 	 str += "좋아요 "+rList[i].reviewLike.reviewNo;
                 }else {

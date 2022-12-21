@@ -368,7 +368,16 @@ public class ReviewController {
 		int result =  reviewService.insertReport(r);
 		return (result > 0) ? "success" : "fail";
 	}
-
+	
+	/**
+	 * @author 정현 신고 카운트
+	 */
+	@ResponseBody
+	@RequestMapping(value = "countReport.rv", produces = "text/html; charset=UTF-8")
+	public String countReport(Report r) {
+		int result = reviewService.countReport(r);
+		return (result > 0) ? "success" : "fail";
+	}
 	// ------------------정현
 
 }

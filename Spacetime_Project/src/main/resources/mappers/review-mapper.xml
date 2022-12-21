@@ -268,6 +268,13 @@
 			     , #{reportedMemNo})
 	</insert>
 	
+	<select id="countReport" parameterType="report" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE REPORT_MEM_NO = #{reportMemNo}
+		AND REPORTED_MEM_NO = #{reportedMemNo}
+		AND  TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+	</select>
 	
 	<!-- 정현 End -->
 	

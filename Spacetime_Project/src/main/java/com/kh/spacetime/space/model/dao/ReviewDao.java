@@ -109,6 +109,11 @@ public class ReviewDao {
 		return sqlSession.insert("reviewMapper.insertReport", r);
 	}
 
+	// 신고 카운트
+	public int countReport(SqlSessionTemplate sqlSession, Report r) {
+		return sqlSession.selectOne("reviewMapper.countReport", r);
+	}
+
 	// ---------------------정현
 
 }

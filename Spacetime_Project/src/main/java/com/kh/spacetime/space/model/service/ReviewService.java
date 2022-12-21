@@ -59,6 +59,9 @@ public interface ReviewService {
 	
 	// 사용자 신고
 	int insertReport(Report r);
+	
+	// 신고 카운트
+	int countReport(Report r);
 
 	// ---------------------정현
 
