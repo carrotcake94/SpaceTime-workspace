@@ -669,6 +669,7 @@
                             <c:forEach var="sa" items="${ sa }">
                               <img src="${ sa.attachmentReName }" class="mySlides w3-animate-right" style="width:100%" alt="사진 없음" />
                             </c:forEach>
+                            <br><br><br><br><br><br><br><br><br>
                           </div>
                         </div>
 						  <!-- 슬라이드 -->
@@ -1183,7 +1184,19 @@
           <div class="modal-dialog">
               <div class="modal-content">
                   <!-- Modal Header -->
-                  <div class="modal-header" style="font-size: 30px; font-weight:600;">예약 확인</div>
+                  <c:choose>
+                  	<c:when test="${empty loginMember}">
+                  	<div class="modal-body">
+                      <div style="padding:30px;" align="center">
+                          <b style="font-size:20px;">로그인 후 이용해주세요.</b> <br><br>
+                          <button type="button"  class="btn btn-primary" onclick="$('#confirm-modal').modal('hide')">닫기</button>
+                          <br>
+                      </div>
+                      </div>
+                  	</c:when>
+                  	<c:otherwise>
+                  	
+                  	<div class="modal-header" style="font-size: 30px; font-weight:600;">예약 확인</div>
                       <!-- Modal body -->
                       <div class="modal-body">
                       <div style="padding:30px;">
@@ -1245,7 +1258,8 @@
                       
                       
                       
-                      <!-- Modal footer -->
+
+                       <!-- Modal footer -->
                       <div class="modal-footer">
                           <button type="button"  class="btn btn-light" onclick="$('#confirm-modal').modal('hide')">닫기</button>
                           <button type="button" class="btn btn-primary" id="bootPayment">결제하기</button> <!-- 결제버튼 여기 -->
@@ -1376,6 +1390,11 @@
                               }
                           }
                         </script>
+                      </div>
+                  	
+                  	</c:otherwise>
+                  </c:choose>
+                      
                       </div>
                   </div>
               </div>
