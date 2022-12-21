@@ -79,46 +79,33 @@
      }
  }
  
- //검색 후 엔터
-function enterPressed(e){
-	var keyword = document.querySelector("#searchInput").value;
-	if(e.keyCode == 13){
-		searchStart(keyword);
-	}
-}
-
-//엔터 혹은 검색클릭
-function searchStart(keyword){
-	location.href="#";
-}
- 
- //추천공간
- function spaceRecommend(keyword){
+//추천공간
+function spaceRecommend(keyword){
      $.ajax({
          url: "spaceRecommend.co",
          async : false,
          data : { keyword : keyword },
          success : (recommendList) => {
-             console.log(recommendList);
-             
              for(var i in recommendList){
-                 var card = document.createElement("div");
-                 card.innerHTML = "<input type='hidden' name='sno' value='" + recommendList[i].spaceNo + "' >" +
-                                    "<div class='recommedCard' id='recommend" + i + "'>" +
-                                        "<div class='img_area'>" +
-                                                "<img class='img-0' src='" + recommendList[i].attachments[0].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
-                                        "</div>" + 
-                                        "<div class='recommend_content_area>" +
-                                            "<span class='stitle'>" + recommendList[i].spaceTitle + "</span>" +
-                                            "<hr />" +
-                                            "<span><i class='fa-solid fa-location-dot'></i>" + recommendList[i].addressDefault + "</span>" +
-                                            "<hr />" +
-                                            "<span style='width:50%; display:inline-block;'>" +
-                                                "<span class='sprice' style='color: #277BC0;' >" + recommendList[i].hourPrice + "</span>" +
-                                                "<span> 원/시간</span>" +
-                                            "</span>" +
-                                        "</div>" +
-                                    "</div>";		   
+			     var hashtag = recommendList[i].hashtag.split(',');
+			     var card = document.createElement("div");
+			     card.innerHTML = "<input type='hidden' name='sno' value='" + recommendList[i].spaceNo + "' >" +
+			                      "<div class='recommedCard' id='recommend" + i + "'>" +
+			                         "<div class='img_area'>" +
+			                             "<img class='img-0' src='" + recommendList[i].attachments[0].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
+			                         "</div>" + 
+			                         "<div class='recommend_content_area'>" +
+			                             "<div class='title_wrap'><span class='stitle'>" + recommendList[i].spaceTitle + "</span></div>" +
+			                             "<div class='hashtag_wrap'>"+ 
+			                             	"<div>#" + hashtag[0] + "</div>" +
+			                             	"<div>#" + hashtag[1] + "</div>" +
+			                             	"<div>#" + hashtag[2] + "</div>" +
+			                             "</div>" +
+			                             "<div>" +
+			                                 "<div><i class='fa-solid fa-location-dot'></i>" + recommendList[i].addressDefault + "</div>" +
+			                                 "<div class='price_wrap'><span class='sprice' style='color: #277BC0;'>" + recommendList[i].hourPrice + "</span><span> 원/시간</span></div>" +
+			                             "</div>" +
+			                        "</div>";		   
                  
                  if(i < 3){
                      document.querySelector("#cardContainer1").append(card);
@@ -129,7 +116,7 @@ function searchStart(keyword){
          },
          error : () => {
          }
-     })
+     });
  }
  //추천공간 테마(해시태그)변경 (관리자용)
  function changeRecommendTheme(keyword){

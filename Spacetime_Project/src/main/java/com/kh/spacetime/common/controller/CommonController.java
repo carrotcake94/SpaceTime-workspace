@@ -436,7 +436,6 @@ public class CommonController {
 		String keywords = commonService.hashtagAutoComplete(keyword);
 		
 		String[] keywordArr = keywords.split(",");
-		System.out.println(keywordArr);
 
 		return keywords;
 	}

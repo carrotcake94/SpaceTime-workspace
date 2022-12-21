@@ -123,6 +123,8 @@
 					document.querySelector("#recommendSelect").onclick = () => {
 						changeRecommendTheme(keyword);
 					}
+					
+					
 				</script>
 
 				<!-- 리뷰 ZONE -->

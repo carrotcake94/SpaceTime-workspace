@@ -12,7 +12,6 @@ function selectList(map) {
 		},
 		success : (listArr) => {
 			spaceListArr = listArr;
-			console.log(listArr);
 		},
 		error : () => {
 		}
@@ -221,7 +220,6 @@ function mapFilterOnCurrentMap(map){
 			max_price : document.querySelector("#max_price").value
 		},
 		success : (listArr) => {
-			console.log(listArr);
 			spaceListArr = listArr;
 		},
 		error : () => {
