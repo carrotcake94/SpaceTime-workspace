@@ -107,12 +107,19 @@
 							<div class="main_recommend_card" id="cardContainer2">
 							</div>
 						</div>
+						<div class="main_recommned_content">
+							<div class="main_recommend_card" id="cardContainer3">
+							</div>
+						</div>
+						<div class="main_recommned_content">
+							<div class="main_recommend_card" id="cardContainer4">
+							</div>
+						</div>
 					</div>
 					<button id="moreRecommend">+ 더 보기</button>
 				</div>
 				
 				<script>
-				
 					var keyword = document.querySelector("#recommendKeyword").value;
 					
 					window.onload = () => {

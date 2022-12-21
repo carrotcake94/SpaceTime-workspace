@@ -361,12 +361,9 @@ public class SpaceController {
 	@ResponseBody
 	@RequestMapping(value = "searchSpaceByHashtag.mp", produces = "application/json; charset=UTF-8")
 	public String searchSpaceByHashtag(String pureKeyword) {
-	    System.out.println(pureKeyword);
 	    String keyword = pureKeyword.replace("#", "");
-	    System.out.println(keyword);
 	    
 	    ArrayList<Space> listArr = spaceService.searchSpaceByHashtag(keyword);
-	    System.out.println(listArr);
 
 	    return new Gson().toJson(listArr);
 	}
@@ -375,9 +372,7 @@ public class SpaceController {
 	@ResponseBody
 	@RequestMapping(value = "searchSpaceByKeyword.mp", produces = "application/json; charset=UTF-8")
 	public String searchSpaceByKeyword(String keyword) {
-	    System.out.println(keyword);
 	    ArrayList<Space> listArr = spaceService.searchSpaceByKeyword(keyword);
-	    System.out.println(listArr);
 
 	    return new Gson().toJson(listArr);
 	}

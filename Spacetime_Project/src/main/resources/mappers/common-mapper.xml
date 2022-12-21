@@ -58,7 +58,7 @@
 	     WHERE SPACE_STATUS = 'Y'
 	       AND ATTACHMENT_LEVEL = 1
 	       AND HASHTAG LIKE '%'|| #{keyword} || '%'
-	       AND ROWNUM <![CDATA[<=]]> 6
+	       AND ROWNUM <![CDATA[<=]]> 9
 	     ORDER BY COUNT DESC
 	</select>
 	

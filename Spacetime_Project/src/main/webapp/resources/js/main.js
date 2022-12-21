@@ -91,26 +91,27 @@ function spaceRecommend(keyword){
 			     var card = document.createElement("div");
 			     card.innerHTML = "<input type='hidden' name='sno' value='" + recommendList[i].spaceNo + "' >" +
 			                      "<div class='recommedCard' id='recommend" + i + "'>" +
-			                         "<div class='img_area'>" +
+			                         "<div class='recommend_img_wrap'>" +
 			                             "<img class='img-0' src='" + recommendList[i].attachments[0].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
 			                         "</div>" + 
 			                         "<div class='recommend_content_area'>" +
-			                             "<div class='title_wrap'><span class='stitle'>" + recommendList[i].spaceTitle + "</span></div>" +
-			                             "<div class='hashtag_wrap'>"+ 
+			                             "<div class='recommend_title_wrap'><span class='stitle'>" + recommendList[i].spaceTitle + "</span></div>" +
+			                             "<div class='recommend_hashtag_wrap'>"+ 
 			                             	"<div>#" + hashtag[0] + "</div>" +
 			                             	"<div>#" + hashtag[1] + "</div>" +
 			                             	"<div>#" + hashtag[2] + "</div>" +
 			                             "</div>" +
-			                             "<div>" +
-			                                 "<div><i class='fa-solid fa-location-dot'></i>" + recommendList[i].addressDefault + "</div>" +
-			                                 "<div class='price_wrap'><span class='sprice' style='color: #277BC0;'>" + recommendList[i].hourPrice + "</span><span> 원/시간</span></div>" +
+			                             "<div class='recommend_priceAndAddress_wrap'>" +
+			                                 "<i class='fa-solid fa-location-dot saddresss'></i>" + recommendList[i].addressDefault + 
+			                                 "<span class='sprice' style='color: #277BC0;'>" + recommendList[i].hourPrice + "</span><span> 원/시간</span>"+
 			                             "</div>" +
-			                        "</div>";		   
-                 
+			                        "</div>";
                  if(i < 3){
                      document.querySelector("#cardContainer1").append(card);
-                 } else {
+                 } else if (i < 6) {
                      document.querySelector("#cardContainer2").append(card);
+                 } else if (i < 9) {
+                     document.querySelector("#cardContainer3").append(card);
                  }
              }
          },
@@ -162,3 +163,6 @@ function spaceRecommend(keyword){
      })
  }
  
+ function changeRecommendTheme(keyword){
+ 	
+ }
