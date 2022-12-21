@@ -420,6 +420,7 @@
 				sendMessage("chat", receiverId, result.message, result.messageDate, roomNo);
 				
 				$("#chatTb #chatRoom-"+receiver+"-${loginMember.memNo}").children("td").eq(2).text(result.message);
+				$("#chatTb #chatRoom-"+receiver+"-${loginMember.memNo}").children("td").eq(3).text(result.messageDate);
 				
 				var $tr = $("#chatTb #chatRoom-"+receiver+"-${loginMember.memNo}").clone();
 				$("#chatTb #chatRoom-"+receiver+"-${loginMember.memNo}").remove();

@@ -44,7 +44,7 @@ public class ReviewController {
 	public String selectList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, HttpSession session,
 			Model model) {
 
-		System.out.println("cpage : " + currentPage);
+//		System.out.println("cpage : " + currentPage);
 
 		Member m = (Member) session.getAttribute("loginMember");
 
@@ -56,7 +56,7 @@ public class ReviewController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		// getter setter X
 		ArrayList<Review> list = reviewService.selectList(pi, m.getMemNo());
-		System.out.println();
+//		System.out.println();
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 
