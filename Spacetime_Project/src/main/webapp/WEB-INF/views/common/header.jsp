@@ -601,7 +601,7 @@ body * {
 		<div>
 			<div id="m_search_bar">
 				<form id="searchInputForm" action="" method="get">
-					<input type="search" id="searchInput" name="pureKeyword">
+					<input type="search" id="searchInput" name="pureKeyword" placeholder="#입력시 해시태그 검색이 가능해요!">
 				</form>
 			</div>
 			<div id="autoComplete">
@@ -648,26 +648,35 @@ body * {
         	window.alert("검색어를 입력해주세요!");
         }
         
+        //다른 곳 클릭 시 창 사라지기
         window.addEventListener("click", (e) => {
             if(e.target != autoCompleteBox){
                 autoCompleteBox.style.display = "none";
+            } else if(autoCompleteBox.style.display = "none" && e.target == searchInput) {
+            	autoCompleteBox.style.display = "block";
+            } else if(e.target == autoCompleteBox) {
+            	
             }
         })
     });
     
-    document.querySelector("#m_search_btn").onclick = () => {
-    	if(searchInput.value == "" || searchInput.value == "#"){
-    		window.alert("검색어를 입력해주세요!");
-    	} else {
-    		searchStart(searchInput.value);
-    	}
-    }
-    
-
-    //엔터 혹은 검색클릭
+/*     document.querySelector("m_search_btn").addEventListener("click", () => {
+    	document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
+    })
+     */
+    //엔터 혹은 검색클릭 시 검색 시작
     function searchStart(pureKeyword){
            document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
     }
+    
+    //연관검색어 클릭 시
+/*     var clickedAutoContent = document.querySelector(".autoCompleteContent");
+    clickedAutoContent.onclick = () => {
+    	console.log(clickedAutoContent.innerHTML);
+   		document.querySelector("#searchInputForm").setAttribute("value", clickedAutoContent.innerHTML);
+   		document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();("action", "searchSpaceList.mp").submit();
+   	} */
+    
 	</script>
 	<!-- 슬라이드 메뉴 -->
 	<div id="overlay"></div>
