@@ -210,13 +210,18 @@
     <script>
 	    $(document).on("change", "select[name=reportStatus]", function(){
 			var value = $(this).find("option:selected").val();
+
+            console.log(value);
 			var inputText = $(this).closest('.selectBox').find('.inputText');
 			var flag = false;
-			if (value == 0) {
+			if (value == 'Y') {
 				flag = true;
-				$(inputText).val('D');
-			}
-			
+				$(inputText).val('');
+			}else if (value =='D') {
+                flag = false;
+
+            }
+			// 
 			$(inputText).attr("disabled", flag);
 		});
 	    
