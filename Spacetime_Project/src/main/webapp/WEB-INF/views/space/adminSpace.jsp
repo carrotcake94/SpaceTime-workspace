@@ -265,7 +265,7 @@
                                 </tr>
                             </thead>   
                             <!-- 승인대기일 때  -->
-                            <tbody id="spaceStatusW">
+                            <tbody id="spaceStatusW" class="selectBox">
                                 <tr>
                                     <th rowspan="2" style="width:100px;">처리</th>
                                     <td class="form-group" align="left">
@@ -277,7 +277,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><textarea name="denyMessage" class="form-control mb-2" cols="20" rows="5" placeholder="반려 사유를 작성해주세요."></textarea></td>
+                                    <td><textarea name="denyMessage" class="form-control mb-2 inputText" cols="20" rows="5" placeholder="반려 사유를 작성해주세요." disabled required></textarea></td>
                                     <td rowspan="2" align="right"><button type="submit" class="btn btn-sm btn-light">처리하기</button></td>
                                 </tr>
                             </tbody>
@@ -314,6 +314,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).on("change", "select[name=spaceStatus]", function(){
+            var value = $(this).find("option:selected").val();
+            var inputText = $(this).closest('.selectBox').find('.inputText');
+            var flag = false;
+            if (value == 0) {
+                flag = true;
+                $(inputText).val('');
+            }
+            
+            $(inputText).attr("disabled", flag);
+        });
+    </script>
 
     <script>
         $(function() {

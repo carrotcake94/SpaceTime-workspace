@@ -191,7 +191,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control mb-2 inputText" style="width:100%;" name="reportAnswer" placeholder="ex) 양식에 맞춰 신고해주세요." value="${r.reportAnswer}" disabled>
+                                        <input type="text" class="form-control mb-2 inputText" style="width:100%;" name="reportAnswer" placeholder="ex) 양식에 맞춰 신고해주세요." value="${r.reportAnswer}" disabled required>
                                     </td>
                                 </tr>
                             </table>
