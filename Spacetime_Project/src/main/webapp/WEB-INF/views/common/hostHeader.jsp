@@ -491,17 +491,19 @@
 		  height:50px;     	
       }  
 
-
 		.toast-right div:nth-child(1) {
-			font-size: 17px;
-			height : 40%;
+			font-size: 12px;
+			height : 45%;
 			padding-top: 12px;
 			padding-right: 15px;
+			overflow:hidden;
+			text-overflow:ellipsis;
+			white-space:nowrap;
 		}
 			
 		.toast-right div:nth-child(2) {
-		 height : 60%;
-			padding-right: 15px;
+			height : 55%;
+			padding-right: 5px;
 		}
 		
       
@@ -708,7 +710,7 @@
    			var data = msg.data; // 전달 받은 데이터
    			
    			socketData = JSON.parse(data); 
-   	        
+   			
    			if(socketData.msgType == "chat" && $("#chatTb").length > 0) {
   						var str=""
   		   				str +=  "<tr id='chatRoom-"+socketData.senderNo+"-${loginMember.memNo}' onclick='chatModalOpen(this)'>";
@@ -779,6 +781,11 @@
 			   	   	toast += "<div>"+socketData.message+"</div>"   
 			   	   	toast += "<div class='review' style='cursor:pointer;'>"+socketData.senderName+"님이 후기를 남겼습니다.</div>"   	
 		   	   	}
+	   	   	    else if(socketData.msgType == "spStatusUpdate" ) {
+			   	   	toast += "<div>"+socketData.message+"</div>"   
+			   	   	toast += "<div class='spStatusUpdate' style='cursor:pointer;'>공간 검수가 끝났습니다.</div>"   	
+	   	 	  	}
+   	   	        
    	    		toast += "</div></div></div>"
    			
 	   	        $("#socketAlarmArea").append(toast);
@@ -805,6 +812,9 @@
    			});
 			$("#socketAlarmArea").on("click", ".review", function() {
 				location.href="hostRvwList.rv";
+   			});
+			$("#socketAlarmArea").on("click", ".spStatusUpdate", function() {
+				location.href="hostSpaceList.sp";
    			});
    		});
 

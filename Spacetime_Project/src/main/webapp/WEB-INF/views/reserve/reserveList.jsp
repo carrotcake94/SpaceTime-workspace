@@ -835,7 +835,7 @@
 			      return false;
 			}
 			$("#reviewForm").submit();
-			sendMessage("review", $("#reviewEnrollModal input[name=smemId]").val());
+			sendMessage("review", $("#reviewEnrollModal input[name=smemId]").val(), $("#reviewEnrollModal #sptitle").text());
 		}
 		
 		

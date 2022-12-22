@@ -260,6 +260,7 @@
                             <thead>
                                 <tr id="spStatus">
                                     <input type="hidden" class="spno" name="spaceNo">
+                                    <input type="hidden" name="hostMemId">
                                     <th style="width:50px; height: 50px;" align="left">공간명</th>
                                     <td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" align="left" class="spTitle"></td>
                                 </tr>
@@ -278,7 +279,8 @@
                                 </tr>
                                 <tr>
                                     <td><textarea name="denyMessage" class="form-control mb-2 inputText" cols="20" rows="5" placeholder="반려 사유를 작성해주세요." disabled required></textarea></td>
-                                    <td rowspan="2" align="right"><button type="submit" class="btn btn-sm btn-light">처리하기</button></td>
+<!--                                     <td rowspan="2" align="right"><button type="submit" class="btn btn-sm btn-light">처리하기</button></td> -->
+                                    <td rowspan="2" align="right"><button type="button" class="btn btn-sm btn-light" onclick="spStatusUpdate()">처리하기</button></td>
                                 </tr>
                             </tbody>
 
@@ -340,12 +342,18 @@
                 }
             });
         });
+       
+        
     </script>
     
     <!-- 검수 모달창으로 공간 번호 보내기 -->
     <script>
         $(".spaceList>tbody").on("click", "#changeStatus", function() {
             
+        	//공간소켓용 
+        	var hostMemId = $(this).children().eq(1).text();
+        	$("#checkSpace input[name=hostMemId]").val(hostMemId); 
+        	
             var spaceNo = $(this).children().eq(0).text();
             $(".modal-body .spno").val(spaceNo); 
             
@@ -396,6 +404,12 @@
         $(function() {
             showSpaceList();
         });
+        
+        //공간 검수 업데이트
+        spStatusUpdate = () => {
+        	$("#spaceStatusForm").submit();
+        	sendMessage("spStatusUpdate", $("#checkSpace input[name=hostMemId]").val(), $("#checkSpace .spTitle").text());
+        }
         
         function showSpaceList(num, currentPage) {
             

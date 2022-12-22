@@ -536,17 +536,20 @@ body * {
 	background-color: white;
 }
 
-.toast-right div:nth-child(1) {
-	font-size: 17px;
-	height: 40%;
-	padding-top: 12px;
-	padding-right: 15px;
-}
-
-.toast-right div:nth-child(2) {
-	height: 60%;
-	padding-right: 15px;
-}
+	.toast-right div:nth-child(1) {
+		font-size: 12px;
+		height : 45%;
+		padding-top: 12px;
+		padding-right: 15px;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+	}
+		
+	.toast-right div:nth-child(2) {
+		height : 55%;
+		padding-right: 5px;
+	}
 
 #autoComplete {
 	display: none;
@@ -966,6 +969,7 @@ body * {
 	}
    		//메시지 수신
    	   		function onMessage(msg) {
+   	 		alert(1);
    	   			var data = msg.data; // 전달 받은 데이터
    	   			
    	   			socketData = JSON.parse(data); 
@@ -1032,14 +1036,20 @@ body * {
    		   	   		    toast += "<div></div>"  
    		   	 	     	toast += "<div class='chat' style='cursor:pointer;'>"+socketData.senderName+"님이 메시지를 보내셨습니다.</div>"
    	   	   	  		}
-   	   	   	  		else if(socketData.msgType == "reserve" ) {
-   				   	   	toast += "<div></div>"   		   	   		
-   				   	   	toast += "<div class='reserve' style='cursor:pointer;'>"+socketData.senderName+"님이 예약하셨습니다.</div>"   	  
-   			   	   	}
-   	   	   	  		else if(socketData.msgType == "review" ) {
-   				   	   	toast += "<div></div>"   
-   				   	   	toast += "<div class='review' style='cursor:pointer;'>"+socketData.senderName+"님이 후기를 남겼습니다.</div>"   	
-   			   	   	}
+		   	   	   	else if(socketData.msgType == "reserve" ) {
+				   	   	toast += "<div>"+socketData.message+"</div>"   		   	   		
+				   	   	toast += "<div class='reserve' style='cursor:pointer;'>"+socketData.senderName+"님이 예약하셨습니다.</div>"   	  
+			   	   	}
+			   	  		else if(socketData.msgType == "review" ) {
+				   	   	toast += "<div>"+socketData.message+"</div>"   
+				   	   	toast += "<div class='review' style='cursor:pointer;'>"+socketData.senderName+"님이 후기를 남겼습니다.</div>"   	
+			   	   	}
+			   	  	else if(socketData.msgType == "spStatusUpdate" ) {
+				   	   	toast += "<div>"+socketData.message+"</div>"   
+				   	   	toast += "<div class='spStatusUpdate' style='cursor:pointer;'>공간 검수가 끝났습니다.</div>"   	
+		   	 	  	}
+   	   	   	        
+   	   	   	        
    	   	    		toast += "</div></div></div>"
    	   			
    		   	        $("#socketAlarmArea").append(toast);
@@ -1066,6 +1076,9 @@ body * {
    			});
 			$("#socketAlarmArea").on("click", ".review", function() {
 				location.href="hostRvwList.rv";
+   			});
+			$("#socketAlarmArea").on("click", ".spStatusUpdate", function() {
+				location.href="hostSpaceList.sp";
    			});
    		});
 </script>

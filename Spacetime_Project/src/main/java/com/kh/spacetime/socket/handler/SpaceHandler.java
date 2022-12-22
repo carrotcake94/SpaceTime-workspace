@@ -78,6 +78,10 @@ public class SpaceHandler extends TextWebSocketHandler {
 			else if ("chat".equals(msg.getMsgType()) && receiverSession != null) {
 				receiverSession.sendMessage(sendMsg);
 			}
+			// 관리자 검수 업데이트
+			else if ("spStatusUpdate".equals(msg.getMsgType()) && receiverSession != null) {
+				receiverSession.sendMessage(sendMsg);
+			}
 			
 		}
 	}
