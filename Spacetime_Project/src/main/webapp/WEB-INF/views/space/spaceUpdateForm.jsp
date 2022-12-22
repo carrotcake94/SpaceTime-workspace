@@ -608,6 +608,11 @@
 		 for(var i = 0; i < thumNo; i++) {
 			 thumChg.push(0);
          }
+		 //textarea br 개행으로 변경
+		 var text = $("textarea[name=spaceInfo]").val();
+		 var result = text.replace(/(<br>|<br\/>|<br \/>)/g, '\r\n');
+		 $("textarea[name=spaceInfo]").val(result);
+		 
 	});
 
 	 // 글자수 체크

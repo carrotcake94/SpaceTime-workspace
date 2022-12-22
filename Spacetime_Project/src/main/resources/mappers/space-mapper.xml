@@ -214,6 +214,7 @@
 		, OPEN_TIME = #{openTime}
 		, CLOSE_TIME = #{closeTime}
 		, DENY_MESSAGE = NULL
+		, SPACE_MODIFY_DATE = SYSDATE
 		, STYPE_NO = #{stypeNo}
 		 WHERE SPACE_NO = #{spaceNo}
 	</update>
@@ -240,6 +241,7 @@
 		UPDATE SPACE
 	    SET SPACE_STATUS = 'W'
 	     , DENY_MESSAGE = NULL
+	     , SPACE_MODIFY_DATE = SYSDATE
 		 WHERE SPACE_NO = #{spaceNo}
 	</update>
 	

@@ -414,7 +414,9 @@
               <button type="button" class="button_img button_img_prev" onclick="imgLoader(this,1)">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
               </button>
+              <c:if test="${s.spaceStatus eq 'Y'}">
               <div class="img-div" onclick="location.href='detail.sp?sno=${s.spaceNo}';"></div>
+              </c:if>
               <button type="button" class="button_img button_img_next" onclick="imgLoader(this,2)">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
               </button>
