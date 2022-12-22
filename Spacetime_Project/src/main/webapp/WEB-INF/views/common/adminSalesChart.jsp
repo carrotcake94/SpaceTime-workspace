@@ -134,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-                <br><br>
+                <br><br><br>
                 
                 <div id="chartjs">
                     <div class="line">
@@ -195,7 +195,7 @@
                     },
                     title: {
                         display: true,
-                        text: '이번 달 공간 타입 별 매출 비율',
+                        text: '이번 달 공간 타입 별 이용 건수',
                         font: { size: 15}
                     }
                 }

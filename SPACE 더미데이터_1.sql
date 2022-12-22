@@ -1,3 +1,5 @@
+SET DEFINE OFF;
+
 -- 경미
 -- 1 에서  100  행에 대한 삽입 실패
 --ORA-01722: invalid number

@@ -270,16 +270,16 @@ public class CommonController {
 		map.put("month", month);
 		map.put("spaceNo", spaceNo);
 		
-		System.out.println("map : " + map);
+		// System.out.println("map : " + map);
 		
 		Reserve r = commonService.selectSales(map);
 
-		System.out.println("r : " + r);
+		// System.out.println("r : " + r);
 		
 		model.addAttribute("r", r);
 		model.addAttribute("month", month);
 		
-		System.out.println("model : " + model);
+		// System.out.println("model : " + model);
 
 		return "common/adminSalesDetail";
 	}
@@ -372,7 +372,7 @@ public class CommonController {
 		map.put("keyword", keyword);
 		map.put("month", month);
 		
-		System.out.println(map);
+		// System.out.println(map);
 		
 		int listCount = commonService.selectSalesSearchListCount(map);
 		
