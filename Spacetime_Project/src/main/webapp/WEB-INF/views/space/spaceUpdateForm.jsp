@@ -775,13 +775,17 @@
       });
       
       $("input[name=hashtagInput]").focusout(function () {
-        if ($(this).val().trim() != "#") {
-          $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
-          $(this).val("");
-        }
-        if ($(this).val().trim() == "#") {
-          $(this).val("");
-        }
+     	  	if ($(this).val().trim() != "#" && $(this).val().trim().substr(0,1) == "#" ) {
+     	  		if($(".hashtag").length>7) {
+  	   	  		alert("해시태그는 최대 8개까지 등록 가능합니다.");
+     	  		}else if($(this).val().length>10) {
+  	   	  		alert("해시태그는 최대 10글자까지 입력할 수 있습니다.");
+     	  		}else {
+  	   	  		$(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+     	  		}
+          }
+     	    $(this).val("");
+     	 	return false;
       });
       $("input[name=hashtagInput]").keydown(function () {
     	  //backspace 막기 
@@ -791,25 +795,36 @@
       });
       
       $("input[name=hashtagInput]").keyup(function () {    
-    	  console.log($(this).val());
-        //space  
-        if (event.keyCode === 32 && $(this).val().trim() !== "#") {
-          $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
-          $(this).val("#");
-          return false;
-        }
-        //enter  
-        if (event.keyCode === 13 && $(this).val() != "#") {
-          $(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
-          $(this).val("#");
-          return false;
-        }
-        //특수문자 막기
-        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
-        if (regExp.test($(this).val().substr(1))) {
-          $(this).val($(this).val().substr(0, $(this).val().length - 1));
-        }
-      });
+          //space  
+          if (event.keyCode === 32 && $(this).val().trim() !== "#" && $(this).val().trim().substr(0,1) == "#") {
+          	if($(".hashtag").length>7) {
+  	   	  		alert("해시태그는 최대 8개까지 등록 가능합니다.");
+     	  		}else if($(this).val().length>10) {
+  	   	  		alert("해시태그는 최대 10글자까지 입력할 수 있습니다.");
+     	  		}else {
+  	   	  		$(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+     	  		}
+          	$(this).val("#");
+          	return false;
+          }else  if (event.keyCode === 13 && $(this).val() != "#" && $(this).val().trim().substr(0,1) == "#") {
+              //enter  
+              if($(".hashtag").length>7) {
+  	   	  		alert("해시태그는 최대 8개까지 등록 가능합니다.");
+     	  		}else if($(this).val().length>10) {
+  	   	  		alert("해시태그는 최대 10글자까지 입력할 수 있습니다.");
+     	  		}else {
+  	   	  		$(".hashtag-area").append("<div class='hashtag'><span>" + $(this).val() + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+     	  		}
+              $(this).val("#");
+          	return false;
+          }
+          //특수문자 막기
+          var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+          if (regExp.test($(this).val().substr(1))) {
+          	$(this).val("#"+$(this).val().replace(regExp, ""));
+          }
+        });
+        
       $(".hashtag-area").on("click", "i", function () {
         $(this).parent().remove();
       });
