@@ -67,9 +67,9 @@
      for(var i = 0; i < words.length; i++){
          //각 div에 속성부여
          autoCompleteContent = document.createElement("div");
-         //autoCompleteContent.setAttribute("id", "autoCompleteContent_" + spaceListArr[i].spaceNo);
+         //autoCompleteContent.setAttribute("id", "autoCompleteContent_" + i);
          autoCompleteContent.setAttribute("class", "autoCompleteContent");
-         //autoCompleteContent.setAttribute("onclick", "toSpaceDetail(" + spaceListArr[i].spaceNo + ")");
+         //autoCompleteContent.setAttribute("onclick", "searchByAutoComplete()");
          
          //각 div속성의 내용
          autoCompleteContent.innerHTML = words[i];
@@ -158,8 +158,8 @@ function spaceRecommend(keyword){
          },
          error : () => {
          }
-     })
- }
+    })
+}
  
 function toSpaceDetail(sno){
 	location.href = "detail.sp?sno=" + sno;

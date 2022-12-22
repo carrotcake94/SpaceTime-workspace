@@ -601,10 +601,11 @@ body * {
 		</div>
 		<div id="m_search_btn">
 			<i class="fa fa-search" aria-hidden="true"></i>
+			<!-- <button id="keywordSubmit" type="submit" style="background-color: white; color: rgb(255,178,2); border:none;"><i class="fa fa-search" aria-hidden="true"></i></button> -->
 		</div>
 		<div>
 			<div id="m_search_bar">
-				<form id="searchInputForm" action="" method="get">
+				<form id="searchInputForm" action="searchSpaceList.mp" method="get">
 					<input type="search" id="searchInput" name="pureKeyword" placeholder="&nbsp&nbsp'#' 입력시 해시태그 검색이 가능해요!" required>
 				</form>
 			</div>
@@ -628,11 +629,16 @@ body * {
     var autoCompleteList = document.querySelector("#autoCompleteList");
     var autoCompleteContent = document.querySelector(".autoCompleteContent");
     var searchInput = document.querySelector("#searchInput");
-        
+    var inputValue = "";
+    var autoCompleteArr = document.querySelector(".autoCompleteContent");
+    
     searchInput.addEventListener("keyup", (e) => {
         if(e.keyCode == 13){
            	searchStart(searchInput.value);
         }
+        
+        inputValue = searchInput.value;
+        console.log(autoCompleteArr)
         
         //입력 시 하단 자동완성 박스 생성
         if(searchInput.value == ""){
@@ -661,10 +667,21 @@ body * {
         })
     });
     
+    
+    document.querySelector("#m_search_btn").onclick = () => {
+    	searchStart(inputValue);
+    }
+    
     //엔터 혹은 검색클릭 시 검색 시작
     function searchStart(pureKeyword){
-        document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
+    	document.querySelector("#searchInputForm").submit();
  	}
+    
+    for(var i = 0; i < 20; i++){
+    	document.querySelector("#autoCompleteContent_" + i).onclick = () => {
+    		console.log('hi');
+    	}
+    }
     
     //연관검색어 클릭 시
     /* autoCompleteContent.onclick = (e) => {
