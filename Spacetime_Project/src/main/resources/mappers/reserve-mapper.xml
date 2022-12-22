@@ -29,6 +29,7 @@
 			<result column="PRICE" property="price" />
 			<result column="MEM_NO" property="memNo" />
 			<result column="MEM_NAME" property="memName" />
+			<result column="RESERVE_STATUS" property="reserveStatus" />
 			
 			<!-- 회원(MEMBER)테이블 -->
 			<result column="PHONE" property="denyMessage" />
@@ -188,6 +189,7 @@
 			     , START_TIME
 			     , END_TIME
 			     , RESERVE_COUNT
+			     , RESERVE_STATUS
 			     , MEM_NO
 	             , MEM_NAME
 			     , NICKNAME

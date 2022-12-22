@@ -799,12 +799,6 @@
 				                                   			endTime = -1
 			                                   			}
 			                                   			
-			                                   			/* for(var a=startTime; a<=endTime; a++) {
-			                                   				
-			                                   				console.log($("#time"+ a + "").css("text-decoration","line-through") != true);
-			                                   				
-			                                   				
-			                                   			} */
 			                                   			
 		                                        		
 		                                        	} else {
@@ -889,8 +883,7 @@
 	                                        			  initialView: 'dayGridMonth',
 	                                        			  validRange: function(nowDate) {
 	                                        				    return {
-	                                        				      start: nowDate,
-	                                        				      end: nowDate + 30
+	                                        				      start: nowDate
 	                                        				    };
 	                                        			},
 	                                        		  dateClick: function (dateClickInfo) {
@@ -920,6 +913,8 @@
 		                                                    },
 		                                                    success: function(result) {
 		                                                    	
+		                                                    	var hours = new Date().getHours();
+		                                                    	// console.log(hours);
 		                                                    	
 		                                                    	
 		                                                    	var resultStr="";
@@ -936,39 +931,80 @@
             														    + "</a>"
             														    + "</li>"; 
             														    
-            														    
+
 		                                                    	}
 		                                                    	
 
 	                                                    		$("#reserveTimeArea>ul").html(resultStr);
+	                                                    		
+	                                                    		// console.log(result.length);
+	                                                    		
 		                                                    	
 		                                                    	 for(var i=0; i<result.length; i++) {
- 		                                							
- 		                                                    		for(var j=result[i].startTime; j<=result[i].endTime; j++){
- 		                                                    			
- 		                                                    			
-            														    if(dateClickInfo.dateStr == result[i].useDate) {
-        		                                                    		// console.log(result[i].useDate);
-        		                                                    		
-        		                                                    		/* $("#time"+ j + ">a").attr('href','#'); // disable
- 		                                                    			 	$("#time"+ j + ">a").attr('data-toggle',''); // disable */
- 		                                                    			 	$("#time"+ j + ">a").attr('class','disabled'); // disable
- 		                                                    			 	
- 		                                                    			 	
- 		                                                    			 	$("#time"+ j + "").css("text-decoration","line-through");  
- 		                                                    			 	$("#time"+ j + "").css("color","lightgrey");  
-/*  		                                                    			 	$("#time"+ j + "").attr("style","text-decoration: line-through !important"); 
- 		                                                    			 	$("#time"+ j + "").attr("style","color: lightgrey !important");  */
 
 
- 		  		                                                    	 /* console.log($(".time").text()); */
-        		                                                    		
-        		                                                    	}
+ 		                                                    		
+ 		                                                    		if(result[i].endTime == -1){ // endTime -1 경우 
+ 		                                                    		
+ 		                                                    			for(var j=result[i].startTime; j<=result[i].startTime; j++){
+ 	 		                                                    			
 
+ 	            														    if(dateClickInfo.dateStr == result[i].useDate) {
+ 	        		                                                    		
+ 	        		                                                    		/* $("#time"+ j + ">a").attr('href','#'); // disable
+ 	 		                                                    			 	$("#time"+ j + ">a").attr('data-toggle',''); // disable */
+ 	 		                                                    			 	$("#time"+ j + ">a").attr('class','disabled'); // disable
+ 	 		                                                    			 	
+ 	 		                                                    			 	
+ 	 		                                                    			 	$("#time"+ j + "").css("text-decoration","line-through");  
+ 	 		                                                    			 	$("#time"+ j + "").css("color","lightgrey");  
+ 	        		                                                    		
+ 	        		                                                    	} 
+
+ 	 		                                                    		}
+ 		                                                    		
+ 		                                                    		} else {
+ 		                                                    			for(var j=result[i].startTime; j<=result[i].endTime; j++){
+ 	 		                                                    			
+
+ 	            														    if(dateClickInfo.dateStr == result[i].useDate && hours<= j ) {
+ 	        		                                                    		
+ 	        		                                                    		/* $("#time"+ j + ">a").attr('href','#'); // disable
+ 	 		                                                    			 	$("#time"+ j + ">a").attr('data-toggle',''); // disable */
+ 	 		                                                    			 	$("#time"+ j + ">a").attr('class','disabled'); // disable
+ 	 		                                                    			 	
+ 	 		                                                    			 	
+ 	 		                                                    			 	$("#time"+ j + "").css("text-decoration","line-through");  
+ 	 		                                                    			 	$("#time"+ j + "").css("color","lightgrey");  
+ 	        		                                                    		
+ 	        		                                                    	} 
+
+ 	 		                                                    		}
  		                                                    		}
  		                                                    		
+ 		                                                    		
+
+    	                                                    		
  		                                							
- 		                                						} 
+ 		                                						}
+		                                                    	 
+		                                                    	 for(var k=0; k<24;k++){
+			                                                    		
+
+				                                                    	 if(hours<= k) {
+		  		                                                    		
+		                                                     			 	$("#time"+ k + ">a").attr('class','disabled'); // disable
+		                                                     			 	
+		                                                     			 	
+		                                                     			 	$("#time"+ k + "").css("text-decoration","line-through");  
+		                                                     			 	$("#time"+ k + "").css("color","lightgrey");  
+		      		                                                    		
+		      		                                                    } 
+	            														    
+
+			                                                    	}
+		                                                    	 
+		                                                    	 
 
 		                                                    },
 		                                                    error: function() {

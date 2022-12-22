@@ -558,6 +558,38 @@
         <div class="modal" id="cancle-modal">
             <div class="modal-dialog">
                 <div class="modal-content">
+                
+                <c:choose>
+                 	<c:when  test="${ r.reserveStatus eq 'C' }">
+                 	
+                 	
+                 	
+                 	
+                 	<div class="modal-header" style="font-size: 20px; text-align: center;">알림</div>
+                 	
+                 		
+                 		<div style="font-size: 15px; text-align: center; padding: 20px;">이미 취소된 예약입니다.</div>
+                 		
+                 		
+                 		
+                 		
+                 		 <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-back" style="background-color: #007bff; color:white;" onclick="$('#cancle-modal').modal('hide');">확인</button>
+                            
+                        </div>
+                 		
+                 	</c:when>
+                 	<c:otherwise>
+                 		
+                 		
+                 		
+                 		
+                 		
+                 		
+                 	
+                
+                
                     <!-- Modal Header -->
                     <div class="modal-header" style="font-size: 30px; font-weight:600;">예약 취소</div>
                         <!-- Modal body -->
@@ -614,6 +646,15 @@
 	    		            	}
 		                	</script>
                         </div>
+                        
+                        
+                        
+                        	
+                 	</c:otherwise>
+                 </c:choose>
+                
+                        
+                        
                     </div>
                 </div>
             </div>
