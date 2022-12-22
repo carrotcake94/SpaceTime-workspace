@@ -31,45 +31,45 @@
 							<div class="carousel-item active">
 								<div id="category_partyRoom" class="main_category">
 									<img
-										src="#">
+										src="resources/images/main/파티룸.png">
 									<div align="center">파티룸</div>
 								</div>
 								<div id="category_cafe" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/카페.png">
 									<div>카페</div>
 								</div>
 								<div id="category_theather" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/극장.png">
 									<div>극장, 공연장</div>
 								</div>
 								<div id="category_practice" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/연습실.png">
 									<div>연습실</div>
 								</div>
 								<div id="category_kitchen" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/주방.png">
 									<div>공유주방</div>
 								</div>
 							</div>
 							<div class="carousel-item">
 								<div id="category_gallery" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/갤러리.png">
 									<div>갤러리</div>
 								</div>
 								<div id="category_exercise" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/운동시설.png">
 									<div>운동시설</div>
 								</div>
 								<div id="category_study" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/스터디룸.png">
 									<div>스터디룸</div>
 								</div>
 								<div id="category_conference" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/회의실.png">
 									<div>회의실</div>
 								</div>
 								<div id="category_studio" class="main_category">
-									<img src="#">
+									<img src="resources/images/main/스튜디오.png">
 									<div>스튜디오</div>
 								</div>
 							</div>

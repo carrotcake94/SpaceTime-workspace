@@ -243,6 +243,7 @@ form > div {
 
 .picList_content_pic {
     height: 200px;
+    border-radius: 2px;
 }
 
 .picList_content_pic > img {
