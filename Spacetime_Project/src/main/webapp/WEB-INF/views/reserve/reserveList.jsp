@@ -770,6 +770,50 @@
 	<jsp:include page="../common/footer.jsp" />
 	
 	<script>
+		 // 파일 유효성 검사
+	    function validFileType(filename) {
+	      const fileTypes = ["png", "jpg", "jpeg"];
+	      return fileTypes.indexOf(filename.substring(filename.lastIndexOf(".") + 1, filename.length).toLowerCase()) >= 0;
+	    }
+	    function validFileSize(file) {
+	      if (file.size > 10000000) { //10MB
+	        return false;
+	      } else {
+	        return true;
+	      }
+	    }
+	    function validFileNameSize(filename) {
+	      if (filename.length > 30) { //30자
+	        return false;
+	      } else {
+	        return true;
+	      }
+	    }
+		
+		$(function() {
+			 $("#reviewEnrollModal input[name=upfile]").on("change", function () {
+			        if ($(this)[0].files.length == 1) {
+			          var filename = $(this)[0].files[0].name;
+
+			          if (!validFileType(filename)) {
+			            alert("허용하지 않는 확장자 파일입니다.");
+			            $(this).val("");
+			            return false;
+			          }
+			          if (!validFileSize($(this)[0].files[0])) {
+			            alert("파일 사이즈가 10MB를 초과합니다.");
+			            $(this).val("");
+			            return false;
+			          }
+			          if (!validFileNameSize(filename)) {
+			            alert("파일명이 30자를 초과합니다.");
+			            $(this).val("");
+			            return false;
+			          }
+			        }
+			      });
+		});
+	
 		/* 리뷰작성하기  */
 		openRevEnrollModal = btn => {
 			var stitle = $(btn).parent().prev().children(".stitle").text();
