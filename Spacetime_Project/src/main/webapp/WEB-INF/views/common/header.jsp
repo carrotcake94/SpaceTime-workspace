@@ -102,13 +102,14 @@ body * {
 .wrap {
 	position: relative;
 	width: 100%;
+	min-width : 1000px;
 	overflow: hidden;
 }
 
 /* ---------- header ---------- */
 .header {
 	width: 100%;
-	min-width: 1000px;
+	min-width: 900px;
 	/*border-bottom: 1px solid black;*/
 	box-sizing: border-box;
 	/*             box-shadow: 0 0 10px rgba(0, 0, 0, 0.55); */
