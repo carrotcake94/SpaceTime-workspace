@@ -196,7 +196,21 @@
 	.nodata {
 	text-align: center;
 	font-size: 25px;
-	font-weight: 600;}
+	font-weight: 600;
+	height : 500px;}
+	#header_area { height: 80px; }
+	#content { 
+		width: 100%;
+		height: 850px; 
+        /*height: auto;  */
+		display: flex;
+	}
+	
+	#content>div { height: 100%; float: left; margin:30px 0px;}
+	
+	#content_1, #content_3 { width: 10%; }
+	#content_2 { width: 80%; }
+	
 </style>
 </head>
 <body>
@@ -215,87 +229,55 @@
 							찜한내역이 없습니다.<br>
 						</div>
 					</c:when> 
-				<c:otherwise>
-                    <c:forEach var="s" items="${ list }">
+                <c:otherwise>
+                  <c:forEach var="s" items="${ list }">
                     <c:set var="attachments" value="${s.attachments}" />
-                    <form id="spaceDetailForm" style="width:33%;" method="post" action="">
-                        <input type="hidden" name="sno" value="${s.spaceNo}" >
-                        <input type="hidden" name="memNo" value="${loginMember.memNo}">
-                        <div class="space">
-                            <div class="img_area">
-                              <%--   <c:forEach var="attach" items="${attachments}">
-                                    <img class="img-0" src="${attachments[0].attachmentReName}" alt="사진 없음" />
-                                </c:forEach> --%>
-                                <img class="img-0" src="${attachments[0].attachmentReName}" alt="사진 없음" />
-                                
-                            
-                                <span class="bookmark">
-                                    
-                                    <c:choose>
-                                    <c:when test="${ s.openTime eq 0 }">
-		                                    
-                                        <img src="resources/images/heart.png" width="35px" height="35px" class="likeControl eventUnLike" style="cursor: pointer;">
-                                        <img src="resources/images/heart2.png" width="35px" height="35px" class="likeControl eventLike"  style="display:none; cursor: pointer;">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="resources/images/heart.png" width="35px" height="35px"  class="likeControl eventUnLike" style="display:none; cursor: pointer;">
-                                        <img src="resources/images/heart2.png" width="35px" height="35px"  class="likeControl eventLike" style="cursor: pointer;">
-                                    </c:otherwise>
-                                    </c:choose>
-                                </span>
-                            </div>
-                            <div>
-                                <span class="stitle">${s.spaceTitle }</span>
-                                <hr />
-                                <span><i class="fa-solid fa-location-dot"></i> ${s.addressDefault}</span>
-                                <span class="sMax"><i class="fa-solid fa-user"></i>최대 ${s.maxPeople} 인</span>
-                                <hr />
-                                <span style="width:50%; display:inline-block;">
-                                    <span class="sprice" style="color: #277BC0;" >${s.hourPrice}</span>
-                                    <span> 원/시간</span>
-                                </span>
-                                <span style="float:right;">
-                                    <span><i class="fa-solid fa-comment"></i> ${s.closeTime}</span>
-                                </span>
-                                
-
-                            </div>
-                        </div>
-
-                    </form> <!-- 이 반복 부분을 다 지우고 ajax 로 $function 으로 불러오기!! (selectBookmarkList 이런식으로) -->
-                   
-                    <!-- 반복 돌리기 -->
-                   
-                    </c:forEach>
-                     </c:otherwise>
-						</c:choose>
-                  <%--   <br>
-                    <br>
-                    
-    <div id="pagingArea" >
-                <ul class="pagination" align="center" id="btn">
-			      	<c:choose>
-				   		<c:when test="${ pi.currentPage eq 1 }">
-				   			<li class="page-item no-page-prev disabled"><a class="page-link">&lt;</a></li>
-				   		</c:when>
-				   		<c:otherwise>
-				   			<li class="page-item"><a class="page-link" href="mypagebookmark.sp?cpage=${ pi.currentPage - 1 }">&lt;</a></li>
-				   		</c:otherwise>
-				   	</c:choose>	       
-				       <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-				       	<li class="page-item page-btn"><a class="page-link" href="mypagebookmark.sp?cpage=${ p }">${ p }</a></li>
-				       </c:forEach>
-				       <c:choose>
-				       	<c:when test="${ pi.currentPage eq pi.maxPage }">
-				       		<li class="page-item no-page-next disabled"><a class="page-link" >&gt;</a></li>
-				       	</c:when>
-				       	<c:otherwise>
-				      	 	<li class="page-item no-page-next"><a class="page-link" href="mypagebookmark.sp?cpage=${ pi.currentPage + 1 }">&gt;</a></li>
-				       	</c:otherwise>
-				       </c:choose>	       
-     			 </ul>
-            </div> --%>
-                </div>
+                          <form id="spaceDetailForm" style="width:33%;" method="post" action="">
+                              <input type="hidden" name="sno" value="${s.spaceNo}" >
+                              <input type="hidden" name="memNo" value="${loginMember.memNo}">
+                              <div class="space">
+                                  <div class="img_area">
+                                    <%--   <c:forEach var="attach" items="${attachments}">
+                                          <img class="img-0" src="${attachments[0].attachmentReName}" alt="사진 없음" />
+                                      </c:forEach> --%>
+                                      <img class="img-0" src="${attachments[0].attachmentReName}" alt="사진 없음" />
+                                      
+                                  
+                                      <span class="bookmark">
+                                          
+                                          <c:choose>
+                                          <c:when test="${ s.openTime eq 0 }">
+                                              
+                                              <img src="resources/images/heart.png" width="35px" height="35px" class="likeControl eventUnLike" style="cursor: pointer;">
+                                              <img src="resources/images/heart2.png" width="35px" height="35px" class="likeControl eventLike"  style="display:none; cursor: pointer;">
+                                          </c:when>
+                                          <c:otherwise>
+                                              <img src="resources/images/heart.png" width="35px" height="35px"  class="likeControl eventUnLike" style="display:none; cursor: pointer;">
+                                              <img src="resources/images/heart2.png" width="35px" height="35px"  class="likeControl eventLike" style="cursor: pointer;">
+                                          </c:otherwise>
+                                          </c:choose>
+                                      </span>
+                                  </div>
+                                  <div>
+                                      <span class="stitle">${s.spaceTitle }</span>
+                                      <hr />
+                                      <span><i class="fa-solid fa-location-dot"></i> ${s.addressDefault}</span>
+                                      <span class="sMax"><i class="fa-solid fa-user"></i>최대 ${s.maxPeople} 인</span>
+                                      <hr />
+                                      <span style="width:50%; display:inline-block;">
+                                          <span class="sprice" style="color: #277BC0;" >${s.hourPrice}</span>
+                                          <span> 원/시간</span>
+                                      </span>
+                                      <span style="float:right;">
+                                          <span><i class="fa-solid fa-comment"></i> ${s.closeTime}</span>
+                                      </span>
+                                   </div>
+                              </div>
+                           </form> 
+                  </c:forEach>
+                </c:otherwise>
+              </c:choose>
+            </div>
             </div>
             
             
@@ -311,18 +293,6 @@
                     console.log(form.text());
                     form.attr("action", "detail.sp").submit();
                 }});
-
-                
-				// 정현오빠.... 여기야..................( ; ω ; )..........
-                
-                //  
-                // list foreach 문에서 id="bookmark"가 반복되서 문제 발생하는 부분이야
-                // 리스트 첫번쨰 bookmark만 클릭했을때 이벤트가 발생해
-                //  space_area div에서  접근하는게 맞구
-                // bookmark id값으로 지정한것도 해재하구  class로 가는게 맞아
-                // bookmark class로 바꾸고 스크립트가 반복문 내부에 있어서 하단으로 뻈어
-                // hidden으로 지정한 input도 id로 설정하면 안되서 id 삭제했어
-
                 $("#space_area").on("click", ".likeControl", function() {
                     let bookmark = $(this).parent(".bookmark");
                     let eventLike = bookmark.children(".eventLike");
