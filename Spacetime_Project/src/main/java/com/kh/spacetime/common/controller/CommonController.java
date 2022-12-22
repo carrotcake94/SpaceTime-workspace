@@ -229,7 +229,7 @@ public class CommonController {
 	 */
 	@RequestMapping("slist.ad")
 	public String selectSalesList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
-
+		
 		int listCount = commonService.selectSalesListCount();
 		
 		int pageLimit = 5;
@@ -353,19 +353,17 @@ public class CommonController {
 	@RequestMapping("searchS.ad")
 	public String selectSalesSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword, String month) {
 		
-//		LocalDate now = LocalDate.now();
-//		
-//		int year = now.getYear();
-//		int Month = now.getMonthValue();
-//		String thisMonth = year + "-" + Month;
-//		System.out.println(thisMonth);
+		LocalDate now = LocalDate.now();
+		
+		int year = now.getYear();
+		int Month = now.getMonthValue();
+		String thisMonth = year + "-" + Month;
+		// System.out.println(thisMonth);
 		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		map.put("month", month);
-		
-		// System.out.println(map);
 		
 		int listCount = commonService.selectSalesSearchListCount(map);
 		
@@ -381,7 +379,7 @@ public class CommonController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("month", month);
-//		model.addAttribute("today", thisMonth);
+		model.addAttribute("thisMonth", thisMonth);
 		
 //		System.out.println("model" + model);
 		

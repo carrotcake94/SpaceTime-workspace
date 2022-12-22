@@ -200,7 +200,7 @@
                                         <td>${r.memId}</td>
                                         <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.spaceTitle}</td>
                                         <td>${r.price}</td>
-                                        <td>${r.salesStatus}</td> 
+                                        <td>미처리</td> 
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>

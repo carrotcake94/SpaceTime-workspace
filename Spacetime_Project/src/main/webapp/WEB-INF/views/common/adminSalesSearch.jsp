@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -199,7 +200,16 @@
                                         <td>${r.memId}</td>
                                         <td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>${r.spaceTitle}</td>
                                         <td>${r.price}</td>
-                                        <td>${r.salesStatus}</td> 
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${month == thisMonth}">
+                                                    미처리
+                                                </c:when>
+                                                <c:when test="${month != thisMonth}">
+                                                    정산완료
+                                                </c:when>
+                                            </c:choose>
+                                        </td> 
                                     </tr>
                                 </c:forEach>
                             </c:otherwise>
