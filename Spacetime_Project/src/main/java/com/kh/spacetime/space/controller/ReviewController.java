@@ -51,8 +51,8 @@ public class ReviewController {
 		
 		int listCount = reviewService.selectListCount(memNo);
 		
-		int pageLimit = 10;
-		int boardLimit = 5;
+		int pageLimit = 5;
+		int boardLimit = 10;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		// getter setter X
@@ -264,7 +264,7 @@ public class ReviewController {
 	}
 
 	/**
-	 * @author 정현 호스트 이용후기관리 리스트
+	 * @author 정현 호스트 이용후기관리 검색 리스트
 	 */
 	@RequestMapping("schHostRvwList.rv")
 	public String searchHostReviewList(@RequestParam(value = "rpage", defaultValue = "1") int currentPage,
@@ -336,8 +336,8 @@ public class ReviewController {
 		Member m = (Member) session.getAttribute("loginMember");
 		// 정현
 		int listCount = spaceService.selectReviewListBySnoCount(sno);
-		int pageLimit = 10;
-		int boardLimit = 1;
+		int pageLimit = 5;
+		int boardLimit = 10;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, page, pageLimit, boardLimit);
 

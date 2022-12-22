@@ -480,8 +480,8 @@ public class SpaceController {
 
 			// 정현
 			int listCount = spaceService.selectReviewListBySnoCount(sno);
-			int pageLimit = 10;
-			int boardLimit = 1;
+			int pageLimit = 5;
+			int boardLimit = 10;
 
 			PageInfo pi = Pagination.getPageInfo(listCount, 1, pageLimit, boardLimit);
 
@@ -540,8 +540,8 @@ public class SpaceController {
 
 				// 정현
 				int listCount = spaceService.selectReviewListBySnoCount(sno);
-				int pageLimit = 10;
-				int boardLimit = 1;
+				int pageLimit = 5;
+				int boardLimit = 10;
 
 				PageInfo pi = Pagination.getPageInfo(listCount, 1, pageLimit, boardLimit);
 

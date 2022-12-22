@@ -59,8 +59,8 @@ public class ReserveController {
 
 		int listCount = reserveService.selectHostReserveListCount(memNo);
 
-		int pageLimit = 10;
-		int boardLimit = 3;
+		int pageLimit = 5;
+		int boardLimit = 10;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
@@ -90,8 +90,8 @@ public class ReserveController {
 		map.put("keyword", keyword);
 
 		int listCount = reserveService.searchHostReserveListCount(map);
-		int pageLimit = 10;
-		int boardLimit = 3;
+		int pageLimit = 5;
+		int boardLimit = 10;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
@@ -116,8 +116,8 @@ public class ReserveController {
 		int memNo = loginMember.getMemNo();
 
 		int listCount = reserveService.selectHostCalculListCount(memNo);
-		int pageLimit = 10;
-		int boardLimit = 3;
+		int pageLimit = 5;
+		int boardLimit = 10;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
@@ -154,8 +154,8 @@ public class ReserveController {
 		map.put("edate", edate);
 
 		int listCount = reserveService.searchHostCalculListCount(map);
-		int pageLimit = 10;
-		int boardLimit = 3;
+		int pageLimit = 5;
+		int boardLimit = 10;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
