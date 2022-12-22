@@ -449,7 +449,17 @@
                                         <dl class="info_date">
                                             <dt>예약시간</dt> 
                                             <dd>
-                                                <span class="line">${ r.startTime }시 - ${ r.endTime }시 (${r.endTime - r.startTime }시간)</span>
+                                            <c:choose>
+		                                    	<c:when  test="${r.endTime eq -1}">
+		                                    		<span class="line">${ r.startTime }시 - ${ r.startTime + 1 }시 (1시간)</span>
+		                                    	</c:when>
+		                                    	<c:otherwise>
+		                                    		<span class="line">${ r.startTime }시 - ${ r.endTime }시 (${r.endTime - r.startTime }시간)</span>
+		                                    	</c:otherwise>
+		                                    </c:choose>
+                                            
+                                            
+                                                
                                             </dd>
                                         </dl>
                                         <dl class="info_person">
