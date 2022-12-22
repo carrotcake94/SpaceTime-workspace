@@ -193,27 +193,24 @@
 /* 리뷰존 *************************************************************************************/
 #main_reviewZone {
 	width: 100%;
-	margin: 350px 0px 150px 0px;
+	margin: 550px 0px 150px 0px;
 }
 
 #main_reviewZone_title {
-	height: 16%;
+	height: 16%
 }
 
 #main_reviewZone_content {
 	height: 84%;
+	width: 1200px;
+	margin-left: 57px;
+	margin-top: 20px;
 }
 
 #main_reviewZone_content>div {
-	float: left;
+	display: inline-block;
 	width: 30%;
 	height: 100%;
-	margin: auto;
-}
-
-.main_reviewZone_paging {
-	width: 5% !important;
-	padding: 190px 12px;
 }
 
 .main_reviewZone_thumbnail {

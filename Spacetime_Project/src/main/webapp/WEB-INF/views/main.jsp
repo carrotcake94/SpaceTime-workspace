@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +94,7 @@
 				<!-- 오늘의 추천 공간 / onclick="location.href'링크'"로 페이지 이동 -->
 				<div id="main_recommend">
 					<div id="recommendChange">
-					<input type="text" id="recommendKeyword" name="hashtag" value="파티룸"><button id="recommendSelect"></button>
+						<input type="text" id="recommendKeyword" name="hashtag" value="파티룸"><button id="recommendSelect"></button>
 					</div>
 					<div id="main_recommend_title">
 						<div>오늘의 추천 공간</div>
@@ -116,7 +117,6 @@
 							</div>
 						</div>
 					</div>
-					<button id="moreRecommend">+ 더 보기</button>
 				</div>
 				
 				<script>
@@ -137,7 +137,7 @@
 				<!-- 리뷰 ZONE -->
 				<div id="main_reviewZone">
 					<div id="main_reviewZone_title">
-						<div>리뷰 ZONE</div>
+						<div>최신 리뷰 ZONE</div>
 					</div>
 					<div id="main_reviewZone_content">
 						<!-- 리뷰 동적으로 찍어낼 예정 (임의로 하드코딩)-->
