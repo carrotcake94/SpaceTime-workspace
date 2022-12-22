@@ -139,8 +139,12 @@
     padding:30px 0px;
 }
 
+.mapFilter_option_title+div {
+    padding: 25px 0px 15px;
+}
+
 #mapFilter_area{
-	margin-top: 20px;
+	height: 45px;
 }
 
 #mapFilter_category {
@@ -154,12 +158,8 @@
 
 #mapFilter_category_list{
     width: 80%;
-}
-
-#mapFilter_category_list > div{
-    float: left;
-    width: 10%;
-    height: 50px;
+    text-align: left;
+    padding: 15px 0px 15px;
 }
 
 #mapFilter_option_price {
@@ -168,13 +168,7 @@
 
 #mapFilter_option_price>.mapFilter_options {
     width: 80%;
-    padding: 25px 0px 25px 0px;
     border : 0px;
-}
-
-
-#mapFilter_category_list {
-    padding: 15px 0px 10px 0px;
 }
 
 #mapFilter_priceRange > input{
@@ -188,14 +182,12 @@
     border-bottom: 0px;
 }
 
-#mapFilter_search {
-    padding-left: 30px;
-    border : 1px ;
-    width: 95%;
+#mapFilter_btns>#mapFilter_search {
+    width: 90%;
     height: 70%;
-    border-radius : 5px;
-	background-color: #FFB200;
+    color: whitesmoke;
 }
+
 
 #map> #changeMap {
 	position: absolute;
@@ -239,11 +231,6 @@ form > div {
     overflow-y: scroll;
 }
 
-
-.picList_content > div {
-    border: 1px solid black;
-}
-
 #picList > div {
     width:50%;
     float: left;
@@ -251,7 +238,7 @@ form > div {
 }
 
 .picList_content {
-    padding: 10%;
+    padding: 5%;
 }
 
 .picList_content_pic {
@@ -261,15 +248,47 @@ form > div {
 .picList_content_pic > img {
 	width:100%;
 	height: 100%;
-	
 }
+
+.picList_content:hover {
+    cursor: pointer;
+}
+
+.picList_content_spaceName {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(51, 51, 51);
+    margin-top: 5px;
+}
+
+.picList_content>hr {
+    color:rgb(96, 155, 204);
+    margin: 3px;
+}
+
+.picList_content_price>span:nth-child(1) {
+    font-weight: 400;
+    color: #277BC0;
+}
+
 /*게시판형 리스트*******************************/
 
-#lineList > div {
-    border: 1px solid black;
-    margin : 40px 40px 40px 50px;
+#lineList > div:nth-child(odd)    {
+    border: 2px solid #277BC0;
+    margin : 35px 20px 35px 60px;
     height: 120px;
     width: 80%;
+    padding: 2px 20px;
+    border-radius: 4px;
+}
+
+#lineList > div:nth-child(even)    {
+    border: 2px solid orange;
+    margin : 35px 20px 35px 60px;
+    height: 120px;
+    width: 80%;
+    padding: 2px 20px;
+    border-radius: 4px;
 }
 
 .lineList_content_spaceTitle {
@@ -277,10 +296,11 @@ form > div {
     font-size : 25px;
     line-height: 1.5;
     padding-left: 3px;
+
 }
 
 .lineList_content_hashTag {
-    height: 50px;
+    height: 43px;
     font-size : 15px;
 }
 
@@ -288,6 +308,11 @@ form > div {
     float:left;
     height: 30px;
     font-size : 15px;
+}
+
+.lineList_content_price>span:nth-child(1) {
+    font-weight: 400;
+    color: #277BC0;
 }
 
 .lineList_content_price {

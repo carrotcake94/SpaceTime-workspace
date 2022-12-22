@@ -33,7 +33,7 @@
 
 					<div id="mapFilter" style="display: none;">
 						<div>
-							<div class="mapFilter_option_title">지역</div>
+							<div class="mapFilter_option_title"><p>지역</p></div>
 							<div>
 								<select class="mapFilter_options form-control" id="mapFilter_area" name="area">
 									<option value="now">현재 지도 위치</option>
@@ -48,7 +48,7 @@
 						</div>
 						
 						<div id="mapFilter_option_category">
-							<div class="mapFilter_option_title">시설</div>
+							<div class="mapFilter_option_title"><p>시설</p></div>
 							<div id="mapFilter_category_list" class="mapFilter_options">
 								<input type="checkbox" name="category" value="1">파티룸 
 								<input type="checkbox" name="category" value="2">카페 
@@ -63,14 +63,14 @@
 							</div>
 						</div>
 						<div id="mapFilter_option_price">
-							<div class="mapFilter_option_title">가격</div>
+							<div class="mapFilter_option_title"><p>가격</p></div>
 							<div id="mapFilter_priceRange" class="mapFilter_options">
 								최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="" class="form-control">원 &nbsp;~&nbsp; 최대
 								<input type="text" id="max_price" name="max_price" value="9999999" placeholder="" class="form-control">원
 							</div>
 						</div>
-						<div id="mapFilter_btns">
-							<button id="mapFilter_search">검색</button>
+						<div id="mapFilter_btns" align="center">
+							<button id="mapFilter_search" class="btn btn-warning">검색</button>
 						</div>
 					</div>
 					
