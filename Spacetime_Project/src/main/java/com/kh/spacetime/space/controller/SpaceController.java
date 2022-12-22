@@ -423,7 +423,7 @@ public class SpaceController {
 	 */
 
 	@RequestMapping("reportSpace.sp")
-	public ModelAndView insertSpaceReport(int sno, String reportType, String reportContent, HttpSession session,
+	public ModelAndView insertSpaceReport(int sno, String reportType, @RequestParam(value="reportContent", required=false, defaultValue=" ")String reportContent, HttpSession session,
 			ModelAndView mv) {
 
 		int mno = ((Member) session.getAttribute("loginMember")).getMemNo();
