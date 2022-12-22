@@ -74,11 +74,11 @@ public class MemberController {
 		}
 		
 		Member loginMember = memberService.loginMember(m);
-		if(loginMember.getMemStatus().equals("Y")) {
+		if(loginMember != null && loginMember.getMemStatus().equals("Y")) {
 			session.setAttribute("alertMsg", "탈퇴한 회원입니다. 이용을 원하시면 다시 가입해주세요.");
 			mv.setViewName("redirect:/");
 			
-		} else if(loginMember.getBlacklist().equals("Y")) {
+		} else if(loginMember != null && loginMember.getBlacklist().equals("Y")) {
 			
 			session.setAttribute("alertMsg", "다수의 신고로 회원 자격이 정지되어 로그인이 불가능합니다. 자세한 사항은 고객센터 문의를 통해 확인 가능합니다.");
 			mv.setViewName("redirect:/");
@@ -89,8 +89,11 @@ public class MemberController {
 			mv.setViewName("redirect:/");
 		}
 		else {
-			mv.addObject("errorMsg", "로그인 실패");
-			mv.setViewName("common/errorPage");
+			
+			session.setAttribute("alertMsg", "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+			mv.setViewName("redirect:/enrollLogin.me");
+			// mv.addObject("errorMsg", "로그인 실패");
+			// mv.setViewName("common/errorPage");
 		}
 		
 		return mv;
