@@ -661,11 +661,6 @@ body * {
         })
     });
     
-    
-/*     document.querySelector("m_search_btn").addEventListener("click", () => {
-    	document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
-    })
-     */
     //엔터 혹은 검색클릭 시 검색 시작
     function searchStart(pureKeyword){
         document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();

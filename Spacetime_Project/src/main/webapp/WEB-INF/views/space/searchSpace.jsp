@@ -129,12 +129,10 @@
 							initiateMap();
 						} else if('${categoryNo}' == ""){
 							if('${pureKeyword}'.startsWith("#") == true){
-								console.log("해시태그검색");
 								selectListByHashtag('${pureKeyword}');
 								initiateMap();
 								
 							} else if ('${pureKeyword}' != "" && '${pureKeyword}'.startsWith("#") == false) {
-								console.log("일반검색");
 								selectListByKeyword('${pureKeyword}');
 								if(spaceListArr.length == 0) {
 									window.alert("해당 검색어로 조회된 공간이 없습니다.\n\n다른 키워드로 조회하시거나, \n필터로 조건을 설정해주세요!");
