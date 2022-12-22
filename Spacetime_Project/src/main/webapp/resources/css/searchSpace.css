@@ -93,9 +93,10 @@
 }
 
 #mapFilter {
-    width: 100%;
+    width: 75%;
     height: 50%;
     position: absolute;
+    left: 20%;
     display: none; 
     /* display: table; */
     background-color: white;
@@ -190,7 +191,7 @@
 #mapFilter_search {
     padding-left: 30px;
     border : 1px ;
-    width: 100%;
+    width: 95%;
     height: 70%;
     border-radius : 5px;
 	background-color: #FFB200;
