@@ -813,9 +813,28 @@ body * {
             alert("로그인 후 이용 가능한 서비스입니다.");
            return false;
         } 
-		$("#reviewReportModal input[name=reportedMemNo]").val(reportedMemNo);
-		$("#reviewReportModal textarea[name=reportContent]").val("");
-		$("#reviewReportModal").modal("show");
+		 
+		var reportMemNo = $("#reviewReportModal input[name=reportMemNo]").val();
+		 
+		 $.ajax({
+				url : "countReport.rv",
+				data : {
+					reportMemNo : reportMemNo,
+					reportedMemNo : reportedMemNo
+				},
+				success : result => {
+					if(result == "success") {
+						alert("신고는 하루에 1회 가능합니다.");
+					} else {
+						$("#reviewReportModal input[name=reportedMemNo]").val(reportedMemNo);
+						$("#reviewReportModal textarea[name=reportContent]").val("");
+						$("#reviewReportModal").modal("show");
+					}
+				},
+				error : () => {
+					console.log("통신 실패");
+				}
+		});
 	 }
 	
 	 reviewReport = () => {
