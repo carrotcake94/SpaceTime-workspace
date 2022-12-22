@@ -299,6 +299,7 @@
 			<result column="SPACE_TITLE" property="spaceTitle" />
 		</collection>
 		<collection  property="member" ofType="member" >
+			<result column="MEM_ID" property="memId" />
 			<result column="MEM_NAME" property="memName" />
 			<result column="PHONE" property="phone" />
 		</collection>
@@ -329,6 +330,7 @@
                 , M.MEM_NAME
                 , M.PHONE
                 , S.SPACE_TITLE
+                , M.MEM_ID
        FROM RESERVE R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
        JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO
@@ -365,6 +367,7 @@
                 , M.MEM_NAME
                 , M.PHONE
                 , S.SPACE_TITLE
+                , M.MEM_ID
        FROM RESERVE R
        JOIN MEMBER M ON R.MEM_NO = M.MEM_NO
        JOIN SPACE S ON R.SPACE_NO = S.SPACE_NO

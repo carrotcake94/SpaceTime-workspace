@@ -785,6 +785,14 @@
 			   	   	toast += "<div>"+socketData.message+"</div>"   
 			   	   	toast += "<div class='spStatusUpdate' style='cursor:pointer;'>공간 검수가 끝났습니다.</div>"   	
 	   	 	  	}
+		   	   	else if(socketData.msgType == "revconfirm" ) {
+			   	   	toast += "<div>"+socketData.message+"</div>"   
+			   	   	toast += "<div class='revconfirm' style='cursor:pointer;'>예약이 확정되었습니다.</div>"   	
+	   	 	  	}
+		   		else if(socketData.msgType == "revreject" ) {
+			   	   	toast += "<div>"+socketData.message+"</div>"   
+			   	   	toast += "<div class='revreject' style='cursor:pointer;'>예약이 취소되었습니다.</div>"   	
+	   	 	  	}
    	   	        
    	    		toast += "</div></div></div>"
    			
@@ -815,6 +823,9 @@
    			});
 			$("#socketAlarmArea").on("click", ".spStatusUpdate", function() {
 				location.href="hostSpaceList.sp";
+   			});
+			$("#socketAlarmArea").on("click", ".revreject, .revconfirm", function() {
+				location.href="myReserve.re";
    			});
    		});
 

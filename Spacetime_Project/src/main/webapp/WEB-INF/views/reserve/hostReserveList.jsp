@@ -385,6 +385,7 @@
 		         	<input type="hidden"  value="${r.denyMessage }">
 		         	<input type="hidden"  value="${r.member.phone }">
 		         	<input type="hidden"  value="${r.reserveStatus}">
+		         	<input type="hidden"  value="${r.member.memId}">
 		          </tr>
 		         </c:forEach>
 		       </c:otherwise>
@@ -457,6 +458,7 @@
                 </tr>
               </tbody>
             </table>
+            <input type="hidden" name="smemId" value="">
           </div>
           <!-- Modal footer -->
           <div class="modal-footer">
@@ -480,7 +482,7 @@
           <div class="modal-footer">
         	  <form action="updateHostRev.re" method="post">
 	            <button type="button" data-dismiss="modal">닫기</button>
-	            <button type="submit" >확인</button>
+	            <button type="button" onclick="revConfirmSub()">확인</button>
 	            <input type="hidden" name="reserveNo" value="">
 	            <input type="hidden" name="reserveStatus" value="Y">
 	            <input type="hidden" name="denyMessage" value="">
@@ -503,7 +505,7 @@
               ></textarea>
               <input type="hidden" name="reserveNo" value="" />
               <input type="hidden" name="reserveStatus" value="N">
-              <button type="submit">확인</button>
+              <button type="button" onclick="revRejectSub()">확인</button>
             </form>
           </div>
         </div>
@@ -531,8 +533,7 @@
     	$("#revTime").text(str);
     	$("#revPhone").text($(tr).children("input").eq(4).val());
     	$("#revPrice").text($(tr).children().eq(4).text());
-    	
-    	
+    	$("#reserveInfoModal input[name=smemId]").val($(tr).children("input").eq(6).val());
     	let today = new Date();
     	
     	var useday = useDate+" "+$(tr).children("input").eq(1).val()+":00:00";
@@ -573,22 +574,16 @@
         
        $("#reserveInfoModal").modal("show");
  
-    	
-//        <td>${r.reserveNo}</td>
-//        <td>${r.space.spaceTitle}</td>
-//        <td>${r.member.memName}</td>
-//        <td>${r.useDate }</td>
-//        <td>${r.space.spaceSubTitle}</td>
-//        <td>승인불가
-
-//        </td>
-// <input type="hidden"  value="${r.reserveCount }">
-//        <input type="hidden"  value="${r.startTime }">
-//     	<input type="hidden"  value="${r.endTime }">
-//     	<input type="hidden"  value="${r.denyMessage }">
-//     	<input type="hidden"  value="${r.member.phone }">
-       
     }
+    revConfirmSub = () => {
+		$("#revConfirmModal form").submit();
+		sendMessage("revconfirm", $("#reserveInfoModal input[name=smemId]").val(), $("#reserveInfoModal #revTitle").text());
+	}
+    
+    revRejectSub = () => {
+		$("#revRejectModal form").submit();
+		sendMessage("revreject", $("#reserveInfoModal input[name=smemId]").val(), $("#reserveInfoModal #revTitle").text());
+	}
     
     //페이징
 	$(function() {

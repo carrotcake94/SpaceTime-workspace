@@ -54,27 +54,27 @@ public class SpaceHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
 		Gson gson = new Gson();
-		//json으로부터 객체를 만듦		//이 message클래스를 기반으로 json이만들어진다.
-		Message msg = gson.fromJson(message.getPayload(), Message.class); 
-		// ↑ json을 java의 객체로 바꿔주는 것.	
-		
+		// json으로부터 객체를 만듦 //이 message클래스를 기반으로 json이만들어진다.
+		Message msg = gson.fromJson(message.getPayload(), Message.class);
+		// ↑ json을 java의 객체로 바꿔주는 것.
+
 		// 전달 메시지
 		TextMessage sendMsg = new TextMessage(gson.toJson(msg));
 
 		if (msg != null) {
 
 			WebSocketSession receiverSession = userSessionsMap.get(msg.getReceiverId());
- 
+
 			Member m = new Member();
-			// 공간 예약완료 시 
+			// 공간 예약완료 시
 			if ("reserve".equals(msg.getMsgType()) && receiverSession != null) {
 				receiverSession.sendMessage(sendMsg);
 			}
-			// 이용후기 작성 시 
+			// 이용후기 작성 시
 			else if ("review".equals(msg.getMsgType()) && receiverSession != null) {
 				receiverSession.sendMessage(sendMsg);
 			}
-			// 챗 작성 시 
+			// 챗 작성 시
 			else if ("chat".equals(msg.getMsgType()) && receiverSession != null) {
 				receiverSession.sendMessage(sendMsg);
 			}
@@ -82,7 +82,14 @@ public class SpaceHandler extends TextWebSocketHandler {
 			else if ("spStatusUpdate".equals(msg.getMsgType()) && receiverSession != null) {
 				receiverSession.sendMessage(sendMsg);
 			}
-			
+			// 호스트 예약 확정
+			else if ("revconfirm".equals(msg.getMsgType()) && receiverSession != null) {
+				receiverSession.sendMessage(sendMsg);
+			}
+			// 호스트 예약 취소
+			else if ("revreject".equals(msg.getMsgType()) && receiverSession != null) {
+				receiverSession.sendMessage(sendMsg);
+			}
 		}
 	}
 

@@ -186,6 +186,7 @@ public class ReserveController {
 		if (result > 0) {
 			if (r.getReserveStatus().equals("Y")) {
 				session.setAttribute("alertMsg", "예약을 확정하였습니다.");
+				mv.setViewName("redirect:/revHostList.re");
 			} else {
 				// 부트페이 결제 취소 - 경미
 				try {
