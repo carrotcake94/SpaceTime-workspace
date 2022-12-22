@@ -605,7 +605,7 @@ body * {
 		<div>
 			<div id="m_search_bar">
 				<form id="searchInputForm" action="" method="get">
-					<input type="search" id="searchInput" name="pureKeyword" placeholder="#입력시 해시태그 검색이 가능해요!">
+					<input type="search" id="searchInput" name="pureKeyword" placeholder="&nbsp&nbsp'#' 입력시 해시태그 검색이 가능해요!" onkeyup="onKeyUp(e)" required>
 				</form>
 			</div>
 			<div id="autoComplete">
@@ -629,11 +629,11 @@ body * {
     var autoCompleteContent = document.querySelector(".autoCompleteContent");
     var searchInput = document.querySelector("#searchInput");
         
-    //메인화면 검색창에서 keyup반응 시 자동완성기능 실행
     searchInput.addEventListener("keyup", (e) => {
         if(e.keyCode == 13){
-            searchStart(searchInput.value);
-        };
+       		console.log(검색시작);
+           	searchStart(searchInput.value);
+        }
         
         //입력 시 하단 자동완성 박스 생성
         if(searchInput.value == ""){
@@ -649,8 +649,6 @@ body * {
         } else if(searchInput.value != null) {
             autoComplete(searchInput.value);
             autoCompleteListShowUp(words, searchInput.value);
-        } else {
-        	window.alert("검색어를 입력해주세요!");
         }
         
         //다른 곳 클릭 시 창 사라지기
@@ -667,22 +665,21 @@ body * {
     });
     
     
-    
 /*     document.querySelector("m_search_btn").addEventListener("click", () => {
     	document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
     })
      */
     //엔터 혹은 검색클릭 시 검색 시작
     function searchStart(pureKeyword){
-           document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
-    }
+        document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
+ 	}
     
     //연관검색어 클릭 시
-    autoCompleteContent.onclick = (e) => {
+    /* autoCompleteContent.onclick = (e) => {
     	console.log(e.target.innerHTML);
    		document.querySelector("#searchInputForm").setAttribute("value", e.target.innerHTML);
    		document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp?pureKey=" + e.target.innerHTML).submit();
-   	} 
+   	}  */
     
 	</script>
 	<!-- 슬라이드 메뉴 -->

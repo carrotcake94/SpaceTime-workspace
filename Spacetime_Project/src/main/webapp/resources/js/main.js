@@ -149,8 +149,7 @@ function spaceRecommend(keyword){
                                                 "<span> 원/시간</span>" +
                                             "</span>" +
                                         "</div>" +
-                                    "</div>";		   
-                 
+                                    "</div>";
                  if(i < 3){
                      document.querySelector("#cardContainer1").append(card);
                  } else {

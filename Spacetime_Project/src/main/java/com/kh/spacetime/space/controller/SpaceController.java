@@ -280,101 +280,85 @@ public class SpaceController {
 		}
 	}
 
-	// 지도화면 이동 -성훈
+	// 지도화면으로 이동 -성훈
 	@RequestMapping("searchSpaceList.mp")
 	public ModelAndView selectSpaceList(String pureKeyword, ModelAndView mv) {
-	    mv.addObject("pureKeyword", pureKeyword).setViewName("space/searchSpace");
-	    
-	    return mv;
-	}
-
-	// 지도 범위에 포함된 장소 조회 -성훈
-	@ResponseBody
-	@RequestMapping(value = "selectSpace.mp", produces = "application/json; charset=UTF-8")
-	public String selecListForMap(double max_lat, double max_lng, double min_lat, double min_lng) {
-
-	    HashMap<String, Double> map = new HashMap<>();
-	    map.put("max_lat", max_lat);
-	    map.put("max_lng", max_lng);
-	    map.put("min_lat", min_lat);
-	    map.put("min_lng", min_lng);
-
-	    ArrayList<Space> listArr = spaceService.selectListForMap(map);
-	    return new Gson().toJson(listArr);
+		mv.addObject("pureKeyword", pureKeyword).setViewName("space/searchSpace");
+		return mv;
 	}
 
 	// 지도 필터링(지역설정O) -성훈
 	@ResponseBody
 	@RequestMapping(value = "mapFilter.mp", produces = "application/json; charset=UTF-8")
 	public String filterListForMap(HttpServletRequest request, String min_price, String max_price) {
-	    String[] category = request.getParameterValues("category[]");
-	    ArrayList<String> categoryArr = new ArrayList<>();
-	    for (int i = 0; i < category.length; i++) {
-	        categoryArr.add(category[i]);
-	    }
+		String[] category = request.getParameterValues("category[]");
+		ArrayList<String> categoryArr = new ArrayList<>();
+		for (int i = 0; i < category.length; i++) {
+			categoryArr.add(category[i]);
+		}
 
-	    String[] area = request.getParameterValues("area[]");
-	    ArrayList<String> areaArr = new ArrayList<>();
-	    for (int i = 0; i < area.length; i++) {
-	        areaArr.add(area[i]);
-	    }
+		String[] area = request.getParameterValues("area[]");
+		ArrayList<String> areaArr = new ArrayList<>();
+		for (int i = 0; i < area.length; i++) {
+			areaArr.add(area[i]);
+		}
 
-	    HashMap<String, Object> condition = new HashMap<>();
-	    condition.put("area", areaArr);
-	    condition.put("category", categoryArr);
-	    condition.put("min_price", min_price);
-	    condition.put("max_price", max_price);
-	    ArrayList<Space> listArr = spaceService.filterListForMap(condition);
+		HashMap<String, Object> condition = new HashMap<>();
+		condition.put("area", areaArr);
+		condition.put("category", categoryArr);
+		condition.put("min_price", min_price);
+		condition.put("max_price", max_price);
+		ArrayList<Space> listArr = spaceService.filterListForMap(condition);
 
-	    return new Gson().toJson(listArr);
+		return new Gson().toJson(listArr);
 	}
 
 	// 지도 필터링(지역설정X => 현재 보여지는 지도) -성훈
 	@ResponseBody
 	@RequestMapping(value = "mapFilterOnCurrentMap.mp", produces = "application/json; charset=UTF-8")
 	public String mapFilterOnCurrentMap(double max_lat, double max_lng, double min_lat, double min_lng,
-	        HttpServletRequest request, String min_price, String max_price) {
-	    String[] category = request.getParameterValues("category[]");
-	    ArrayList<String> categoryArr = new ArrayList<>();
-	    for (int i = 0; i < category.length; i++) {
-	        categoryArr.add(category[i]);
-	    }
+			HttpServletRequest request, String min_price, String max_price) {
+		String[] category = request.getParameterValues("category[]");
+		ArrayList<String> categoryArr = new ArrayList<>();
+		for (int i = 0; i < category.length; i++) {
+			categoryArr.add(category[i]);
+		}
 
-	    HashMap<String, Double> bound = new HashMap<>();
-	    bound.put("max_lat", max_lat);
-	    bound.put("max_lng", max_lng);
-	    bound.put("min_lat", min_lat);
-	    bound.put("min_lng", min_lng);
+		HashMap<String, Double> bound = new HashMap<>();
+		bound.put("max_lat", max_lat);
+		bound.put("max_lng", max_lng);
+		bound.put("min_lat", min_lat);
+		bound.put("min_lng", min_lng);
 
-	    HashMap<String, Object> condition = new HashMap<>();
-	    condition.put("bound", bound);
-	    condition.put("category", categoryArr);
-	    condition.put("min_price", min_price);
-	    condition.put("max_price", max_price);
+		HashMap<String, Object> condition = new HashMap<>();
+		condition.put("bound", bound);
+		condition.put("category", categoryArr);
+		condition.put("min_price", min_price);
+		condition.put("max_price", max_price);
 
-	    ArrayList<Space> listArr = spaceService.mapFilterOnCurrentMap(condition);
+		ArrayList<Space> listArr = spaceService.mapFilterOnCurrentMap(condition);
 
-	    return new Gson().toJson(listArr);
+		return new Gson().toJson(listArr);
 	}
 
 	// 해시태그 검색 -성훈
 	@ResponseBody
 	@RequestMapping(value = "searchSpaceByHashtag.mp", produces = "application/json; charset=UTF-8")
 	public String searchSpaceByHashtag(String pureKeyword) {
-	    String keyword = pureKeyword.replace("#", "");
-	    
-	    ArrayList<Space> listArr = spaceService.searchSpaceByHashtag(keyword);
+		String keyword = pureKeyword.replace("#", "");
+		
+		ArrayList<Space> listArr = spaceService.searchSpaceByHashtag(keyword);
 
-	    return new Gson().toJson(listArr);
+		return new Gson().toJson(listArr);
 	}
 
 	// 일반검색 -성훈
 	@ResponseBody
 	@RequestMapping(value = "searchSpaceByKeyword.mp", produces = "application/json; charset=UTF-8")
 	public String searchSpaceByKeyword(String keyword) {
-	    ArrayList<Space> listArr = spaceService.searchSpaceByKeyword(keyword);
+		ArrayList<Space> listArr = spaceService.searchSpaceByKeyword(keyword);
 
-	    return new Gson().toJson(listArr);
+		return new Gson().toJson(listArr);
 	}
 
 

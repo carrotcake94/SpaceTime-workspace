@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,9 +31,9 @@
 						</div>
 					</div>
 
-					<div id="mapFilter" style="display:none;">
+					<div id="mapFilter" style="display: none;">
 						<div>
-							<div class="mapFilter_option_title"><p>지역</p></div>
+							<div class="mapFilter_option_title">지역</div>
 							<div>
 								<select class="mapFilter_options form-control" id="mapFilter_area" name="area">
 									<option value="now">현재 지도 위치</option>
@@ -48,28 +48,28 @@
 						</div>
 						
 						<div id="mapFilter_option_category">
-							<div class="mapFilter_option_title"><p>시설</p></div>
+							<div class="mapFilter_option_title">시설</div>
 							<div id="mapFilter_category_list" class="mapFilter_options">
-								<input type="checkbox" name="category" value="1"> 파티룸 
-								<input type="checkbox" name="category" value="2"> 카페 
-								<input type="checkbox" name="category" value="3"> 공연장
-								<input type="checkbox" name="category" value="4"> 연습실<br>
-								<input type="checkbox" name="category" value="5"> 공유주방
-								<input type="checkbox" name="category" value="6"> 갤러리 
-								<input type="checkbox" name="category" value="7"> 운동시설<br>
-								<input type="checkbox" name="category" value="8"> 스터디룸
-								<input type="checkbox" name="category" value="9"> 회의실 
-								<input type="checkbox" name="category" value="10"> 촬영스튜디오
+								<input type="checkbox" name="category" value="1">파티룸 
+								<input type="checkbox" name="category" value="2">카페 
+								<input type="checkbox" name="category" value="3">공연장
+								<input type="checkbox" name="category" value="4">연습실<br>
+								<input type="checkbox" name="category" value="5">공유주방
+								<input type="checkbox" name="category" value="6">갤러리 
+								<input type="checkbox" name="category" value="7">운동시설<br>
+								<input type="checkbox" name="category" value="8">스터디룸
+								<input type="checkbox" name="category" value="9">회의실 
+								<input type="checkbox" name="category" value="10">촬영스튜디오
 							</div>
 						</div>
 						<div id="mapFilter_option_price">
-							<div class="mapFilter_option_title"><p>가격</p></div>
+							<div class="mapFilter_option_title">가격</div>
 							<div id="mapFilter_priceRange" class="mapFilter_options">
-								최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="" class="form-control"> 원 &nbsp;~&nbsp;
-								최대 <input type="text" id="max_price" name="max_price" value="9999999" placeholder="" class="form-control"> 원
+								최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="" class="form-control">원 &nbsp;~&nbsp; 최대
+								<input type="text" id="max_price" name="max_price" value="9999999" placeholder="" class="form-control">원
 							</div>
 						</div>
-						<div id="mapFilter_btns" align="center">
+						<div id="mapFilter_btns">
 							<button id="mapFilter_search">검색</button>
 						</div>
 					</div>
@@ -98,7 +98,7 @@
 				        zoom: 12
 					};
 					var map = new naver.maps.Map('map', mapOptions);
-					var HOME_PATH = window.HOME_PATH || '.';
+					//var HOME_PATH = window.HOME_PATH || '.';
 					var picListArr = [];
 					var lineListArr = [];
 					
@@ -118,43 +118,63 @@
 							}
 						}
 					};
-					
-					
-					//중복코드 묶은 메소드
-					function initiateMap(map){
-						
-						loadList(spaceListArr, picListArr, lineListArr);
-						updateMarkers();
-						linkMarkerWithList(markers, picListArr, lineListArr, map);
-					}
 					 
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
-						if('${pureKeyword}'.startsWith("#")){
+						
+						if('${pureKeyword}'.startsWith("#") == true){
+							console.log("해시태그검색");
 							selectListByHashtag('${pureKeyword}');
 							initiateMap();
-						} else if ('${pureKeyword}' != null && !'${pureKeyword}'.startsWith("#")) {
+							
+						} else if ('${pureKeyword}' != "" && '${pureKeyword}'.startsWith("#") == false) {
+							console.log("일반검색");
 							selectListByKeyword('${pureKeyword}');
+							if(spaceListArr.length == 0) {
+								window.alert("해당 검색어로 조회된 공간이 없습니다.\n\n다른 키워드로 조회하시거나, \n필터로 조건을 설정해주세요!");
+							}
 							initiateMap();
-						} else if ('${pureKeyword}' == null){
-							window.alert("입력하세요");
+
+						} else if ('${pureKeyword}' == ""){
+							filter.style.display = "block";
+							window.alert("필터를 설정해 공간을 검색하세요!");
+						} else {
+							console.log("?");
 						}
  					};
  					
 					//지도 이동 후 해당 범위의 장소 재검색
 					var changeMap = document.querySelector("#changeMap");
-					changeMap.onclick = () => {
-						getCategory();
-						if(area.value == "now"){
-							if(checkedCategory.length == 0){
-								window.alert("지역과 시설의 종류를 설정해주세요!");
+						changeMap.onclick = () => {
+							area.setAttribute("value", "now");
+							getCategory();
+							if(checkedCategory.length > 3){
+								window.alert("최대 3개의 시설종류만 선택이 가능합니다!");
 							} else {
-								mapFilterOnCurrentMap(map);
+								if(area.value == "now"){
+									if(checkedCategory.length == 0){
+										window.alert("지역과 시설의 종류를 설정해주세요!");
+										filter.style.display = "block";
+									} else {
+										mapFilterOnCurrentMap(map);
+									}
+								} else {
+									filter.style.display = "none";
+									filterMap();
+								}
+								initiateMap();
 							}
-						} else {
-							filterMap();
-						}
-						initiateMap();
+							/* getCategory();
+							if(area.value == "now"){
+								if(checkedCategory.length == 0){
+									window.alert("지역과 시설의 종류를 설정해주세요!");
+								} else {
+									mapFilterOnCurrentMap(map);
+								}
+							} else {
+								filterMap();
+							}
+							initiateMap(); */
 					};
 					
 					//게시판 형태 변환 (게시판형-사진형)
@@ -176,8 +196,8 @@
 					filterSearch.onclick = () => {
 						
 						getCategory();
-						if(checkedCategory.length > 6){
-							window.alert("최대 5개의 시설종류만 선택이 가능합니다!");
+						if(checkedCategory.length > 3){
+							window.alert("최대 3개의 시설종류만 선택이 가능합니다!");
 						} else {
 							if(area.value == "now"){
 								if(checkedCategory.length == 0){

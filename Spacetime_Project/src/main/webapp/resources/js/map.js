@@ -1,25 +1,18 @@
-
 //지도의 정보를 불러와 마커를 추가하는 메소드
-function selectList(map) {
-	$.ajax({
-		url: "selectSpace.mp",
-		type: "get",
-		async: false,
-		data : {
-			max_lat : map.getBounds()._max._lat,
-			max_lng : map.getBounds()._max._lng,
-			min_lat : map.getBounds()._min._lat,
-			min_lng : map.getBounds()._min._lng
-		},
-		success : (listArr) => {
-			spaceListArr = listArr;
-		},
-		error : () => {
-		}
-	});
+function loadMap(map, mapOptions) {
+	mapOptions = {
+		center: new naver.maps.LatLng(37.539861, 126.990815),
+		//center: new naver.maps.LatLng(37.533937, 126.897133),
+        zoom: 12
+	};
+	var map = new naver.maps.Map('map', mapOptions);
 };
 
 function selectListByHashtag(pureKeyword){
+	if(pureKeyword == "#"){
+		window.alert("해시태그(#)와 검색어를 함께 입력해주세요!");
+		return;
+	}
 	$.ajax({
 		url: "searchSpaceByHashtag.mp",
 		type : "get",
@@ -44,7 +37,7 @@ function selectListByKeyword(pureKeyword){
 			keyword : pureKeyword
 		},
 		success : (listArr) => {
-			spaceListArr = listArr;
+				spaceListArr = listArr;
 		},
 		error : () => {
 		}
@@ -53,8 +46,12 @@ function selectListByKeyword(pureKeyword){
 
 function loadList(spaceListArr, picListArr, lineListArr){
 	//기존의 리스트 삭제
-	picListArr = [];
-	lineListArr = [];
+	while(picList.hasChildNodes()){
+		picList.removeChild(picList.firstChild);
+	}
+	while(lineList.hasChildNodes()){
+		lineList.removeChild(lineList.firstChild);
+	}
 	
 	//새로운 리스트 생성
 	var picContent, lineCotent;
@@ -118,7 +115,6 @@ function updateMarkers() {
 			map: map,
 			animation: null
 		});
-		
         markers[i] = marker;
 	}
 };
@@ -179,7 +175,7 @@ function toLineList() {
 	picList.style.display = "none";
 }
 
-function filterMap(map, mapOptions) {
+function filterMap() {
 	//지역
 	
 	var selectedArea = area.options[area.selectedIndex].value;
@@ -204,15 +200,6 @@ function filterMap(map, mapOptions) {
 		},
 		success : (listArr) => {
 			spaceListArr = listArr;
-			switch(selectedArea){
-				case "강서구,양천구,구로구,영등포구" : var lat = 37.533059; var lng = 126.878722; break;
-				case "금천구,동작구,관악구,서초구" : var lat = 37.490694; var lng = 126.967206; break;
-				case "강남구,송파구,광진구,강동구" : var lat = 37.520155; var lng = 127.096403; break;
-				case "은평구,마포구,서대문구,종로구" : var lat = 37.587191; var lng = 126.956507; break;
-				case "성북구,강북구,도봉구,노원구,중랑구" : var lat = 36.623989; var lng = 127.062066; break;
-				case "용산구,중구,성동구,동대문구" : var lat = 37.557784; var lng = 127.013968; break;
-            };
-            changeMapCenter(lat, lng);
 		},
 		error : () => {
 		}
@@ -256,14 +243,13 @@ function mapFilterOnCurrentMap(map){
 	});
 }
 
-function changePositionSet(map, lat, lng){
-	mapOptions = { 
-		center : new naver.maps.LatLng(lat, lng),
-		zoom : 13
-	}
-	map = new naver.maps.Map("map", mapOptions);
-}
-
 function toSpaceDetail(sno){
 	location.href = "detail.sp?sno=" + sno;
+}
+
+//중복코드 묶은 메소드
+function initiateMap(map){
+	loadList(spaceListArr, picListArr, lineListArr);
+	updateMarkers();
+	linkMarkerWithList(markers, picListArr, lineListArr, map);
 }

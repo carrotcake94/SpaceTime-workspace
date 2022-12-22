@@ -144,6 +144,11 @@
 	height: 30px;
 }
 
+.recommend_hashtag_wrap {
+	height: 35px;
+	overflow: hidden;
+}
+
 .recommend_hashtag_wrap > div {
 	border : 0.5px solid lightgray;
 	border-radius: 15px;
