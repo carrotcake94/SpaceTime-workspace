@@ -134,18 +134,19 @@ function spaceRecommend(keyword){
              for(var i in reviewList){
                  var card = document.createElement("div");
                  card.setAttribute("onclick", "toSpaceDetail(" + reviewList[i].spaceNo + ")");
-                 card.innerHTML =  "<div class='reviewCard' id='recommend" + i + "'>" +
-                                        "<div class='review_img'>" +
-                                                
-                                        "</div>" + 
-                                        "<div class='review_content_area>" +
-                                            "<span class='review_stitle'>" + reviewList[i].spaceTitle + "</span>" +
-                                            "<hr />" +
-                                            "<span>별점 : </span><span style='color: #277BC0;>" + reviewList[i].rating + "</span><span>점 / 10점</span>" +
-                                            "<hr />" +
-                                            "<span>" + reviewList[i].reviewCont + "</span>" +
-                                        "</div>" +
-                                    "</div>";
+                 card.innerHTML = "<div class='reviewCard' id='review" + i + "'>" +
+			                         "<div class='review_img_wrap'>" +
+			                            "<img class='img-1' src='" + reviewList[i].reviewAttach1 + "' width='100%' height='100%' alt='사진 없음' />" +
+			                         "</div>" + 
+			                      "<div class='review_content_area'>" +
+			                         "<div class='review_title_wrap'><span class='review_stitle'>" + reviewList[i].spaceTitle + "</span></div>" +
+			                         "<div class='review_nickNameAndProfile'>" +
+			                         	"<div><img class='img-2' src='" + reviewList[i].profilePath + "'/></div>" +
+			                         	"<div class='review_nickName_wrap'><span class='review_nickName'>" + reviewList[i].nickName + "</span></div>" +
+			                         	"<div class='review_rating_wrap'><span style='color:red; font-weight:900;'>" + reviewList[i].rating + "</span> / 10점</div>" +
+			                         "</div>" +
+			                         "<div class='review_content_wrap'>" +  reviewList[i].reviewCont + "</div>"
+			                      "</div>";
                 if(i == 0){
                      document.querySelector("#reviewContainer1").append(card);
                  } else if (i == 1) {

@@ -47,5 +47,7 @@ public class Space {
 		private String reviewAttach1;
 		private String reviewCont;
 		private String attachmentReName;
+		private String nickName;
+		private String profilePath;
 }
 

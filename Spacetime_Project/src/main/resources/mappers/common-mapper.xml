@@ -15,8 +15,9 @@
 		<result column="REVIEW_ATTACH1" property="reviewAttach1" />
 		<result column="REVIEW_CONT" property="reviewCont" />
 		<result column="RATING" property="rating" />
+		<result column="NICKNAME" property="nickName" />
+		<result column="PROFILE_PATH" property="profilePath" />
 		<result column="ATTACHMENT_RENAME" property="attachmentReName" />
-		
 	</resultMap>
 	
 	<!-- 추천공간 -성훈 -->
@@ -39,18 +40,20 @@
 	
 	<!-- 리뷰존 (최신순) -성훈 -->
 	<select id="spaceReview" resultMap="spaceResultSet">
-		SELECT DISTINCT S.SPACE_NO,
+	  
+	    SELECT DISTINCT S.SPACE_NO,
 		       S.SPACE_TITLE,
 		       RV.REVIEW_ATTACH1,
 		       RV.REVIEW_CONT,
 		       RV.RATING,
-		       RV.REVIEW_NO
+		       RV.REVIEW_NO,
+		       M.NICKNAME,
+		       M.PROFILE_PATH
 		  FROM SPACE S
-		  LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
 		  LEFT JOIN RESERVE RS ON (S.SPACE_NO = RS.SPACE_NO)
 		  LEFT JOIN REVIEW RV ON (RS.RESERVE_NO = RV.RESERVE_NO)
+		  LEFT JOIN MEMBER M ON (RV.MEM_NO = M.MEM_NO)
 		 WHERE SPACE_STATUS = 'Y'
-		   AND ATTACHMENT_LEVEL = 1
 		   AND REVIEW_STATUS = 'N'
 		   AND ROWNUM <![CDATA[<=]]> 3
 	  ORDER BY REVIEW_NO DESC

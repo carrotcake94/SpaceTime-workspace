@@ -99,9 +99,16 @@
 
 				<!-- 오늘의 추천 공간 / onclick="location.href'링크'"로 페이지 이동 -->
 				<div id="main_recommend">
-					<div id="recommendChange">
+					<div id="recommendChange" style="display:none;">
 						<input type="text" id="recommendKeyword" name="hashtag" value="파티룸"><button id="recommendSelect"></button>
 					</div>
+					<%-- <c:if test="${loginMember.memNo eq 1 }">
+						<script>
+							window.onload(){
+								$("#recommendChange").css("display", "block");
+							}
+						</script>
+					</c:if> --%>
 					<div id="main_recommend_title">
 						<div>오늘의 추천 공간</div>
 					</div>
