@@ -193,7 +193,10 @@
        .page-btn {
         margin: 0 5px;
     }
-
+	.nodata {
+	text-align: center;
+	font-size: 25px;
+	font-weight: 600;}
 </style>
 </head>
 <body>
@@ -206,6 +209,13 @@
             <div id="content_2">
              <div id="text" align="center"><p>찜한내역</p></div>   
                 <div id="space_area">
+                    <c:choose>	
+				 	<c:when test="${list.size() eq 0}">
+						<div class="nodata">
+							찜한내역이 없습니다.<br>
+						</div>
+					</c:when> 
+				<c:otherwise>
                     <c:forEach var="s" items="${ list }">
                     <c:set var="attachments" value="${s.attachments}" />
                     <form id="spaceDetailForm" style="width:33%;" method="post" action="">
@@ -220,8 +230,10 @@
                                 
                             
                                 <span class="bookmark">
+                                    
                                     <c:choose>
                                     <c:when test="${ s.openTime eq 0 }">
+		                                    
                                         <img src="resources/images/heart.png" width="35px" height="35px" class="likeControl eventUnLike" style="cursor: pointer;">
                                         <img src="resources/images/heart2.png" width="35px" height="35px" class="likeControl eventLike"  style="display:none; cursor: pointer;">
                                     </c:when>
@@ -253,7 +265,10 @@
                     </form> <!-- 이 반복 부분을 다 지우고 ajax 로 $function 으로 불러오기!! (selectBookmarkList 이런식으로) -->
                    
                     <!-- 반복 돌리기 -->
+                   
                     </c:forEach>
+                     </c:otherwise>
+						</c:choose>
                   <%--   <br>
                     <br>
                     

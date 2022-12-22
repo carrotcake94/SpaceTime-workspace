@@ -34,8 +34,12 @@
 	line-height: 35px;
 }
 
-.table>tbody>tr:hover {
-	cursor: pointer;
+.table>tbody>.data:hover {
+	cursor: pointer; /* 일부러 조회된 데이터가 있을 경우에만 포인터 모양 변경 */
+}
+
+.table>tbody>.nodata:hover {
+	background-color : white; /* 마치 hover 가 안일어난거 같은 효과 */
 }
 
 .modal-footer, .modal-header, .modal-body {
@@ -120,6 +124,12 @@
 .page-btn {
 	margin: 0 5px;
 }
+
+.nodata {
+	text-align: center;
+	font-size: 25px;
+	font-weight: 600;}
+	
 </style>
 </head>
 
@@ -144,9 +154,19 @@
 							<th>처리여부</th>
 						</tr>
 					</thead>
+					
 					<tbody id="content1">
+					<c:choose>	
+				 	<c:when test="${list.size() eq 0}">
+						<tr class="nodata">
+							<td colspan="3">
+								신고내역이 없습니다.
+							</td>
+						</tr>
+					</c:when> 
+				<c:otherwise>
 						<c:forEach var="r" items="${ list }">
-							<tr onclick="reportmodalopen(this)">
+							<tr class="data" onclick="reportmodalopen(this)">
 								<td>${r.reportType}</td>
 								<td>${r.reportDate}</td>
 								<td><c:choose>
@@ -164,7 +184,10 @@
 								<input type="hidden" value="${r.reportContent}">
 								<input type="hidden" value="${r.reportAnswer}">
 							</tr>
-						</c:forEach>
+							</c:forEach>
+											
+						</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</div>

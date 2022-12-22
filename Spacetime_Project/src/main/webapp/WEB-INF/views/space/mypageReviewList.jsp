@@ -20,9 +20,10 @@
 	#reviewList{
 		width: 60%;
 	}
-	#title1{cursor : pointer;}
+	/* #title1{cursor : pointer;} */
 	
 	#review-admin1{text-align: center;}
+	
 	#reviewTitle {
 		font-size: 40px;
 		font-weight: bold;
@@ -32,8 +33,8 @@
 	
 	
 	.table { text-align: center;}
-	.table tr { line-height: 35px;}
-	.reviewList>table>tbody>tr>td:hover { cursor: pointer ;}
+	.table tr { line-height: 35px;} */
+	/* .reviewList>table>tbody>tr>td:hover { cursor: pointer ;}  */
 	
 	#reviewlist_tr{font-size : 20px;
 	height : 15px;
@@ -88,15 +89,30 @@
             margin: 0;
         }
 
-	#reviewList tr:not(#reviewlist_tr):hover {
+	/* #reviewList tr:not(#reviewlist_tr):hover {
 	background-color: #E5E5E5;
 	cursor: pointer;
-	}
+	}  */
 	
 	#reviewlist_tr{
 	font : 30px;}
 	
 	#tr1{height:10px;}
+	
+	.nodata {
+	text-align: center;
+	font-size: 25px;
+	font-weight: 600;}
+	
+	table>tbody>.data:hover {
+	cursor: pointer; /* 일부러 조회된 데이터가 있을 경우에만 포인터 모양 변경 */
+	background-color: #E5E5E5;
+} 
+
+ table>tbody>.nodata:hover {
+	background-color : white; /* 마치 hover 가 안일어난거 같은 효과 */
+} 
+	
 </style>
 </head>
 <body>
@@ -121,10 +137,21 @@
 						<th style="width: 15%;">작성날짜</th>
 					</tr>
 				</thead>
+				
 				<tr id=tr1><tr>
 				<tbody id="tbody_1">
+				<c:choose>	
+				 	<c:when test="${list.size() eq 0}">
+						<tr class="nodata">
+							<td colspan="5" align="center">
+							리뷰후기가 없습니다.
+							</td>
+						</tr>
+					</c:when> 
+				
+				<c:otherwise>
 					<c:forEach var="r" items="${ list }">
-						<tr>
+						<tr class="data">
 							<td>${r.reserveNo}</td>
 							<td>${r.spaceTitle}</td>
 							<td>${r.reviewCont}</td>
@@ -144,11 +171,13 @@
 							
 						</tr>
 					</c:forEach>
+					</c:otherwise>
+					 </c:choose>
 				</tbody>
 			</table>
 			<script>
 					$(function() {
-						$("#reviewList>tbody>tr").click(function() {
+						$("#reviewList>tbody>.data").click(function() {
 							
 							location.href = "detail.re?rde=" + $(this).children().eq(5).val();
 						});
@@ -191,7 +220,9 @@
 				       	</c:otherwise>
 				       </c:choose>	       
      			 </ul>
+           
             </div>
+            
 		</div>
 	<br><br><br>
 	
