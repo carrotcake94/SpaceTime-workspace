@@ -3,7 +3,7 @@
 <mapper namespace="commonMapper">
 
 	<!-- 메인화면 추천공간 -->
-	<resultMap id="spaceResultSetForRecommend" type="space">
+	<resultMap id="spaceResultSet" type="space">
 		<result column="SPACE_NO" property="spaceNo" />
 		<result column="SPACE_TITLE" property="spaceTitle" />
 		<result column="HOUR_PRICE" property="hourPrice" />
@@ -11,41 +11,16 @@
 		<result column="ADDRESS_DEFAULT" property="addressDefault" />
 		<result column="HASHTAG" property="hashtag" />
 		<result column="SPACE_STATUS" property="spaceStatus" />
-		<collection resultMap="spaceAttachmentResultSetForReviewZone" property="attachments" />
-	</resultMap>
-	
-	<resultMap id="spaceResultSetForReviewZone" type="space">
-		<result column="SPACE_NO" property="spaceNo" />
-		<result column="SPACE_TITLE" property="spaceTitle" />
-		<result column="HOUR_PRICE" property="hourPrice" />
-		<result column="MAX_PEOPLE" property="maxPeople" />
-		<result column="ADDRESS_DEFAULT" property="addressDefault" />
-		<result column="HASHTAG" property="hashtag" />
-		<result column="SPACE_STATUS" property="spaceStatus" />
-		<collection resultMap="spaceAttachmentResultSetForReviewZone" property="attachments" />
-		<collection resultMap="reviewResultSetForReviewZone" property="reviewContForReviewZone"/>
-		<collection resultMap="reserveResultSetForReviewZone" property="reserveNoForReviewZone"/>
-	</resultMap>
-	
-	<resultMap id="spaceAttachmentResultSetForReviewZone" type="spaceAttachment">
-		<result column="ATTACHMENT_RENAME" property="attachmentReName" />
-		<result column="ATTACHMENT_LEVEL" property="attachmentLevel" />
-		<result column="SPACE_NO" property="spaceNo" />
-	</resultMap>
-	
-	<resultMap id="reviewResultSetForReviewZone" type="review">
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REVIEW_ATTACH1" property="reviewAttach1" />
 		<result column="REVIEW_CONT" property="reviewCont" />
-		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
-		<result column="RESERVE_NO" property="reserveNo" />
-	</resultMap>
-	
-	<resultMap id="reserveResultSetForReviewZone" type="reserve">
-		<result column="RESERVE_NO" property="reserveNo"/>
-		<result column="SPACE_NO" property="spaceNo"/>	
+		<result column="RATING" property="rating" />
+		<result column="ATTACHMENT_RENAME" property="attachmentReName" />
+		
 	</resultMap>
 	
 	<!-- 추천공간 -성훈 -->
-	<select id="spaceRecommend" parameterType="string" resultMap="spaceResultSetForRecommend">
+	<select id="spaceRecommend" parameterType="string" resultMap="spaceResultSet">
 	    SELECT S.SPACE_NO,
 	           SPACE_TITLE,
 	           HOUR_PRICE,
@@ -63,11 +38,13 @@
 	</select>
 	
 	<!-- 리뷰존 (최신순) -성훈 -->
-	<select id="spaceReview" resultMap="spaceResultSetForReviewZone">
+	<select id="spaceReview" resultMap="spaceResultSet">
 		SELECT DISTINCT S.SPACE_NO,
 		       S.SPACE_TITLE,
-		       A.ATTACHMENT_RENAME,
-		       RV.REVIEW_CONT
+		       RV.REVIEW_ATTACH1,
+		       RV.REVIEW_CONT,
+		       RV.RATING,
+		       RV.REVIEW_NO
 		  FROM SPACE S
 		  LEFT JOIN SPACE_ATTACHMENT A ON (S.SPACE_NO = A.SPACE_NO)
 		  LEFT JOIN RESERVE RS ON (S.SPACE_NO = RS.SPACE_NO)
@@ -75,8 +52,8 @@
 		 WHERE SPACE_STATUS = 'Y'
 		   AND ATTACHMENT_LEVEL = 1
 		   AND REVIEW_STATUS = 'N'
-		   AND ROWNUM <![CDATA[<=]]> 6
-		 ORDER BY (SELECT REVIEW_NO FROM REVIEW) DESC
+		   AND ROWNUM <![CDATA[<=]]> 3
+	  ORDER BY REVIEW_NO DESC
 	</select>
 	
 	

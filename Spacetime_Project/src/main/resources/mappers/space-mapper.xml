@@ -303,16 +303,6 @@
 	</select>
 	<!-- 	정현 End -->
 	
-	
-	<!-- 지도에 표시될 공간 갯수 조회 -성훈-->
-	<select id="selectListCountForMap" parameterType="hashmap" resultType="_int">
-		SELECT COUNT(*)
-		  FROM SPACE
-		 WHERE LATITUDE BETWEEN #{min_lat} AND #{max_lat}
-		   AND LONGITUDE BETWEEN #{min_lng} AND #{max_lng}
-		   AND SPACE_STATUS = 'Y'
-	</select>
-	
 	<!-- 지도 공간 리스트 (사진형게시판) -성훈 -->
 	<select id="selectListForMap" parameterType="hashmap" resultMap="spaceResultSet">
 	    SELECT SPACE_NO, 
@@ -320,29 +310,16 @@
 	           HOUR_PRICE, 
 	           HASHTAG, 
 	           LATITUDE, 
-	           LONGITUDE, 
-	           ATTACHMENT_RENAME
+	           LONGITUDE,
+	           MAX_PEOPLE,
+			   SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT,
+			   ATTACHMENT_RENAME
 	      FROM SPACE
 	 LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
 	     WHERE LATITUDE BETWEEN #{min_lat} AND #{max_lat}
 	       AND LONGITUDE BETWEEN #{min_lng} AND #{max_lng}
 	       AND SPACE_STATUS = 'Y'
 	       AND ATTACHMENT_LEVEL = 1
-	</select>
-	
-	<!-- 지도 필터링된 공간 갯수 -성훈 -->
-	<select id="filterListCountForMap" parameterType="hashmap" resultType="_int">
-		SELECT COUNT(*)
-          FROM SPACE
-         WHERE HOUR_PRICE BETWEEN #{min_price} AND #{max_price}
-           AND SPACE_STATUS = 'Y'
-           AND ATTACHMENT_LEVEL = 1
-           AND STYPE_NO IN (<foreach collection="category" item="category" separator=",">
-					           	#{category}
-							</foreach>)
-		   AND (<foreach collection="area" item="area" separator="OR">
-		   			ADDRESS_DEFAULT LIKE '%' || #{area} || '%'
-		   		</foreach>)
 	</select>
 	
 	<!-- 지도 필터링된 공간 리스트(지역설정O) -성훈 -->
@@ -353,6 +330,8 @@
 			   HASHTAG, 
 			   LATITUDE, 
 			   LONGITUDE, 
+			   MAX_PEOPLE,
+			   SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT,
 			   ATTACHMENT_RENAME
           FROM SPACE
      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)
@@ -375,6 +354,8 @@
 			   HASHTAG, 
 			   LATITUDE, 
 			   LONGITUDE, 
+			   MAX_PEOPLE,
+			   SUBSTR((SUBSTR(ADDRESS_DEFAULT, 0, INSTR(ADDRESS_DEFAULT, ' ', 1, 2))),INSTR(ADDRESS_DEFAULT, ' ', 1)+1) ADDRESS_DEFAULT,
 			   ATTACHMENT_RENAME
           FROM SPACE 
      LEFT JOIN SPACE_ATTACHMENT USING (SPACE_NO)

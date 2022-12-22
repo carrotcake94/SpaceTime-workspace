@@ -462,7 +462,7 @@ public class CommonController {
 	public String spaceRecommend(String keyword){
 	    
 	    ArrayList<Space> recommendList = commonService.spaceRecommend(keyword);
-	    
+	    System.out.println(recommendList);
 	    return new Gson().toJson(recommendList);
 	}
 
@@ -472,7 +472,7 @@ public class CommonController {
 	public String spaceReview(){
 	    
 	    ArrayList<Space> reviewList = commonService.spaceReview();
-	    
+	    System.out.println(reviewList);
 	    return new Gson().toJson(reviewList);
 	}
 

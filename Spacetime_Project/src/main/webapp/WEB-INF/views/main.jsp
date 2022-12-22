@@ -139,23 +139,11 @@
 					</div>
 					<div id="main_reviewZone_content">
 						<!-- 리뷰 동적으로 찍어낼 예정 (임의로 하드코딩)-->
-						<div class="main_reviewZone_card">
-							<div class="main_reviewZone_thumbnail"></div>
-							<div class="main_reviewZone_spaceName"></div>
-							<div class="main_reviewZone_star"></div>
-							<div class="main_reviewZone_reviewContent"></div>
+						<div class="main_reviewZone_card" id="reviewContainer1">
 						</div>
-						<div class="main_reviewZone_card">
-							<div class="main_reviewZone_thumbnail"></div>
-							<div class="main_reviewZone_spaceName"></div>
-							<div class="main_reviewZone_star"></div>
-							<div class="main_reviewZone_reviewContent"></div>
+						<div class="main_reviewZone_card" id="reviewContainer2">
 						</div>
-						<div class="main_reviewZone_card">
-							<div class="main_reviewZone_thumbnail"></div>
-							<div class="main_reviewZone_spaceName"></div>
-							<div class="main_reviewZone_star"></div>
-							<div class="main_reviewZone_reviewContent"></div>
+						<div class="main_reviewZone_card" id="reviewContainer3">
 						</div>
 					</div>
 				</div>

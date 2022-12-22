@@ -43,5 +43,9 @@ public class Space {
 		private int rating;
 		private String hostAnswer;// join 용
 		private Date spaceModifyDate;
+		private int reviewNo;
+		private String reviewAttach1;
+		private String reviewCont;
+		private String attachmentReName;
 }
 

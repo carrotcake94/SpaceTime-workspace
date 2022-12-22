@@ -92,7 +92,7 @@ function spaceRecommend(keyword){
 			     card.innerHTML = "<input type='hidden' name='sno' value='" + recommendList[i].spaceNo + "' >" +
 			                      "<div class='recommedCard' id='recommend" + i + "'>" +
 			                         "<div class='recommend_img_wrap'>" +
-			                             "<img class='img-0' src='" + recommendList[i].attachments[0].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
+			                             "<img class='img-0' src='" + recommendList[i].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
 			                         "</div>" + 
 			                         "<div class='recommend_content_area'>" +
 			                             "<div class='recommend_title_wrap'><span class='stitle'>" + recommendList[i].spaceTitle + "</span></div>" +
@@ -131,29 +131,29 @@ function spaceRecommend(keyword){
          async : false,
          data : { keyword : keyword },
          success : (reviewList) => {
-             
+             console.log(reviewList);
              for(var i in reviewList){
                  var card = document.createElement("div");
                  card.innerHTML = "<input type='hidden' name='sno' value='" + reviewList[i].spaceNo + "' >" +
                                     "<div class='reviewCard' id='recommend" + i + "'>" +
-                                        "<div class='img_area'>" +
-                                                "<img class='img-0' src='" + reviewList[i].attachments[0].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
+                                        "<div class='review_img'>" +
+                                                "<img class='img-0' src='" + reviewList[i].reviewAttach1 + "' width='100%' height='100%' alt='사진 없음' />" +
                                         "</div>" + 
                                         "<div class='review_content_area>" +
-                                            "<span class='stitle'>" + reviewList[i].spaceTitle + "</span>" +
+                                            "<span class='review_stitle'>" + reviewList[i].spaceTitle + "</span>" +
                                             "<hr />" +
-                                            "<span><i class='fa-solid fa-location-dot'></i>" + reviewList[i].addressDefault + "</span>" +
+                                            "<span>별점 : </span><span style='color: #277BC0;>" + reviewList[i].rating + "</span><span>점 / 10점</span>" +
                                             "<hr />" +
-                                            "<span style='width:50%; display:inline-block;'>" +
-                                                "<span class='sprice' style='color: #277BC0;' >" + reviewList[i].hourPrice + "</span>" +
-                                                "<span> 원/시간</span>" +
-                                            "</span>" +
+                                            "<span>" + reviewList[i].reviewCont + "</span>" +
                                         "</div>" +
                                     "</div>";
-                 if(i < 3){
-                     document.querySelector("#cardContainer1").append(card);
-                 } else {
-                     document.querySelector("#cardContainer2").append(card);
+                                    
+                if(i == 0){
+                     document.querySelector("#reviewContainer1").append(card);
+                 } else if (i == 1) {
+                     document.querySelector("#reviewContainer2").append(card);
+                 } else if (i == 2) {
+                     document.querySelector("#reviewContainer3").append(card);
                  }
              }
          },

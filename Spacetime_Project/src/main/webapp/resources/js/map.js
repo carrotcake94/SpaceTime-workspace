@@ -82,9 +82,9 @@ function loadList(spaceListArr, picListArr, lineListArr){
 								    "<div class='lineList_content_spaceTitle'>" + spaceListArr[i].spaceTitle + "</div>" +
 								    "<div class='lineList_content_hashTag click_disable'>" + spaceListArr[i].hashtag + "</div>" +
 								    "<div class='lineList_content_extraInfo'>" +
-									    "<div class='lineList_content_price click_disable'><span>" + spaceListArr[i].hourPrice + "</span><span> 원 / 시간</span></div>" +
-									    "<div class='lineList_content_reviewCount click_disable'><span><i class='fa-solid fa-user' style='color:#5fa5df;'></i> 최대" + spaceListArr[i].reviewCount + "인</span></div>" +
-									    "<div class='lineList_content_like'><span><i class='fa-solid fa-location-dot' style='color:#5fa5df;'></i> " + spaceListArr[i].likeCount + "</span></div>" +
+									    "<div class='lineList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
+									    "<div class='lineList_content_reviewCount click_disable'>최대 : " + spaceListArr[i].maxPeople + "명</div>" +
+									    "<i class='fa-solid fa-location-dot saddresss'></i>" + spaceListArr[i].addressDefault + 
 								    "</div>" +
 							    "</div>";
 							    
