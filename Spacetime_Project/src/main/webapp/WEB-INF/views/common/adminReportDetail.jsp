@@ -134,7 +134,16 @@
                                         </c:when>
                                     </c:choose>
                                 </div>
-                                <div id="reportAnswer" align="left">${r.reportAnswer}</div>
+                                <div id="reportAnswer" align="left">
+                                	<c:choose>
+                                		<c:when test="${r.reportStatus eq 'D' && empty r.reportAnswer}">
+                                			반려사유를 작성해주세요.
+                                		</c:when> 
+                                		<c:otherwise>
+                                			${r.reportAnswer}
+                                		</c:otherwise>
+                                	</c:choose>
+                                </div>
                             </td>
                             <td align="right" style="width: 100px;">
                                 <a class="btn btn-sm btn-light" data-toggle="modal" data-target="#answer">처리하기</a>
@@ -176,13 +185,13 @@
                                         <div id="reportStatus" align="left">
                                             <div class="form-group">
                                                 <select class="form-control" name="reportStatus" style="width: 70%;">
-                                                    <option value="N">미처리</option>
+                                                    <!-- <option value="N">미처리</option> -->
                                                     <option value="Y">승인</option>
                                                     <option value="D">반려</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control mb-2" style="width:100%;" name="reportAnswer" placeholder="ex) 양식에 맞춰 신고해주세요." value="${r.reportAnswer}">
+                                        <input type="text" class="form-control mb-2 inputText" style="width:100%;" name="reportAnswer" placeholder="ex) 양식에 맞춰 신고해주세요." value="${r.reportAnswer}" disabled>
                                     </td>
                                 </tr>
                             </table>
@@ -197,6 +206,20 @@
             </div>
         </div>
     </div>
+    
+    <script>
+	    $(document).on("change", "select[name=reportStatus]", function(){
+			var value = $(this).find("option:selected").val();
+			var inputText = $(this).closest('.selectBox').find('.inputText');
+			var flag = false;
+			if (value == 0) {
+				flag = true;
+				$(inputText).val('');
+			}
+			
+			$(inputText).attr("disabled", flag);
+		});
+    </script>
 
 </body>
 </html>

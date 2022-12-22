@@ -222,13 +222,6 @@ public class CommonController {
 		return "common/adminReportSearch";
 	}
 	
-	@ResponseBody
-	@RequestMapping("ajax30days.ad")
-	public String select30days() {
-		
-		return "";
-	}
-
 	/**
 	 * 관리자 매출관리 리스트 조회 - 혜민
 	 * 

@@ -270,7 +270,7 @@
                                     <th rowspan="2" style="width:100px;">처리</th>
                                     <td class="form-group" align="left">
                                         <select name="spaceStatus" class="select_category form-control mb-2" style="width:50%;">
-                                            <option value="W">승인대기</option>
+                                            <!-- <option value="W">승인대기</option> -->
                                             <option value="Y">승인</option>
                                             <option value="N">반려</option>
                                         </select>

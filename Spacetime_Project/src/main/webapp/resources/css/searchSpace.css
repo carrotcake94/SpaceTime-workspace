@@ -97,11 +97,16 @@
     height: 50%;
     position: absolute;
     display: none; 
-    display: table;
+    /* display: table; */
     background-color: white;
+    margin: auto;
     margin-top: 5px;
-    border: 3px solid rgb(96, 155, 204);
-    border-radius: 15px;
+    border: 2px solid rgb(96, 155, 204);
+    border-radius: 5px;
+}
+
+#mapFilter tr {
+    height: 25%;
 }
 
 #mapFilter > div{
@@ -117,13 +122,13 @@
 
 .mapFilter_option_title {
     width: 20%;
-    height: 100%;
+    height: 120px;
     display: table-cell;
     font-size: 20px;
     color: #007bff;
     font-weight: 650;
     text-align: center;
-    line-height: 7;
+    /* line-height: 3; */
 }
 
 #mapFilter_area{
@@ -175,9 +180,9 @@
 #mapFilter_search {
     padding-left: 30px;
     border : 1px ;
-    width: 80%;
+    width: 100%;
     height: 70%;
-    border-radius : 15px;
+    border-radius : 5px;
 	background-color: #FFB200;
 }
 
