@@ -915,7 +915,11 @@
 		                                                    	
 		                                                    	var hours = new Date().getHours();
 		                                                    	// console.log(hours);
-		                                                    	
+		                                                    	var date =  new Date();
+		                                                    	date = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+																
+		                                                    	console.log(date);
+		                                                    	console.log(dateClickInfo.dateStr);
 		                                                    	
 		                                                    	var resultStr="";
 		                                                    	
@@ -941,9 +945,7 @@
 	                                                    		
 		                                                    	
 		                                                    	 for(var i=0; i<result.length; i++) {
-
-
- 		                                                    		
+		                                                    		
  		                                                    		if(result[i].endTime == -1){ // endTime -1 경우 
  		                                                    		
  		                                                    			for(var j=result[i].startTime; j<=result[i].startTime; j++){
@@ -967,7 +969,7 @@
  		                                                    			for(var j=result[i].startTime; j<=result[i].endTime; j++){
  	 		                                                    			
 
- 	            														    if(dateClickInfo.dateStr == result[i].useDate && hours<= j ) {
+ 	            														    if(dateClickInfo.dateStr == result[i].useDate) {
  	        		                                                    		
  	        		                                                    		/* $("#time"+ j + ">a").attr('href','#'); // disable
  	 		                                                    			 	$("#time"+ j + ">a").attr('data-toggle',''); // disable */
@@ -982,35 +984,41 @@
  	 		                                                    		}
  		                                                    		}
  		                                                    		
- 		                                                    		
 
     	                                                    		
  		                                							
  		                                						}
 		                                                    	 
-		                                                    	 for(var k=0; k<24;k++){
-			                                                    		
-
-				                                                    	 if(hours<= k) {
-		  		                                                    		
-		                                                     			 	$("#time"+ k + ">a").attr('class','disabled'); // disable
-		                                                     			 	
-		                                                     			 	
-		                                                     			 	$("#time"+ k + "").css("text-decoration","line-through");  
-		                                                     			 	$("#time"+ k + "").css("color","lightgrey");  
-		      		                                                    		
-		      		                                                    } 
-	            														    
-
-			                                                    	}
 		                                                    	 
-		                                                    	 
+
+		                                                    		
+		                                                    		if(dateClickInfo.dateStr == date){
+		                                                    		
+		                                                    			for(var a=0; a<=hours ; a++){
+		                                                    				$("#time"+ a + ">a").attr('class','disabled'); // disable
+		                                                      			 	
+		                                                      			 	
+		                                                      			 	$("#time"+a + "").css("text-decoration","line-through");  
+		                                                      			 	$("#time"+ a + "").css("color","lightgrey");  
+		                                                    			}
+		                                                    		
+		                                                    		}
+		                                                    		
 
 		                                                    },
 		                                                    error: function() {
 		                                                        console.log("getting reserve time ajax failure");
 		                                                    }
 		                                                });
+		                                        		 
+			                                        /* 	 if(hours<=k ) {
+	                                                    		
+                                              			 	$("#time"+ k + ">a").attr('class','disabled'); // disable
+                                              			 	
+                                              			 	
+                                              			 	$("#time"+ k + "").css("text-decoration","line-through");  
+                                              			 	$("#time"+ k + "").css("color","lightgrey");  
+			                                        	 } */
 		                                        		  
 		                                        		  
 		                                        		}
