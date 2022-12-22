@@ -428,7 +428,7 @@ public class CommonController {
 	 * @return
 	 * @author 성훈
 	 */
-	// 검색어 자동완성
+	// 검색어 자동완성 -성훈
 	@ResponseBody
 	@RequestMapping(value = "autoComplete.co", produces = "text/html; charset=UTF-8")
 	public String autoComplete(String keyword) {
@@ -445,7 +445,7 @@ public class CommonController {
 	 * @return
 	 * @author 성훈
 	 */
-	// 해시태그 자동완성
+	// 해시태그 자동완성 -성훈
 	@ResponseBody
 	@RequestMapping(value = "hashtagAutoComplete.co", produces = "text/html; charset=UTF-8")
 	public String hashtagAutoComplete(String keyword) {
@@ -456,31 +456,23 @@ public class CommonController {
 		return keywords;
 	}
 	
-	//추천공간리스트
+	//추천공간리스트 -성훈
 	@ResponseBody
 	@RequestMapping(value="spaceRecommend.co", produces = "application/json; charset=UTF-8")
 	public String spaceRecommend(String keyword){
-	    
 	    ArrayList<Space> recommendList = commonService.spaceRecommend(keyword);
-	    System.out.println(recommendList);
+	    
 	    return new Gson().toJson(recommendList);
 	}
 
-	//리뷰존리스트
+	//리뷰존리스트 -성훈
 	@ResponseBody
 	@RequestMapping(value="spaceReview.co", produces = "application/json; charset=UTF-8")
 	public String spaceReview(){
-	    
 	    ArrayList<Space> reviewList = commonService.spaceReview();
-	    System.out.println(reviewList);
+	    
 	    return new Gson().toJson(reviewList);
 	}
-
-	// 카테고리 페이지 이동
-//	@RequestMapping("moveCategoryPage.co")
-//	public String moveCategoryPage(@RequestParam(value="e")String category) {
-//		return "space/" + valueOf(category);
-//	}
 
 	/**
 	 * 마이페이지 신고리스트 - 신희섭
