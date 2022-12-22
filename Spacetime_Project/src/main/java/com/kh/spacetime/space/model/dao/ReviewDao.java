@@ -15,9 +15,9 @@ import com.kh.spacetime.space.model.vo.Space;
 
 @Repository
 public class ReviewDao {
-	public int selectListCount(SqlSessionTemplate sqlSession) {
+	public int selectListCount(SqlSessionTemplate sqlSession, int memNo) {
 
-		return sqlSession.selectOne("reviewMapper.selectListCount");
+		return sqlSession.selectOne("reviewMapper.selectListCount", memNo);
 	}
 
 	public ArrayList<Review> selectList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
@@ -27,7 +27,7 @@ public class ReviewDao {
 
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
-		return (ArrayList) sqlSession.selectList("reviewMapper.selectList", memNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectList", memNo, rowBounds);
 	}
 
 	public Review selectReview(SqlSessionTemplate sqlSession, int reviewNo) {

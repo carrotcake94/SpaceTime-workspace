@@ -10,6 +10,22 @@
 <title>Insert title here</title>
 <style>
 
+    /* content */
+    /* div { border: 1px black solid; } */
+	#header_area { height: 80px; }
+	#content { 
+		width: 100%;
+		height: 850px; 
+        /*height: auto;  */
+		display: flex;
+	}
+	
+	#content>div { height: 100%; float: left; margin:30px 0px;}
+	
+	#content_1, #content_3 { width: 10%; }
+	#content_2 { width: 80%; }
+
+
 	#mypage_content {
 	font-size: 40px;
 	font-weight: bold;
@@ -117,10 +133,10 @@
 </head>
 <body>
 	
-	<jsp:include page="../common/header.jsp" />
+	<div id="header_area"><jsp:include page="../common/header.jsp" /></div>
 
 	<div id="content">
-	<div id="content_1">왼쪽여백</div>
+	<div id="content_1"></div>
 	
 	<!--컨텐츠작성부분-->
 	<div id="content_2">
@@ -149,30 +165,30 @@
 						</tr>
 					</c:when> 
 				
-				<c:otherwise>
-					<c:forEach var="r" items="${ list }">
-						<tr class="data">
-							<td>${r.reserveNo}</td>
-							<td>${r.spaceTitle}</td>
-							<td>${r.reviewCont}</td>
-							<td>
-								<div id="starArea">
-                                    <div id="realStarArea">
-                                   <fmt:parseNumber var="i" value="${r.rating/2}" integerOnly="true" />
-			        	<c:set var="j" value="${r.rating%2}" />
-			        	<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa-solid fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if>
-                                    </div>
-                                   
-                                </div>
-							</td>
-							<td>${r.reviewEnrollDate}</td>
-							<input type="hidden" value="${r.reviewNo}">
-							
-							
-						</tr>
-					</c:forEach>
+					<c:otherwise>
+						<c:forEach var="r" items="${ list }">
+							<tr class="data">
+								<td>${r.reserveNo}</td>
+								<td>${r.spaceTitle}</td>
+								<td>${r.reviewCont}</td>
+								<td>
+									<div id="starArea">
+										<div id="realStarArea">
+									<fmt:parseNumber var="i" value="${r.rating/2}" integerOnly="true" />
+							<c:set var="j" value="${r.rating%2}" />
+							<c:if test="${i ne 0 }"><c:forEach begin="1" end="${i}" ><i class="fa-solid fa-star" aria-hidden="true"></i></c:forEach></c:if><c:if test="${j ne 0 }"><i class='fa-regular fa-star-half-stroke' aria-hidden='true'></i></c:if><c:if test="${ (5-i-j) ne 0 }"><c:forEach begin="1" end="${5-i-j}" ><i class="fa fa-star-o" aria-hidden="true"></i></c:forEach></c:if>
+										</div>
+									
+									</div>
+								</td>
+								<td>${r.reviewEnrollDate}</td>
+								<input type="hidden" value="${r.reviewNo}">
+								
+								
+							</tr>
+						</c:forEach>
 					</c:otherwise>
-					 </c:choose>
+				</c:choose>
 				</tbody>
 			</table>
 			<script>

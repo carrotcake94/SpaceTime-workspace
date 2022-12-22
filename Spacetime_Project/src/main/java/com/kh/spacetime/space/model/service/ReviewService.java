@@ -11,8 +11,8 @@ import com.kh.spacetime.space.model.vo.Space;
 
 public interface ReviewService {
 	// 리뷰 리스트 조회 서비스 + 페이징처리
-	// 리뷰의 총 갯수
-	int selectListCount();
+	// 마이페이지 리뷰의 총 갯수
+	int selectListCount(int memNo);
 
 	// 리뷰 리스트 조회
 	ArrayList<Review> selectList(PageInfo pi, int memNo);

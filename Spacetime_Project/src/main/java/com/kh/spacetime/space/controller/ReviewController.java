@@ -46,16 +46,17 @@ public class ReviewController {
 
 //		System.out.println("cpage : " + currentPage);
 
-		Member m = (Member) session.getAttribute("loginMember");
-
-		int listCount = reviewService.selectListCount();
-
+		Member m = (Member)session.getAttribute("loginMember");
+		int memNo = m.getMemNo();
+		
+		int listCount = reviewService.selectListCount(memNo);
+		
 		int pageLimit = 10;
 		int boardLimit = 5;
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		// getter setter X
-		ArrayList<Review> list = reviewService.selectList(pi, m.getMemNo());
+		ArrayList<Review> list = reviewService.selectList(pi, memNo);
 //		System.out.println();
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);

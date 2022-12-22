@@ -24,8 +24,8 @@ public class ReviewServiceImpl implements ReviewService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int selectListCount() {
-		return reviewDao.selectListCount(sqlSession);
+	public int selectListCount(int memNo) {
+		return reviewDao.selectListCount(sqlSession, memNo);
 
 	}
 

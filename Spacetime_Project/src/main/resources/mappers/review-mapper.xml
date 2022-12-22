@@ -15,31 +15,26 @@
 		<result column="HOST_ANSWER" property="hostAnswer" />
 	</resultMap>
 	<!-- 리스트조회 -->
-	<select id="selectListCount" resultType="_int">
+	<select id="selectListCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*)
 		FROM REVIEW
 		WHERE REVIEW_STATUS = 'N'
+		  AND MEM_NO = #{memNo}
 	</select>
 	
-	<select id="selectList" resultMap="reviewResultSet" parameterType="_int">
+	<select id="selectList" parameterType="_int" resultMap="reviewResultSet">
 		SELECT
 		A.REVIEW_NO
-		, C.RESERVE_NO		--예약번호
-		, B.SPACE_TITLE		--공간장소
-		, A.REVIEW_CONT		--리뷰내용
-		, A.RATING			--평점
-		, TO_CHAR(A.REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE		--작성일자
+		, C.RESERVE_NO
+		, B.SPACE_TITLE
+		, A.REVIEW_CONT
+		, A.RATING
+		, TO_CHAR(A.REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE
 		FROM 
 		REVIEW A
-		INNER JOIN RESERVE C
-		ON A.RESERVE_NO = C.RESERVE_NO
-		
-		INNER JOIN SPACE B
-		
-		ON B.SPACE_NO = C.SPACE_NO
-		
-		WHERE
-		A.MEM_NO = #{memNo}
+		INNER JOIN RESERVE C ON A.RESERVE_NO = C.RESERVE_NO
+		INNER JOIN SPACE B ON B.SPACE_NO = C.SPACE_NO
+		WHERE A.MEM_NO = #{memNo}
 		AND REVIEW_STATUS = 'N'
 		ORDER BY REVIEW_NO DESC
 	</select>
