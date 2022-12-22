@@ -278,9 +278,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><textarea name="denyMessage" class="form-control mb-2 inputText" cols="20" rows="5" placeholder="반려 사유를 작성해주세요." disabled required></textarea></td>
-<!--                                     <td rowspan="2" align="right"><button type="submit" class="btn btn-sm btn-light">처리하기</button></td> -->
-                                    <td rowspan="2" align="right"><button type="button" class="btn btn-sm btn-light" onclick="spStatusUpdate()">처리하기</button></td>
+                                    <td>
+                                    	<textarea name="denyMessage" class="form-control mb-2 inputText" cols="20" rows="5" placeholder="반려 사유를 작성해주세요." disabled required></textarea>
+                                    </td>
+                                    <td rowspan="2" align="right">
+                                    	<button type="submit" class="btn btn-sm btn-light spStatusBtn" onclick="">처리하기</button>
+                                    </td>
                                 </tr>
                             </tbody>
 
@@ -322,15 +325,16 @@
             var value = $(this).find("option:selected").val();
             var inputText = $(this).closest('.selectBox').find('.inputText');
             var flag = false;
-            if (value == 0) {
+            if (value == 'Y') {
                 flag = true;
                 $(inputText).val('');
+            } else if (value = 'N') {
+            	flag = false;
             }
-            
             $(inputText).attr("disabled", flag);
         });
     </script>
-
+    
     <script>
         $(function() {
             $(".page-link").each(function() {
@@ -342,8 +346,6 @@
                 }
             });
         });
-       
-        
     </script>
     
     <!-- 검수 모달창으로 공간 번호 보내기 -->
@@ -366,7 +368,7 @@
             var denyMessage = $(this).children().eq(5).val();
             $(".modal-body .DM").text(denyMessage);
             
-            console.log(spaceStatus);                                                
+            // console.log(spaceStatus);                                                
             
             if (spaceStatus == '승인대기') {
                 $('#spaceStatusW').show();
