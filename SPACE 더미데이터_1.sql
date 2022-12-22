@@ -1156,13 +1156,6 @@ INSERT INTO SPACE (SPACE_NO, SPACE_TITLE, SPACE_SUBTITLE, SPACE_INFO, HOUR_PRICE
 피트니스 촬영장 협찬, 스튜디오 대관
 코로나19 저렴한가격으로 대관 합니다.',35000,5,'서울 은평구 대조동 172-56','3층','05041380193','헬스,피트니시,런닝머신,헬스장','Y',99,37.6097951,126.920088,0,24,15,7);
 --행 45
-INSERT INTO SPACE (SPACE_NO, SPACE_TITLE, SPACE_SUBTITLE, SPACE_INFO, HOUR_PRICE, MAX_PEOPLE, ADDRESS_DEFAULT, ADDRESS_DETAIL, TEL, HASHTAG, SPACE_STATUS, COUNT, LATITUDE, LONGITUDE, OPEN_TIME, CLOSE_TIME, HOST_NO, STYPE_NO) VALUES (SEQ_SNO.NEXTVAL,'단독사용 회의실[슈팅스타스튜디오]','은평구 흔하지 않은 스터디룸/회의실/세미나실','은평구에 회의실/스터디룸이 많지 않아 그동안 불편하셨죠?
-슈팅스타 스튜디오에서 원데이클래스, 워크숍, 회의 등을 진행해보세요:)
-- 주차 1대 무료, 기본 2시간, 이용인원 10명까지 무료
-- 20평 전체 단독 사용
-- 55인치 TV(무료), 프로젝터(유료) 대여 가능
-- 4~6인 수용 목재 테이블 1개
-- 4~6인 수용 접이식 테이블 1개',25000,6,'서울 은평구 응암로12길17','지하1층','05041381203','파티룸,스터디룸,카페,강의실,회의실,세미나','Y',22,37.5876839,126.918697,0,24,16,9);
 --행 46
 INSERT INTO SPACE (SPACE_NO, SPACE_TITLE, SPACE_SUBTITLE, SPACE_INFO, HOUR_PRICE, MAX_PEOPLE, ADDRESS_DEFAULT, ADDRESS_DETAIL, TEL, HASHTAG, SPACE_STATUS, COUNT, LATITUDE, LONGITUDE, OPEN_TIME, CLOSE_TIME, HOST_NO, STYPE_NO) VALUES (SEQ_SNO.NEXTVAL,'용기와회복센터 프라이빗 상담실','2~3인이 조용히 대화 할 수 있는 안전한 공간','- 연신내 전철역에서 1분 거리, 프라이빗한 오피스텔입니다.
 
@@ -1914,6 +1907,20 @@ INSERT INTO SPACE (SPACE_NO, SPACE_TITLE, SPACE_SUBTITLE, SPACE_INFO, HOUR_PRICE
 예쁜 촬영 하시고 가시길 바랍니다 🙏🏼
 
 휴대폰 충전기 , 테이프클리너 , 스팀다리미 , 행거 , 옷걸이 , 셀카봉 , 대형전신거울 , 마스킹테이프 제공',35000,4,'서울 마포구 환일길 7','B1','05043220801','렌탈스튜디오,스튜디오대관,쇼핑몰촬영,도매촬영,자연광스튜디오','Y',123,37.5571982,126.960221,0,24,11,8);
+
+INSERT INTO SPACE (SPACE_NO, SPACE_TITLE, SPACE_SUBTITLE, SPACE_INFO, HOUR_PRICE, MAX_PEOPLE, ADDRESS_DEFAULT, ADDRESS_DETAIL, TEL, HASHTAG, SPACE_STATUS, COUNT, LATITUDE, LONGITUDE, OPEN_TIME, CLOSE_TIME, HOST_NO, STYPE_NO) VALUES (SEQ_SNO.NEXTVAL,'[익선동 고즈넉]','도심속,프라이빗한 익선동 종로 복합문화공간','[최근 코로나 바이러스로 익선동,종로루프탑 고즈넉은 매번 방역작업을 실시하고 있습니다]
+
+고즈넉 고요하고 아늑한 상태라는 순 우리말로, 우리들만의 프라이빗한 공간입니다.
+저 멀리 창덕궁의 정문 돈화문이 보이는 익선동 고즈넉에서 여러분들을 초대합니다.
+
+[고즈넉x호스텔코리아 콜라보레이션]
+고즈넉을 대관 하시는 고객님에 한해서 호스텔코리아의 객실을 할인된 가격으로 만나보실수 있습니다.
+
+호스트 Interview
+도심 중심에 있는 호스텔 건물 지하에 있는 공용공간입니다.
+총 7개의 스터디룸과 회의실 그리고 공용 주방이 준비 되있습니다.
+고즈넉, 고요하고 아늑한 우리들만의 공간
+함께 편안하고 즐거운 시간을 보내보세요.',10000,10,'서울 종로구 와룡동 140','B1','05043220599','서울스터디룸,서울회의실,공간대여,서울파티룸,스터디룸','Y',111,37.5762568995271,126.990278533916,7,22,14,9);
 
 
 

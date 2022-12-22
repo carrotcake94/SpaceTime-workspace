@@ -7,22 +7,7 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 <style>
-    /* content */
-    /* div { border: 1px black solid; } */
-	#header_area { height: 80px; }
-	#content { 
-		width: 100%;
-		/*height: 1050px;  */
-        height: auto; /* 공지사항의 테이블이 클릭될 때마다 세로 길이에 영향을 끼쳐 자동으로 조절되게 바꿈 */
-		display: flex;
-	}
-	
-	#content>div { height: 100%; float: left;}
-	
-	#content_1, #content_3 { width: 20%; }
-	#content_2 { width: 60%; }
-	
-    /* --------------------------- */
+
     /* content */
     /* div { border: 1px black solid; } */
 	#header_area { height: 80px; }
@@ -33,7 +18,7 @@
 		display: flex;
 	}
 	
-	#content>div { height: 100%; float: left;}
+	#content>div { height: 100%; float: left; margin:30px 0px;}
 	
 	#content_1, #content_3 { width: 20%; }
 	#content_2 { width: 60%; }
@@ -95,8 +80,8 @@
 </head>
 <body>
     <div class="wrap">
-        <div id="header_area"></div>
-        <jsp:include page="../common/header.jsp" />
+        <div id="header_area"><jsp:include page="../common/header.jsp" /></div>
+
         <div id="content">
             <div id="content_1"></div>
             
@@ -157,7 +142,8 @@
                     </table>
                 </div>
                 <div style="height: 50px"></div>
-                <!-- 페이지 버튼 -->
+                
+                <!-- 페이지 버튼 
                 <div class="btnPage" align="center" id="btn">
                     <ul class="pagination" align="center">
                         <c:choose>
@@ -183,6 +169,7 @@
                         </c:choose>
                     </ul>
                 </div>
+                -->
             </div>
             <!-- 질문 클릭시 아코디언 함수 -->
             <script>

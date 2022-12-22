@@ -192,7 +192,7 @@ body * {
 /* ---------- main ---------- */
 .main {
 	min-height: calc(100vh - 325px);
-	margin-top: 100px;
+	margin-top: 90px;
 }
 
 /* ---------- 슬라이드 메뉴 ---------- */

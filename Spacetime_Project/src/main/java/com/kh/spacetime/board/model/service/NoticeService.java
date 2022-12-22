@@ -7,9 +7,9 @@ import com.kh.spacetime.common.model.vo.PageInfo;
 
 public interface NoticeService {
 	
-	int selectAllListCount();
-	
-	ArrayList<Notice> selectAllList(PageInfo pi);
+	// int selectAllListCount();
+	// ArrayList<Notice> selectAllList(PageInfo pi);
+	ArrayList<Notice> selectAllList();
 	
 	int insertNotice(Notice n);
 	
@@ -19,7 +19,7 @@ public interface NoticeService {
 	
 	int deleteNotice(int noticeNo);
 	
-	int selectSearchListCount(String searchText);
+	// int selectSearchListCount(String searchText);
 	
-	ArrayList<Notice> selectSearchList(PageInfo pi, String searchText);
+	ArrayList<Notice> selectSearchList(String searchText);
 }

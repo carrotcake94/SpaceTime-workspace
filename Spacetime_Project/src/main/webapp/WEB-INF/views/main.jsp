@@ -18,7 +18,7 @@
 			<!-- 옆으로 넘어가는 화면 (+ 몇 초 뒤 넘어가도록) -->
 			<div id="main_pic">
 				<div>
-					<img src="resources/images/main/mainPic.png">
+					<img src="resources/images/main/메인크리스마스.jpg">
 				</div>
 			</div>
 			<div id="main_display">

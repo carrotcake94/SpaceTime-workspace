@@ -34,18 +34,20 @@ public class NoticeController {
 	 * @return
 	 */
 	@RequestMapping("list.no")
-	public String noticeList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model) {
+	public String noticeList(Model model) {
 		
+		/*
 		int listCount = noticeService.selectAllListCount();
 		
 		int pageLimit = 5;
 		int boardLimit = 10;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		*/
 		
-		ArrayList<Notice> list = noticeService.selectAllList(pi);
+		ArrayList<Notice> list = noticeService.selectAllList();
 		
-		model.addAttribute("pi", pi);
+		// model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		return "board/noticeListView";
@@ -160,18 +162,19 @@ public class NoticeController {
 	 * @return
 	 */
 	@RequestMapping("searchList.no")
-	public String noticeSearchList(@RequestParam(value="cpage", defaultValue="1")int currentPage, String searchText, Model model) {
-		
+	public String noticeSearchList(String searchText, Model model) {
+		// @RequestParam(value="cpage", defaultValue="1")int currentPage, 
+		/*
 		int listCount = noticeService.selectSearchListCount(searchText);
 
 		int pageLimit = 5;
 		int boardLimit = 10;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		*/
+		ArrayList<Notice> list = noticeService.selectSearchList(searchText);
 		
-		ArrayList<Notice> list = noticeService.selectSearchList(pi, searchText);
-		
-		model.addAttribute("pi", pi);
+		// model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
 		return "board/noticeListView";

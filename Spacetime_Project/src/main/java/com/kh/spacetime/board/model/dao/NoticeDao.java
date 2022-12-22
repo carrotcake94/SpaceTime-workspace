@@ -17,10 +17,12 @@ public class NoticeDao {
 	 * @param sqlSession
 	 * @return
 	 */
+	/*
 	public int selectAllListCount(SqlSessionTemplate sqlSession) {
 		
 		return sqlSession.selectOne("noticeMapper.selectAllListCount");
 	}
+	*/
 	
 	/**
 	 * 공지사항 전체 리스트 조회용 Dao - 경미
@@ -28,14 +30,14 @@ public class NoticeDao {
 	 * @param pi
 	 * @return
 	 */
-	public ArrayList<Notice> selectAllList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		
+	public ArrayList<Notice> selectAllList(SqlSessionTemplate sqlSession) {
+		/*
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("noticeMapper.selectAllList", null, rowBounds);
+		*/
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectAllList");
 	}
 	
 	/**
@@ -82,15 +84,18 @@ public class NoticeDao {
 		return sqlSession.update("noticeMapper.deleteNotice", noticeNo);
 	}
 	
+	
 	/**
 	 * 공지사항 검색 리스트 카운트용 Dao - 경미
 	 * @param sqlSession
 	 * @return
 	 */
+	/*
 	public int selectSearchListCount(SqlSessionTemplate sqlSession, String searchText) {
 		
 		return sqlSession.selectOne("noticeMapper.selectSearchListCount", searchText);
 	}
+	*/
 	
 	/**
 	 * 공지사항 검색 리스트 조회용 Dao - 경미
@@ -98,13 +103,15 @@ public class NoticeDao {
 	 * @param pi
 	 * @return
 	 */
-	public ArrayList<Notice> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, String searchText) {
+	public ArrayList<Notice> selectSearchList(SqlSessionTemplate sqlSession, String searchText) {
 		
+		/*
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
+		*/
 		
-		return (ArrayList)sqlSession.selectList("noticeMapper.selectSearchList", searchText, rowBounds);
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectSearchList", searchText);
 	}
 }

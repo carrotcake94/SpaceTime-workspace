@@ -22,17 +22,19 @@ public class NoticeServiceImpl implements NoticeService {
 	/**
 	 * 공지사항 전체 리스트 카운트용 서비스 - 경미
 	 */
+	/*
 	@Override
 	public int selectAllListCount() {
 		return noticeDao.selectAllListCount(sqlSession);
 	}
+	*/
 
 	/**
 	 * 공지사항 전체 리스트 조회용 서비스 - 경미
 	 */
 	@Override
-	public ArrayList<Notice> selectAllList(PageInfo pi) {
-		return noticeDao.selectAllList(sqlSession, pi);
+	public ArrayList<Notice> selectAllList() {
+		return noticeDao.selectAllList(sqlSession);
 	}
 	
 	/**
@@ -73,19 +75,21 @@ public class NoticeServiceImpl implements NoticeService {
 	/**
 	 * 공지사항 검색 리스트 카운트용 서비스 - 경미
 	 */
+	/*
 	@Override
 	public int selectSearchListCount(String searchText) {
 
 		return noticeDao.selectSearchListCount(sqlSession, searchText);
 	}
+	*/
 	
 	/**
 	 * 공지사항 검색 리스트 서비스 - 경미
 	 */
 	@Override
-	public ArrayList<Notice> selectSearchList(PageInfo pi, String searchText) {
+	public ArrayList<Notice> selectSearchList(String searchText) {
 
-		return noticeDao.selectSearchList(sqlSession, pi, searchText);
+		return noticeDao.selectSearchList(sqlSession, searchText);
 	}
 
 }
