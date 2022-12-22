@@ -207,12 +207,14 @@ public class ReserveController {
 
 					HashMap<String, Object> res = bootpay.receiptCancel(cancel);
 					if (res.get("error_code") == null) { // 결제 취소 성공
-
+						//payment pay_status 업데이트
+						reserveService.updatePayment(rno);
+						
 						// 예약 취소 시 회원 등급 자동 변경 - 경미
 						int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
 						int sumPrice = reserveService.sumPrice(memNo);
-						System.out.println("누적금액 : "+sumPrice);
 						int upgradeResult = memberService.downGrade(sumPrice, memNo);
+						
 
 						session.setAttribute("alertMsg", "예약을 취소하였습니다.");
 						mv.setViewName("redirect:/revHostList.re");
@@ -377,7 +379,9 @@ public class ReserveController {
 
 				HashMap<String, Object> res = bootpay.receiptCancel(cancel);
 				if (res.get("error_code") == null) { // 결제 취소 성공
-
+					//payment pay_status 업데이트
+					reserveService.updatePayment(rno);
+					
 					// 예약 취소 시 회원 등급 자동 변경 - 경미
 					int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
 					int sumPrice = reserveService.sumPrice(memNo);
@@ -385,7 +389,6 @@ public class ReserveController {
 
 					session.setAttribute("alertMsg", "예약이 취소되었습니다.");
 					mv.setViewName("redirect:/myReserve.re");
-
 				} else { // 결제 취소 실패
 					session.setAttribute("alertMsg", "결제 취소가 실패하였습니다. 관리자에게 문의해주세요.");
 					mv.setViewName("common/errorPage");

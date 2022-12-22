@@ -117,25 +117,24 @@ public class ReserveDao {
 
 		return sqlSession.update("reserveMapper.insertReportMyReserve", s);
 	}
-	
-	// 예약 현황 가져오기 
+
+	// 예약 현황 가져오기
 	public ArrayList<Reserve> selectReserveTime(SqlSessionTemplate sqlSession, int spaceNo) {
-		
+
 		return (ArrayList) sqlSession.selectList("reserveMapper.selectReserveTime", spaceNo);
 	}
-	
-	// 예약 insert 
+
+	// 예약 insert
 	public int insertReserve(SqlSessionTemplate sqlSession, Reserve r) {
 
 		return sqlSession.insert("reserveMapper.insertReserve", r);
 	}
-	
-	// 결제하기 
+
+	// 결제하기
 	public int insertPay(SqlSessionTemplate sqlSession, Payment p) {
 
 		return sqlSession.update("reserveMapper.insertPay", p);
 	}
-	
 
 	// 정현-------------------------------------------
 	// 호스트 공간 예약 리스트 개수 가져오기-정현
@@ -209,17 +208,21 @@ public class ReserveDao {
 		return (ArrayList) sqlSession.selectList("reserveMapper.searchHostCalculList", map, rowBounds);
 	}
 
+	// PAY_STATUS  취소로 업데이트
+	public int updatePayment(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.update("reserveMapper.updatePayment", rno);
+	}
+
 	// -------------------------------------------정현
-	
+
 	// 회원 등급 업데이트를 위한 결제 금액 SUM - 경미
 	public String sumPrice(SqlSessionTemplate sqlSession, int memNo) {
-		
 		return sqlSession.selectOne("reserveMapper.sumPrice", memNo);
 	}
-	
+
 	// 결제 취소를 위한 Payment select - 경미
 	public Payment selectPayment(SqlSessionTemplate sqlSession, int reserveNo) {
-		
+
 		return sqlSession.selectOne("reserveMapper.selectPayment", reserveNo);
 	}
 }

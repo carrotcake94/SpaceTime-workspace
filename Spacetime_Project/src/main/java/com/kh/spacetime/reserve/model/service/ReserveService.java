@@ -44,6 +44,9 @@ public interface ReserveService {
 
 	// 호스트 정산 검색 리스트
 	ArrayList<Payment> searchHostCalculList(HashMap<String, String> map, PageInfo pi);
+	
+	// PAY_STATUS  취소로 업데이트
+	int updatePayment(int rno);
 
 	// ---------------------정현
 
