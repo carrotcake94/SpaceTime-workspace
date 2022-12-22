@@ -336,6 +336,13 @@
 </head>
 <body>
 
+	 <!--  jstl 형변환 -->
+	<c:set var="now" value="<%=new java.util.Date()%>" />
+	<fmt:formatDate var="now" value="${now}" pattern="yyyyMMdd" />
+	<fmt:parseDate var="useDate" value="${r.useDate}" pattern="yyyy-MM-dd HH:mm:ss.S"/> <!-- String 을 Date 로 바꿈 -->
+	<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
+	<fmt:formatDate var="useDate2" value="${useDate}" pattern="yyyy-MM-dd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
+                    
     <div id="spaceList_Host" class="wrap">
 
         <div id="header_area"><jsp:include page="../common/header.jsp" /></div>
@@ -361,7 +368,7 @@
                         <dl class="flex_box refund">
                             <dt class="flex tit">예약내용</dt> 
                             <dd class="flex">
-                                ${ r.useDate } ${ r.startTime }시 - ${ r.endTime}시
+                                ${ useDate2 } ${ r.startTime }시 - ${ r.endTime}시
                             </dd>
                         </dl> 
                         <dl class="flex_box refund">
@@ -427,7 +434,7 @@
                                   		</script>
                                     <!-- <a  href=“${ r.month }" class="btn_print">거래명세서 인쇄</a> -->
                                     <!-- href 로 payment의 결제영수증 주소 연결-->
-                                    
+                                                   
                                 </div>
                             </div> 
                             <div class="scroll_box">
@@ -436,7 +443,7 @@
                                         <dl class="info_date">
                                             <dt>예약날짜</dt>
                                             <dd>
-                                                <span class="line"> ${ r.useDate } </span>
+                                                <span class="line"> ${ useDate2 } </span>
                                             </dd>
                                         </dl> 
                                         <dl class="info_date">
@@ -525,11 +532,11 @@
        
         <jsp:include page="../common/footer.jsp" />
         
-        <!--  jstl 형변환 -->
+<%--         <!--  jstl 형변환 -->
 		<c:set var="now" value="<%=new java.util.Date()%>" />
 		<fmt:formatDate var="now" value="${now}" pattern="yyyyMMdd" />
 		<fmt:parseDate var="useDate" value="${r.useDate}" pattern="yyyy-MM-dd HH:mm:ss.S"/> <!-- String 을 Date 로 바꿈 -->
-		<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 -->
+		<fmt:formatDate var="useDate1" value="${useDate}" pattern="yyyyMMdd"/> <!-- Date 를 뒤에 시분초 뺀 포맷으로 바꿈 --> --%>
 
         <!-- 하연아 여기 주석처리 안하면 뜨길래 주석 처리 해놨음!-->
 		<!--

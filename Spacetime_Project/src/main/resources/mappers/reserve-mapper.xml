@@ -28,6 +28,7 @@
 			<result column="RESERVE_COUNT" property="reserveCount" />
 			<result column="PRICE" property="price" />
 			<result column="MEM_NO" property="memNo" />
+			<result column="MEM_NAME" property="memName" />
 			
 			<!-- 회원(MEMBER)테이블 -->
 			<result column="PHONE" property="denyMessage" />
@@ -181,29 +182,30 @@
 		
 		<select id="selectMyReserve" resultMap="joinReserveDetailResultSet">
 			SELECT RESERVE_NO 
-		     , RESERVE_DATE
-		     , SPACE_TITLE
-		     , USE_DATE
-		     , START_TIME
-		     , END_TIME
-		     , RESERVE_COUNT
-		     , MEM_NO
-		     , NICKNAME
-		     , PHONE
-		     , EMAIL
-		     , PAY_METHOD 
-		     , PRICE
-		     , RECEIPT_URL
-		     , ADDRESS_DEFAULT
-		     , ADDRESS_DETAIL
-		     , TEL
-		     , LATITUDE
-		     , LONGITUDE
-		  FROM RESERVE
-		  JOIN SPACE USING(SPACE_NO)
-		  JOIN MEMBER USING(MEM_NO)
-		  JOIN PAYMENT USING (RESERVE_NO)
-		 WHERE RESERVE_NO = #{reserveNo}
+			     , TO_CHAR(RESERVE_DATE, 'YYYY-MM-DD') AS "RESERVE_DATE"
+			     , SPACE_TITLE
+			     , USE_DATE
+			     , START_TIME
+			     , END_TIME
+			     , RESERVE_COUNT
+			     , MEM_NO
+	             , MEM_NAME
+			     , NICKNAME
+			     , PHONE
+			     , EMAIL
+			     , PAY_METHOD 
+			     , PRICE
+			     , RECEIPT_URL
+			     , ADDRESS_DEFAULT
+			     , ADDRESS_DETAIL
+			     , TEL
+			     , LATITUDE
+			     , LONGITUDE
+			  FROM RESERVE
+			  JOIN SPACE USING(SPACE_NO)
+			  JOIN MEMBER USING(MEM_NO)
+			  JOIN PAYMENT USING (RESERVE_NO)
+			 WHERE RESERVE_NO = #{reserveNo}
 		</select>
 		
 		<update id="cancleMyReserve" parameterType="_int">
