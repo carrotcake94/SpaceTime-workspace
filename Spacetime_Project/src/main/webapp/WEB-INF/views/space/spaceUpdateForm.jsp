@@ -601,7 +601,7 @@
 		var hashtag ="${s.hashtag}".split(",");
 		
 		hashtag.forEach((value, index, array) => {
-		    $(".hashtag-area").append("<div class='hashtag'><span>" + value + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
+		    $(".hashtag-area").append("<div class='hashtag'><span>#" + value + "</span><i class='fa fa-minus-square' aria-hidden='true'></i></div>");
 		});
 		$("#stype"+${s.stypeNo}).prop("checked",true);
 		
@@ -941,9 +941,8 @@
      	//해시태그 합치기
      	var hashtag = [];
      	$(".hashtag>span").each(function() {
-     		hashtag.push($(this).text());
+     		hashtag.push($(this).text().substr(1).trim());
      	});
-     	
      	
      	if($(".hashtag>span").length != 0) {
      		$("input[name=hashtag]").val(hashtag.join(","));
