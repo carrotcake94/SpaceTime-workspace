@@ -214,15 +214,13 @@
 	<!-- 매출이 있는 공간 리스트 조회 -->
 	<select id="selectSalesList" resultMap="reserveResultSet">
 		<![CDATA[
-		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE",
-		CASE WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) < EXTRACT(MONTH FROM SYSDATE))) THEN '정산완료' 
-		     WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) >= EXTRACT(MONTH FROM SYSDATE))) THEN '미처리' END AS "SALES_STATUS"
+		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE"
 		FROM RESERVE R
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		WHERE MEM_STATUS = 'N'
 		  AND EXTRACT(YEAR FROM USE_DATE)|| '-' || EXTRACT(MONTH FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE)|| '-' || EXTRACT(MONTH FROM SYSDATE)
-		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE, USE_DATE
+		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE
 		ORDER BY SPACE_NO DESC
 		]]>
 	</select>
@@ -252,37 +250,35 @@
 		FROM RESERVE R
 		WHERE SPACE_NO = #{spaceNo}
 		  AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
-		ORDER BY USE_DATE, START_TIME ASC
+		ORDER BY USE_DATE ASC, START_TIME ASC
 	</select>
 	
 	<!-- 매출 검색 글 개수 -->
 	<select id="selectSalesSearchListCount" parameterType="hashmap" resultType="_int">
 		SELECT COUNT(*)
-		FROM RESERVE
-		JOIN SPACE USING (SPACE_NO)
-		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
-		WHERE MEM_STATUS = 'N'
-		  AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
-		  	<if test="condition == 'spaceTitle'">
-		    	AND SPACE_TITLE
-			</if>
-			<if test="condition == 'hostName'">
-			    AND M.MEM_NAME
-			</if>
-			<if test="condition == 'hostId'">
-			    AND M.MEM_ID
-			</if>
-			LIKE '%' || #{keyword} || '%'
+		FROM (SELECT SPACE_NO
+			  FROM RESERVE
+			  JOIN SPACE USING (SPACE_NO)
+			  JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
+			  WHERE MEM_STATUS = 'N'
+				AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
+			  	<if test="condition == 'spaceTitle'">
+			    	AND SPACE_TITLE
+				</if>
+				<if test="condition == 'hostName'">
+				    AND M.MEM_NAME
+				</if>
+				<if test="condition == 'hostId'">
+				    AND M.MEM_ID
+				</if>
+				LIKE '%' || #{keyword} || '%'
+				GROUP BY SPACE_NO)
 	</select>
 	
 	<!-- 매출 검색 리스트 조회 -->
 	<select id="selectSalesSearchList" parameterType="hashmap" resultMap="reserveResultSet">
 		
-		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE", TO_CHAR(USE_DATE, 'YYYY-MM-DD') AS "USE_DATE",
-		<![CDATA[
-		CASE WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) < EXTRACT(MONTH FROM SYSDATE))) THEN '정산완료' 
-		     WHEN ((EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) >= EXTRACT(MONTH FROM SYSDATE))) THEN '미처리'END AS "SALES_STATUS"
-		]]>
+		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE"
 		FROM RESERVE R
 		JOIN SPACE S USING (SPACE_NO)
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
@@ -298,7 +294,7 @@
 			    AND M.MEM_ID
 			</if>
 			LIKE '%' || #{keyword} || '%'
-		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE, USE_DATE
+		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE
 		ORDER BY SPACE_NO DESC
 	</select>
 	
