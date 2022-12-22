@@ -122,7 +122,7 @@
                             <select name="condition" class="select_category form-control mb-2" style="width:70%;">
                                 <option value="reportedMem">신고대상ID</option>
                                 <option value="reportMem">신고자ID</option>
-                                <option value="reportContent">신고내용</option>
+                                <!-- <option value="reportContent">신고내용</option> -->
                             </select>
                         </td>
                         <td>

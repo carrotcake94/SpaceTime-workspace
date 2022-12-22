@@ -456,32 +456,31 @@ public class SpaceController {
 	// 공간 상세조회 - 북마크 기능
 	@RequestMapping(value = "detail.sp", produces = "text/html; charset=UTF-8")
 	public ModelAndView selectProduct(int sno, ModelAndView mv, HttpSession session) {
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
+		if(loginMember != null && loginMember.getMemNo() == 1) {
 
-		// 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
-		int result = spaceService.increaseCount(sno);
+			Bookmark bm = new Bookmark();
 
-		Bookmark bm = new Bookmark();
+			int count = 0;
 
-		int count = 0;
+			if (session.getAttribute("loginMember") != null) {
 
-		if (session.getAttribute("loginMember") != null) {
+				int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
+//				System.out.println(sno);
+//				System.out.println(memNo);
 
-			int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
-//			System.out.println(sno);
-//			System.out.println(memNo);
+				bm.setBookmarkMem(memNo);
+				bm.setBookmarkSpace(sno);
 
-			bm.setBookmarkMem(memNo);
-			bm.setBookmarkSpace(sno);
+				// System.out.println(bm);
 
-			// System.out.println(bm);
+				count = spaceService.selectSpaceLike(bm);
+				// System.out.println("selectSpaceLike" + bm);
+			}
 
-			count = spaceService.selectSpaceLike(bm);
-			// System.out.println("selectSpaceLike" + bm);
-		}
-
-		Member m = (Member) session.getAttribute("loginMember");
-
-		if (result > 0) { // 성공적으로 조회수 증가가 일어났다면
+			Member m = (Member) session.getAttribute("loginMember");
+			
 
 			// 상세조회 요청
 			// DetailView.jsp 상에 필요한 데이터 조회
@@ -514,15 +513,73 @@ public class SpaceController {
 			mv.addObject("sa", sa);
 			mv.addObject("bm", bm);
 			mv.setViewName("space/spaceDetailView");
-
-			// System.out.println(s);
-
-		} else { // 실패
-
-			mv.addObject("alertMsg", "공간 조회 실패").setViewName("common/errorPage");
-
+			
 		}
+		else {
+			// 게시글 조회수 증가용 서비스 호출 결과 받기 (update 하고 오기)
+			int result = spaceService.increaseCount(sno);
 
+			Bookmark bm = new Bookmark();
+
+			int count = 0;
+
+			if (session.getAttribute("loginMember") != null) {
+
+				int memNo = ((Member) session.getAttribute("loginMember")).getMemNo();
+//				System.out.println(sno);
+//				System.out.println(memNo);
+
+				bm.setBookmarkMem(memNo);
+				bm.setBookmarkSpace(sno);
+
+				// System.out.println(bm);
+
+				count = spaceService.selectSpaceLike(bm);
+				// System.out.println("selectSpaceLike" + bm);
+			}
+
+			Member m = (Member) session.getAttribute("loginMember");
+			
+			if (result > 0) { // 성공적으로 조회수 증가가 일어났다면
+
+				// 상세조회 요청
+				// DetailView.jsp 상에 필요한 데이터 조회
+				Space s = spaceService.selectSpaceDetail(sno);
+				ArrayList<SpaceAttachment> sa = spaceService.selectSpaceDetailAttachment(sno);
+
+				// 정현
+				int listCount = spaceService.selectReviewListBySnoCount(sno);
+				int pageLimit = 10;
+				int boardLimit = 1;
+
+				PageInfo pi = Pagination.getPageInfo(listCount, 1, pageLimit, boardLimit);
+
+				HashMap<String, Integer> map = new HashMap<>();
+
+				map.put("spaceNo", sno);
+				if (m == null) {
+					map.put("memNo", null);
+				} else {
+					map.put("memNo", m.getMemNo());
+				}
+
+				ArrayList<Review> reviewList = spaceService.selectReviewListBySno(map, pi);
+				mv.addObject("rList", reviewList);
+				mv.addObject("pi", pi);
+
+				// 조회된 데이터를 담아서 포워딩
+				mv.addObject("count", count);
+				mv.addObject("s", s);
+				mv.addObject("sa", sa);
+				mv.addObject("bm", bm);
+				mv.setViewName("space/spaceDetailView");
+
+				// System.out.println(s);
+
+			} else { // 실패
+				mv.setViewName("common/errorPage404");
+			}
+		}
 		return mv;
 	}
 
