@@ -1340,7 +1340,7 @@
                                           // 가상계좌 입금 완료 처리
                                           break;
                                       case 'done':
-
+                                    	  sendMessage("reserve", "${s.memId}", "${s.spaceTitle}");
                                           // 결제 완료 시 hidden으로 숨긴 input들 안에 부트페이 데이터를 넣고 서블릿으로 요청
                                           console.log(response);
                                           $("form>input[name=rId]").val(response.data.receipt_id);
@@ -1372,6 +1372,7 @@
                                            */
                                           break;
                                   }
+                                 
                               } catch (e) {
                                   // 결제 진행중 오류 발생
                                   // e.error_code - 부트페이 오류 코드
