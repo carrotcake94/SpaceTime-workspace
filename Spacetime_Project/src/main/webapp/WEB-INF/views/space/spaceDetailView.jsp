@@ -698,7 +698,14 @@
                             <div id="reserve_title" style="font-size: 25px; font-weight: 800;">
                                 예약하기
                                 <!-- 신고버튼 -->
+                                <c:choose>
+                                <c:when test="${(!empty loginMember) and (loginMember.memNo ne s.hostNo) }">
                                 <button type="button" class="img_btn" id="report_btn" data-toggle="modal" data-target="#report-Modal"><img src="resources/images/space/siren_icon.png" width="40px" height="30px"></button>
+                                </c:when>
+                                <c:when test="${empty loginMember}">
+                                <button type="button" class="img_btn" id="report_btn" onclick="denyChat()"><img src="resources/images/space/siren_icon.png" width="40px" height="30px"></button>
+                                </c:when>
+                                </c:choose>
                                 <!-- 북마크 버튼 -->
                                 <span id="bookmark">
                                 	<c:choose>
