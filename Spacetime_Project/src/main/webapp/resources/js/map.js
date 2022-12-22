@@ -207,8 +207,7 @@ function filterMap() {
 	});
 }
 
-function mapFilterOnCurrentMap(map){
-	//카테고리
+function selectCategory(){
 	var category = document.querySelectorAll("input[type=checkbox]");
 	var checkedCategory = [];
 	for(var i in category){
@@ -223,6 +222,10 @@ function mapFilterOnCurrentMap(map){
 		}
 	}
 	
+	return checkedCategory;
+}
+
+function mapFilterOnCurrentMap(map, checkedCategory){
 	$.ajax({
 		url: "mapFilterOnCurrentMap.mp",
 		type: "get",

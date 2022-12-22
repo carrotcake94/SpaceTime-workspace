@@ -605,7 +605,7 @@ body * {
 		<div>
 			<div id="m_search_bar">
 				<form id="searchInputForm" action="" method="get">
-					<input type="search" id="searchInput" name="pureKeyword" placeholder="&nbsp&nbsp'#' 입력시 해시태그 검색이 가능해요!" onkeyup="onKeyUp(e)" required>
+					<input type="search" id="searchInput" name="pureKeyword" placeholder="&nbsp&nbsp'#' 입력시 해시태그 검색이 가능해요!" required>
 				</form>
 			</div>
 			<div id="autoComplete">
@@ -631,7 +631,6 @@ body * {
         
     searchInput.addEventListener("keyup", (e) => {
         if(e.keyCode == 13){
-       		console.log(검색시작);
            	searchStart(searchInput.value);
         }
         
@@ -658,8 +657,6 @@ body * {
             } else if(autoCompleteBox.style.display = "none" && e.target == searchInput) {
             	if(e.target == searchInput || e.target == autoCompleteBox)
             	autoCompleteBox.style.display = "block";
-            } else if(e.target == autoCompleteBox) {
-            	
             }
         })
     });

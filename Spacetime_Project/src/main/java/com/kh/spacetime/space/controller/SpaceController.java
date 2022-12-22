@@ -286,6 +286,14 @@ public class SpaceController {
 		mv.addObject("pureKeyword", pureKeyword).setViewName("space/searchSpace");
 		return mv;
 	}
+	
+	// 메인화면에서 카테고리 선택으로 지도 이동 -성훈
+	@RequestMapping("searchSpaceByCategory.mp")
+	public ModelAndView searchSpaceByCategory(String categoryNo, ModelAndView mv) {
+		System.out.println(categoryNo);
+		mv.addObject("categoryNo", categoryNo).setViewName("space/searchSpace");
+		return mv;
+	}
 
 	// 지도 필터링(지역설정O) -성훈
 	@ResponseBody

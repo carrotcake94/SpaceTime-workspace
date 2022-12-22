@@ -89,8 +89,8 @@ function spaceRecommend(keyword){
              for(var i in recommendList){
 			     var hashtag = recommendList[i].hashtag.split(',');
 			     var card = document.createElement("div");
-			     card.innerHTML = "<input type='hidden' name='sno' value='" + recommendList[i].spaceNo + "' >" +
-			                      "<div class='recommedCard' id='recommend" + i + "'>" +
+			     card.setAttribute("onclick", "toSpaceDetail(" + recommendList[i].spaceNo + ")");
+			     card.innerHTML = "<div class='recommedCard' id='recommend" + i + "'>" +
 			                         "<div class='recommend_img_wrap'>" +
 			                             "<img class='img-0' src='" + recommendList[i].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
 			                         "</div>" + 
@@ -134,10 +134,10 @@ function spaceRecommend(keyword){
              console.log(reviewList);
              for(var i in reviewList){
                  var card = document.createElement("div");
-                 card.innerHTML = "<input type='hidden' name='sno' value='" + reviewList[i].spaceNo + "' >" +
-                                    "<div class='reviewCard' id='recommend" + i + "'>" +
+                 card.setAttribute("onclick", "toSpaceDetail(" + reviewList[i].spaceNo + ")");
+                 card.innerHTML =  "<div class='reviewCard' id='recommend" + i + "'>" +
                                         "<div class='review_img'>" +
-                                                "<img class='img-0' src='" + reviewList[i].reviewAttach1 + "' width='100%' height='100%' alt='사진 없음' />" +
+                                                
                                         "</div>" + 
                                         "<div class='review_content_area>" +
                                             "<span class='review_stitle'>" + reviewList[i].spaceTitle + "</span>" +
@@ -147,7 +147,6 @@ function spaceRecommend(keyword){
                                             "<span>" + reviewList[i].reviewCont + "</span>" +
                                         "</div>" +
                                     "</div>";
-                                    
                 if(i == 0){
                      document.querySelector("#reviewContainer1").append(card);
                  } else if (i == 1) {
@@ -161,6 +160,10 @@ function spaceRecommend(keyword){
          }
      })
  }
+ 
+function toSpaceDetail(sno){
+	location.href = "detail.sp?sno=" + sno;
+}
  
  function changeRecommendTheme(keyword){
  	

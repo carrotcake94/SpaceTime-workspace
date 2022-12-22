@@ -29,46 +29,46 @@
 						data-ride="carousel">
 						<div class="carousel-inner" id="main_category_slider1">
 							<div class="carousel-item active">
-								<div id="category_partyRoom" class="main_category">
+								<div id="category_partyRoom" class="main_category" onclick="moveToMapByCategory(1)">
 									<img
 										src="resources/images/main/파티룸.png">
 									<div align="center">파티룸</div>
 								</div>
-								<div id="category_cafe" class="main_category">
+								<div id="category_cafe" class="main_category" onclick="moveToMapByCategory(2)">
 									<img src="resources/images/main/카페.png">
 									<div>카페</div>
 								</div>
-								<div id="category_theather" class="main_category">
+								<div id="category_theather" class="main_category" onclick="moveToMapByCategory(3)">
 									<img src="resources/images/main/극장.png">
 									<div>극장, 공연장</div>
 								</div>
-								<div id="category_practice" class="main_category">
+								<div id="category_practice" class="main_category" onclick="moveToMapByCategory(4)">
 									<img src="resources/images/main/연습실.png">
 									<div>연습실</div>
 								</div>
-								<div id="category_kitchen" class="main_category">
+								<div id="category_kitchen" class="main_category" onclick="moveToMapByCategory(5)">
 									<img src="resources/images/main/주방.png">
 									<div>공유주방</div>
 								</div>
 							</div>
 							<div class="carousel-item">
-								<div id="category_gallery" class="main_category">
+								<div id="category_gallery" class="main_category" onclick="moveToMapByCategory(6)">
 									<img src="resources/images/main/갤러리.png">
 									<div>갤러리</div>
 								</div>
-								<div id="category_exercise" class="main_category">
+								<div id="category_exercise" class="main_category" onclick="moveToMapByCategory(7)">
 									<img src="resources/images/main/운동시설.png">
 									<div>운동시설</div>
 								</div>
-								<div id="category_study" class="main_category">
+								<div id="category_study" class="main_category" onclick="moveToMapByCategory(8)">
 									<img src="resources/images/main/스터디룸.png">
 									<div>스터디룸</div>
 								</div>
-								<div id="category_conference" class="main_category">
+								<div id="category_conference" class="main_category" onclick="moveToMapByCategory(9)">
 									<img src="resources/images/main/회의실.png">
 									<div>회의실</div>
 								</div>
-								<div id="category_studio" class="main_category">
+								<div id="category_studio" class="main_category" onclick="moveToMapByCategory(10)">
 									<img src="resources/images/main/스튜디오.png">
 									<div>스튜디오</div>
 								</div>
@@ -90,6 +90,12 @@
 						</button>
 					</div>
 				</div>
+				
+				<script>
+					function moveToMapByCategory(categoryNo){
+						location.href= "searchSpaceByCategory.mp?categoryNo=" + categoryNo;
+					}
+				</script>
 
 				<!-- 오늘의 추천 공간 / onclick="location.href'링크'"로 페이지 이동 -->
 				<div id="main_recommend">
@@ -147,10 +153,14 @@
 						</div>
 					</div>
 				</div>
+				
+				<script>
+					
+				</script>
 			</div>
 		</div>
 		<!-- main -->
-
+		
 		<jsp:include page="common/footer.jsp" />
 	</div>
 </body>
