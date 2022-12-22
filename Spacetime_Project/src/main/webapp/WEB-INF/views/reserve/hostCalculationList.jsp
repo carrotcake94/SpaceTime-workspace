@@ -124,7 +124,9 @@
 	#hostCaltb td {
 		text-align: center;
 	}
-
+	#hostCaltb tr {
+		cursor: pointer;
+	}
     #CalList_Host button {
       float: right;
       width: 150px;
