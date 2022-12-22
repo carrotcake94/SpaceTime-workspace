@@ -966,7 +966,6 @@ body * {
 	}
    		//메시지 수신
    	   		function onMessage(msg) {
-   	 		alert(1);
    	   			var data = msg.data; // 전달 받은 데이터
    	   			
    	   			socketData = JSON.parse(data); 
