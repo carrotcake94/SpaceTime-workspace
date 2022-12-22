@@ -502,7 +502,7 @@
 	<!-- 정현 End -->
 	
 	<!-- 회원 등급 업데이트를 위한 결제 금액 SUM - 경미 -->
-	<select id="sumPrice" parameterType="_int" resultType="_int">
+	<select id="sumPrice" parameterType="_int" resultType="string">
 		SELECT SUM(PRICE)
         FROM RESERVE
         WHERE MEM_NO = #{memNo}

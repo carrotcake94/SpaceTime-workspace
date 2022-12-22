@@ -183,7 +183,12 @@ public class ReserveServiceImpl implements ReserveService {
 	@Override
 	public int sumPrice(int memNo) {
 		
-		return reserveDao.sumPrice(sqlSession, memNo);
+		int sumPrice = 0;
+		String sumStr = reserveDao.sumPrice(sqlSession, memNo);
+		if(sumStr != null) {
+			sumPrice = Integer.parseInt(sumStr);
+		}
+		return sumPrice;
 	}
 	
 	// 결제 취소를 위한 Payment select - 경미
