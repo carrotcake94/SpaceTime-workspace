@@ -1,3 +1,4 @@
+
 //지도의 정보를 불러와 마커를 추가하는 메소드
 function selectList(map) {
 	$.ajax({
@@ -52,12 +53,8 @@ function selectListByKeyword(pureKeyword){
 
 function loadList(spaceListArr, picListArr, lineListArr){
 	//기존의 리스트 삭제
-	while(picList.hasChildNodes()){
-		picList.removeChild(picList.firstChild);
-	}
-	while(lineList.hasChildNodes()){
-		lineList.removeChild(lineList.firstChild);
-	}
+	picListArr = [];
+	lineListArr = [];
 	
 	//새로운 리스트 생성
 	var picContent, lineCotent;
@@ -78,7 +75,7 @@ function loadList(spaceListArr, picListArr, lineListArr){
 		
 		//리스트를 위한 내용물 생성
 		picContent.innerHTML = "<div class='picList_content'>" +
-								   "<div class='picList_content_pic'><img src='" + spaceListArr[i].attachments[0].attachmentReName + "' alt='사진없음'/></div>" +
+								   
 								   "<div class='picList_content_spaceName'>" + spaceListArr[i].spaceTitle + "</div>" +
 								   "<div class='picList_content_price click_disable'>" + spaceListArr[i].hourPrice + "원 / 시간</div>" +
 							   "</div>";
@@ -182,7 +179,7 @@ function toLineList() {
 	picList.style.display = "none";
 }
 
-function filterMap() {
+function filterMap(map, mapOptions) {
 	//지역
 	
 	var selectedArea = area.options[area.selectedIndex].value;
@@ -206,8 +203,16 @@ function filterMap() {
 			max_price : document.querySelector("#max_price").value
 		},
 		success : (listArr) => {
-		
 			spaceListArr = listArr;
+			switch(selectedArea){
+				case "강서구,양천구,구로구,영등포구" : var lat = 37.533059; var lng = 126.878722; break;
+				case "금천구,동작구,관악구,서초구" : var lat = 37.490694; var lng = 126.967206; break;
+				case "강남구,송파구,광진구,강동구" : var lat = 37.520155; var lng = 127.096403; break;
+				case "은평구,마포구,서대문구,종로구" : var lat = 37.587191; var lng = 126.956507; break;
+				case "성북구,강북구,도봉구,노원구,중랑구" : var lat = 36.623989; var lng = 127.062066; break;
+				case "용산구,중구,성동구,동대문구" : var lat = 37.557784; var lng = 127.013968; break;
+            };
+            changeMapCenter(lat, lng);
 		},
 		error : () => {
 		}
@@ -249,6 +254,14 @@ function mapFilterOnCurrentMap(map){
 		error : () => {
 		}
 	});
+}
+
+function changePositionSet(map, lat, lng){
+	mapOptions = { 
+		center : new naver.maps.LatLng(lat, lng),
+		zoom : 13
+	}
+	map = new naver.maps.Map("map", mapOptions);
 }
 
 function toSpaceDetail(sno){

@@ -9,11 +9,6 @@
 	type="text/css" />
 	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script> <!-- nrd3zj6gm7 -->
 	<script src="resources/js/map.js"></script>
-
-<style>
-	#min_price { width: 100px; float: left;}
-	#max_price { width: 100px; float: left; }
-</style>
 </head>
 <body>
 	<div class="wrap">
@@ -36,10 +31,10 @@
 						</div>
 					</div>
 
-					<table id="mapFilter" style="display:none;">
-						<tr>
-							<th class="mapFilter_option_title">지역</th>
-							<td>
+					<div id="mapFilter" style="display:none;">
+						<div>
+							<div class="mapFilter_option_title">지역</div>
+							<div>
 								<select class="mapFilter_options form-control" id="mapFilter_area" name="area">
 									<option value="now">현재 지도 위치</option>
 									<option>강서구,양천구,구로구,영등포구</option>
@@ -49,35 +44,35 @@
 									<option>성북구,강북구,도봉구,노원구,중랑구</option>
 									<option>용산구,중구,성동구,동대문구</option>
 								</select>
-							</td>
-						</tr>
+							</div>
+						</div>
 						
-						<tr id="mapFilter_option_category">
-							<th class="mapFilter_option_title">시설</th>
-							<td id="mapFilter_category_list" class="mapFilter_options">
-								<input type="checkbox" name="category" value="1"> 파티룸 
-								<input type="checkbox" name="category" value="2"> 카페 
-								<input type="checkbox" name="category" value="3"> 공연장
-								<input type="checkbox" name="category" value="4"> 연습실<br>
-								<input type="checkbox" name="category" value="5"> 공유주방
-								<input type="checkbox" name="category" value="6"> 갤러리 
-								<input type="checkbox" name="category" value="7"> 운동시설<br>
-								<input type="checkbox" name="category" value="8"> 스터디룸
-								<input type="checkbox" name="category" value="9"> 회의실 
-								<input type="checkbox" name="category" value="10"> 촬영스튜디오
-							</td>
-						</tr>
-						<tr id="mapFilter_option_price">
-							<th class="mapFilter_option_title">가격</th>
-							<td id="mapFilter_priceRange" class="mapFilter_options" style="width: 70%;">
-								<div style="float: left; width: 40%;">최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="" class="form-control">원 &nbsp;~&nbsp; </div>
-								<div style="float: left; width: 40%;">최대 <input type="text" id="max_price" name="max_price" value="9999999" placeholder="" class="form-control">원</div>
-							</td>
-						</tr>
-						<tr id="mapFilter_btns">
-							<td colspan="2"><button id="mapFilter_search">검색</button></td>
-						</tr>
-					</table>
+						<div id="mapFilter_option_category">
+							<div class="mapFilter_option_title">시설</div>
+							<div id="mapFilter_category_list" class="mapFilter_options">
+								<input type="checkbox" name="category" value="1">파티룸 
+								<input type="checkbox" name="category" value="2">카페 
+								<input type="checkbox" name="category" value="3">공연장
+								<input type="checkbox" name="category" value="4">연습실<br>
+								<input type="checkbox" name="category" value="5">공유주방
+								<input type="checkbox" name="category" value="6">갤러리 
+								<input type="checkbox" name="category" value="7">운동시설<br>
+								<input type="checkbox" name="category" value="8">스터디룸
+								<input type="checkbox" name="category" value="9">회의실 
+								<input type="checkbox" name="category" value="10">촬영스튜디오
+							</div>
+						</div>
+						<div id="mapFilter_option_price">
+							<div class="mapFilter_option_title">가격</div>
+							<div id="mapFilter_priceRange" class="mapFilter_options">
+								최소 <input type="text" id="min_price" name="min_price" value="0" placeholder="" class="form-control">원 &nbsp;~&nbsp; 최대
+								<input type="text" id="max_price" name="max_price" value="9999999" placeholder="" class="form-control">원
+							</div>
+						</div>
+						<div id="mapFilter_btns">
+							<button id="mapFilter_search">검색</button>
+						</div>
+					</div>
 					
 					<!-- 사진형 리스트 -->
 					<div id="picList">
@@ -116,6 +111,7 @@
 					var checkedCategory = [];
 					
 					function getCategory(){
+						checkedCategory = [];
 						for(var i in category){
 							if(category[i].checked == true){
 								checkedCategory.push(category[i].value);
@@ -125,7 +121,8 @@
 					
 					
 					//중복코드 묶은 메소드
-					function initiateMap(){
+					function initiateMap(map){
+						
 						loadList(spaceListArr, picListArr, lineListArr);
 						updateMarkers();
 						linkMarkerWithList(markers, picListArr, lineListArr, map);
@@ -177,19 +174,24 @@
 					};
 					
 					filterSearch.onclick = () => {
+						
 						getCategory();
-						if(area.value == "now"){
-							if(checkedCategory.length == 0){
-								window.alert("지역과 시설의 종류를 설정해주세요!");
+						if(checkedCategory.length > 6){
+							window.alert("최대 5개의 시설종류만 선택이 가능합니다!");
+						} else {
+							if(area.value == "now"){
+								if(checkedCategory.length == 0){
+									window.alert("지역과 시설의 종류를 설정해주세요!");
+								} else {
+									filter.style.display = "none";
+									mapFilterOnCurrentMap(map);
+								}
 							} else {
 								filter.style.display = "none";
-								mapFilterOnCurrentMap(map);
+								filterMap();
 							}
-						} else {
-							filter.style.display = "none";
-							filterMap();
+							initiateMap();
 						}
-						initiateMap();
 					};
 				</script>
 			</div>

@@ -622,6 +622,7 @@ body * {
     //검색어 자동완성기능에 필요한 변수
     var autoCompleteBox = document.querySelector("#autoComplete");
     var autoCompleteList = document.querySelector("#autoCompleteList");
+    var autoCompleteContent = document.querySelector(".autoCompleteContent");
     var searchInput = document.querySelector("#searchInput");
         
     //메인화면 검색창에서 keyup반응 시 자동완성기능 실행
@@ -653,12 +654,15 @@ body * {
             if(e.target != autoCompleteBox){
                 autoCompleteBox.style.display = "none";
             } else if(autoCompleteBox.style.display = "none" && e.target == searchInput) {
+            	if(e.target == searchInput || e.target == autoCompleteBox)
             	autoCompleteBox.style.display = "block";
             } else if(e.target == autoCompleteBox) {
             	
             }
         })
     });
+    
+    
     
 /*     document.querySelector("m_search_btn").addEventListener("click", () => {
     	document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();
@@ -670,12 +674,11 @@ body * {
     }
     
     //연관검색어 클릭 시
-/*     var clickedAutoContent = document.querySelector(".autoCompleteContent");
-    clickedAutoContent.onclick = () => {
-    	console.log(clickedAutoContent.innerHTML);
-   		document.querySelector("#searchInputForm").setAttribute("value", clickedAutoContent.innerHTML);
-   		document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp").submit();("action", "searchSpaceList.mp").submit();
-   	} */
+    autoCompleteContent.onclick = (e) => {
+    	console.log(e.target.innerHTML);
+   		document.querySelector("#searchInputForm").setAttribute("value", e.target.innerHTML);
+   		document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp?pureKey=" + e.target.innerHTML).submit();
+   	} 
     
 	</script>
 	<!-- 슬라이드 메뉴 -->
