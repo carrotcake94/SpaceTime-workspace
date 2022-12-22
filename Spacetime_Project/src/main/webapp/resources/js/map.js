@@ -44,6 +44,79 @@ function selectListByKeyword(pureKeyword){
 	});
 }
 
+function filterMap() {
+	//지역
+	
+	var selectedArea = area.options[area.selectedIndex].value;
+	var areaArr = selectedArea.split(',');
+	
+	//카테고리
+	if(checkedCategory.length == 0){
+		for(var i = 0; i < 10; i++){
+		checkedCategory.push(i);
+		}
+	}
+	
+	$.ajax({
+		url: "mapFilter.mp",
+		type: "get",
+		async: false,
+		data : {
+			area : areaArr,
+			category : checkedCategory,
+			min_price : document.querySelector("#min_price").value,
+			max_price : document.querySelector("#max_price").value
+		},
+		success : (listArr) => {
+			spaceListArr = listArr;
+		},
+		error : () => {
+		}
+	});
+}
+
+function selectMapByCurrentPosition(map, checkedCategory){
+	$.ajax({
+		url: "mapFilterOnCurrentMap.mp",
+		type: "get",
+		async: false,
+		data : {
+			max_lat : map.getBounds()._max._lat,
+			max_lng : map.getBounds()._max._lng,
+			min_lat : map.getBounds()._min._lat,
+			min_lng : map.getBounds()._min._lng,
+			category : checkedCategory,
+			min_price : document.querySelector("#min_price").value,
+			max_price : document.querySelector("#max_price").value
+		},
+		success : (listArr) => {
+			spaceListArr = [];
+			spaceListArr = listArr;
+		},
+		error : () => {
+		}
+	});
+}
+
+
+function selectCategory(){
+	var category = document.querySelectorAll("input[type=checkbox]");
+	var checkedCategory = [];
+	for(var i in category){
+		if(category[i].checked == true){
+			checkedCategory.push(category[i].value);
+		}
+	}
+	
+	if(checkedCategory.length == 0){
+		for(var i = 0; i < 10; i++){
+		checkedCategory.push(i);
+		}
+	}
+	
+	return checkedCategory;
+}
+
 function loadList(spaceListArr, picListArr, lineListArr){
 	//기존의 리스트 삭제
 	while(picList.hasChildNodes()){
@@ -176,76 +249,7 @@ function toLineList() {
 	picList.style.display = "none";
 }
 
-function filterMap() {
-	//지역
-	
-	var selectedArea = area.options[area.selectedIndex].value;
-	var areaArr = selectedArea.split(',');
-	
-	//카테고리
-	if(checkedCategory.length == 0){
-		for(var i = 0; i < 10; i++){
-		checkedCategory.push(i);
-		}
-	}
-	
-	$.ajax({
-		url: "mapFilter.mp",
-		type: "get",
-		async: false,
-		data : {
-			area : areaArr,
-			category : checkedCategory,
-			min_price : document.querySelector("#min_price").value,
-			max_price : document.querySelector("#max_price").value
-		},
-		success : (listArr) => {
-			spaceListArr = listArr;
-		},
-		error : () => {
-		}
-	});
-}
 
-function selectCategory(){
-	var category = document.querySelectorAll("input[type=checkbox]");
-	var checkedCategory = [];
-	for(var i in category){
-		if(category[i].checked == true){
-			checkedCategory.push(category[i].value);
-		}
-	}
-	
-	if(checkedCategory.length == 0){
-		for(var i = 0; i < 10; i++){
-		checkedCategory.push(i);
-		}
-	}
-	
-	return checkedCategory;
-}
-
-function mapFilterOnCurrentMap(map, checkedCategory){
-	$.ajax({
-		url: "mapFilterOnCurrentMap.mp",
-		type: "get",
-		async: false,
-		data : {
-			max_lat : map.getBounds()._max._lat,
-			max_lng : map.getBounds()._max._lng,
-			min_lat : map.getBounds()._min._lat,
-			min_lng : map.getBounds()._min._lng,
-			category : checkedCategory,
-			min_price : document.querySelector("#min_price").value,
-			max_price : document.querySelector("#max_price").value
-		},
-		success : (listArr) => {
-			spaceListArr = listArr;
-		},
-		error : () => {
-		}
-	});
-}
 
 function toSpaceDetail(sno){
 	location.href = "detail.sp?sno=" + sno;

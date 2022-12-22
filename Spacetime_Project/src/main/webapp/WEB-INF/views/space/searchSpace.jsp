@@ -50,16 +50,16 @@
 						<div id="mapFilter_option_category">
 							<div class="mapFilter_option_title"><p>시설</p></div>
 							<div id="mapFilter_category_list" class="mapFilter_options">
-								<input type="checkbox" name="category" value="1">파티룸 
-								<input type="checkbox" name="category" value="2">카페 
-								<input type="checkbox" name="category" value="3">공연장
-								<input type="checkbox" name="category" value="4">연습실<br>
-								<input type="checkbox" name="category" value="5">공유주방
-								<input type="checkbox" name="category" value="6">갤러리 
-								<input type="checkbox" name="category" value="7">운동시설<br>
-								<input type="checkbox" name="category" value="8">스터디룸
-								<input type="checkbox" name="category" value="9">회의실 
-								<input type="checkbox" name="category" value="10">촬영스튜디오
+								<input class="ctgr" type="checkbox" name="category" value="1">파티룸 
+								<input class="ctgr" type="checkbox" name="category" value="2">카페 
+								<input class="ctgr" type="checkbox" name="category" value="3">공연장
+								<input class="ctgr" type="checkbox" name="category" value="4">연습실<br>
+								<input class="ctgr" type="checkbox" name="category" value="5">공유주방
+								<input class="ctgr" type="checkbox" name="category" value="6">갤러리 
+								<input class="ctgr" type="checkbox" name="category" value="7">운동시설<br>
+								<input class="ctgr" type="checkbox" name="category" value="8">스터디룸
+								<input class="ctgr" type="checkbox" name="category" value="9">회의실 
+								<input class="ctgr" type="checkbox" name="category" value="10">촬영스튜디오
 							</div>
 						</div>
 						<div id="mapFilter_option_price">
@@ -121,11 +121,19 @@
 					 
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
-						
 						if('${pureKeyword}' == ""){
+							//선택한 카테고리에 체크하기
 							var categoryNo = [];
 							categoryNo[0] = '${categoryNo}';
-							mapFilterOnCurrentMap(map, categoryNo);
+							
+							var mapFilterCategoryList = document.querySelectorAll(".ctgr");
+							for(var i = 1; i < 11; i++){
+								if(i == categoryNo[0]){
+									mapFilterCategoryList[i].checked = true;
+								}
+							}
+							
+							selectMapByCurrentPosition(map, categoryNo);
 							initiateMap();
 						} else if('${categoryNo}' == ""){
 							if('${pureKeyword}'.startsWith("#") == true){
@@ -159,7 +167,7 @@
 										window.alert("지역과 시설의 종류를 설정해주세요!");
 										filter.style.display = "block";
 									} else {
-										mapFilterOnCurrentMap(map);
+										selectMapByCurrentPosition(map, checkedCategory);
 									}
 								} else {
 									filter.style.display = "none";
@@ -186,7 +194,6 @@
 					};
 					
 					filterSearch.onclick = () => {
-						
 						getCategory();
 						if(checkedCategory.length > 3){
 							window.alert("최대 3개의 시설종류만 선택이 가능합니다!");
@@ -197,7 +204,7 @@
 								} else {
 									filter.style.display = "none";
 									selectCategory();
-									mapFilterOnCurrentMap(map, checkedCategory);
+									selectMapByCurrentPosition(map, checkedCategory);
 								}
 							} else {
 								filter.style.display = "none";
