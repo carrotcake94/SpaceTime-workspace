@@ -9,19 +9,76 @@
 <title>SpaceTime</title>
 <link href="resources/css/main.css" rel="stylesheet" type="text/css" />
 <!-- 헤더에서 제이쿼리등 임포트하기 떄문에 여기에 스크립트나 링크 가져올 필요없다. -->
+<style>
+ #spacetime {
+        font-size: 70px;
+    }
+
+
+    .introduce td div{
+
+      padding: 30px;
+      margin: auto;
+    }
+
+    #intro_tb {
+      margin: auto;
+    }
+
+    .title_wrap{
+      width: 100%;
+	  margin: 10px auto;
+      position: relative;
+    }
+    
+        .title_wrap img {
+      width: 100%;
+      height: 600px;
+			vertical-align: middle;
+    }
+
+    .text {
+      font-size: 50px;
+      font-weight:700;
+      color: white;
+      padding: 5px 10px;
+			text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate( -50%, -50% );
+    }
+    
+    #main_categoryBar { margin:auto;}
+    
+
+</style>
 </head>
 <body>
 	<div class="wrap">
 		<jsp:include page="common/header.jsp" />
-		<div class="main">
-			<!--컨텐츠작성부분-->
-			<!-- 옆으로 넘어가는 화면 (+ 몇 초 뒤 넘어가도록) -->
-			<div id="main_pic">
-				<div>
-					<img src="resources/images/main/메인크리스마스.jpg">
-				</div>
+		
+		
+		 <div class="title_wrap">
+		     <div><img src="resources/images/common/introductionImg.jpeg" alt="사진없음"></div>
+		     <div class="text">
+			       누구나 원하는 곳에서 
+			       <br>
+			       우리다운 시간을 
+			       <br>
+			       <div id="spacetime" align="center">
+			         <span id="logo"><img src="resources/images/logo.png"></span> &nbsp;&nbsp;&nbsp;&nbsp;
+			         <span style="color:#277BC0;">S</span><span>pace</span>
+			         <span style="color: #FFB200;">T</span><span>ime</span>
+			       </div>
 			</div>
-			<div id="main_display">
+		</div>
+		
+		
+		<div class="main">
+		
+		
+		
 
 				<!-- 카테고리 선택, 클릭 시 옆으로 넘어가도록 -->
 				<div id="main_categoryBar">
