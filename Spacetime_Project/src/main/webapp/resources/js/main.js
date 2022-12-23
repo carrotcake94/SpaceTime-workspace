@@ -59,23 +59,23 @@
  //(자동완성)키워드를 바탕으로 뽑아온 데이터를 동적리스트로 가공하여 화면에 뿌려줌
  function autoCompleteListShowUp(words, input){
      //기존의 내용 삭제
-     while(autoCompleteList.hasChildNodes()){
-         autoCompleteList.removeChild(autoCompleteList.firstChild);
+     while(autoCompleteContainer.hasChildNodes()){
+         autoCompleteContainer.removeChild(autoCompleteContainer.firstChild);
      }
      
      //자동완성어를 div에 담아 동적으로 뿌려줌
+     var keyword;
+     var ul = document.createElement("ul");
+     ul.setAttribute("class", "autoCompleteUl");
      for(var i = 0; i < words.length; i++){
-         //각 div에 속성부여
-         autoCompleteContent = document.createElement("div");
-         //autoCompleteContent.setAttribute("id", "autoCompleteContent_" + i);
-         autoCompleteContent.setAttribute("class", "autoCompleteContent");
-         //autoCompleteContent.setAttribute("onclick", "searchByAutoComplete()");
-         
-         //각 div속성의 내용
-         autoCompleteContent.innerHTML = words[i];
+     	 keyword = document.createElement("li");
+     	 keyword.setAttribute("class", "autoCompleteContent");
+     	 keyword.innerHTML = words[i];
+     	 
+     	 ul.append(keyword);
          
          //생성된 각 div를 #autoCompleteList의 자식으로 추가
-         autoCompleteList.append(autoCompleteContent);
+         autoCompleteContainer.append(ul);
      }
  }
  

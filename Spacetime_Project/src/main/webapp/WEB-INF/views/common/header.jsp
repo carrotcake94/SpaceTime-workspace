@@ -102,7 +102,7 @@ body * {
 .wrap {
 	position: relative;
 	width: 100%;
-	min-width : 1000px;
+	min-width: 1000px;
 	overflow: hidden;
 }
 
@@ -536,38 +536,48 @@ body * {
 	background-color: white;
 }
 
-	.toast-right div:nth-child(1) {
-		font-size: 12px;
-		height : 45%;
-		padding-top: 12px;
-		padding-right: 15px;
-		overflow:hidden;
-		text-overflow:ellipsis;
-		white-space:nowrap;
-	}
-		
-	.toast-right div:nth-child(2) {
-		height : 55%;
-		padding-right: 5px;
-	}
+.toast-right div:nth-child(1) {
+	font-size: 12px;
+	height: 45%;
+	padding-top: 12px;
+	padding-right: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 
-#autoComplete {
+.toast-right div:nth-child(2) {
+	height: 55%;
+	padding-right: 5px;
+}
+
+#autoCompleteContainer {
 	display: none;
 	border: 1px solid lightgrey;
-	border-radius: 5px;
+	border-radius: 15px;
 	height: 200px;
 	overflow-y: scroll;
 	background-color: white;
-	width: 370px;
-	margin-left: 25px;
 	margin-top: -16.5px;
+	z-index: 999;
+}
+
+.autoCompleteUl {
+	height: 30px;
 }
 
 .autoCompleteContent {
-	border-bottom: 1px solid rgba(211, 211, 211, 0.5);
-	padding-bottom: 8px;
-	margin: 15px;
+	border-bottom: 1px solid lightgrey;
 	font-size: 15px;
+	height: 30px;
+	list-style: none;
+	line-height: 20px;
+	padding-left: 0px;
+}
+
+.autoCompleteContent :hover {
+	cursor: pointer;
+	z-index: 1000;
 }
 
 /* -------------------- */
@@ -607,11 +617,10 @@ body * {
 		<div>
 			<div id="m_search_bar">
 				<form id="searchInputForm" action="searchSpaceList.mp" method="get">
-					<input type="search" id="searchInput" name="pureKeyword" placeholder="&nbsp&nbsp'#' 입력시 해시태그 검색이 가능해요!" required>
+					<input type="search" id="searchInput" name="pureKeyword"
+						placeholder="&nbsp&nbsp'#' 입력시 해시태그 검색이 가능해요!" required>
 				</form>
-			</div>
-			<div id="autoComplete">
-				<div id=autoCompleteList></div>
+				<div id="autoCompleteContainer"></div>
 			</div>
 		</div>
 		<div id="menu_btn">
@@ -625,27 +634,63 @@ body * {
         location.href="searchSpaceList.mp";
     }
     
+    
+    $("#autoCompleteUl li").on("click", (e)=>{
+    	console.log($(this).text());
+    })
+    /*******************/
+    const checkInput = () => {
+	    const beforeInput = searchInput.value;
+	    timer(beforeInput);
+	}
+    
+    const timer = (beforeInput) => {
+ 	  setTimeout(() => {
+
+ 	    if(searchInput.value === beforeInput) {
+ 	      console.log("입력멈춤");
+	 	     if(searchInput.value.startsWith("#") == true){
+	             hashtagAutoComplete(searchInput.value);
+	             autoCompleteListShowUp(words, searchInput.value);
+	         } else if(searchInput.value != null) {
+	             autoComplete(searchInput.value);
+	             autoCompleteListShowUp(words, searchInput.value);
+	         }
+ 	      checkInput();
+ 	      
+ 	    } else {
+ 	      console.log("입력변함");
+ 	      checkInput();
+ 	    }
+ 	   
+ 	    if(searchInput.value === "") {		// 입력창이 비었다면 추천 검색어 리스트 숨김
+ 	      autoCompleteContainer.classList.add("hide");	
+ 	    } else {
+ 	    	autoCompleteContainer.classList.remove("hide");
+ 	    }
+ 	  }, 500);
+		}
+   
+    /********************/
     //검색어 자동완성기능에 필요한 변수
-    var autoCompleteBox = document.querySelector("#autoComplete");
-    var autoCompleteList = document.querySelector("#autoCompleteList");
+    var autoCompleteContainer = document.querySelector("#autoCompleteContainer");
     var autoCompleteContent = document.querySelector(".autoCompleteContent");
+    var autoCompleteUl = document.querySelector("#autoCompleteUl");
     var searchInput = document.querySelector("#searchInput");
     var inputValue = "";
-    var autoCompleteArr = document.querySelector(".autoCompleteContent");
     
     searchInput.addEventListener("keyup", (e) => {
+        inputValue = searchInput.value;
+        
         if(e.keyCode == 13){
            	searchStart(searchInput.value);
         }
         
-        inputValue = searchInput.value;
-        console.log(autoCompleteArr)
-        
         //입력 시 하단 자동완성 박스 생성
         if(searchInput.value == ""){
-            autoCompleteBox.style.display = "none";
+        	autoCompleteContainer.style.display = "none";
         } else {
-            autoCompleteBox.style.display = "block";
+        	autoCompleteContainer.style.display = "block";
         }
         
         //"#"입력여부 확인하여 해시태그자동완성-일반자동완성 변환
@@ -658,14 +703,14 @@ body * {
         }
         
         //다른 곳 클릭 시 창 사라지기
-        window.addEventListener("click", (e) => {
-            if(e.target != autoCompleteBox){
-                autoCompleteBox.style.display = "none";
-            } else if(autoCompleteBox.style.display = "none" && e.target == searchInput) {
-            	if(e.target == searchInput || e.target == autoCompleteBox)
-            	autoCompleteBox.style.display = "block";
+        /* window.addEventListener("click", (e) => {
+            if(e.target != autoCompleteContainer){
+            	autoCompleteContainer.style.display = "none";
+            } else if(autoCompleteContainer.style.display = "none" && e.target == searchInput) {
+            	if(e.target == searchInput || e.target == autoCompleteContainer)
+            		autoCompleteContainer.style.display = "block";
             }
-        })
+        }) */
     });
     
     
@@ -678,18 +723,15 @@ body * {
     	document.querySelector("#searchInputForm").submit();
  	}
     
-    for(var i = 0; i < 20; i++){
-    	document.querySelector("#autoCompleteContent_" + i).onclick = () => {
-    		console.log('hi');
-    	}
-    }
     
     //연관검색어 클릭 시
-    /* autoCompleteContent.onclick = (e) => {
+    /* var autoCompleteContent = document.querySelector(".autoCompleteContent");
+    
+    autoCompleteContent.onclick = (e) => {
     	console.log(e.target.innerHTML);
    		document.querySelector("#searchInputForm").setAttribute("value", e.target.innerHTML);
    		document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp?pureKey=" + e.target.innerHTML).submit();
-   	}  */
+   	} */
     
 	</script>
 	<!-- 슬라이드 메뉴 -->
@@ -720,7 +762,7 @@ body * {
 						<tr>
 							<td rowspan="2"><img id="profile-img"
 								src="${loginMember.profilePath}"></td>
-							<td>${ loginMember.memName } 님</td>
+							<td>${ loginMember.memName }님</td>
 						</tr>
 						<tr>
 							<td><a href="myPage.me">프로필 관리 및 수정</a></td>
@@ -1104,3 +1146,6 @@ body * {
 	<div id="socketAlarmArea"></div>
 </body>
 </html>
+
+
+
