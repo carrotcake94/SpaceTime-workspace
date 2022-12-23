@@ -942,7 +942,7 @@ body * {
 		<c:when test="${loginMember.hostStatus eq 'Y'}">
 			<script>
 	     		$(".sign-up>a").text("호스트 페이지로");
-	     		$(".sign-up>a").attr("href","hostCalList.re");
+	     		$(".sign-up>a").attr("href","revHostList.re");
 	     	</script>
 		</c:when>
 		<c:otherwise>
