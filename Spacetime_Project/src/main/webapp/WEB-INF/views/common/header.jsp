@@ -554,18 +554,19 @@ body * {
 #autoComplete {
 	display: none;
 	border: 1px solid lightgrey;
-	border-radius: 15px;
+	border-radius: 5px;
 	height: 200px;
 	overflow-y: scroll;
 	background-color: white;
-	margin-left: 10px;
+	width: 370px;
+	margin-left: 25px;
 	margin-top: -16.5px;
 }
 
 .autoCompleteContent {
-	border-bottom: 1px solid lightgrey;
-	margin-left: 15px;
-	height: 30px;
+	border-bottom: 1px solid rgba(211, 211, 211, 0.5);
+	padding-bottom: 8px;
+	margin: 15px;
 	font-size: 15px;
 }
 

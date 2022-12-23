@@ -282,7 +282,7 @@
                                     	<textarea name="denyMessage" class="form-control mb-2 inputText" cols="20" rows="5" placeholder="반려 사유를 작성해주세요." disabled required></textarea>
                                     </td>
                                     <td rowspan="2" align="right">
-                                    	<button type="button" class="btn btn-sm btn-light spStatusBtn" onclick="spStatusUpdate()">처리하기</button>
+                                    	<button type="submit" class="btn btn-sm btn-light spStatusBtn" onclick="">처리하기</button>
                                     </td>
                                 </tr>
                             </tbody>

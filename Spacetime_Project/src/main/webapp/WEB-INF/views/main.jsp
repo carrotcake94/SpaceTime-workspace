@@ -51,6 +51,9 @@
     
     #main_categoryBar { margin:auto;}
     
+    .main_category:hover {
+    	opacity: 70%;
+    }
 
 </style>
 </head>
