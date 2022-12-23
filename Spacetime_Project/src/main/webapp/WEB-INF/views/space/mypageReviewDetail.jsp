@@ -100,16 +100,16 @@
 
 	/* The Close Button */
 	.close {
-		color: white;
+		color: yellow;
 		position: absolute;
 		top: 10px;
 		right: 25px;
-		font-size: 35px;
+		font-size: 55px;
 		font-weight: bold;
 	}
 
 	.close:hover, .close:focus {
-		color: white;
+		color: yellow;
 		text-decoration: none;
 		cursor: pointer;
 		
@@ -144,7 +144,7 @@
 	.next {
 		right: 0;
 		border-radius: 3px 0 0 3px;
-		background-color: #0062cc;
+		background-color: #fefefe00;
 	}
 
 	/* On hover, add a black background color with a little bit see-through */
@@ -177,6 +177,11 @@
             cursor: pointer;
         }
 					
+		#myModal>span {
+			font-size : 50px;
+			color :white;
+			
+		}
 		
 </style>
 
