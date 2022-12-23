@@ -1625,10 +1625,11 @@
 <script>
 //챗 모달 오픈
 function chatModalOpen(btn) {
+	
 		$.ajax({
 			url : "detailChat.me",
 			data : {
-				sender : $(btn).next().val(),
+				sender : $(btn).next().next().val(),
 				receiver : ${loginMember.memNo}
 			},
 			success : result => {
