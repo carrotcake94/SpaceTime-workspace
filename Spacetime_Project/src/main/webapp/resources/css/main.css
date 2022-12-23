@@ -147,11 +147,14 @@
 }
 
 .recommend_title_wrap {
-	height: 30px;
+	height: 40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .recommend_hashtag_wrap {
-	height: 35px;
+	height: 45px;
 	overflow: hidden;
 }
 
@@ -159,22 +162,17 @@
 	border : 0.5px solid lightgray;
 	border-radius: 15px;
 	margin: 5px;
+	padding: 2px 7px;
 	width: auto;
 	display: inline-block;
 	color: black;
 }
 
 .stitle {
-	display: block;
-	width: 300px;
-	height: 30px;
-	white-space: nowrap;
-	line-height: center;
+	height: 40px;
+	line-height: 40px;
 	font-size: 18px;
 	font-weight: 600;
-	overflow: hidden;
-	text-overflow: eclipsis; 
-	word-break:break-all;
 }
 
 .saddress {
