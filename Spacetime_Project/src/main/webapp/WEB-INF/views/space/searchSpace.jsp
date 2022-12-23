@@ -122,6 +122,10 @@
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
 						if('${pureKeyword}' == ""){
+							if('${categoryKeyword}' == ""){
+								filter.style.display = "block";
+								window.alert("필터를 설정해 공간을 검색하세요!");
+							}
 							//선택한 카테고리에 체크하기
 							var categoryNo = [];
 							categoryNo[0] = '${categoryNo}';
@@ -132,28 +136,27 @@
 									mapFilterCategoryList[i].checked = true;
 								}
 							}
-							
 							selectMapByCurrentPosition(map, categoryNo);
 							initiateMap();
+							
 						} else if('${categoryNo}' == ""){
-							if('${pureKeyword}'.startsWith("#") == true){
+							if ('${pureKeyword}' == "") {
+								filter.style.display = "block";
+								window.alert("필터를 설정해 공간을 검색하세요!");
+		 					} else if('${pureKeyword}'.startsWith("#") == true){
 								selectListByHashtag('${pureKeyword}');
 								initiateMap();
-								
-							} else if ('${pureKeyword}' != "" && '${pureKeyword}'.startsWith("#") == false) {
+		 					} else if ('${pureKeyword}' != "" && '${pureKeyword}'.startsWith("#") == false) {
 								selectListByKeyword('${pureKeyword}');
 								if(spaceListArr.length == 0) {
 									window.alert("해당 검색어로 조회된 공간이 없습니다.\n\n다른 키워드로 조회하시거나, \n필터로 조건을 설정해주세요!");
-								}
+								} 
 								initiateMap();
-	
-							} else if ('${pureKeyword}' == ""){
-								filter.style.display = "block";
-								window.alert("필터를 설정해 공간을 검색하세요!");
-							}
+		 					}
 						}
  					};
  					
+ 				
 					//지도 이동 후 해당 범위의 장소 재검색
 					var changeMap = document.querySelector("#changeMap");
 						changeMap.onclick = () => {

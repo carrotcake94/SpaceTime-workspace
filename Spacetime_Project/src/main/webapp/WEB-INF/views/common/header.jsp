@@ -633,45 +633,7 @@ body * {
     document.querySelector("#m_search_btn").onclick = () => {
         location.href="searchSpaceList.mp";
     }
-    
-    
-    $("#autoCompleteUl li").on("click", (e)=>{
-    	console.log($(this).text());
-    })
-    /*******************/
-    const checkInput = () => {
-	    const beforeInput = searchInput.value;
-	    timer(beforeInput);
-	}
-    
-    const timer = (beforeInput) => {
- 	  setTimeout(() => {
-
- 	    if(searchInput.value === beforeInput) {
- 	      console.log("입력멈춤");
-	 	     if(searchInput.value.startsWith("#") == true){
-	             hashtagAutoComplete(searchInput.value);
-	             autoCompleteListShowUp(words, searchInput.value);
-	         } else if(searchInput.value != null) {
-	             autoComplete(searchInput.value);
-	             autoCompleteListShowUp(words, searchInput.value);
-	         }
- 	      checkInput();
- 	      
- 	    } else {
- 	      console.log("입력변함");
- 	      checkInput();
- 	    }
- 	   
- 	    if(searchInput.value === "") {		// 입력창이 비었다면 추천 검색어 리스트 숨김
- 	      autoCompleteContainer.classList.add("hide");	
- 	    } else {
- 	    	autoCompleteContainer.classList.remove("hide");
- 	    }
- 	  }, 500);
-		}
    
-    /********************/
     //검색어 자동완성기능에 필요한 변수
     var autoCompleteContainer = document.querySelector("#autoCompleteContainer");
     var autoCompleteContent = document.querySelector(".autoCompleteContent");
@@ -703,6 +665,11 @@ body * {
         }
         
         //다른 곳 클릭 시 창 사라지기
+        if(searchInput.value === "") {		// 입력창이 비었다면 추천 검색어 리스트 숨김
+ 	      autoCompleteContainer.classList.add("hide");	
+ 	    } else {
+ 	    	autoCompleteContainer.classList.remove("hide");
+ 	    }
         /* window.addEventListener("click", (e) => {
             if(e.target != autoCompleteContainer){
             	autoCompleteContainer.style.display = "none";
@@ -723,15 +690,9 @@ body * {
     	document.querySelector("#searchInputForm").submit();
  	}
     
-    
-    //연관검색어 클릭 시
-    /* var autoCompleteContent = document.querySelector(".autoCompleteContent");
-    
-    autoCompleteContent.onclick = (e) => {
-    	console.log(e.target.innerHTML);
-   		document.querySelector("#searchInputForm").setAttribute("value", e.target.innerHTML);
-   		document.querySelector("#searchInputForm").setAttribute("action", "searchSpaceList.mp?pureKey=" + e.target.innerHTML).submit();
-   	} */
+	$(document).on("click", ".autoCompleteContent", function(){
+		searchStart(this.value);
+	});
     
 	</script>
 	<!-- 슬라이드 메뉴 -->
