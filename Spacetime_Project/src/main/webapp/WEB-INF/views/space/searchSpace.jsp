@@ -129,11 +129,12 @@
 							//선택한 카테고리에 체크하기
 							var categoryNo = [];
 							categoryNo[0] = '${categoryNo}';
+							console.log(category[0]);
 							
 							var mapFilterCategoryList = document.querySelectorAll(".ctgr");
 							for(var i = 1; i < 11; i++){
 								if(i == categoryNo[0]){
-									mapFilterCategoryList[i].checked = true;
+									mapFilterCategoryList[i-1].checked = true;
 								}
 							}
 							selectMapByCurrentPosition(map, categoryNo);

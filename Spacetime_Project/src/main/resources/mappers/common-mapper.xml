@@ -369,9 +369,11 @@
     </select>
 
 		<!-- 검색어 자동완성 -성훈 -->
+		<select id="keywordAutoComplete" parameterType="string" resultType="string">
 	SELECT LISTAGG(SPACE_TITLE, ',' ON OVERFLOW TRUNCATE) WITHIN GROUP (ORDER BY SPACE_TITLE DESC) AS TITLES
 	 FROM SPACE
 	 WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
+	 </select>
 
 	
 	<!-- 해시태그 자동완성 -성훈 -->
