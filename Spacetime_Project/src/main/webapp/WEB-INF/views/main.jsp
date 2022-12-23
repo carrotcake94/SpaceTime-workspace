@@ -55,6 +55,12 @@
     	opacity: 70%;
     }
 
+	span.stitle:hover {cursor: pointer;}
+	.main_recommend_card img:hover, .main_reviewZone_card img:hover {
+		cursor: pointer;
+		opacity: 70%;
+	}
+
 </style>
 </head>
 <body>
