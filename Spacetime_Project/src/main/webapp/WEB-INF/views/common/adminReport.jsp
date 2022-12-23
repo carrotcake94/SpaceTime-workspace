@@ -171,11 +171,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">신고대상ID</th>
-                                <th style="width:15%;">타입</th>
-                                <th style="width:35%;">내용</th>
-                                <th style="width:15%;">신고일</th>
-                                <th style="width:10%;">처리여부</th>
+                                <th style="width:25%;">신고대상ID</th>
+                                <th style="width:20%;">타입</th>
+                                <!-- <th style="width:35%;">내용</th> -->
+                                <th style="width:20%;">신고일</th>
+                                <th style="width:25%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody class="myTable">
@@ -195,11 +195,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">신고대상ID</th>
-                                <th style="width:15%;">타입</th>
-                                <th style="width:35%;">내용</th>
-                                <th style="width:15%;">신고일</th>
-                                <th style="width:10%;">처리여부</th>
+                                <th style="width:25%;">신고대상ID</th>
+                                <th style="width:20%;">타입</th>
+                                <!-- <th style="width:35%;">내용</th> -->
+                                <th style="width:20%;">신고일</th>
+                                <th style="width:25%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody class="myTable">
@@ -219,11 +219,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">신고대상ID</th>
-                                <th style="width:15%;">타입</th>
-                                <th style="width:35%;">내용</th>
-                                <th style="width:15%;">신고일</th>
-                                <th style="width:10%;">처리여부</th>
+                                <th style="width:25%;">신고대상ID</th>
+                                <th style="width:20%;">타입</th>
+                                <!-- <th style="width:35%;">내용</th> -->
+                                <th style="width:20%;">신고일</th>
+                                <th style="width:25%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody class="myTable">
@@ -243,11 +243,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">신고번호</th>
-                                <th style="width:15%;">신고대상ID</th>
-                                <th style="width:15%;">타입</th>
-                                <th style="width:35%;">내용</th>
-                                <th style="width:15%;">신고일</th>
-                                <th style="width:10%;">처리여부</th>
+                                <th style="width:25%;">신고대상ID</th>
+                                <th style="width:20%;">타입</th>
+                                <!-- <th style="width:35%;">내용</th> -->
+                                <th style="width:20%;">신고일</th>
+                                <th style="width:25%;">처리여부</th>
                             </tr>
                         </thead>
                         <tbody class="myTable">
@@ -332,7 +332,7 @@
                                             + "<td class='rpno'>" + result.list[i].reportNo + "</td>"
                                             + "<td>" + result.list[i].reportedMemNo + "</td>"
                                             + "<td>" + result.list[i].reportType + "</td>"
-                                            + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>"
+                                           /*  + "<td align='left' style='text-overflow:ellipsis; overflow:hidden; white-space:nowrap;'>" + result.list[i].reportContent + "</td>" */
                                             + "<td>" + result.list[i].reportDate + "</td>"
                                             + "<td>";
                                                     if(result.list[i].reportStatus == 'Y') {
