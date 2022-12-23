@@ -96,15 +96,7 @@ function spaceRecommend(keyword){
 			     card.setAttribute("onclick", "toSpaceDetail(" + recommendList[i].spaceNo + ")");
 			     card.innerHTML = "<div class='recommedCard' id='recommend" + i + "'>" +
 			                         "<div class='recommend_img_wrap'>" +
-			                         	 "<c:choose>" +
-			                         	 	"<c:when test='" + recommendList[i].attachmentReName + "!= null'>" +
-			                             		"<img class='img-0' src='" + recommendList[i].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
-			                         	 	"</c:when>" + 
-			                         	 	"<c:otherwise>" +
-			                         	 		"<img class='img-0' src='' alt='사진없음'>" +
-			                         	 	"</c:otherwise>" +
-			                         	 
-			                         	 "</c:choose>
+	                             		 "<img class='img-0' src='" + recommendList[i].attachmentReName + "' width='100%' height='100%' alt='사진 없음' />" +
 			                         "</div>" + 
 			                         "<div class='recommend_content_area'>" +
 			                             "<div class='recommend_title_wrap'><span class='stitle'>" + recommendList[i].spaceTitle + "</span></div>" +

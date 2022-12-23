@@ -7,7 +7,7 @@
 <title>공간 검색</title>
 <link href="resources/css/searchSpace.css" rel="stylesheet"
 	type="text/css" />
-	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=mn7cwsrvym"></script> <!-- nrd3zj6gm7 -->
+	<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nrd3zj6gm7"></script> <!-- mn7cwsrvym -->
 	<script src="resources/js/map.js"></script>
 </head>
 <body>
