@@ -122,7 +122,7 @@
 					//최초 로딩 시, 지도를 띄움과 동시에 전체 마커,리스트 표시
 					window.onload = () => {
 						if('${pureKeyword}' == ""){
-							if('${categoryKeyword}' == ""){
+							if('${categoryNo}' == ""){
 								filter.style.display = "block";
 								window.alert("필터를 설정해 공간을 검색하세요!");
 							}
