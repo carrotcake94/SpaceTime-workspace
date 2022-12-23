@@ -369,12 +369,25 @@
     </select>
 
 		<!-- 검색어 자동완성 -성훈 -->
-		<select id="keywordAutoComplete" parameterType="string" resultType="string">
-	SELECT LISTAGG(SPACE_TITLE, ',' ON OVERFLOW TRUNCATE) WITHIN GROUP (ORDER BY SPACE_TITLE DESC) AS TITLES
-	 FROM SPACE
-	 WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
+	<select id="keywordAutoComplete" parameterType="string" resultType="string">
+		SELECT LISTAGG(SPACE_TITLE, ',' ON OVERFLOW TRUNCATE) WITHIN GROUP (ORDER BY SPACE_TITLE DESC) AS TITLES
+		 FROM SPACE
+		 WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
 	 </select>
-
+	 
+	<!-- 검색어 자동완성 -성훈 -->
+	<select id="autoComplete" parameterType="hashmap" resultType="string">
+		SELECT LISTAGG(SPACE_TITLE, ',' ON OVERFLOW TRUNCATE) WITHIN GROUP (ORDER BY SPACE_TITLE DESC) AS TITLES
+		 FROM SPACE
+		 WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%' 
+	 </select>
+	 
+	 <!-- 검색어 자동완성 수정 - 경미 -->
+<!-- 	<select id="autoComplete" parameterType="hashmap" resultType="string">
+		SELECT SUBSTR(LISTAGG(SPACE_TITLE, ',') WITHIN GROUP (ORDER BY SPACE_TITLE DESC), 0, INSTR(LISTAGG(SPACE_TITLE, ',') WITHIN GROUP (ORDER BY SPACE_TITLE DESC), ',',1,5)-1) AS TITLES
+		 FROM SPACE
+		 WHERE SPACE_TITLE LIKE '%' || #{keyword} || '%'
+	</select> -->
 	
 	<!-- 해시태그 자동완성 -성훈 -->
 	<select id="hashtagAutoComplete" parameterType="string" resultType="string">
@@ -382,8 +395,6 @@
 		  FROM SPACE
 		 WHERE HASHTAG LIKE '%' || #{keyword} || '%'
 	</select>
-	
-	
 	
 	<!-- 마이페이지 신고리스트 신희섭 -->
 	<select id="selectMypageReportListCount" parameterType="_int" resultType="_int">

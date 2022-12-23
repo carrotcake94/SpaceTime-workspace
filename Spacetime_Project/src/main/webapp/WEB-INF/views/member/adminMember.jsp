@@ -180,11 +180,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">회원번호</th>
-                                <th style="width:10%;">이름</th>
+                                <th style="width:15%;">이름</th>
                                 <th style="width:15%;">ID</th>
                                 <th style="width:20%;">닉네임</th>
                                 <th style="width:10%;">등급</th>
-                                <th style="width:20%;">가입일</th>
+                                <th style="width:15%;">가입일</th>
                                 <th style="width:15%;">상태</th>
                             </tr>
                         </thead>
@@ -205,11 +205,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">회원번호</th>
-                                <th style="width:10%;">이름</th>
+                                <th style="width:15%;">이름</th>
                                 <th style="width:15%;">ID</th>
                                 <th style="width:20%;">닉네임</th>
                                 <th style="width:10%;">등급</th>
-                                <th style="width:20%;">가입일</th>
+                                <th style="width:15%;">가입일</th>
                                 <th style="width:15%;">상태</th>
                             </tr>
                         </thead>
@@ -230,11 +230,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">회원번호</th>
-                                <th style="width:10%;">이름</th>
+                                <th style="width:15%;">이름</th>
                                 <th style="width:15%;">ID</th>
                                 <th style="width:20%;">닉네임</th>
                                 <th style="width:10%;">등급</th>
-                                <th style="width:20%;">가입일</th>
+                                <th style="width:15%;">가입일</th>
                                 <th style="width:15%;">상태</th>
                             </tr>
                         </thead>
@@ -255,11 +255,11 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">회원번호</th>
-                                <th style="width:10%;">이름</th>
+                                <th style="width:15%;">이름</th>
                                 <th style="width:15%;">ID</th>
                                 <th style="width:20%;">닉네임</th>
                                 <th style="width:10%;">등급</th>
-                                <th style="width:20%;">가입일</th>
+                                <th style="width:15%;">가입일</th>
                                 <th style="width:15%;">상태</th>
                             </tr>
                         </thead>
