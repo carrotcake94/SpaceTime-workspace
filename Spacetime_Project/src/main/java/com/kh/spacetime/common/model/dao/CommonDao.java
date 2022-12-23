@@ -147,8 +147,24 @@ public class CommonDao {
 
 	// 검색어 자동완성기능 - 성훈
 	public String autoComplete(SqlSessionTemplate sqlSession, String keyword) {
+		
+		/*
+		int max = 10;
+		HashMap map = new HashMap();
+		
+		map.put("keyword", keyword);
+		map.put("max", max);
+		
+		String searchKeyword = null;
+		
+		while(searchKeyword == null) {
+			max = max-4;
+			searchKeyword = sqlSession.selectOne("commonMapper.autoComplete", map);
+		}
+		
+		System.out.println(searchKeyword);
+		*/
 		return sqlSession.selectOne("commonMapper.autoComplete", keyword);
-
 	}
 
 	// 해시태그 자동완성기능 -성훈
