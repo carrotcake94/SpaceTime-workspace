@@ -617,7 +617,7 @@ body * {
 		<div>
 			<div id="m_search_bar">
 				<form id="searchInputForm" action="searchSpaceList.mp" method="get">
-					<input type="search" id="searchInput" name="pureKeyword" required> <!-- placeholder=" '#' 입력 시 해시태그 검색이 가능해요!" -->
+					<input type="search" id="searchInput" name="pureKeyword" placeholder=" '#' 입력 시 해시태그 검색이 가능해요!" required> <!-- placeholder=" '#' 입력 시 해시태그 검색이 가능해요!" -->
 				</form>
 				<div id="autoCompleteContainer"></div>
 			</div>
