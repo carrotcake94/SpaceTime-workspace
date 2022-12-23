@@ -156,6 +156,12 @@
         color: white;
       }
 
+	   .space .sinfo-area {
+	 	text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	   }
+
       .space .stitle {
         font-size: 20px;
         font-weight: 600;
@@ -598,7 +604,7 @@
             	</c:otherwise>            
             </c:choose>
           </div>
-          <div>
+          <div class="sinfo-area">
             <span class="stitle">${s.spaceTitle }</span>
             <hr />
             ${s.addressDefault }
