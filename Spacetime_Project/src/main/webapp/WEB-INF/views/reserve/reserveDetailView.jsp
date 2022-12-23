@@ -633,7 +633,7 @@
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn-back" style="background-color: #007bff; color:white;" onclick="$('#cancle-modal').modal('hide');">뒤로가기</button>
+                            <button type="button" class="btn btn-back" style="background-color: #007bff; color:white;" onclick="$('#cancle-modal').modal('hide');">뒤로가기</button>
                             <button type="button" class="btn btn-primary btn-cancle" style="background-color: lightgray; border-color: lightgray; color:black;" onclick="reserveNoSubmit();">예약취소</button>
                             
                             <form id="rnoSubmit" action="" method="post">

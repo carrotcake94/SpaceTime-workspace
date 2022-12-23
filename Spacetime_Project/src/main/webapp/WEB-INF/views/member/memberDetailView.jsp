@@ -707,7 +707,6 @@
 	                                <th style="width:30%;">은행명</th>
 	                                <td>
 	                                    <select name="bankName" class="select_category form-control mb-2" required>
-	                                        <option selected>은행명</option>
 	                                        <option value="KB국민은행">KB국민은행</option>
 	                                        <option value="신한은행">신한은행</option>
 	                                        <option value="IBK기업은행">IBK기업은행</option>
