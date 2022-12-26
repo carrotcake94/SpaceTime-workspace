@@ -690,7 +690,11 @@ body * {
  	}
     
 	$(document).on("click", ".autoCompleteContent", function(){
-		searchStart(this.value);
+		if(searchInput.value.startsWith("#") == true){
+			console.log("hi");
+		} else {
+			searchStart(this.innerHTML);
+		}
 	});
     
 	</script>

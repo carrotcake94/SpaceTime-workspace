@@ -353,7 +353,7 @@ public class SpaceController {
 	@RequestMapping(value = "searchSpaceByHashtag.mp", produces = "application/json; charset=UTF-8")
 	public String searchSpaceByHashtag(String pureKeyword) {
 		String keyword = pureKeyword.replace("#", "");
-		
+		System.out.println(pureKeyword);
 		ArrayList<Space> listArr = spaceService.searchSpaceByHashtag(keyword);
 
 		return new Gson().toJson(listArr);
