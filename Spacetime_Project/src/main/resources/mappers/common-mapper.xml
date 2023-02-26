@@ -156,15 +156,25 @@
 	
 	<!-- 블랙리스트 처리 -->
 	<update id="updateBlacklist" parameterType="report">
-		UPDATE MEMBER
-		SET BLACKLIST_YN = 'Y'
-		WHERE (SELECT COUNT(*) 
-		       FROM REPORT 
-		       LEFT JOIN MEMBER ON (REPORTED_MEM_NO = MEM_NO) 
-		       WHERE MEM_ID = #{reportedMemNo}
-		       AND MEM_STATUS = 'N' 
-		       AND REPORT_STATUS = 'Y') >= 5
-		  AND MEM_ID = #{reportedMemNo}
+		  UPDATE MEMBER
+		  	 SET BLACKLIST_YN = 
+							    CASE 
+							    -- 첫 번째 조건: MEM_ID에 해당하는 REPORT_STATUS 중 5개 이상이 Y인 경우
+					            WHEN (
+					                  SELECT COUNT(*) 
+					                    FROM REPORT 
+					                   WHERE REPORTED_MEM_NO = MEM_NO
+					                     AND REPORT_STATUS = 'Y'
+					                 ) >= 5 THEN 'Y'
+							    -- 두 번째 조건: MEM_ID에 해당하는 REPORT_STATUS 중 5개 이하가 Y인 경우
+					            ELSE (
+								      SELECT CASE WHEN COUNT(*) >= 5 THEN 'Y' ELSE 'N' END
+					                  FROM REPORT 
+					                  WHERE REPORTED_MEM_NO = MEM_NO
+					                    AND REPORT_STATUS = 'Y'
+					                )
+							  	END
+		  WHERE MEM_ID = #{reportedMemNo}
 	</update>
 	
 	<!-- 신고 검색 글 개수 -->
@@ -218,7 +228,6 @@
 	
 	<!-- 매출이 있는 공간 리스트 조회 -->
 	<select id="selectSalesList" resultMap="reserveResultSet">
-		<![CDATA[
 		SELECT M.MEM_NAME, M.MEM_ID, SPACE_NO, S.SPACE_TITLE, (SUM(PRICE)*0.1) AS "PRICE"
 		FROM RESERVE R
 		JOIN SPACE S USING (SPACE_NO)
@@ -228,7 +237,6 @@
 		  AND RESERVE_STATUS = 'Y'
 		GROUP BY SPACE_NO, MEM_NAME, MEM_ID, SPACE_TITLE
 		ORDER BY SPACE_NO DESC
-		]]>
 	</select>
 	
 	<!-- 공간별 매출 상세조회 (기본정보만)-->
@@ -249,7 +257,14 @@
 		FROM RESERVE R
 		WHERE SPACE_NO = #{spaceNo}
 		  AND TO_CHAR(R.USE_DATE, 'YYYY-MM') = #{month}
-		  <![CDATA[AND (EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE))]]>
+		  AND (
+			  <![CDATA[ EXTRACT(YEAR FROM USE_DATE) < EXTRACT(YEAR FROM SYSDATE) OR 
+			        (
+			            EXTRACT(YEAR FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE) AND 
+			            EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE) AND 
+			            USE_DATE <= SYSDATE + 7
+			        ) ]]>
+			    )
 		  AND RESERVE_STATUS = 'Y'
 	</select>
 	
@@ -259,8 +274,15 @@
 		FROM RESERVE R
 		WHERE SPACE_NO = #{spaceNo}
 		  AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
+		  AND (
+				  <![CDATA[ EXTRACT(YEAR FROM USE_DATE) < EXTRACT(YEAR FROM SYSDATE) OR 
+				        (
+				            EXTRACT(YEAR FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE) AND 
+				            EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE) AND 
+				            USE_DATE <= SYSDATE + 7
+				        ) ]]>
+				    )
 		  AND RESERVE_STATUS = 'Y'
-		  <![CDATA[AND (EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE))]]>
 		ORDER BY USE_DATE ASC, START_TIME ASC
 	</select>
 	
@@ -273,8 +295,15 @@
 			  JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 			  WHERE MEM_STATUS = 'N'
 				AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
+				AND (
+				  <![CDATA[ EXTRACT(YEAR FROM USE_DATE) < EXTRACT(YEAR FROM SYSDATE) OR 
+				        (
+				            EXTRACT(YEAR FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE) AND 
+				            EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE) AND 
+				            USE_DATE <= SYSDATE + 7
+				        ) ]]>
+				    )
 				AND RESERVE_STATUS = 'Y'
-				<![CDATA[AND (EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE))]]>
 			  	<if test="condition == 'spaceTitle'">
 			    	AND SPACE_TITLE
 				</if>
@@ -296,7 +325,14 @@
 		JOIN MEMBER M ON (M.MEM_NO = HOST_NO)
 		WHERE MEM_STATUS = 'N'
 		  AND TO_CHAR(USE_DATE, 'YYYY-MM') = #{month}
-		  <![CDATA[AND (EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE))]]>
+		  AND (
+		  <![CDATA[ EXTRACT(YEAR FROM USE_DATE) < EXTRACT(YEAR FROM SYSDATE) OR 
+		        (
+		            EXTRACT(YEAR FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE) AND 
+		            EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE) AND 
+		            USE_DATE <= SYSDATE + 7
+		        ) ]]>
+		    )
 		  AND RESERVE_STATUS = 'Y'
 			<if test="condition == 'spaceTitle'">
 		    	AND SPACE_TITLE
@@ -315,41 +351,48 @@
 	<!-- 매출차트 보드 조회 -->
 	<select id="selectSalesChartBoard" resultMap="reserveResultSet">
 		SELECT *
-		FROM (SELECT TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999') AS "todaySales", COUNT(*) AS "todaySalesCount"
-	          FROM RESERVE
-	          WHERE RESERVE_STATUS = 'Y' 
-	            AND TO_CHAR(USE_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) today,
+		FROM (SELECT NVL(TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999'), '0') AS "todaySales", 
+					 NVL(COUNT(*), '0') AS "todaySalesCount"
+	            FROM RESERVE
+	           WHERE RESERVE_STATUS = 'Y' 
+	             AND TO_CHAR(USE_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) today,
 	        
 	          -- 이번주 매출 
-	          (SELECT TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999') AS "weekSales", COUNT(*) AS "weekSalesCount"
-	          FROM RESERVE
-	          WHERE RESERVE_STATUS = 'Y' 
-	            AND USE_DATE <![CDATA[>=]]> TRUNC(NEXT_DAY(SYSDATE-8,1)+1) 
-	            AND USE_DATE <![CDATA[<]]> TRUNC(NEXT_DAY(SYSDATE-8,1)+7)+1) week, 
+	          (SELECT NVL(TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999'), '0') AS "weekSales", 
+	          		  NVL(COUNT(*), '0') AS "weekSalesCount"
+		         FROM RESERVE
+		        WHERE RESERVE_STATUS = 'Y' 
+				  AND USE_DATE <![CDATA[>=]]> TRUNC(NEXT_DAY(SYSDATE-8,1)+1) 
+		          AND USE_DATE <![CDATA[<]]> TRUNC(NEXT_DAY(SYSDATE-8,1)+7)+1) week, 
 	        
 	          -- 한달 매출 
-	          (SELECT TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999') AS "monthSales", COUNT(*) AS "monthSalesCount"
-	          FROM RESERVE
-	          WHERE RESERVE_STATUS = 'Y' 
-	            AND TO_CHAR(USE_DATE,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')) month,
+	          (SELECT NVL(TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999'), '0') AS "monthSales", 
+	          		  NVL(COUNT(*), '0') AS "monthSalesCount"
+	          	 FROM RESERVE
+	            WHERE RESERVE_STATUS = 'Y' 
+	              AND TO_CHAR(USE_DATE,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')) month,
 	       
 	          -- 1년 매출 
-	          (SELECT TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999') AS "yearSales", COUNT(*) AS "yearSalesCount"
-	          FROM RESERVE
-	          WHERE RESERVE_STATUS = 'Y' 
-	            AND TO_CHAR(USE_DATE,'YYYY')=TO_CHAR(SYSDATE,'YYYY')) year
+	          (SELECT NVL(TO_CHAR(SUM(PRICE)*0.1, 'fm999,999,999,999'), '0') AS "yearSales", 
+				      NVL(COUNT(*), 0) AS "yearSalesCount"
+				 FROM RESERVE
+				WHERE RESERVE_STATUS = 'Y' 
+				  AND TO_CHAR(USE_DATE,'YYYY')=TO_CHAR(SYSDATE,'YYYY')) year
 	</select>
     
     <!-- 매출 bar 차트 조회 -->
     <select id="selectbChart" resultMap="reserveResultSet">
 		SELECT *
-		FROM (SELECT TO_CHAR(USE_DATE, 'YYYY-MM') chartMonth,
-		             SUM(CASE WHEN USE_DATE LIKE '22/%' THEN PRICE END)*0.1 chartPrice
-		      FROM RESERVE
-		      WHERE RESERVE_STATUS = 'Y'
-		       <![CDATA[AND (EXTRACT(YEAR FROM USE_DATE) <= EXTRACT(YEAR FROM SYSDATE)) AND (EXTRACT(MONTH FROM USE_DATE) <= EXTRACT(MONTH FROM SYSDATE))]]>
-		      GROUP BY TO_CHAR(USE_DATE, 'YYYY-MM')
-		      ORDER BY TO_CHAR(USE_DATE, 'YYYY-MM') DESC)
+		FROM (
+			    SELECT TO_CHAR(USE_DATE, 'YYYY-MM') AS chartMonth,
+			           SUM(CASE WHEN EXTRACT(YEAR FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE) OR EXTRACT(YEAR FROM USE_DATE) = EXTRACT(YEAR FROM SYSDATE)-1 THEN PRICE END)*0.1 AS chartPrice
+			    FROM RESERVE
+			    WHERE RESERVE_STATUS = 'Y'
+			        AND USE_DATE <![CDATA[>=]]> ADD_MONTHS(TRUNC(SYSDATE, 'MM'), -5)
+			        AND USE_DATE <![CDATA[<=]]> LAST_DAY(SYSDATE)
+			    GROUP BY TO_CHAR(USE_DATE, 'YYYY-MM')
+			    ORDER BY TO_CHAR(USE_DATE, 'YYYY-MM') DESC
+			 )
 		WHERE ROWNUM IN (1, 2, 3, 4, 5, 6)
 		ORDER BY chartMonth ASC
     </select>

@@ -41,7 +41,7 @@ public class MailSendService {
 	*/
 	public String joinEmail(String email) {
 		makeRandomNumber();
-		String setFrom = "final221223@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
+		String setFrom = "pinbymin@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 		String toMail = email;
 		String title = "[본인인증] '스페이스 타임' 회원 가입 인증 이메일입니다."; // 이메일 제목 
 		String content = 
@@ -61,7 +61,7 @@ public class MailSendService {
 	*/
 	public String pwdEmail(String email) {
 		makeRandomNumber();
-		String setFrom = "final221223@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
+		String setFrom = "pinbymin@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 		String toMail = email;
 		String title = "[본인인증] '스페이스 타임' 비밀번호 변경을 위한 이메일입니다."; // 이메일 제목 
 		String content = 
@@ -81,7 +81,7 @@ public class MailSendService {
 	 */
 	public void reserveEmail(String email, String receiptUrl) {
 
-		String setFrom = "final221223@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
+		String setFrom = "pinbymin@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 		String toMail = email;
 		String title = "[예약확인] 스페이스타임 예약 확인 및 결제 영수증 이메일입니다."; // 이메일 제목 
 		String content = 
@@ -134,7 +134,7 @@ public class MailSendService {
 		
 		String authString = makeAdminRandom();
 		
-		String setFrom = "final221223@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
+		String setFrom = "pinbymin@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 		String toMail = email;
 		String title = "[비밀번호 초기화] '스페이스 타임' 임시 비밀번호 안내 이메일입니다."; // 이메일 제목 
 		String content = 

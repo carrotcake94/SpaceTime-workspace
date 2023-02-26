@@ -171,11 +171,11 @@ public class CommonController {
 			
 			int resultBlack = commonService.updateBlacklist(reportedMemNo);
 			
-				if(resultBlack > 0) { // 신고 5회이상, 블랙리스트로 업데이트 성공 
-					session.setAttribute("alertMsg", "신고 누적 5회, 블랙리스트 처리 성공");
-				} else { // 신고 5회 미만
+				//if(resultBlack > 0) { // 신고 5회이상, 블랙리스트로 업데이트 성공 
+				//	session.setAttribute("alertMsg", "신고 누적 5회, 블랙리스트 처리 성공");
+				//} else { // 신고 5회 미만
 					session.setAttribute("alertMsg", "신고처리가 완료되었습니다.");
-				}
+				// }
 			return "redirect:/rdetail.ad?rpno=" + r.getReportNo();
 
 		} else { // 신고처리 실패
@@ -290,7 +290,7 @@ public class CommonController {
 	public String ajaxSalesDetailList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, Model model,
 			int sno, String month) {
 
-		// System.out.println(month);
+//		System.out.println(month);
 
 		HashMap<String, String> map = new HashMap<>();
 
@@ -353,12 +353,14 @@ public class CommonController {
 	@RequestMapping("searchS.ad")
 	public String selectSalesSearchList(@RequestParam(value="currentPage", defaultValue="1")int currentPage, Model model, String condition, String keyword, String month) {
 		
+		// System.out.println("month : " + month);
+		 
 		LocalDate now = LocalDate.now();
 		
 		int year = now.getYear();
 		int Month = now.getMonthValue();
 		String thisMonth = year + "-" + Month;
-		// System.out.println(thisMonth);
+		// System.out.println("thisMonth : " + thisMonth);
 		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
